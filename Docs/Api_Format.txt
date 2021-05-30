@@ -1,0 +1,89 @@
+login:
+
+    client to server:
+
+        {
+            "action":"login",
+            "content":
+            {
+                "username":"username<str>",
+                "password":"password<str>"
+            }
+        }
+
+    server to client:
+
+        -accepted
+        {
+            "status":"ok",
+            "action":"res_login",
+            "content":
+            {
+                "login":"ok",
+            }
+        }
+
+        -invalid username
+        {
+            "status":"fail",
+            "action":"res_login",
+            "content":
+            {
+                "Error":"invalid_username"
+            }
+        }
+
+        -invalid password
+        {
+            "status":"fail",
+            "action":"res_login",
+            "content":
+            {
+                "Error":"invalid_password"
+            }
+        }
+
+signup:
+
+    client to server:
+        {
+            "action":"signup",
+            "content":
+            {
+                "username":"username<str>",
+                "password":"password<str>",
+                "email":"email<str>",
+                "bio":"bio<str>"
+            }
+        }
+
+    server to client:
+
+        -accepted
+        {
+            "status":"ok",
+            "action":"res_signup",
+            "content":
+            {
+                "signup":"ok",
+            }
+        }
+
+        -username already exists
+        {
+            "status":"fail",
+            "content":
+            {
+                "Error":"invalid_username"
+            }
+
+        }
+
+        -email already exists
+        {
+            "status":"fail",
+            "content":
+            {
+                "Error":"invalid_email"
+            }
+}
