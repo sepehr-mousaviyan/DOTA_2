@@ -1,8 +1,8 @@
 package sbu.cs.mahkats.Api;
 
-public class ApiCTS_Signin_Ok extends Json implements Send{
-    private String action = "signin";
-    private ContentCTS_Signin_Ok content;
+public class ApiCTS_Signup_Ok extends Json implements Send{
+    private String action = "signup";
+    private ContentCTS_Signup_Ok content;
 
     public String getAction() {
         return action;
@@ -16,9 +16,15 @@ public class ApiCTS_Signin_Ok extends Json implements Send{
         return content.getPassword();
     }
 
+    public String getEmail() { return content.getEmail(); }
+
+    public String getBio() {
+        return content.getBio();
+    }
+
     public void setAction(String action) { this.action = action; }
 
-    public void setContent(ContentCTS_Signin_Ok content) { this.content = content; }
+    public void setContent(ContentCTS_Signup_Ok content) { this.content = content; }
 
     @Override
     public String toString() { return super.toString(); }
@@ -30,9 +36,13 @@ public class ApiCTS_Signin_Ok extends Json implements Send{
     public void send(String ... args) {
         String username = args[0];
         String password = args[1];
-        ContentCTS_Signin_Ok content = new ContentCTS_Signin_Ok();
+        String email = args[2];
+        String bio = args[3];
+        ContentCTS_Signup_Ok content = new ContentCTS_Signup_Ok();
         content.setUsername(username);
         content.setPassword(password);
+        content.setEmail(email);
+        content.setBio(bio);
         setContent(content);
     }
 }

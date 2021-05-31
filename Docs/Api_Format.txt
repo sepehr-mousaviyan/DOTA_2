@@ -2,7 +2,7 @@ login:
 
     client to server:
 
-        #1: ApiCTS_Signin
+        #1: ApiCTS_Signin_Ok
         {
             "action":"signin",
             "content":
@@ -53,7 +53,7 @@ signup:
 
     client to server:
 
-        #5: ApiCTS_Signup
+        #5: ApiCTS_Signup_Ok
         {
             "action":"signup",
             "content":
