@@ -1,7 +1,8 @@
 login:
 
     client to server:
-        #1: ApiCTS_login
+
+        #1: ApiCTS_Signin
         {
             "action":"login",
             "content":
@@ -13,6 +14,7 @@ login:
 
     server to client:
 
+        #2: ApiSTC_Signin_Ok
         -accepted
         {
             "status":"ok",
@@ -23,6 +25,7 @@ login:
             }
         }
 
+        #3: ApiSTC_Signin_IU
         -invalid username
         {
             "status":"fail",
@@ -33,6 +36,7 @@ login:
             }
         }
 
+        #4: ApiSTC_Signin_IP
         -invalid password
         {
             "status":"fail",
@@ -46,6 +50,8 @@ login:
 signup:
 
     client to server:
+
+        #5: ApiCTS_Signup
         {
             "action":"signup",
             "content":
@@ -59,6 +65,7 @@ signup:
 
     server to client:
 
+        #6: ApiSTC_Signup_Ok
         -accepted
         {
             "status":"ok",
@@ -69,6 +76,7 @@ signup:
             }
         }
 
+        #7: ApiSTC_Signup_Fail_IU
         -username already exists
         {
             "status":"fail",
@@ -79,6 +87,7 @@ signup:
 
         }
 
+        #8: ApiSTC_Signup_Fail_IE
         -email already exists
         {
             "status":"fail",
