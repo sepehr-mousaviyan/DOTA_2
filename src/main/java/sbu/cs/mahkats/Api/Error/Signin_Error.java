@@ -1,4 +1,4 @@
-package sbu.cs.mahkats.Api;
+package sbu.cs.mahkats.Api.Error;
 
 /**
  * possible sign in errors enum

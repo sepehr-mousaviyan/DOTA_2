@@ -1,4 +1,8 @@
-package sbu.cs.mahkats.Api;
+package sbu.cs.mahkats.Api.CTS.Signup;
+
+import sbu.cs.mahkats.Api.Api;
+import sbu.cs.mahkats.Api.Content;
+import sbu.cs.mahkats.Api.Send;
 
 /**
  * Api maker

@@ -1,4 +1,8 @@
-package sbu.cs.mahkats.Api;
+package sbu.cs.mahkats.Api.STC.Signin;
+
+import sbu.cs.mahkats.Api.Api;
+import sbu.cs.mahkats.Api.Content;
+import sbu.cs.mahkats.Api.Send;
 
 /**
  * Api maker
@@ -7,7 +11,7 @@ package sbu.cs.mahkats.Api;
  * status Failed because of invalid_username or invalid_password error
  */
 
-public class ApiSTC_Signin_Fail extends Api implements Send{
+public class ApiSTC_Signin_Fail extends Api implements Send {
     private String status = "fail";
     private String action = "res_signin";
     private ContentSTC_Signin_Fail content;

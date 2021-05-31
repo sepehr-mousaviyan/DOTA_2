@@ -1,4 +1,6 @@
-package sbu.cs.mahkats.Api;
+package sbu.cs.mahkats.Api.CTS.Signup;
+
+import sbu.cs.mahkats.Api.Content;
 
 /**
  * Api content part maker

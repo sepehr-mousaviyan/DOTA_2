@@ -1,11 +1,15 @@
-package sbu.cs.mahkats.Api;
+package sbu.cs.mahkats.Api.CTS.Signin;
+
+import sbu.cs.mahkats.Api.Api;
+import sbu.cs.mahkats.Api.Content;
+import sbu.cs.mahkats.Api.Send;
 
 /**
  * Api maker
  * client to server
  * for sign in
  */
-public class ApiCTS_Signin_Ok extends Api implements Send{
+public class ApiCTS_Signin_Ok extends Api implements Send {
     private String action = "signin";
     private ContentCTS_Signin_Ok content;
 

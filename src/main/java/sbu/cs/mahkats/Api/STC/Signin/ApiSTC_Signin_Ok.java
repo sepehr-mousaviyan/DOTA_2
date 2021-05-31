@@ -1,4 +1,8 @@
-package sbu.cs.mahkats.Api;
+package sbu.cs.mahkats.Api.STC.Signin;
+
+import sbu.cs.mahkats.Api.Api;
+import sbu.cs.mahkats.Api.Content;
+import sbu.cs.mahkats.Api.Send;
 
 /**
  * Api maker
@@ -7,7 +11,7 @@ package sbu.cs.mahkats.Api;
  * status is ok
  */
 
-public class ApiSTC_Signin_Ok extends Api implements Send{
+public class ApiSTC_Signin_Ok extends Api implements Send {
     private String status = "ok";
     private String action = "res_signin";
     private ContentSTC_Signin_Ok content;
