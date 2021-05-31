@@ -1,13 +1,13 @@
 package sbu.cs.mahkats.Api;
 
 public class ContentSTC_Signin_Ok extends Content{
-    private String login = "ok";
+    private String signin = "ok";
 
-    public String getLogin() {
-        return login;
+    public String getSignin() {
+        return signin;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
+    public void setSignin(String signin) {
+        this.signin = signin;
     }
 }

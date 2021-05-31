@@ -78,7 +78,8 @@ signup:
             }
         }
 
-        #7: ApiSTC_Signup_Fail_IU
+        #7: ApiSTC_Signup_Fail
+        enum: IU
         -username already exists
         {
             "status":"fail",
@@ -89,7 +90,8 @@ signup:
 
         }
 
-        #8: ApiSTC_Signup_Fail_IE
+        #8: ApiSTC_Signup_Fail
+        enum: IE
         -email already exists
         {
             "status":"fail",
