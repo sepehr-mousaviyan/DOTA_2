@@ -1,6 +1,13 @@
 package sbu.cs.mahkats.Api;
 
-public class ApiSTC_Signup_Fail extends Json implements Send {
+/**
+ * Api maker
+ * server to client
+ * for signup
+ * status Failed because of invalid_username or invalid_email error
+ */
+
+public class ApiSTC_Signup_Fail extends Api implements Send {
     private final String status = "fail";
     private String action = "res_signup";
     private ContentSTC_Signup_Fail content;
@@ -35,7 +42,7 @@ public class ApiSTC_Signup_Fail extends Json implements Send {
     }
 
     @Override
-    public Json toJson(String jsonString) {
+    public Api toJson(String jsonString) {
         return super.toJson(jsonString);
     }
 

@@ -1,5 +1,8 @@
 package sbu.cs.mahkats.Api;
 
-public class Content {
+/**
+ * Api content part maker
+ */
 
+public class Content {
 }

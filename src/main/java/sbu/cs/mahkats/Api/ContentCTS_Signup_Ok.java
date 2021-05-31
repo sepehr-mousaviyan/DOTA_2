@@ -1,5 +1,11 @@
 package sbu.cs.mahkats.Api;
 
+/**
+ * Api content part maker
+ * client to server
+ * for signup
+ */
+
 public class ContentCTS_Signup_Ok extends Content {
     private String username;
     private String password;

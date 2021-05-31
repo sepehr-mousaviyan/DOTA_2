@@ -1,5 +1,9 @@
 package sbu.cs.mahkats.Api;
 
+/**
+ * possible sign in errors enum
+ */
+
 public enum Signin_Error {
     IU,
     IP;

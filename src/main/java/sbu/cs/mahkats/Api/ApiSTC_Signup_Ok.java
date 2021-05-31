@@ -1,6 +1,13 @@
 package sbu.cs.mahkats.Api;
 
-public class ApiSTC_Signup_Ok extends Json implements Send {
+/**
+ * Api maker
+ * server to client
+ * for signup
+ * status is ok
+ */
+
+public class ApiSTC_Signup_Ok extends Api implements Send {
     private final String status = "ok";
     private String action = "res_signup";
     private ContentSTC_Signup_Ok content;
@@ -35,7 +42,7 @@ public class ApiSTC_Signup_Ok extends Json implements Send {
     }
 
     @Override
-    public Json toJson(String jsonString) {
+    public Api toJson(String jsonString) {
         return super.toJson(jsonString);
     }
 

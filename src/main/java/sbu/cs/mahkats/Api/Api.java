@@ -1,8 +1,12 @@
 package sbu.cs.mahkats.Api;
 
+/**
+ * Api maker
+ */
+
 import com.google.gson.Gson;
 
-public class Json {
+public class Api {
 
     public String toString()  {
         Gson gson = new Gson();
@@ -10,9 +14,9 @@ public class Json {
         return jsonString;
     }
 
-    public Json toJson(String jsonString) {
+    public Api toJson(String jsonString) {
         Gson gson = new Gson();
-        Json json = gson.fromJson(jsonString, Json.class);
+        Api json = gson.fromJson(jsonString, Api.class);
         return json;
     }
 

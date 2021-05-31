@@ -1,5 +1,12 @@
 package sbu.cs.mahkats.Api;
 
+/**
+ * Api content part maker
+ * server to client
+ * for sign in
+ * status Failed because of invalid_username or invalid_password error
+ */
+
 public class ContentSTC_Signin_Fail extends Content {
     private String error;
 

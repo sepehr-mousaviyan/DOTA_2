@@ -1,5 +1,9 @@
 package sbu.cs.mahkats.Api;
 
+/**
+ * possible signup errors enum
+ */
+
 public enum Signup_Error {
     IU,
     IE;
