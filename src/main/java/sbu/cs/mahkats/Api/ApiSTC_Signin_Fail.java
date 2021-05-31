@@ -32,4 +32,5 @@ public class ApiSTC_Signin_Fail extends Json implements Send{
         content.setError(error);
         setContent(content);
     }
+
 }
