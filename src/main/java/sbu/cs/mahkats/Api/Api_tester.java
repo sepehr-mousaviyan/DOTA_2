@@ -2,7 +2,7 @@ package sbu.cs.mahkats.Api;
 
 public class Api_tester {
     public static void main(String[] args)  {
-        Api_1 json = new Api_1();
+        ApiCTS_Login json = new ApiCTS_Login();
         json.send("ali", "122223");
         System.out.println(json);
         System.out.println(json.getAction());

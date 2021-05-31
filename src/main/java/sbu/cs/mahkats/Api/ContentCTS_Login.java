@@ -1,6 +1,6 @@
 package sbu.cs.mahkats.Api;
 
-public class Content_1 extends Content {
+public class ContentCTS_Login extends Content {
     private String username;
     private String password;
 
