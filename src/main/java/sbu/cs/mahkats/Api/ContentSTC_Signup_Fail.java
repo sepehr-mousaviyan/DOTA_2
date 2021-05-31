@@ -7,5 +7,7 @@ public class ContentSTC_Signup_Fail extends Content {
         return error;
     }
 
-    public void setError(String error) { this.error = error; }
+    public void setError(String error) {
+        this.error = error;
+    }
 }

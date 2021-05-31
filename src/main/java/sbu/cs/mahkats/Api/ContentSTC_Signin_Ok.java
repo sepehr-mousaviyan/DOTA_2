@@ -1,6 +1,6 @@
 package sbu.cs.mahkats.Api;
 
-public class ContentSTC_Signin_Ok extends Content{
+public class ContentSTC_Signin_Ok extends Content {
     private String signin = "ok";
 
     public String getSignin() {

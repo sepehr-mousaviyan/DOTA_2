@@ -13,7 +13,9 @@ public class ApiSTC_Signin_Ok extends Json implements Send{
 
     public Content getContent() { return content; }
 
-    public String getLogin() { return content.getSignin(); }
+    public String getLogin() {
+        return content.getSignin();
+    }
 
     public void setAction(String action) { this.action = action; }
 

@@ -10,12 +10,12 @@ public class ContentCTS_Signup_Ok extends Content {
         return username;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
     }
 
     public void setPassword(String password) {
@@ -26,15 +26,15 @@ public class ContentCTS_Signup_Ok extends Content {
         return email;
     }
 
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public String getBio() {
         return bio;
     }
 
     public void setBio(String bio) {
         this.bio = bio;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 }
