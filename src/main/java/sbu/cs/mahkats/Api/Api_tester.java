@@ -2,12 +2,12 @@ package sbu.cs.mahkats.Api;
 
 public class Api_tester {
     public static void main(String[] args)  {
-        ApiCTS_Signin json = new ApiCTS_Signin();
+        ApiSTC_Signin_Ok json = new ApiSTC_Signin_Ok();
         json.send("ali", "122223");
         System.out.println(json);
         System.out.println(json.getAction());
-        System.out.println(json.getUsername());
-        System.out.println(json.getPassword());
+        System.out.println(json.getStatus());
+
 
     }
 }

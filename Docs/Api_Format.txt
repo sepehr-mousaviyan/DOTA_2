@@ -4,7 +4,7 @@ login:
 
         #1: ApiCTS_Signin
         {
-            "action":"login",
+            "action":"signin",
             "content":
             {
                 "username":"username<str>",
@@ -18,7 +18,7 @@ login:
         -accepted
         {
             "status":"ok",
-            "action":"res_login",
+            "action":"res_signin",
             "content":
             {
                 "login":"ok",
@@ -29,7 +29,7 @@ login:
         -invalid username
         {
             "status":"fail",
-            "action":"res_login",
+            "action":"res_signin",
             "content":
             {
                 "Error":"invalid_username"
@@ -40,7 +40,7 @@ login:
         -invalid password
         {
             "status":"fail",
-            "action":"res_login",
+            "action":"res_signin",
             "content":
             {
                 "Error":"invalid_password"
