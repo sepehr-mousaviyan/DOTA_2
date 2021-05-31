@@ -1,6 +1,6 @@
 package sbu.cs.mahkats.Api;
 
-public class ApiCTS_Signin extends Json implements Send{
+public class ApiCTS_Signin_Ok extends Json implements Send{
     private String action = "signin";
     private ContentCTS_Signin content;
 

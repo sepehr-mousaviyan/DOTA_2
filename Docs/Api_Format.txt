@@ -25,18 +25,18 @@ login:
             }
         }
 
-        #3: ApiSTC_Signin_IU
+        #3: ApiSTC_Signin_Fail
         -invalid username
         {
             "status":"fail",
             "action":"res_signin",
             "content":
             {
-                "Error":"invalid_username"
+                "error":"invalid_username"
             }
         }
 
-        #4: ApiSTC_Signin_IP
+        #4: ApiSTC_Signin_Fail
         -invalid password
         {
             "status":"fail",
