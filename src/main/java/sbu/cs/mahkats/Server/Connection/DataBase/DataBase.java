@@ -26,7 +26,7 @@ public class DataBase {
             this.conn = DriverManager.getConnection(SQL_URL, SQL_USERNAME, SQL_PASSWORD);
             LOGGER.info("Connected to sql server");
         } catch (SQLException throwables) {
-            LOGGER.error("Can not connect to database!");
+            LOGGER.fatal("Can not connect to database!", throwables);
         }
         this.SQL_TABLE_NAME = "player";
         initiateTable();
@@ -47,13 +47,11 @@ public class DataBase {
             try {
                 statement.close();
             }catch (SQLException throwables){
-                LOGGER.error("can not close database!");
+                LOGGER.fatal("can not close database!", throwables);
             }
         } catch (SQLException throwables) {
-            LOGGER.error("can not make playe table!");
+            LOGGER.fatal("can not make playe table!", throwables);
         }
-
-
     }
 
     public Pair signupRequest(String usr , String passw , String email){
@@ -63,7 +61,7 @@ public class DataBase {
         try {
             ps = conn.prepareStatement(sql);
         } catch (SQLException throwables) {
-            LOGGER.error("can not connect to database!");
+            LOGGER.fatal("can not connect to database!", throwables);
             return null;
         }
         try {
@@ -72,31 +70,36 @@ public class DataBase {
             ps.setString(3 , email);
             LOGGER.info("add player to database");
         } catch (SQLException throwables) {
-            LOGGER.warn("can not sign up this user!");
+            LOGGER.warn("can not sign up this user!", throwables);
             return new Pair<Boolean, String>(Boolean.FALSE , "this user already exist");
         }
         finally {
             try {
                 ps.close();
-            } catch (SQLException e) {
-                LOGGER.error("can not close database!");
+            } catch (SQLException throwables) {
+                LOGGER.fatal("can not close database!", throwables);
             }
         }
 
         return new Pair<Boolean , String>(Boolean.TRUE , "OK");
     }
 
-    public Pair loginRequest(String usr , String passw) throws SQLException {
+    public Pair loginRequest(String usr , String passw) {
         Pair result = null;
         String sql = "select * from " + SQL_TABLE_NAME + " where username LIKE '"+ usr + "';";
         Statement stmt = null;
         try {
             stmt = conn.createStatement();
         } catch (SQLException throwables) {
-            LOGGER.error("can not connect to database!");
+            LOGGER.error("can not connect to database!", throwables);
             return null;
         }
-        ResultSet rs=stmt.executeQuery(sql);
+        ResultSet rs= null;
+        try {
+            rs = stmt.executeQuery(sql);
+        } catch (SQLException throwables) {
+            LOGGER.fatal("can not connect to database!", throwables);
+        }
         LOGGER.info("check and serach the player");
         while(rs.next()) {
             result = new Pair<Boolean , Pair<String , String>>(Boolean.TRUE , new Pair<String , String>(rs.getString(1) , rs.getString(2)));
@@ -104,7 +107,7 @@ public class DataBase {
         try {
             stmt.close();
         } catch (SQLException throwables) {
-            LOGGER.error("can not close database!");
+            LOGGER.error("can not close database!", throwables);
         }
         if(result != null) {
             LOGGER.info("player is found");
@@ -119,8 +122,8 @@ public class DataBase {
         try {
             conn.close();
             LOGGER.info("databse has been closed");
-        } catch (SQLException e) {
-            LOGGER.error("can not close database!");
+        } catch (SQLException throwables) {
+            LOGGER.fatal("can not close database!", throwables);
         }
     }
 
