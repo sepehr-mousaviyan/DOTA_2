@@ -5,7 +5,7 @@ import javafx.fxml.Initializable;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-class SplashScreen implements Initializable {
+public class SplashController implements Initializable {
 
     public static boolean isPlayed = false;
 
@@ -14,3 +14,4 @@ class SplashScreen implements Initializable {
 
     }
 }
+

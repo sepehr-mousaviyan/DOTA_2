@@ -16,8 +16,9 @@ public class MainController implements Initializable {
 
     public void loadSplash(){
         try {
-            SplashScreen.isPlayed = true;
-            AnchorPane anch1 = FXMLLoader.load(getClass().getResource("SplashScreen.fxml"));
+            SplashController.isPlayed = true;
+            AnchorPane anch1 = FXMLLoader.load(getClass().getResource("/SplashScreen.fxml"));
+
             mainanchor.getChildren().setAll(anch1);
 
             FadeTransition fadeIn = new FadeTransition(Duration.seconds(5),anch1);
@@ -39,20 +40,20 @@ public class MainController implements Initializable {
             });
             fadeOut.setOnFinished((e) -> {
                 try {
-                    AnchorPane anch2 = FXMLLoader.load(getClass().getResource("Main.fxml"));
+                    AnchorPane anch2 = FXMLLoader.load(getClass().getResource("/Main.fxml"));
                     mainanchor.getChildren().setAll(anch2);
                 }catch (Exception ex){
-                    ex.printStackTrace();
+
                 }
             });
         }catch (Exception e){
-            e.printStackTrace();
+
         }
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        if (!SplashScreen.isPlayed)
+        if (!SplashController.isPlayed)
             loadSplash();
     }
 }
