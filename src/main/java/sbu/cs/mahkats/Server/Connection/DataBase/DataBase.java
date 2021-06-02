@@ -1,6 +1,7 @@
 package sbu.cs.mahkats.Server.Connection.DataBase;
 
 import com.mysql.cj.conf.ConnectionUrlParser;
+import org.apache.log4j.Logger;
 import org.javatuples.Pair;
 import sbu.cs.mahkats.Api.ApiCTS_Signin_Ok;
 import sbu.cs.mahkats.Api.ApiSTC_Signup_Fail;
@@ -18,12 +19,14 @@ public class DataBase {
     private int LIMIT_PASSWORD;
     private int LIMIT_EMAIL;
 
+    private final static Logger LOGGER = Logger.getLogger(DataBase.class.getName());
+
     public DataBase(){
         try {
             this.conn = DriverManager.getConnection(SQL_URL, SQL_USERNAME, SQL_PASSWORD);
-            System.out.println("Connected to sql server");
+            LOGGER.info("Connected to sql server");
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            LOGGER.error("Can not connect to database!");
         }
         this.SQL_TABLE_NAME = "player";
         initiateTable();
@@ -40,12 +43,17 @@ public class DataBase {
         try {
             statement = conn.createStatement();
             statement.execute(sql);
-            statement.close();
+            LOGGER.info("player table has been made");
+            try {
+                statement.close();
+            }catch (SQLException throwables){
+                LOGGER.error("can not close database!");
+            }
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            LOGGER.error("can not make playe table!");
         }
 
-        System.out.println("initiate table done");
+
     }
 
     public Pair signupRequest(String usr , String passw , String email){
@@ -55,35 +63,24 @@ public class DataBase {
         try {
             ps = conn.prepareStatement(sql);
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            LOGGER.error("can not connect to database!");
             return null;
         }
         try {
             ps.setString(1, usr);
             ps.setString(2, passw);
             ps.setString(3 , email);
+            LOGGER.info("add player to database");
         } catch (SQLException throwables) {
-            System.out.println("can not sign up this user!");
+            LOGGER.warn("can not sign up this user!");
+            return new Pair<Boolean, String>(Boolean.FALSE , "this user already exist");
+        }
+        finally {
             try {
                 ps.close();
             } catch (SQLException e) {
-                System.out.println("Error! can not close database!");
+                LOGGER.error("can not close database!");
             }
-            return new Pair<Boolean, String>(Boolean.FALSE , "this user already exist");
-        }
-
-        int i = 0;
-        System.out.println(ps);
-        try {
-            i = ps.executeUpdate();
-        } catch (Exception e) {
-            System.out.println("Error! can not insert to table!");
-        }
-
-        try {
-            ps.close();
-        } catch (SQLException throwables) {
-            System.out.println("Error! can not close database!");
         }
 
         return new Pair<Boolean , String>(Boolean.TRUE , "OK");
@@ -96,30 +93,34 @@ public class DataBase {
         try {
             stmt = conn.createStatement();
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            LOGGER.error("can not connect to database!");
             return null;
         }
         ResultSet rs=stmt.executeQuery(sql);
+        LOGGER.info("check and serach the player");
         while(rs.next()) {
             result = new Pair<Boolean , Pair<String , String>>(Boolean.TRUE , new Pair<String , String>(rs.getString(1) , rs.getString(2)));
         }
         try {
-            conn.close();
             stmt.close();
         } catch (SQLException throwables) {
-            System.out.println("Error! can not close database!");
+            LOGGER.error("can not close database!");
         }
-        if(result != null)
+        if(result != null) {
+            LOGGER.info("player is found");
             return result;
+        }
         else result = new Pair<Boolean , String>(Boolean.FALSE , "can not found player!");
+        LOGGER.warn("player is not found!");
         return result;
     }
 
     public void close(){
         try {
             conn.close();
+            LOGGER.info("databse has been closed");
         } catch (SQLException e) {
-            System.out.println("Error! can not close database!");
+            LOGGER.error("can not close database!");
         }
     }
 
@@ -132,5 +133,6 @@ public class DataBase {
         db.LIMIT_USERNAME = config.getIntValue("input.limit.username");
         db.LIMIT_PASSWORD = config.getIntValue("input.limit.password");
         db.LIMIT_EMAIL = config.getIntValue("input.limit.email");
+        LOGGER.info("properties has been gotten");
     }
 }
