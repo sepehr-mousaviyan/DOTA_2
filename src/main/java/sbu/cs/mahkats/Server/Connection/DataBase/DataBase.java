@@ -18,6 +18,9 @@ public class DataBase {
     private int LIMIT_USERNAME;
     private int LIMIT_PASSWORD;
     private int LIMIT_EMAIL;
+    private int LIMIT_FNAME;
+    private int LIMIT_LNAME;
+
 
     private final static Logger LOGGER = Logger.getLogger(DataBase.class.getName());
 
@@ -37,6 +40,8 @@ public class DataBase {
                 "  username varchar("+ LIMIT_USERNAME +") NOT NULL,\n" +
                 "  password varchar("+ LIMIT_PASSWORD +") NOT NULL,\n" +
                 "  email varchar("+ LIMIT_EMAIL +") NOT NULL UNIQUE ,\n" +
+                "  first_name varchar("+ LIMIT_FNAME +") NOT NULL ,\n" +
+                "  last_name varchar("+ LIMIT_LNAME +") NOT NULL ,\n" +
                 "  PRIMARY KEY (username)\n" +
                 ")";
         Statement statement = null;
@@ -136,6 +141,9 @@ public class DataBase {
         db.LIMIT_USERNAME = config.getIntValue("input.limit.username");
         db.LIMIT_PASSWORD = config.getIntValue("input.limit.password");
         db.LIMIT_EMAIL = config.getIntValue("input.limit.email");
+        db.LIMIT_FNAME = config.getIntValue("input.limit.first.name");
+        db.LIMIT_LNAME = config.getIntValue("input.limit.last.name");
+
         LOGGER.info("properties has been gotten");
     }
 }
