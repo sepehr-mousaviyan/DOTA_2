@@ -1,13 +1,21 @@
 package sbu.cs.mahkats.Api;
 
+
 import com.google.gson.JsonObject;
 import org.javatuples.Pair;
 
-public class MassageMaker {
-    public static JsonObject Massage(String status, String action, JsonObject content){
+public class MassageMaker{
+
+    public JsonObject Massage(String status, String action, UserData user){
         Pair<String, String> statusProperty = new Pair<>("status" , status);
         Pair<String, String> actionProperty = new Pair<>("action" , action);
-        Pair<String, JsonObject> contentProperty = new Pair<>("content" , content);
+        Pair<String, JsonObject> contentProperty;
+        if(status.equals("OK")) {
+            contentProperty = new Pair<>("content", user.makeJson());
+        }
+        else{
+            contentProperty = new Pair<String, JsonObject>("content", user.makeErrorJson());
+        }
 
         return new Api().toJson(statusProperty, actionProperty, contentProperty);
     }
