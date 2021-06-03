@@ -5,15 +5,28 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 import javafx.util.Duration;
+import sbu.cs.mahkats.Client.Connection.Connection;
+import sbu.cs.mahkats.Configuration.Config;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class MainController implements Initializable {
+
+    Config config = Config.getInstance();
+    private static String USERNAME_LENGTH = "input.limit.userName";
+    private static String PASSWORD_LENGTH = "input.limit.passWord";
+    private static String EMAIL_LENGTH = "input.limit.email";
+
     @FXML
     AnchorPane mainanchor;
 
@@ -71,43 +84,56 @@ public class MainController implements Initializable {
 
     @FXML
     void signUpAction(ActionEvent event) {
-        if (passInput.getText().isEmpty() || userNameInput.getText().isEmpty() || emailInput.getText().isEmpty())
+        if (passInput.getText().isEmpty() || userNameInput.getText().isEmpty() || emailInput.getText().isEmpty()){
+            invalidRespond.setText("");
             emptyRespond.setText("PLEASE ENTER ALL FEILDS!");
+        }
         if (!goodInput(userNameInput.getText(),passInput.getText(),emailInput.getText())){
             emptyRespond.setText("");
             invalidRespond.setText("DON'T USE ! , / , ? , ) , ( , * , & , % IN YOUR INPUT!");
 
         }
+
         //***********************************************************
-//        else
-//
+        else if(Connection.checkUserSignUp(userNameInput.getText(),passInput.getText(),emailInput.getText())){
+            //وارد منیو می شود
+        }
+
+       // else
+        //پیام سرور را در لیبل چاپ میکند
 
     }
 
     private boolean goodInput(String userName, String password, String Email){
-        boolean b1, b2, b3;
-        b1 = checkString(userName);
-        b2 = checkString(password);
-        b3 = checkString(Email);
+        boolean userName_check, password_check, email_check;
+        userName_check = checkString(userName);
+        password_check = checkString(password);
+        email_check = checkString(Email);
 
-        return b1 && b2 && b3;
+        return userName_check && password_check && email_check;
     }
 
     private boolean checkString(String str){
-        boolean b = true;
+        boolean str_check = true;
         char[] charArray = {'%','&','*','(',')','/',':',';','!','?','$'};
 
         for (int i = 0; i < charArray.length; i++)
             if (str.indexOf(charArray[i]) > -1) {
-                b = false;
+                str_check = false;
                 break;
             }
-        return b;
+        return str_check;
     }
 
     @FXML
-    void loginAction(ActionEvent event) {
+    void loginAction(ActionEvent event) throws IOException {
+        Parent logParent = FXMLLoader.load(getClass().getResource("/LoginScreen.fxml"));
+        Stage logStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
+        Scene logScene = new Scene(logParent);
+
+        logStage.setScene(logScene);
+        logStage.show();
     }
 
     @Override
