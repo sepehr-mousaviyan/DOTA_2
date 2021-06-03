@@ -1,13 +1,11 @@
 package sbu.cs.mahkats.Server.Connection.DataBase;
 
-import com.mysql.cj.conf.ConnectionUrlParser;
 import org.apache.log4j.Logger;
 import org.javatuples.Pair;
-import sbu.cs.mahkats.Api.ApiCTS_Signin_Ok;
-import sbu.cs.mahkats.Api.ApiSTC_Signup_Fail;
 import sbu.cs.mahkats.Configuration.Config;
 
 import java.sql.*;
+import java.util.Random;
 
 public class DataBase {
     private Connection conn = null;
@@ -18,14 +16,13 @@ public class DataBase {
     private int LIMIT_USERNAME;
     private int LIMIT_PASSWORD;
     private int LIMIT_EMAIL;
-    private int LIMIT_FNAME;
-    private int LIMIT_LNAME;
 
 
     private final static Logger LOGGER = Logger.getLogger(DataBase.class.getName());
 
     public DataBase(){
         try {
+            parseSqlProperties(this);
             this.conn = DriverManager.getConnection(SQL_URL, SQL_USERNAME, SQL_PASSWORD);
             LOGGER.info("Connected to sql server");
         } catch (SQLException throwables) {
@@ -40,8 +37,6 @@ public class DataBase {
                 "  username varchar("+ LIMIT_USERNAME +") NOT NULL,\n" +
                 "  password varchar("+ LIMIT_PASSWORD +") NOT NULL,\n" +
                 "  email varchar("+ LIMIT_EMAIL +") NOT NULL UNIQUE ,\n" +
-                "  first_name varchar("+ LIMIT_FNAME +") NOT NULL ,\n" +
-                "  last_name varchar("+ LIMIT_LNAME +") NOT NULL ,\n" +
                 "  PRIMARY KEY (username)\n" +
                 ")";
         Statement statement = null;
@@ -55,7 +50,7 @@ public class DataBase {
                 LOGGER.fatal("can not close database!", throwables);
             }
         } catch (SQLException throwables) {
-            LOGGER.fatal("can not make playe table!", throwables);
+            LOGGER.fatal("can not make player table!", throwables);
         }
     }
 
@@ -76,7 +71,7 @@ public class DataBase {
             LOGGER.info("add player to database");
         } catch (SQLException throwables) {
             LOGGER.warn("can not sign up this user!", throwables);
-            return new Pair<Boolean, String>(Boolean.FALSE , "this user already exist");
+            return new Pair<>(Boolean.FALSE, "this user already exist");
         }
         finally {
             try {
@@ -105,10 +100,20 @@ public class DataBase {
         } catch (SQLException throwables) {
             LOGGER.fatal("can not connect to database!", throwables);
         }
-        LOGGER.info("check and serach the player");
-        while(rs.next()) {
-            result = new Pair<Boolean , Pair<String , String>>(Boolean.TRUE , new Pair<String , String>(rs.getString(1) , rs.getString(2)));
+        while(true) {
+            try {
+                if (!rs.next()) break;
+                if(rs.getString(2).equals(passw)) {
+                    result = new Pair<>(Boolean.TRUE, new Random().nextLong());
+                }
+                else{
+                    result = new Pair<>(Boolean.FALSE, "password is incorrect!");
+                }
+            } catch (SQLException throwables) {
+                LOGGER.fatal("can not find player in database!", throwables);
+            }
         }
+
         try {
             stmt.close();
         } catch (SQLException throwables) {
@@ -118,7 +123,7 @@ public class DataBase {
             LOGGER.info("player is found");
             return result;
         }
-        else result = new Pair<Boolean , String>(Boolean.FALSE , "can not found player!");
+        else result = new Pair<>(Boolean.FALSE, "can not found player!");
         LOGGER.warn("player is not found!");
         return result;
     }
@@ -141,8 +146,6 @@ public class DataBase {
         db.LIMIT_USERNAME = config.getIntValue("input.limit.username");
         db.LIMIT_PASSWORD = config.getIntValue("input.limit.password");
         db.LIMIT_EMAIL = config.getIntValue("input.limit.email");
-        db.LIMIT_FNAME = config.getIntValue("input.limit.first.name");
-        db.LIMIT_LNAME = config.getIntValue("input.limit.last.name");
 
         LOGGER.info("properties has been gotten");
     }
