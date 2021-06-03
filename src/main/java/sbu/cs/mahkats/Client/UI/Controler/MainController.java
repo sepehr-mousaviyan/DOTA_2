@@ -1,9 +1,12 @@
 package sbu.cs.mahkats.Client.UI.Controler;
 
 import javafx.animation.FadeTransition;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Duration;
 
@@ -13,6 +16,21 @@ import java.util.ResourceBundle;
 public class MainController implements Initializable {
     @FXML
     AnchorPane mainanchor;
+
+    @FXML
+    private TextField passInput;
+
+    @FXML
+    private TextField userNameInput;
+
+    @FXML
+    private TextField emailInput;
+
+    @FXML
+    private Label invalidRespond;
+
+    @FXML
+    private Label emptyRespond;
 
     public void loadSplash(){
         try {
@@ -49,6 +67,47 @@ public class MainController implements Initializable {
         }catch (Exception e){
 
         }
+    }
+
+    @FXML
+    void signUpAction(ActionEvent event) {
+        if (passInput.getText().isEmpty() || userNameInput.getText().isEmpty() || emailInput.getText().isEmpty())
+            emptyRespond.setText("PLEASE ENTER ALL FEILDS!");
+        if (!goodInput(userNameInput.getText(),passInput.getText(),emailInput.getText())){
+            emptyRespond.setText("");
+            invalidRespond.setText("DON'T USE ! , / , ? , ) , ( , * , & , % IN YOUR INPUT!");
+
+        }
+        //***********************************************************
+//        else
+//
+
+    }
+
+    private boolean goodInput(String userName, String password, String Email){
+        boolean b1, b2, b3;
+        b1 = checkString(userName);
+        b2 = checkString(password);
+        b3 = checkString(Email);
+
+        return b1 && b2 && b3;
+    }
+
+    private boolean checkString(String str){
+        boolean b = true;
+        char[] charArray = {'%','&','*','(',')','/',':',';','!','?','$'};
+
+        for (int i = 0; i < charArray.length; i++)
+            if (str.indexOf(charArray[i]) > -1) {
+                b = false;
+                break;
+            }
+        return b;
+    }
+
+    @FXML
+    void loginAction(ActionEvent event) {
+
     }
 
     @Override
