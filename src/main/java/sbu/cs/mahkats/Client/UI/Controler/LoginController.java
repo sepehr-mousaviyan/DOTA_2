@@ -2,10 +2,17 @@ package sbu.cs.mahkats.Client.UI.Controler;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 import sbu.cs.mahkats.Client.Connection.Connection;
 import sbu.cs.mahkats.Configuration.Config;
+
+import java.io.IOException;
 
 public class LoginController {
     Config config = Config.getInstance();
@@ -25,8 +32,15 @@ public class LoginController {
     private Label invalidRespond;
 
     @FXML
-    void backAction(ActionEvent event) {
+    void backAction(ActionEvent event) throws IOException {
+        System.out.println("***************" );
+        Parent logParent = FXMLLoader.load(getClass().getResource("/Main.fxml"));
+        Stage logStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
+        Scene logScene = new Scene(logParent);
+
+        logStage.setScene(logScene);
+        logStage.show();
     }
 
     @FXML

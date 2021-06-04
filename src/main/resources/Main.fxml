@@ -73,7 +73,7 @@
             <Font name="Corbel" size="19.0" />
          </font>
       </Label>
-      <Button layoutX="552.0" layoutY="706.0" mnemonicParsing="false" onAction="#loginAction" prefHeight="38.0" prefWidth="73.0" style="-fx-background-radius: 60; -fx-background-color: #ffffff00;" text="Login" textFill="#da3c10" underline="true">
+      <Button layoutX="552.0" layoutY="706.0" mnemonicParsing="false" onAction="#loginAction" prefHeight="38.0" prefWidth="73.0" style="-fx-background-color: #ffffff00;" text="Login" textFill="#da3c10" underline="true">
          <font>
             <Font name="Corbel" size="19.0" />
          </font>

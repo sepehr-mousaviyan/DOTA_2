@@ -16,7 +16,7 @@
             <Image url="@Photos/168d8722637bdbea904b15dea23e0849.jpg" />
          </image>
       </ImageView>
-      <Label layoutX="34.0" layoutY="47.0" prefHeight="81.0" prefWidth="459.0" text="Welcome Back Gamer!">
+      <Label layoutX="48.0" layoutY="70.0" prefHeight="81.0" prefWidth="459.0" text="Welcome Back!">
          <font>
             <Font name="Corbel" size="48.0" />
          </font>
@@ -60,10 +60,18 @@
             <Font name="Corbel" size="30.0" />
          </font>
       </Label>
-      <Label fx:id="invalidRespond" contentDisplay="TOP" layoutX="52.0" layoutY="492.0" prefHeight="60.0" prefWidth="590.0" textAlignment="CENTER" textFill="RED">
+      <Label fx:id="invalidRespond" contentDisplay="TOP" layoutX="52.0" layoutY="492.0" prefHeight="60.0" prefWidth="728.0" textAlignment="CENTER" textFill="RED">
          <font>
             <Font name="Corbel" size="30.0" />
          </font>
       </Label>
+      <Button layoutX="-82.0" layoutY="-62.0" mnemonicParsing="false" onAction="#backAction" prefHeight="193.0" prefWidth="294.0" style="-fx-background-color: #ffffff00; -fx-background-image: url('file:C:/Users/Documents/page_background.gif')" text="⊲">
+         <font>
+            <Font size="96.0" />
+         </font>
+         <effect>
+            <Blend />
+         </effect>
+      </Button>
    </children>
 </AnchorPane>
