@@ -11,9 +11,6 @@ public class Connection {
     private Socket socket;
     private static String Host = "host";
     private static String PORT = "port";
-    boolean enter1 = true,flag = true;
-    boolean enter2 = true;
-    boolean enter3 = true;
 
 
     public Connection() throws IOException {

@@ -24,7 +24,10 @@ public class LoginController {
     @FXML
     private Label invalidRespond;
 
+    @FXML
+    void backAction(ActionEvent event) {
 
+    }
 
     @FXML
     void loginAction(ActionEvent event) {
