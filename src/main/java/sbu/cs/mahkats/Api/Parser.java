@@ -8,6 +8,10 @@ public class Parser{
         return new Gson().fromJson(json , JsonData.class).getStatus().equals("OK");
     }
 
+    public static String getAction(JsonObject json){
+        return new Gson().fromJson(json , JsonData.class).getAction();
+    }
+
     public static UserData parse(JsonObject json) {
         Gson gson = new Gson();
         JsonData userData = gson.fromJson(json , JsonData.class);
