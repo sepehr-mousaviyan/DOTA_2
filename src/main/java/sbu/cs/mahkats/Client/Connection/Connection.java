@@ -1,8 +1,8 @@
 package sbu.cs.mahkats.Client.Connection;
 
 import com.google.gson.JsonObject;
-import sbu.cs.mahkats.Api.Api;
 import sbu.cs.mahkats.Api.MassageMaker;
+import sbu.cs.mahkats.Api.Parser;
 import sbu.cs.mahkats.Api.UserData;
 import sbu.cs.mahkats.Configuration.Config;
 
@@ -11,12 +11,16 @@ import java.net.Socket;
 
 
 public class Connection {
+    private static Boolean checkStatus;
     Config config = Config.getInstance();
     private static Socket socket;
     private static String Host = "host";
     private static String PORT = "port";
+    private static long TOKEN;
 
-    Api api = new Api();
+    public static boolean getCheckStatus() {
+        return checkStatus;
+    }
 
     public Connection() throws IOException {
         this.socket = new Socket(config.getStringValue(Host
@@ -31,7 +35,7 @@ public class Connection {
         try {
             UserData user = new UserData(userName,passWord,email);
             MassageMaker massageMaker = new MassageMaker();
-            JsonObject signinObj = massageMaker.massage("","signin",user);
+            JsonObject signinObj = massageMaker.massage("OK","signin",user);
             if(send(signinObj.toString())){
                 return true;
             }
@@ -47,7 +51,7 @@ public class Connection {
         try {
             UserData user = new UserData(userName,passWord);
             MassageMaker massageMaker = new MassageMaker();
-            JsonObject signinObj = massageMaker.massage("","signin",user);
+            JsonObject signinObj = massageMaker.massage("OK","signin",user);
             if(send(signinObj.toString())){
                 return true;
             }
@@ -83,6 +87,9 @@ public class Connection {
             UserData userData = new UserData("couldn't receive, please send it again!" );
             MassageMaker massageMaker = new MassageMaker();
             JsonObject json = massageMaker.massage("fail", "receive", userData);
+            checkStatus = Parser.getStatus(json);
+            if (checkStatus)
+                TOKEN = Long.valueOf(data);
             send(json.toString());
         }
         return data;

@@ -57,18 +57,16 @@ public class LoginController {
         }
 
         else if(Connection.checkUserSignIn(userNameInput.getText(),passInput.getText())){
-            if(Connection.receive().equals("ok")){
+            if(Connection.getCheckStatus()){
                 //**********************************
                 //وارد منیو می شود
             }
 
 
             else {
-                //********************************
-                //اروری که در ریسیو سرور فرستاده را در لیبل چاپ می کند
                 emptyRespond.setText("");
                 invalidRespond.setText("");
-                serverRespond.setText("shrhwwrtbw5jetjetkv");
+                serverRespond.setText(Connection.receive());
 
             }
         }

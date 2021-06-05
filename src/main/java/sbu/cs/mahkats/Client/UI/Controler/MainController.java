@@ -98,7 +98,7 @@ public class MainController implements Initializable {
         }
 
         else if(Connection.checkUserSignUp(userNameInput.getText(),passInput.getText(),emailInput.getText())){
-            if(Connection.receive().equals("ok")){
+            if(Connection.getCheckStatus()){
                 //**********************************
                 //وارد منیو می شود
             }
@@ -109,7 +109,7 @@ public class MainController implements Initializable {
                 //اروری که در ریسیو سرور فرستاده را در لیبل چاپ می کند
                 emptyRespond.setText("");
                 invalidRespond.setText("");
-                serverRespond.setText("shrhwwrtbw5jetjetkv");
+                serverRespond.setText(Connection.receive());
 
             }
         }

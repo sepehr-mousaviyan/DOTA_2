@@ -5,6 +5,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import sbu.cs.mahkats.Client.Connection.Connection;
+
+import java.io.IOException;
 
 public class App extends Application {
 
@@ -18,7 +21,8 @@ public class App extends Application {
         primaryStage.show();
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
+        Connection client = new Connection();
         launch(args);
     }
 
