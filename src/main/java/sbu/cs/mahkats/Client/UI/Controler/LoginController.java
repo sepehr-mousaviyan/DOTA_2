@@ -32,8 +32,10 @@ public class LoginController {
     private Label invalidRespond;
 
     @FXML
+    private Label serverRespond;
+
+    @FXML
     void backAction(ActionEvent event) throws IOException {
-        System.out.println("***************" );
         Parent logParent = FXMLLoader.load(getClass().getResource("/Main.fxml"));
         Stage logStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
@@ -54,13 +56,28 @@ public class LoginController {
             invalidRespond.setText("DON'T USE ! , / , ? , ) , ( , * , & , % IN YOUR INPUT!");
         }
 
-        else if(Connection.checkUserlogIn(userNameInput.getText(),passInput.getText())){
-            //وارد ص منیو می شود
-        }
-         // ************************
+        else if(Connection.checkUserSignIn(userNameInput.getText(),passInput.getText())){
+            if(Connection.receive().equals("ok")){
+                //**********************************
+                //وارد منیو می شود
+            }
 
-      //  else
-      // پبام سرور را در لیبل چاپ میکند
+
+            else {
+                //********************************
+                //اروری که در ریسیو سرور فرستاده را در لیبل چاپ می کند
+                emptyRespond.setText("");
+                invalidRespond.setText("");
+                serverRespond.setText("shrhwwrtbw5jetjetkv");
+
+            }
+        }
+
+        else {
+            emptyRespond.setText("");
+            invalidRespond.setText("");
+            serverRespond.setText("Connecting to server failed. Please try again.");
+        }
     }
 
     private boolean goodInput(String userName, String password){

@@ -2,15 +2,17 @@ package sbu.cs.mahkats.Client.Connection;
 
 import com.google.gson.JsonObject;
 import sbu.cs.mahkats.Api.Api;
+import sbu.cs.mahkats.Api.MassageMaker;
+import sbu.cs.mahkats.Api.UserData;
 import sbu.cs.mahkats.Configuration.Config;
 
-import java.io.IOException;
+import java.io.*;
 import java.net.Socket;
 
 
 public class Connection {
     Config config = Config.getInstance();
-    private Socket socket;
+    private static Socket socket;
     private static String Host = "host";
     private static String PORT = "port";
 
@@ -20,20 +22,70 @@ public class Connection {
         this.socket = new Socket(config.getStringValue(Host
         ),config.getIntValue(PORT));
     }
-
     public void start(){
     }
 
-    public static boolean checkUserlogIn(String userName, String passWord){
-        boolean resault = true;
-
-
-        return resault;
-    }
-    public static boolean checkUserSignUp(String username, String passWord, String email){
+    public static boolean checkUserSignUp(String userName, String passWord, String email){
         boolean resault = false;
 
+        try {
+            UserData user = new UserData(userName,passWord,email);
+            MassageMaker massageMaker = new MassageMaker();
+            JsonObject signinObj = massageMaker.massage("","signin",user);
+            if(send(signinObj.toString())){
+                return true;
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+        }
         return resault;
+    }
+
+    public static boolean checkUserSignIn(String userName, String passWord) {
+        boolean resault = false;
+
+        try {
+            UserData user = new UserData(userName,passWord);
+            MassageMaker massageMaker = new MassageMaker();
+            JsonObject signinObj = massageMaker.massage("","signin",user);
+            if(send(signinObj.toString())){
+                return true;
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return resault;
+
+    }
+    public static boolean send(String data) {
+        boolean resault = false;
+        try {
+            OutputStream outputStream = socket.getOutputStream();
+            DataOutputStream dataOutputStream = new DataOutputStream(outputStream);
+            dataOutputStream.writeUTF(data);
+            dataOutputStream.flush();
+            return true;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return resault;
+    }
+
+    public static String receive() {
+        String data = null;
+
+        try {
+            DataInputStream dataInputStream = new DataInputStream(socket.getInputStream());
+            data = dataInputStream.readUTF();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            UserData userData = new UserData("couldn't receive, please send it again!" );
+            MassageMaker massageMaker = new MassageMaker();
+            JsonObject json = massageMaker.massage("fail", "receive", userData);
+            send(json.toString());
+        }
+        return data;
     }
 
 }

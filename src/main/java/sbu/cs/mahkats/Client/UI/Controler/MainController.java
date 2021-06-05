@@ -45,6 +45,9 @@ public class MainController implements Initializable {
     @FXML
     private Label emptyRespond;
 
+    @FXML
+    private Label serverRespond;
+
     public void loadSplash(){
         try {
             SplashController.isPlayed = true;
@@ -94,13 +97,28 @@ public class MainController implements Initializable {
 
         }
 
-        //***********************************************************
         else if(Connection.checkUserSignUp(userNameInput.getText(),passInput.getText(),emailInput.getText())){
-            //وارد منیو می شود
+            if(Connection.receive().equals("ok")){
+                //**********************************
+                //وارد منیو می شود
+            }
+
+
+            else {
+                //********************************
+                //اروری که در ریسیو سرور فرستاده را در لیبل چاپ می کند
+                emptyRespond.setText("");
+                invalidRespond.setText("");
+                serverRespond.setText("shrhwwrtbw5jetjetkv");
+
+            }
         }
 
-       // else
-        //پیام سرور را در لیبل چاپ میکند
+        else {
+            emptyRespond.setText("");
+            invalidRespond.setText("");
+            serverRespond.setText("connecting to server failed");
+        }
 
     }
 

@@ -96,5 +96,6 @@
             <Blend />
          </effect>
       </Label>
+      <Label fx:id="serverRespond" layoutX="305.0" layoutY="552.0" prefHeight="60.0" prefWidth="416.0" />
    </children>
 </AnchorPane>
