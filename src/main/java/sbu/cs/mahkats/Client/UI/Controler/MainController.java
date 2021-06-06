@@ -19,6 +19,8 @@ import sbu.cs.mahkats.Configuration.Config;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class MainController implements Initializable {
 
@@ -47,6 +49,9 @@ public class MainController implements Initializable {
 
     @FXML
     private Label serverRespond;
+
+    @FXML
+    private Label invalidEmail;
 
     public void loadSplash(){
         try {
@@ -89,12 +94,22 @@ public class MainController implements Initializable {
     void signUpAction(ActionEvent event) {
         if (passInput.getText().isEmpty() || userNameInput.getText().isEmpty() || emailInput.getText().isEmpty()){
             invalidRespond.setText("");
+            serverRespond.setText("");
+            invalidEmail.setText("");
             emptyRespond.setText("PLEASE ENTER ALL FEILDS!");
         }
         if (!goodInput(userNameInput.getText(),passInput.getText(),emailInput.getText())){
             emptyRespond.setText("");
+            serverRespond.setText("");
+            invalidEmail.setText("");
             invalidRespond.setText("DON'T USE ! , / , ? , ) , ( , * , & , % IN YOUR INPUT!");
 
+        }
+        if (!isValidEmailAddress(emailInput.getText())){
+            emptyRespond.setText("");
+            serverRespond.setText("");
+            invalidEmail.setText("");
+            invalidEmail.setText("YOUR EMAILADDRESS IS INVALID!");
         }
 
         else if(Connection.checkUserSignUp(userNameInput.getText(),passInput.getText(),emailInput.getText())){
@@ -109,6 +124,7 @@ public class MainController implements Initializable {
                 //اروری که در ریسیو سرور فرستاده را در لیبل چاپ می کند
                 emptyRespond.setText("");
                 invalidRespond.setText("");
+                invalidEmail.setText("");
                 serverRespond.setText(Connection.receive());
 
             }
@@ -117,7 +133,8 @@ public class MainController implements Initializable {
         else {
             emptyRespond.setText("");
             invalidRespond.setText("");
-            serverRespond.setText("connecting to server failed");
+            invalidEmail.setText("");
+            serverRespond.setText("CONNECTING TO SERVER FAILED");
         }
 
     }
@@ -141,6 +158,14 @@ public class MainController implements Initializable {
                 break;
             }
         return str_check;
+    }
+
+    public static boolean isValidEmailAddress(String email) {
+        final String regex = "^[\\\\w!#$%&’*+/=?`{|}~^-]+(?:\\\\.[\\\\w!#$%&’*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\\\.)+[a-zA-Z]{2,6}$";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(email);
+
+        return matcher.matches();
     }
 
     @FXML
