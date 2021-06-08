@@ -8,7 +8,7 @@ import java.sql.*;
 import java.util.Random;
 
 public class DataBase {
-    private Connection conn = null;
+    private final Connection conn;
     private String SQL_URL = "";
     private String SQL_USERNAME = "";
     private String SQL_PASSWORD = "";
@@ -20,13 +20,14 @@ public class DataBase {
 
     private final static Logger LOGGER = Logger.getLogger(DataBase.class.getName());
 
-    public DataBase(){
+    public DataBase() throws SQLException {
         try {
             parseSqlProperties(this);
             this.conn = DriverManager.getConnection(SQL_URL, SQL_USERNAME, SQL_PASSWORD);
             LOGGER.info("Connected to sql server");
         } catch (SQLException throwables) {
             LOGGER.fatal("Can not connect to database!", throwables);
+            throw throwables;
         }
         this.SQL_TABLE_NAME = "player";
         initiateTable();
@@ -81,7 +82,7 @@ public class DataBase {
             }
         }
 
-        return new Pair<Boolean , String>(Boolean.TRUE , "OK");
+        return new Pair<>(Boolean.TRUE, "OK");
     }
 
     public Pair loginRequest(String usr , String passw) {

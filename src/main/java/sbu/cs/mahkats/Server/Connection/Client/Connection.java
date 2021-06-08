@@ -1,45 +1,56 @@
 package sbu.cs.mahkats.Server.Connection.Client;
 
 import org.apache.log4j.Logger;
+import sbu.cs.mahkats.Configuration.Config;
 
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class Connection implements Runnable {
 
-    private static final long ThreadID = 2;
+    private static final long NUMBER_PLAYER = 2;
     private ServerSocket serverSocket;
+    private Socket socket;
     private ArrayList<Client> clients;
+
     private final static Logger LOGGER = Logger.getLogger(Connection.class.getName());
+    private final static ReentrantLock lock = new ReentrantLock();
 
-    public Connection(ArrayList<Client> clients) {
-        this.clients = clients;
+    public Connection() {
+        this.clients = new ArrayList<>();
+        Config config = Config.getInstance();
+        try {
+            serverSocket = new ServerSocket(config.getIntValue("connection.port"));
+        } catch (IOException e) {
+            LOGGER.fatal("server can not start", e);
+        }
 
-        while (true)
+        int countPlayer = 0;
+        while (countPlayer < NUMBER_PLAYER)
         {
             try {
-                Socket socket = serverSocket.accept();
+                lock.lock();
+                socket = serverSocket.accept();
                 LOGGER.info("a Socket connected to: " + socket.getInetAddress());
             } catch (IOException e) {
                 LOGGER.fatal("a Socket didn't connect", e);
-                e.printStackTrace();
             }
             Thread thread = new Thread(this);
             thread.start();
+            LOGGER.info("player "+ countPlayer +" is connected!");
+            countPlayer++;
         }
     }
 
 
     @Override
     public void run() {
-        try {
-            Socket socket  = serverSocket.accept();
-            Client client = new Client(Thread.currentThread().getId(), socket);
-            clients.add(client);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        Client client = new Client(Thread.currentThread().getId(), socket);
+        clients.add(client);
+        lock.unlock();
+        client.handler();
     }
 }
