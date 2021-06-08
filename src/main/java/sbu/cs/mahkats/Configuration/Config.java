@@ -3,11 +3,11 @@ package sbu.cs.mahkats.Configuration;
 import java.util.ResourceBundle;
 
 public class Config {
-    private static Config config_instance = null;
-    private final ResourceBundle config;
+    protected static Config config_instance = null;
+    protected ResourceBundle config;
 
-    private Config() {
-        config = ResourceBundle.getBundle("config");
+    protected Config() {
+        config = ResourceBundle.getBundle("Config");
     }
 
     public static Config getInstance()

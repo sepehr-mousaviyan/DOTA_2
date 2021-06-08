@@ -23,8 +23,7 @@ public class Connection {
     }
 
     public Connection() throws IOException {
-        this.socket = new Socket(config.getStringValue(Host
-        ),config.getIntValue(PORT));
+        this.socket = new Socket(config.getStringValue(Host),config.getIntValue(PORT));
     }
     public void start(){
     }

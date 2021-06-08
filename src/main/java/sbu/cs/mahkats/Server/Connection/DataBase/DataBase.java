@@ -3,6 +3,7 @@ package sbu.cs.mahkats.Server.Connection.DataBase;
 import org.apache.log4j.Logger;
 import org.javatuples.Pair;
 import sbu.cs.mahkats.Configuration.Config;
+import sbu.cs.mahkats.Configuration.SecurityConfig;
 
 import java.sql.*;
 import java.util.Random;
@@ -139,7 +140,7 @@ public class DataBase {
     }
 
     private static void parseSqlProperties(DataBase db){
-        Config config = Config.getInstance();
+        Config config = SecurityConfig.getInstance();
         db.SQL_USERNAME = config.getStringValue("sql.username");
         db.SQL_PASSWORD = config.getStringValue("sql.password");
         db.SQL_TABLE_NAME = config.getStringValue("sql.table.name");
