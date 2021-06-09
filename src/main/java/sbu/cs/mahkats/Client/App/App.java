@@ -27,7 +27,12 @@ public class App extends Application {
 
     public static void main(String[] args) throws IOException {
         Connection client = new Connection();
-        launch(args);
+        if(client.getStatusConnection()) {
+            launch(args);
+        }
+        else{
+            System.out.println("Faild Connection!");
+        }
     }
 
 

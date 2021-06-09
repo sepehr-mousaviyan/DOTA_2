@@ -58,8 +58,7 @@ public class LoginController {
 
         else if(Connection.checkUserSignIn(userNameInput.getText(),passInput.getText())){
             if(Connection.getCheckStatus()){
-                //**********************************
-                //وارد منیو می شود
+                //TODO: go to menu and list of heroes
             }
 
 

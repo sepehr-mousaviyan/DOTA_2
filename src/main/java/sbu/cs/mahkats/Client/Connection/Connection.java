@@ -12,21 +12,34 @@ import java.net.Socket;
 
 public class Connection {
     private static Boolean checkStatus;
-    Config config = Config.getInstance();
+    private static Boolean statusConnection;
+    private static Config config = Config.getInstance();
     private static Socket socket;
-    private static String Host = "host";
-    private static String PORT = "port";
+    private static String HOST;
+    private static int PORT;
     private static long TOKEN;
+    private static DataInputStream dataInputStream;
+    private static DataOutputStream dataOutputStream;
 
     public static boolean getCheckStatus() {
         return checkStatus;
     }
 
-    public Connection() throws IOException {
-        this.socket = new Socket(config.getStringValue(Host),config.getIntValue(PORT));
+    public Connection() {
+        HOST = config.getStringValue("Host");
+        PORT = config.getIntValue("PORT");
+        try {
+            this.socket = new Socket(HOST, PORT);
+            dataInputStream = new DataInputStream(socket.getInputStream());
+            dataOutputStream = new DataOutputStream(socket.getOutputStream());
+            statusConnection = true;
+        } catch (IOException e) {
+            e.printStackTrace();
+            statusConnection = false;
+        }
     }
-    public void start(){
-    }
+
+    public Boolean getStatusConnection(){return statusConnection;}
 
     public static boolean checkUserSignUp(String userName, String passWord, String email){
         boolean resault = false;
@@ -52,7 +65,7 @@ public class Connection {
             MassageMaker massageMaker = new MassageMaker();
             JsonObject signinObj = massageMaker.massage("OK","signin",user);
             if(send(signinObj.toString())){
-                return true;
+                resault = true;
             }
         } catch (Exception e){
             e.printStackTrace();
@@ -63,11 +76,9 @@ public class Connection {
     public static boolean send(String data) {
         boolean resault = false;
         try {
-            OutputStream outputStream = socket.getOutputStream();
-            DataOutputStream dataOutputStream = new DataOutputStream(outputStream);
             dataOutputStream.writeUTF(data);
             dataOutputStream.flush();
-            return true;
+            resault = true;
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -78,7 +89,6 @@ public class Connection {
         String data = null;
 
         try {
-            DataInputStream dataInputStream = new DataInputStream(socket.getInputStream());
             data = dataInputStream.readUTF();
 
         } catch (IOException e) {
@@ -88,7 +98,7 @@ public class Connection {
             JsonObject json = massageMaker.massage("fail", "receive", userData);
             checkStatus = Parser.getStatus(json);
             if (checkStatus)
-                TOKEN = Long.valueOf(data);
+                 Long.valueOf(data);
             send(json.toString());
         }
         return data;

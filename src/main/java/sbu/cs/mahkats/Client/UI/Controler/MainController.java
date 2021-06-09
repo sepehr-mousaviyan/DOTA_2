@@ -114,14 +114,12 @@ public class MainController implements Initializable {
 
         else if(Connection.checkUserSignUp(userNameInput.getText(),passInput.getText(),emailInput.getText())){
             if(Connection.getCheckStatus()){
-                //**********************************
-                //وارد منیو می شود
+                //Enter menu
             }
 
 
             else {
-                //********************************
-                //اروری که در ریسیو سرور فرستاده را در لیبل چاپ می کند
+                //Print error massage
                 emptyRespond.setText("");
                 invalidRespond.setText("");
                 invalidEmail.setText("");
@@ -139,11 +137,11 @@ public class MainController implements Initializable {
 
     }
 
-    private boolean goodInput(String userName, String password, String Email){
+    private boolean goodInput(String userName, String password, String email){
         boolean userName_check, password_check, email_check;
         userName_check = checkString(userName);
         password_check = checkString(password);
-        email_check = checkString(Email);
+        email_check = checkString(email);
 
         return userName_check && password_check && email_check;
     }
