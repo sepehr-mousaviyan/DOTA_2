@@ -98,6 +98,5 @@
       </Label>
       <Label fx:id="serverRespond" layoutX="305.0" layoutY="552.0" prefHeight="60.0" prefWidth="416.0" />
       <Label fx:id="invalidEmail" layoutX="301.0" layoutY="548.0" prefHeight="69.0" prefWidth="416.0" />
-      <Label fx:id="notSend" layoutX="301.0" layoutY="548.0" prefHeight="69.0" prefWidth="416.0" />
    </children>
 </AnchorPane>
