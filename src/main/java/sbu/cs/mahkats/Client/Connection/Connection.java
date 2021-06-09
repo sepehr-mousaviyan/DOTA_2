@@ -102,7 +102,7 @@ public class Connection {
         return resault;
     }
 
-    public static String receive() {
+    public static String receive() throws IOException {
         String data = null;
         String error = null;
         try {
@@ -118,7 +118,7 @@ public class Connection {
 
 
         } catch (IOException e) {
-            e.printStackTrace();
+            throw e;
         }
         return error;
     }

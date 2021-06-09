@@ -65,15 +65,13 @@ public class LoginController {
             else {
                 emptyRespond.setText("");
                 invalidRespond.setText("");
-                if (Connection.receive() != null)
-                    serverRespond.setText("SIGN IN FAILED!");
+                try {
+                    if (Connection.receive() != null)
+                        serverRespond.setText("SIGN IN FAILED!");
+                } catch (IOException e) {
+                    serverRespond.setText("CONNECTING TO SERVER FAILED");
+                }
             }
-        }
-
-        else {
-            emptyRespond.setText("");
-            invalidRespond.setText("");
-            serverRespond.setText("Connecting to server failed. Please try again.");
         }
     }
 

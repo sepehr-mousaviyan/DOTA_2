@@ -53,6 +53,7 @@ public class MainController implements Initializable {
     @FXML
     private Label invalidEmail;
 
+
     public void loadSplash(){
         try {
             SplashController.isPlayed = true;
@@ -123,17 +124,14 @@ public class MainController implements Initializable {
                 emptyRespond.setText("");
                 invalidRespond.setText("");
                 invalidEmail.setText("");
-                if (Connection.receive() != null)
-                    serverRespond.setText("SIGN IN FAILED!");
+                try {
+                    if (Connection.receive() != null)
+                        serverRespond.setText("SIGN IN FAILED!");
+                } catch (IOException e) {
+                    serverRespond.setText("CONNECTING TO SERVER FAILED");
+                }
 
             }
-        }
-
-        else {
-            emptyRespond.setText("");
-            invalidRespond.setText("");
-            invalidEmail.setText("");
-            serverRespond.setText("CONNECTING TO SERVER FAILED");
         }
 
     }
