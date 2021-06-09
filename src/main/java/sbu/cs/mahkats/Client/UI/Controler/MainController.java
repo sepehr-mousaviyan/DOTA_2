@@ -24,10 +24,11 @@ import java.util.regex.Pattern;
 
 public class MainController implements Initializable {
 
-    Config config = Config.getInstance();
-    private static String USERNAME_LENGTH = "input.limit.userName";
-    private static String PASSWORD_LENGTH = "input.limit.passWord";
-    private static String EMAIL_LENGTH = "input.limit.email";
+    private static Config config = Config.getInstance();
+    private static final int USERNAME_LENGTH = config.getIntValue("input.limit.userName");
+    private static final int PASSWORD_LENGTH = config.getIntValue("input.limit.passWord");
+    private static final int EMAIL_LENGTH = config.getIntValue("input.limit.email");
+    private static final String regex = "^\\S+@\\S+\\.\\S+$";
 
     @FXML
     AnchorPane mainanchor;
@@ -67,7 +68,7 @@ public class MainController implements Initializable {
             fadeIn.setToValue(1);
             fadeIn.setCycleCount(1);
 
-            FadeTransition fadeOut = new FadeTransition(Duration.seconds(5),anch1);
+            FadeTransition fadeOut = new FadeTransition(Duration.seconds(3),anch1);
 
             fadeOut.setFromValue(1);
             fadeOut.setToValue(0);
@@ -99,18 +100,24 @@ public class MainController implements Initializable {
             invalidEmail.setText("");
             emptyRespond.setText("PLEASE ENTER ALL FEILDS!");
         }
-        if (!goodInput(userNameInput.getText(),passInput.getText(),emailInput.getText())){
+        else if (!goodInput(userNameInput.getText(),passInput.getText(),emailInput.getText())){
             emptyRespond.setText("");
             serverRespond.setText("");
             invalidEmail.setText("");
             invalidRespond.setText("DON'T USE ! , / , ? , ) , ( , * , & , % IN YOUR INPUT!");
 
         }
-        if (!isValidEmailAddress(emailInput.getText())){
+        else if (!isValidEmailAddress(emailInput.getText())){
             emptyRespond.setText("");
             serverRespond.setText("");
             invalidEmail.setText("");
             invalidEmail.setText("YOUR EMAILADDRESS IS INVALID!");
+        }
+        else if (!checkLength(userNameInput.getText(),passInput.getText(),emailInput.getText())){
+            emptyRespond.setText("");
+            serverRespond.setText("");
+            invalidEmail.setText("");
+            invalidRespond.setText("YOUR LENGTH OF FIELDS ARE TOO LONG!");
         }
 
         else if(Connection.checkUserSignUp(userNameInput.getText(),passInput.getText(),emailInput.getText())){
@@ -157,11 +164,16 @@ public class MainController implements Initializable {
         return str_check;
     }
 
+    public static boolean checkLength(String userName, String passWord, String email){
+        return (userName.length() <= USERNAME_LENGTH) &&
+                (passWord.length() <= PASSWORD_LENGTH) &&
+                (email.length() <= EMAIL_LENGTH);
+
+    }
+
     public static boolean isValidEmailAddress(String email) {
-        final String regex = "^[\\\\w!#$%&’*+/=?`{|}~^-]+(?:\\\\.[\\\\w!#$%&’*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\\\.)+[a-zA-Z]{2,6}$";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(email);
-
         return matcher.matches();
     }
 

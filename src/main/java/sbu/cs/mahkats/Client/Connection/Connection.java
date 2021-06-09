@@ -1,20 +1,21 @@
 package sbu.cs.mahkats.Client.Connection;
 
 import com.google.gson.JsonObject;
+import org.apache.log4j.Logger;
 import sbu.cs.mahkats.Api.Api;
 import sbu.cs.mahkats.Api.MassageMaker;
 import sbu.cs.mahkats.Api.Parser;
 import sbu.cs.mahkats.Api.UserData;
 import sbu.cs.mahkats.Configuration.Config;
+import sbu.cs.mahkats.Server.Connection.DataBase.DataBase;
 
 import java.io.*;
 import java.net.Socket;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 
 public class Connection {
-    private static Boolean checkStatus;
+    private static Boolean checkStatus = false;
     private static Boolean statusConnection;
     private static Config config = Config.getInstance();
     private static Socket socket;
@@ -23,7 +24,8 @@ public class Connection {
     private static long TOKEN;
     private static DataInputStream dataInputStream;
     private static DataOutputStream dataOutputStream;
-    static Logger logger =  Logger.getLogger(Connection.class.getName());
+
+    private static final Logger logger = Logger.getLogger(Connection.class.getName());
 
     public static boolean getCheckStatus() {
         return checkStatus;
@@ -33,22 +35,17 @@ public class Connection {
         return TOKEN;
     }
 
-    public static void setTOKEN(long TOKEN) {
-        Connection.TOKEN = TOKEN;
-    }
-
     public Connection() {
-        HOST = config.getStringValue("Host");
-        PORT = config.getIntValue("PORT");
+        HOST = config.getStringValue("connection.host");
+        PORT = config.getIntValue("connection.port");
         try {
             this.socket = new Socket(HOST, PORT);
-            logger.log(Level.INFO,"connecting to server in connection class ...");
+            logger.info("connecting to server in connection class ...");
             dataInputStream = new DataInputStream(socket.getInputStream());
             dataOutputStream = new DataOutputStream(socket.getOutputStream());
             statusConnection = true;
         } catch (IOException e) {
-            e.printStackTrace();
-            logger.log(Level.FINER,"connection to server failed in connection class");
+            logger.fatal("connection to server failed in connection class", e);
             statusConnection = false;
         }
     }
@@ -61,19 +58,18 @@ public class Connection {
         try {
             UserData user = new UserData(userName,passWord,email);
             MassageMaker massageMaker = new MassageMaker();
-            JsonObject signinObj = massageMaker.massage("OK","signin",user);
+            JsonObject signinObj = massageMaker.massage("OK","signup",user);
             if(send(signinObj.toString())){
-                logger.log(Level.INFO,"registering a new user was successful ");
+                logger.info("registering a new user was successful ");
                 return true;
             }
         } catch (Exception e){
-            logger.log(Level.FINER,"'email address or username already exist' error in connection class in checkUserSignUp method ");
-            e.printStackTrace();
+            logger.fatal("email address or username already exist", e);
         }
         return resault;
     }
 
-    public static boolean checkUserSignIn(String userName, String passWord) {
+    public static boolean checkUserSignIn(String userName, String passWord) throws IOException {
         boolean resault = false;
 
         try {
@@ -84,20 +80,22 @@ public class Connection {
                 resault = true;
             }
         } catch (Exception e){
-            e.printStackTrace();
-            logger.log(Level.FINER,"'Account not found' error in sign in part in connection class in checkUserSignIn method " );
+            logger.fatal("Account not found", e);
+            throw e;
         }
         return resault;
 
     }
-    public static boolean send(String data) {
+    public static boolean send(String data) throws IOException {
         boolean resault = false;
         try {
             dataOutputStream.writeUTF(data);
             dataOutputStream.flush();
             resault = true;
+            logger.info("massage has been sent");
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.fatal("Can not send massage", e);
+            throw e;
         }
         return resault;
     }
@@ -109,15 +107,14 @@ public class Connection {
             data = dataInputStream.readUTF();
             Api api = new Api();
             JsonObject json = api.toJson(data);
-
-            if(!Parser.getStatus(json).equals("OK"))
+            logger.info("massage has been receive");
+            if(!Parser.getStatus(json))
                 error = Parser.parse(json).getError();
-
             else
                 TOKEN = Parser.parse(json).getToken();
 
-
         } catch (IOException e) {
+            logger.fatal("can not receive massage!", e);
             throw e;
         }
         return error;

@@ -20,16 +20,17 @@ public class Player {
      * @param res response massage
      * @param playerData is the information of player that should be storage
      */
-    public String ResSignup(Pair<Boolean, String> res, PlayerData playerData) {
+    public String ResSignup(Pair res, PlayerData playerData) {
         if (res.getValue0().equals(Boolean.TRUE)) {
+            TOKEN = (long) res.getValue1();
             UserData userData = new UserData(TOKEN);
             MassageMaker massageMaker = new MassageMaker();
-            JsonObject json = massageMaker.massage("ok", "res_signup", userData);
+            JsonObject json = massageMaker.massage("OK", "res_signup", userData);
             this.playerData = playerData;
             LOGGER.info(res.getValue1() + " signed up.");
             return json.toString();
         } else if (res.getValue0().equals(Boolean.FALSE)) {
-            UserData userData = new UserData(res.getValue1());
+            UserData userData = new UserData((String) res.getValue1());
             MassageMaker massageMaker = new MassageMaker();
             JsonObject json = massageMaker.massage("fail", "res_signup", userData);
             LOGGER.info(res.getValue1());
@@ -56,7 +57,7 @@ public class Player {
             TOKEN = (long) res.getValue1();
             UserData userData = new UserData(TOKEN);
             MassageMaker massageMaker = new MassageMaker();
-            JsonObject json = massageMaker.massage("ok", "res_signin", userData);
+            JsonObject json = massageMaker.massage("OK", "res_signin", userData);
             this.playerData = playerData;
             LOGGER.info(res.getValue0() + " signed in. " + "acces TOKEN: " + TOKEN);
             return json.toString();

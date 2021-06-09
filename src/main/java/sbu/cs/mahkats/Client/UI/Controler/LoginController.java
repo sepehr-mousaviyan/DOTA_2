@@ -15,9 +15,9 @@ import sbu.cs.mahkats.Configuration.Config;
 import java.io.IOException;
 
 public class LoginController {
-    Config config = Config.getInstance();
-    private static String USERNAME_LENGTH = "input.limit.userName";
-    private static String PASSWORD_LENGTH = "input.limit.passWord";
+    private static Config config = Config.getInstance();
+    private static final int USERNAME_LENGTH = config.getIntValue("input.limit.userName");
+    private static final int PASSWORD_LENGTH = config.getIntValue("input.limit.passWord");
 
     @FXML
     private TextField userNameInput;
@@ -49,28 +49,40 @@ public class LoginController {
     void loginAction(ActionEvent event) {
         if (passInput.getText().isEmpty() || userNameInput.getText().isEmpty()){
             invalidRespond.setText("");
-            emptyRespond.setText("PLEASE ENTER ALL FEILDS!");
+            emptyRespond.setText("PLEASE ENTER ALL FIELDS!");
         }
-        if (!goodInput(userNameInput.getText(),passInput.getText())){
+        else if (!goodInput(userNameInput.getText(),passInput.getText())){
             emptyRespond.setText("");
             invalidRespond.setText("DON'T USE ! , / , ? , ) , ( , * , & , % IN YOUR INPUT!");
         }
+        else if (!checkLength(userNameInput.getText(),passInput.getText())){
+            emptyRespond.setText("");
+            serverRespond.setText("");
+            invalidRespond.setText("YOUR LENGTH OF FIELDS ARE TOO LONG!");
+        }
 
-        else if(Connection.checkUserSignIn(userNameInput.getText(),passInput.getText())){
-            if(Connection.getCheckStatus()){
-                //TODO: go to menu and list of heroes
-            }
+        else {
+            try {
+                if(Connection.checkUserSignIn(userNameInput.getText(),passInput.getText())){
+                    if(Connection.getCheckStatus()){
+                        //TODO: go to menu and list of heroes
+                    }
 
 
-            else {
-                emptyRespond.setText("");
-                invalidRespond.setText("");
-                try {
-                    if (Connection.receive() != null)
-                        serverRespond.setText("SIGN IN FAILED!");
-                } catch (IOException e) {
-                    serverRespond.setText("CONNECTING TO SERVER FAILED");
+                    else {
+                        emptyRespond.setText("");
+                        invalidRespond.setText("");
+                        try {
+                            if (Connection.receive() != null)
+                                serverRespond.setText("SIGN UP FAILED! Try later");
+                        } catch (IOException e) {
+                            serverRespond.setText("CONNECTING TO SERVER FAILED");
+                        }
+                    }
                 }
+            } catch (IOException e) {
+                serverRespond.setText("SIGN UP FAILED! Try later");
+                e.printStackTrace();
             }
         }
     }
@@ -81,6 +93,11 @@ public class LoginController {
         password_check = checkString(password);
 
         return userName_check && password_check;
+    }
+
+    private boolean checkLength(String userName , String passWord){
+        return (userName.length() <= USERNAME_LENGTH) &&
+                (passWord.length() <= PASSWORD_LENGTH);
     }
 
     private boolean checkString(String str){

@@ -24,6 +24,7 @@ public class Connection implements Runnable {
         Config config = Config.getInstance();
         try {
             serverSocket = new ServerSocket(config.getIntValue("connection.port"));
+            LOGGER.info("Server is started");
         } catch (IOException e) {
             LOGGER.fatal("server can not start", e);
         }
@@ -32,7 +33,6 @@ public class Connection implements Runnable {
         while (countPlayer < NUMBER_PLAYER)
         {
             try {
-                lock.lock();
                 socket = serverSocket.accept();
                 LOGGER.info("a Socket connected to: " + socket.getInetAddress());
             } catch (IOException e) {
@@ -40,7 +40,7 @@ public class Connection implements Runnable {
             }
             Thread thread = new Thread(this);
             thread.start();
-            LOGGER.info("player "+ countPlayer +" is connected!");
+            LOGGER.info("player "+ countPlayer+1 +" is connected!");
             countPlayer++;
         }
     }
@@ -50,7 +50,6 @@ public class Connection implements Runnable {
     public void run() {
         Client client = new Client(Thread.currentThread().getId(), socket);
         clients.add(client);
-        lock.unlock();
         client.handler();
     }
 }

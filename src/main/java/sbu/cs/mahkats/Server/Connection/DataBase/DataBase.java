@@ -70,6 +70,7 @@ public class DataBase {
             ps.setString(1, usr);
             ps.setString(2, passw);
             ps.setString(3 , email);
+            ps.executeUpdate();
             LOGGER.info("add player to database");
         } catch (SQLException throwables) {
             LOGGER.warn("can not sign up this user!", throwables);
@@ -83,7 +84,7 @@ public class DataBase {
             }
         }
 
-        return new Pair<>(Boolean.TRUE, "OK");
+        return new Pair<>(Boolean.TRUE, Math.abs(new Random().nextLong()));
     }
 
     public Pair loginRequest(String usr , String passw) {
@@ -106,7 +107,7 @@ public class DataBase {
             try {
                 if (!rs.next()) break;
                 if(rs.getString(2).equals(passw)) {
-                    result = new Pair<>(Boolean.TRUE, new Random().nextLong());
+                    result = new Pair<>(Boolean.TRUE, Math.abs(new Random().nextLong()));
                 }
                 else{
                     result = new Pair<>(Boolean.FALSE, "password is incorrect!");
@@ -145,8 +146,9 @@ public class DataBase {
         db.SQL_PASSWORD = config.getStringValue("sql.password");
         db.SQL_TABLE_NAME = config.getStringValue("sql.table.name");
         db.SQL_URL = config.getStringValue("sql.url");
-        db.LIMIT_USERNAME = config.getIntValue("input.limit.username");
-        db.LIMIT_PASSWORD = config.getIntValue("input.limit.password");
+        config = Config.getInstance();
+        db.LIMIT_USERNAME = config.getIntValue("input.limit.userName");
+        db.LIMIT_PASSWORD = config.getIntValue("input.limit.passWord");
         db.LIMIT_EMAIL = config.getIntValue("input.limit.email");
 
         LOGGER.info("properties has been gotten");
