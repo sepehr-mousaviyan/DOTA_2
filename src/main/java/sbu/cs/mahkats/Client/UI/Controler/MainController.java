@@ -28,6 +28,7 @@ public class MainController implements Initializable {
     private static String USERNAME_LENGTH = "input.limit.userName";
     private static String PASSWORD_LENGTH = "input.limit.passWord";
     private static String EMAIL_LENGTH = "input.limit.email";
+    private static final String regex = "^\\S+@\\S+\\.\\S+$";
 
     @FXML
     AnchorPane mainanchor;
@@ -67,7 +68,7 @@ public class MainController implements Initializable {
             fadeIn.setToValue(1);
             fadeIn.setCycleCount(1);
 
-            FadeTransition fadeOut = new FadeTransition(Duration.seconds(5),anch1);
+            FadeTransition fadeOut = new FadeTransition(Duration.seconds(3),anch1);
 
             fadeOut.setFromValue(1);
             fadeOut.setToValue(0);
@@ -158,10 +159,8 @@ public class MainController implements Initializable {
     }
 
     public static boolean isValidEmailAddress(String email) {
-        final String regex = "^[\\\\w!#$%&’*+/=?`{|}~^-]+(?:\\\\.[\\\\w!#$%&’*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\\\.)+[a-zA-Z]{2,6}$";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(email);
-
         return matcher.matches();
     }
 

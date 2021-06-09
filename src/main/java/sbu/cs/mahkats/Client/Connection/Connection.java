@@ -14,7 +14,7 @@ import java.util.logging.Logger;
 
 
 public class Connection {
-    private static Boolean checkStatus;
+    private static Boolean checkStatus = false;
     private static Boolean statusConnection;
     private static Config config = Config.getInstance();
     private static Socket socket;
@@ -38,8 +38,8 @@ public class Connection {
     }
 
     public Connection() {
-        HOST = config.getStringValue("Host");
-        PORT = config.getIntValue("PORT");
+        HOST = config.getStringValue("connection.host");
+        PORT = config.getIntValue("connection.port");
         try {
             this.socket = new Socket(HOST, PORT);
             logger.log(Level.INFO,"connecting to server in connection class ...");
@@ -110,7 +110,7 @@ public class Connection {
             Api api = new Api();
             JsonObject json = api.toJson(data);
 
-            if(!Parser.getStatus(json).equals("OK"))
+            if(!Parser.getStatus(json))
                 error = Parser.parse(json).getError();
 
             else
