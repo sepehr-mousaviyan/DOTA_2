@@ -65,8 +65,8 @@ public class LoginController {
             else {
                 emptyRespond.setText("");
                 invalidRespond.setText("");
-                serverRespond.setText(Connection.receive());
-
+                if (Connection.receive() != null)
+                    serverRespond.setText("SIGN IN FAILED!");
             }
         }
 

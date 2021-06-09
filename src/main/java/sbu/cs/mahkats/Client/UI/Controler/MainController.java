@@ -123,7 +123,8 @@ public class MainController implements Initializable {
                 emptyRespond.setText("");
                 invalidRespond.setText("");
                 invalidEmail.setText("");
-                serverRespond.setText(Connection.receive());
+                if (Connection.receive() != null)
+                    serverRespond.setText("SIGN IN FAILED!");
 
             }
         }

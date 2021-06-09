@@ -1,6 +1,7 @@
 package sbu.cs.mahkats.Client.Connection;
 
 import com.google.gson.JsonObject;
+import sbu.cs.mahkats.Api.Api;
 import sbu.cs.mahkats.Api.MassageMaker;
 import sbu.cs.mahkats.Api.Parser;
 import sbu.cs.mahkats.Api.UserData;
@@ -26,6 +27,14 @@ public class Connection {
 
     public static boolean getCheckStatus() {
         return checkStatus;
+    }
+
+    public static long getTOKEN() {
+        return TOKEN;
+    }
+
+    public static void setTOKEN(long TOKEN) {
+        Connection.TOKEN = TOKEN;
     }
 
     public Connection() {
@@ -95,21 +104,23 @@ public class Connection {
 
     public static String receive() {
         String data = null;
-
+        String error = null;
         try {
             data = dataInputStream.readUTF();
+            Api api = new Api();
+            JsonObject json = api.toJson(data);
+
+            if(!Parser.getStatus(json).equals("OK"))
+                error = Parser.parse(json).getError();
+
+            else
+                TOKEN = Parser.parse(json).getToken();
+
 
         } catch (IOException e) {
             e.printStackTrace();
-            UserData userData = new UserData("couldn't receive, please send it again!" );
-            MassageMaker massageMaker = new MassageMaker();
-            JsonObject json = massageMaker.massage("fail", "receive", userData);
-            checkStatus = Parser.getStatus(json);
-            if (checkStatus)
-                 Long.valueOf(data);
-            send(json.toString());
         }
-        return data;
+        return error;
     }
 
 }
