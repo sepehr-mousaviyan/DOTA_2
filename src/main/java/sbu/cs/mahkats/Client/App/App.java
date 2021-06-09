@@ -10,8 +10,12 @@ import sbu.cs.mahkats.Configuration.Config;
 import sbu.cs.mahkats.Configuration.InterfaceConfig;
 
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class App extends Application {
+
+    static Logger logger =  Logger.getLogger(App.class.getName());
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -31,7 +35,7 @@ public class App extends Application {
             launch(args);
         }
         else{
-            System.out.println("Faild Connection!");
+            logger.log(Level.FINER,"connection to server failed in App class in main method");
         }
     }
 
