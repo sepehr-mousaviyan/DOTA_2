@@ -1,33 +1,56 @@
 package sbu.cs.mahkats.Client.Connection;
 
 import com.google.gson.JsonObject;
+import org.apache.log4j.Logger;
+import sbu.cs.mahkats.Api.Api;
 import sbu.cs.mahkats.Api.MassageMaker;
 import sbu.cs.mahkats.Api.Parser;
 import sbu.cs.mahkats.Api.UserData;
 import sbu.cs.mahkats.Configuration.Config;
+import sbu.cs.mahkats.Server.Connection.DataBase.DataBase;
 
 import java.io.*;
 import java.net.Socket;
+import java.util.logging.Level;
 
 
 public class Connection {
-    private static Boolean checkStatus;
-    Config config = Config.getInstance();
+    private static Boolean checkStatus = false;
+    private static Boolean statusConnection;
+    private static Config config = Config.getInstance();
     private static Socket socket;
-    private static String Host = "host";
-    private static String PORT = "port";
+    private static String HOST;
+    private static int PORT;
     private static long TOKEN;
+    private static DataInputStream dataInputStream;
+    private static DataOutputStream dataOutputStream;
+
+    private static final Logger logger = Logger.getLogger(Connection.class.getName());
 
     public static boolean getCheckStatus() {
         return checkStatus;
     }
 
-    public Connection() throws IOException {
-        this.socket = new Socket(config.getStringValue(Host
-        ),config.getIntValue(PORT));
+    public static long getTOKEN() {
+        return TOKEN;
     }
-    public void start(){
+
+    public Connection() {
+        HOST = config.getStringValue("connection.host");
+        PORT = config.getIntValue("connection.port");
+        try {
+            this.socket = new Socket(HOST, PORT);
+            logger.info("connecting to server in connection class ...");
+            dataInputStream = new DataInputStream(socket.getInputStream());
+            dataOutputStream = new DataOutputStream(socket.getOutputStream());
+            statusConnection = true;
+        } catch (IOException e) {
+            logger.fatal("connection to server failed in connection class", e);
+            statusConnection = false;
+        }
     }
+
+    public Boolean getStatusConnection(){return statusConnection;}
 
     public static boolean checkUserSignUp(String userName, String passWord, String email){
         boolean resault = false;
@@ -35,17 +58,18 @@ public class Connection {
         try {
             UserData user = new UserData(userName,passWord,email);
             MassageMaker massageMaker = new MassageMaker();
-            JsonObject signinObj = massageMaker.massage("OK","signin",user);
+            JsonObject signinObj = massageMaker.massage("OK","signup",user);
             if(send(signinObj.toString())){
+                logger.info("registering a new user was successful ");
                 return true;
             }
         } catch (Exception e){
-            e.printStackTrace();
+            logger.fatal("email address or username already exist", e);
         }
         return resault;
     }
 
-    public static boolean checkUserSignIn(String userName, String passWord) {
+    public static boolean checkUserSignIn(String userName, String passWord) throws IOException {
         boolean resault = false;
 
         try {
@@ -53,46 +77,47 @@ public class Connection {
             MassageMaker massageMaker = new MassageMaker();
             JsonObject signinObj = massageMaker.massage("OK","signin",user);
             if(send(signinObj.toString())){
-                return true;
+                resault = true;
             }
         } catch (Exception e){
-            e.printStackTrace();
+            logger.fatal("Account not found", e);
+            throw e;
         }
         return resault;
 
     }
-    public static boolean send(String data) {
+    public static boolean send(String data) throws IOException {
         boolean resault = false;
         try {
-            OutputStream outputStream = socket.getOutputStream();
-            DataOutputStream dataOutputStream = new DataOutputStream(outputStream);
             dataOutputStream.writeUTF(data);
             dataOutputStream.flush();
-            return true;
+            resault = true;
+            logger.info("massage has been sent");
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.fatal("Can not send massage", e);
+            throw e;
         }
         return resault;
     }
 
-    public static String receive() {
+    public static String receive() throws IOException {
         String data = null;
-
+        String error = null;
         try {
-            DataInputStream dataInputStream = new DataInputStream(socket.getInputStream());
             data = dataInputStream.readUTF();
+            Api api = new Api();
+            JsonObject json = api.toJson(data);
+            logger.info("massage has been receive");
+            if(!Parser.getStatus(json))
+                error = Parser.parse(json).getError();
+            else
+                TOKEN = Parser.parse(json).getToken();
 
         } catch (IOException e) {
-            e.printStackTrace();
-            UserData userData = new UserData("couldn't receive, please send it again!" );
-            MassageMaker massageMaker = new MassageMaker();
-            JsonObject json = massageMaker.massage("fail", "receive", userData);
-            checkStatus = Parser.getStatus(json);
-            if (checkStatus)
-                TOKEN = Long.valueOf(data);
-            send(json.toString());
+            logger.fatal("can not receive massage!", e);
+            throw e;
         }
-        return data;
+        return error;
     }
 
 }

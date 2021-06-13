@@ -1,0 +1,4 @@
+sql.username        = #Enter your sql username
+sql.password        = #Enter your sql password
+sql.table.name      = player
+sql.url             = jdbc:mysql://localhost:3306/Dota2
