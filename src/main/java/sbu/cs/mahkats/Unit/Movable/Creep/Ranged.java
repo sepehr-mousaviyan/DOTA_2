@@ -4,7 +4,8 @@ import sbu.cs.mahkats.Configuration.Config;
 import sbu.cs.mahkats.Configuration.Units.CreepConfig;
 
 public class Ranged extends Creep{
-    public Ranged(int Location_x, int Location_y) {
+    public Ranged(int Location_x, int Location_y, String teamName) {
+        super(teamName);
         Config creepConfig = CreepConfig.getInstance();
         damage = creepConfig.getIntValue("creep.ranged.damage");
         hp = creepConfig.getIntValue("creep.ranged.hp");

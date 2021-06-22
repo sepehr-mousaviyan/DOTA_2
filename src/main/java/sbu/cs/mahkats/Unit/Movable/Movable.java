@@ -7,13 +7,18 @@ import sbu.cs.mahkats.Unit.Unit;
 
 public abstract class Movable extends Unit {
     int level;
-    protected  int experience;
+    protected int experience;
     int mana;
     int mana_regeneration;
     Ability ability1;
     Ability ability2;
     Ability ability3;
     Ability ability4;
+
+    public Movable(String teamName) {
+        super(teamName);
+    }
+
     //TODO move
     public void move(int Location_x, int Location_y, String lane) {
         this.Location_x = Location_x;

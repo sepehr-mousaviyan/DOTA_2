@@ -91,7 +91,7 @@ public class Client {
                 case "signup":
                     username = Parser.parseUserData(json).getUsername();
                     password = Parser.parseUserData(json).getPassword();
-                    String email    = Parser.parseUserData(json).getEmail();
+                    String email = Parser.parseUserData(json).getEmail();
                     res = dataBase.signupRequest(username, password, email);
                     send(player.ResSignup(res, new PlayerData(username, password)));
                     break;

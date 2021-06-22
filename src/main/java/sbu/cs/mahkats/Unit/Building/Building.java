@@ -5,6 +5,10 @@ import sbu.cs.mahkats.Api.Api;
 import sbu.cs.mahkats.Unit.Unit;
 
 public  abstract class Building extends Unit {
+    public Building(String teamName) {
+        super(teamName);
+    }
+
     public String toString() {
         return new Api().toJson(new Pair<>("hp", hp),
                 new Pair<>("hp_regeneration", hp_regeneration),

@@ -4,7 +4,8 @@ import sbu.cs.mahkats.Configuration.Config;
 import sbu.cs.mahkats.Configuration.Units.CreepConfig;
 
 public class Melee extends Creep {
-    public Melee(int Location_x, int Location_y) {
+    public Melee(int Location_x, int Location_y, String teamName) {
+        super(teamName);
         Config creepConfig = CreepConfig.getInstance();
         damage = creepConfig.getIntValue("creep.melee.damage");
         hp = creepConfig.getIntValue("creep.melee.hp");
