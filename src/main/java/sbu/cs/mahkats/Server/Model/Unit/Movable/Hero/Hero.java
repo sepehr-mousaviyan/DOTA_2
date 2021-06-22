@@ -1,6 +1,6 @@
 package sbu.cs.mahkats.Server.Model.Unit.Movable.Hero;
 
-public class Hero {
+public class Hero{
     int level;
     int experience;
     int mana;

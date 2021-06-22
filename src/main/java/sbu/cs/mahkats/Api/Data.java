@@ -1,4 +1,4 @@
 package sbu.cs.mahkats.Api;
 
-public class Data {
+public abstract class Data {
 }
