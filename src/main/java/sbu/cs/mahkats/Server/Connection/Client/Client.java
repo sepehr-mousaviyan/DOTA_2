@@ -89,16 +89,16 @@ public class Client {
 
             switch (Parser.getAction(json)){
                 case "signup":
-                    username = Parser.parse(json).getUsername();
-                    password = Parser.parse(json).getPassword();
-                    String email    = Parser.parse(json).getEmail();
+                    username = Parser.parseUserData(json).getUsername();
+                    password = Parser.parseUserData(json).getPassword();
+                    String email    = Parser.parseUserData(json).getEmail();
                     res = dataBase.signupRequest(username, password, email);
                     send(player.ResSignup(res, new PlayerData(username, password)));
                     break;
 
                 case "signin":
-                    username = Parser.parse(json).getUsername();
-                    password = Parser.parse(json).getPassword();
+                    username = Parser.parseUserData(json).getUsername();
+                    password = Parser.parseUserData(json).getPassword();
                     res = dataBase.loginRequest(username, password);
                     send(player.ResSignin(res, new PlayerData(username, password)));
                     break;

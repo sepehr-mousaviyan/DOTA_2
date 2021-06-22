@@ -4,7 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import org.javatuples.Pair;
 
-public class Api {
+public final class Api {
 
     public JsonObject toJson(Pair... args) {
         JsonObject json = new JsonObject();

@@ -19,4 +19,10 @@ public class MassageMaker{
 
         return new Api().toJson(statusProperty, actionProperty, contentProperty);
     }
+
+    public JsonObject massage(String status, String action, GamePlayData gamePlayData){
+        return new Api().toJson(new Pair<>("status" , status),
+                new Pair<>("action" , action),
+                new Pair<>("content", gamePlayData.makeJson()));
+    }
 }

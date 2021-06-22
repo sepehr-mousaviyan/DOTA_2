@@ -12,10 +12,18 @@ public class Parser{
         return new Gson().fromJson(json , JsonData.class).getAction();
     }
 
-    public static UserData parse(JsonObject json) {
+
+    public static UserData parseUserData(JsonObject json) {
         Gson gson = new Gson();
         JsonData userData = gson.fromJson(json , JsonData.class);
         String content = userData.getContent().toString();
         return gson.fromJson(new Api().toJson(content), UserData.class);
+    }
+
+    public static GamePlayData parseGamePlayData(JsonObject json) {
+        Gson gson = new Gson();
+        JsonData gamePlayData = gson.fromJson(json , JsonData.class);
+        String content = gamePlayData.getContent().toString();
+        return gson.fromJson(new Api().toJson(content), GamePlayData.class);
     }
 }

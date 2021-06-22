@@ -25,5 +25,5 @@ public interface Unit {
 //        hp  = hp  - (damageDealt - armor);
 //    }
 
-    
+    public String toString();
 }

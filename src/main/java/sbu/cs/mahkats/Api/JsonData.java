@@ -1,6 +1,6 @@
 package sbu.cs.mahkats.Api;
 
-public class JsonData<T>{
+public class JsonData<T> extends Data{
     String status;
     String action;
     private T content;

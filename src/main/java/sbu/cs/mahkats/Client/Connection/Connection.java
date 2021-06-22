@@ -7,11 +7,9 @@ import sbu.cs.mahkats.Api.MassageMaker;
 import sbu.cs.mahkats.Api.Parser;
 import sbu.cs.mahkats.Api.UserData;
 import sbu.cs.mahkats.Configuration.Config;
-import sbu.cs.mahkats.Server.Connection.DataBase.DataBase;
 
 import java.io.*;
 import java.net.Socket;
-import java.util.logging.Level;
 
 
 public class Connection {
@@ -109,9 +107,9 @@ public class Connection {
             JsonObject json = api.toJson(data);
             logger.info("massage has been receive");
             if(!Parser.getStatus(json))
-                error = Parser.parse(json).getError();
+                error = Parser.parseUserData(json).getError();
             else
-                TOKEN = Parser.parse(json).getToken();
+                TOKEN = Parser.parseUserData(json).getToken();
 
         } catch (IOException e) {
             logger.fatal("can not receive massage!", e);
