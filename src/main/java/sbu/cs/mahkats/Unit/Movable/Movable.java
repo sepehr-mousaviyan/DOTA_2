@@ -1,12 +1,30 @@
-package sbu.cs.mahkats.Server.Model.Unit.Movable;
+package sbu.cs.mahkats.Unit.Movable;
 
 import org.javatuples.Pair;
 import sbu.cs.mahkats.Api.Api;
-import sbu.cs.mahkats.Server.Model.Unit.Unit;
+import sbu.cs.mahkats.Unit.Movable.Hero.Ability;
+import sbu.cs.mahkats.Unit.Unit;
 
-public abstract class Movable implements Unit {
+public abstract class Movable extends Unit {
+    int level;
+    protected  int experience;
+    int mana;
+    int mana_regeneration;
+    Ability ability1;
+    Ability ability2;
+    Ability ability3;
+    Ability ability4;
     //TODO move
+    public void move(int Location_x, int Location_y, String lane) {
+        this.Location_x = Location_x;
+        this.Location_y = Location_y;
 
+
+        switch (lane) {
+            case "TOP":
+
+        }
+    }
 
     @Override
     public String toString() {

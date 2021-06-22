@@ -1,10 +1,10 @@
-package sbu.cs.mahkats.Server.Model.Unit.Building;
+package sbu.cs.mahkats.Unit.Building;
 
 import org.javatuples.Pair;
 import sbu.cs.mahkats.Api.Api;
-import sbu.cs.mahkats.Server.Model.Unit.Unit;
+import sbu.cs.mahkats.Unit.Unit;
 
-public  abstract class Building implements Unit {
+public  abstract class Building extends Unit {
     public String toString() {
         return new Api().toJson(new Pair<>("hp", hp),
                 new Pair<>("hp_regeneration", hp_regeneration),
