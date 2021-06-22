@@ -4,9 +4,14 @@ import sbu.cs.mahkats.Unit.Movable.Movable;
 
 public class Creep extends Movable {
 
-
-    public Creep(String teamName) {
+    String lane;
+    public Creep(String lane, String teamName) {
         super(teamName);
+        this.lane = lane;
+    }
+
+    public String getLane() {
+        return lane;
     }
 }
 

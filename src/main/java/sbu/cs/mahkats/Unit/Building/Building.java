@@ -4,10 +4,22 @@ import org.javatuples.Pair;
 import sbu.cs.mahkats.Api.Api;
 import sbu.cs.mahkats.Unit.Unit;
 
-public  abstract class Building extends Unit {
+public abstract class Building extends Unit {
+    protected String lane;
+
+    public Building(String teamName, String lane) {
+        super(teamName);
+        this.lane = lane;
+    }
+
     public Building(String teamName) {
         super(teamName);
     }
+
+    public String getLane(){
+        return lane;
+    }
+
 
     public String toString() {
         return new Api().toJson(new Pair<>("hp", hp),

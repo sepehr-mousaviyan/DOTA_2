@@ -9,13 +9,19 @@ public abstract class Unit {
     protected double armor = 0;
     protected double range = 0;
     protected String teamName = "";
+    protected Boolean isAttacking = false;
+    protected Unit defender = NULL;
+    
+    protected int Location_x = 0;
+    protected int Location_y = 0;
+
     public Unit(String teamName) {
         this.teamName = teamName;
     }
 
-    protected int Location_x = 0;
-    protected int Location_y = 0;
-
+    public String getTeamName(){
+        return teamName;
+    }
 
     public void Hp_regenerate(){
         hp  = hp  + hp_regeneration;
@@ -26,4 +32,29 @@ public abstract class Unit {
         hp = hp - (damage - armor);
     }
 
+    public int getLocation_x() {
+        return Location_x;
+    }
+
+    public int getLocation_y() {        
+        return Location_y;
+    }
+
+    public int getRange() {
+        return range;
+    }
+
+    public void setDefender(Unit defender){
+        this.defender = defender;
+    }
+
+    public void setStatusAttacker(boolean isTrue){
+        this.isAttacker = isTrue;
+    }
+
+    public boolean canHit(Unit defender) {
+        return false;
+        //if(Location_x - range > defender.getLocation_x() && Location_x + range < defender.getLocation_x()
+        //&& Location_x - range > defender.getLocation_x() && Location_x + range < defender.getLocation_x())
+    }
 }
