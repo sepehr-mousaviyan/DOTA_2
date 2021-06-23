@@ -1,6 +1,7 @@
 package sbu.cs.mahkats.Unit.Building.Ancient;
 
 import sbu.cs.mahkats.Configuration.Config;
+import sbu.cs.mahkats.Configuration.InterfaceConfig;
 import sbu.cs.mahkats.Configuration.Units.BuildingConfig;
 import sbu.cs.mahkats.Unit.Building.Building;
 
@@ -14,7 +15,7 @@ public class Ancient extends Building {
         
         Location_x = config.getIntValue("ancient.location_x");
         Location_y = config.getIntValue("ancient.location_y");
-        if(teamName.equals("Red")){
+        if (teamName.equals("RED")){
             config = InterfaceConfig.getInstance();
             Location_x = config.getIntValue("map.width") - Location_x;
             Location_y = config.getIntValue("map.heigth") - Location_y;

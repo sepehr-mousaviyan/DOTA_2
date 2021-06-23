@@ -8,6 +8,7 @@ public abstract class Unit {
     protected double damage = 0;
     protected double armor = 0;
     protected double range = 0;
+    protected double experience;
     protected String teamName = "";
     protected Boolean isAttacking = false;
     protected Unit defender = null;

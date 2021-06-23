@@ -10,7 +10,7 @@ import sbu.cs.mahkats.Unit.Unit;
 
 public abstract class Movable extends Unit {
     int level;
-    protected int experience;
+
     int mana;
     int mana_regeneration;
     Ability ability1;
