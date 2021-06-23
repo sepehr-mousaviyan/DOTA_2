@@ -110,7 +110,7 @@ public class MainController implements Initializable {
         else if (!isValidEmailAddress(emailInput.getText())){
             emptyRespond.setText("");
             serverRespond.setText("");
-            invalidEmail.setText("");
+            invalidRespond.setText("");
             invalidEmail.setText("YOUR EMAILADDRESS IS INVALID!");
         }
         else if (!checkLength(userNameInput.getText(),passInput.getText(),emailInput.getText())){
@@ -122,7 +122,21 @@ public class MainController implements Initializable {
 
         else if(Connection.checkUserSignUp(userNameInput.getText(),passInput.getText(),emailInput.getText())){
             if(Connection.getCheckStatus()){
-                //Enter menu
+                //TODO: go to menu and list of heroes
+                //for now go to map screen
+                try {
+                    Parent logParent = null;
+                    logParent = FXMLLoader.load(getClass().getResource("/Map.fxml"));
+                    Stage logStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+                    Scene logScene = new Scene(logParent);
+
+                    logStage.setScene(logScene);
+                    logStage.show();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
             }
 
 
