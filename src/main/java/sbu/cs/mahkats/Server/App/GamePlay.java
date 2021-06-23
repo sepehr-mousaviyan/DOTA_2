@@ -27,8 +27,8 @@ public class GamePlay {
     private static int MAP_WIDTH;  //game map width
     private static int LANE_WIDTH; //width of the lanes ()
     
-    private unitList GreenUnits; // all the red units objects 
-    private unitList RedUnits;  // all the green units objects
+    private final unitList GreenUnits; // all the red units objects
+    private final unitList RedUnits;  // all the green units objects
 
     private static int turn = 0;
 
@@ -203,7 +203,7 @@ public class GamePlay {
     }
 
     /**
-     * 
+     * this function spawn a group of creep from a random barracks
      */
     public void spawnCreep(){
         String greenLane  = whichLane((int) (Math.random() * GreenUnits.getTowers().size()) + 1);
@@ -223,25 +223,25 @@ public class GamePlay {
                                         RedUnits.getRangedBarrack(redLane).getLocation_y(),
                                         greenLane, "RED"));
             }
-        GreenUnits.add(greenRangedCreep);
-        GreenUnit.getRangedBarrack(greenLane).addCreep(greenRangedCreep);
-        RedUnits.add(redRangedCreep);
-        RedUnits.getRangedBarrack(redLane).addCreep(greenRangedCreep);
+        GreenUnits.addCreeps(new ArrayList<>(greenRangedCreep));
+        GreenUnits.getRangedBarrack(greenLane).addCreep(greenRangedCreep);
+        RedUnits.addCreeps(new ArrayList<>(redRangedCreep));
+        RedUnits.getRangedBarrack(redLane).addCreep(redRangedCreep);
 
         for (int i = 0; i < MELEE_CREEP_NUMBERS; i++) {
-            greenMeleeCreep.add(new MeleeCreep(GreenUnits.getMeleedBarrack(greenLane).getLocation_x(),
-                                        GreenUnits.getMeleedBarrack(greenLane).getLocation_y(),
+            greenMeleeCreep.add(new MeleeCreep(GreenUnits.getMeleeBarracks(greenLane).getLocation_x(),
+                                        GreenUnits.getMeleeBarracks(greenLane).getLocation_y(),
                                         greenLane, "GREEN")); 
 
-            redMeleeCreep.add(new MeleeCreep(RedUnits.getMeleedBarrack(redLane).getLocation_x(),
-                                        RedUnits.getMeleedBarrack(redLane).getLocation_y(),
+            redMeleeCreep.add(new MeleeCreep(RedUnits.getMeleeBarracks(redLane).getLocation_x(),
+                                        RedUnits.getMeleeBarracks(redLane).getLocation_y(),
                                         greenLane, "RED"));
-            RedUnits.add(redMeleeCreep);
+            RedUnits.addCreeps(new ArrayList<>(redMeleeCreep));
         }
-        GreenUnits.add(greenMeleeCreep);
-        GreenUnits.getRangedBarrack(greenLane).addCreep(greenMeleeCreep);
-        RedUnits.add(redMeleeCreep);
-        RedUnits.getRangedBarrack(redLane).addCreep(greenMeleeCreep);
+        GreenUnits.addCreeps(new ArrayList<>(greenMeleeCreep));
+        GreenUnits.getMeleeBarracks(greenLane).addCreep(greenMeleeCreep);
+        RedUnits.addCreeps(new ArrayList<>(redMeleeCreep));
+        RedUnits.getMeleeBarracks(redLane).addCreep(redMeleeCreep);
 
         CreepRunnable greenCreepRunnable = new CreepRunnable(GreenUnits.getCreeps());
         new Thread(greenCreepRunnable).start();

@@ -4,14 +4,10 @@ import sbu.cs.mahkats.Unit.Building.Ancient.Ancient;
 import sbu.cs.mahkats.Unit.Building.Barrack.Barrack;
 import sbu.cs.mahkats.Unit.Building.Barrack.RangedBarrack;
 import sbu.cs.mahkats.Unit.Building.Barrack.MeleeBarrack;
-import sbu.cs.mahkats.Unit.Building.Building;
 import sbu.cs.mahkats.Unit.Building.Tower.Tower;
 import sbu.cs.mahkats.Unit.Movable.Creep.Creep;
 import sbu.cs.mahkats.Unit.Movable.Creep.RangedCreep;
 import sbu.cs.mahkats.Unit.Movable.Hero.Hero;
-import sbu.cs.mahkats.Unit.Movable.Movable;
-import sbu.cs.mahkats.Unit.Unit;
-
 import java.util.ArrayList;
 
 public class unitList {
@@ -70,9 +66,21 @@ public class unitList {
         towers.add(tower);
     }
 
-    public void add(ArrayList<Creep> creeps) {
+    public void addCreeps(ArrayList<Creep> creeps) {
         for(Creep c : creeps){
-            add(c);
+            creeps.add(c);
+        }
+    }
+
+    public void addMeleeBarracks(ArrayList<MeleeBarrack> barracks) {
+        for(MeleeBarrack b : barracks){
+            meleeBarracks.add(b);
+        }
+    }
+
+    public void addRangedBarracks(ArrayList<RangedBarrack> barracks) {
+        for(RangedBarrack b : barracks){
+            rangedBarracks.add(b);
         }
     }
     
@@ -107,8 +115,8 @@ public class unitList {
     }
 
 
-    public Barrack getRangedBarrack(String lane) {
-        for(Barrack rangedB : rangedBarracks){
+    public RangedBarrack getRangedBarrack(String lane) {
+        for(RangedBarrack rangedB : rangedBarracks){
             if(rangedB.getLane().equals(lane)){
                 return rangedB;
             }
@@ -122,6 +130,14 @@ public class unitList {
                 return meleeB;
             }
         }
+        return null;
+    }
+
+    public ArrayList<Barrack> getBarracks() {
+        ArrayList<Barrack> barracks = new ArrayList<>();
+        barracks.addAll(meleeBarracks);
+        barracks.addAll(rangedBarracks);
+        return barracks;
     }
 
     public Ancient getAncient(){

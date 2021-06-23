@@ -2,6 +2,9 @@ package sbu.cs.mahkats.Unit.Building.Barrack;
 
 import sbu.cs.mahkats.Configuration.Config;
 import sbu.cs.mahkats.Configuration.Units.BuildingConfig;
+import sbu.cs.mahkats.Unit.Movable.Creep.RangedCreep;
+
+import java.util.ArrayList;
 
 public class RangedBarrack extends Barrack {
     private ArrayList <RangedCreep> rangedCreeps;
@@ -42,7 +45,7 @@ public class RangedBarrack extends Barrack {
             }
         }
     }
-    public void addCreep(RangedCreep rangedCreep) {
-        rangedCreeps.add(rangedCreep);
+    public void addCreep(ArrayList<RangedCreep> rangedCreep) {
+        this.rangedCreeps.addAll(rangedCreep);
     }
 }
