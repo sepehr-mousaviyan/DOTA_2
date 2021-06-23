@@ -15,11 +15,11 @@ public abstract class Building extends Unit {
     public Building(String teamName) {
         super(teamName);
     }
-
+    
     public String getLane(){
         return lane;
     }
-
+    
 
     public String toString() {
         return new Api().toJson(new Pair<>("hp", hp),

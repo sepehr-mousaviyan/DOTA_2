@@ -20,14 +20,21 @@ public abstract class Movable extends Unit {
     }
 
     //TODO move
-    public void move(int Location_x, int Location_y, String lane) {
+    public void move(int Location_x, int Location_y) {
         this.Location_x = Location_x;
         this.Location_y = Location_y;
+        
+    }
 
-
+    public void move(String lane){
         switch (lane) {
-            case "TOP":
-
+            case "BOTTOM" :
+                
+                break;
+            case "MIDDLE" :
+                break;
+            case "TOP" :
+                break;
         }
     }
 

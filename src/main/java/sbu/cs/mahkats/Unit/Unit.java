@@ -10,7 +10,7 @@ public abstract class Unit {
     protected double range = 0;
     protected String teamName = "";
     protected Boolean isAttacking = false;
-    protected Unit defender = NULL;
+    protected Unit defender = null;
     
     protected int Location_x = 0;
     protected int Location_y = 0;
@@ -40,21 +40,49 @@ public abstract class Unit {
         return Location_y;
     }
 
-    public int getRange() {
+    public double getRange() {
         return range;
+    }
+
+    public double getDamage() {
+        return damage;
     }
 
     public void setDefender(Unit defender){
         this.defender = defender;
     }
 
-    public void setStatusAttacker(boolean isTrue){
-        this.isAttacker = isTrue;
+    public Unit getDefender(){
+        return defender;
     }
 
+    public void setStatusAttacker(boolean isTrue){
+        this.isAttacking = isTrue;
+    }
+
+    public boolean getStatusAttacker(){
+        return isTrue;
+    }
+
+
     public boolean canHit(Unit defender) {
-        return false;
-        //if(Location_x - range > defender.getLocation_x() && Location_x + range < defender.getLocation_x()
-        //&& Location_x - range > defender.getLocation_x() && Location_x + range < defender.getLocation_x())
+        if(range ==1) {
+            for(int i = Location_x - 1 ; i <= Location_x + 1 ; i++){
+                for(int j = Location_y - 1 ; j <= Location_y + 1 ; j++){
+                    if(defender.getLocation_x() == i && defender.getLocation_y() == j){
+                        isAttacking = true;
+                        return isAttacking;
+                    }
+                }
+            }
+        }
+        if(range == 2 || range == 3){
+            if (Math.abs(defender.getLocation_x() - Location_x) + Math.abs(defender.getLocation_y() - Location_y) <= range) {
+                isAttacking = true;
+                return true;
+            }
+        }
+        isAttacking = false;
+        return isAttacking;
     }
 }

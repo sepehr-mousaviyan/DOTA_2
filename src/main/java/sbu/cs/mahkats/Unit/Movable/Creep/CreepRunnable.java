@@ -11,17 +11,20 @@ public class CreepRunnable implements Runnable {
     }
 
     private void handler() {
-       /* if (opponent != null) {
-            opponent().damage(creep.getAttack());
-            creep.attack();
+        for(Creep c : creeps){
+            if (c.getStatusAttacker()) {
+                //TODO: message to client for attack
+                c.getDefender().takeDamage(c.getDamage());
+            }
+            else {
+                creep.move();
         }
-        else {
-            creep.move();
-        }*/
+        
     }
 
     @Override
     public void run(){
+
         int lastTurn = GamePlay.getTurn();
         while(true) {
             if (GamePlay.getTurn() - lastTurn == 1) {
@@ -29,6 +32,7 @@ public class CreepRunnable implements Runnable {
                 lastTurn = GamePlay.getTurn();
             }
         }
+    
     }
 }
 

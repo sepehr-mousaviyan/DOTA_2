@@ -41,6 +41,12 @@ public class unitList {
     public void add(Tower tower) {
         towers.add(tower);
     }
+
+    public void add(ArrayList<Creep> creeps) {
+        for(Creep c : creeps){
+            add(c);
+        }
+    }
     
     public Tower getTower(String lane) {
         for(Tower t : towers){

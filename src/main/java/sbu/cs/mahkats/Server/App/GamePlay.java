@@ -18,7 +18,7 @@ public class GamePlay {
 
 
     private final int REFRESH_RATE = 1000;
-    private final int CREEP_GENERATE_TIME = 60000;
+    private final int CREEP_GENERATE_TIME = 60;
     
     private final int RANGED_CREEP_NUMBERS = 1;
     private final int MELEE_CREEP_NUMBERS = 3;
@@ -46,34 +46,21 @@ public class GamePlay {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-        });
+        }).start();
         
         
-        int lastTurn = turn;
+        int lastTurnCreepSpawn = turn;
+        new Thread(()->{
+            if (turn - lastTurnCreepSpawn == 60) {
+                spawnCreep();
+                lastTurnCreepSpawn = turn;
+            }
+        }).start();
         while(true) {
             if (turn - lastTurn == 1) {
                 checkMap();
                 lastTurn = turn;
-                String greenLane  = whichLane((int) (Math.random() * GreenUnits.getTowers().size()) + 1);
-                String redLane  = whichLane((int) (Math.random() * RedUnits.getTowers().size()) + 1);
-               
-                for (int i = 0; i < RANGED_CREEP_NUMBERS; i++) {
-                    GreenUnits.add(new Ranged(GreenUnits.getBarrack(greenLane).getLocation_x(),
-                                                GreenUnits.getBarrack(greenLane).getLocation_y(),
-                                                greenLane, "GREEN"));
-
-                    RedUnits.add(new Ranged(RedUnits.getBarrack(redLane).getLocation_x(),
-                                                RedUnits.getBarrack(redLane).getLocation_y(),
-                                                greenLane, "RED"));
-                }
-                for (int i = 0; i < MELEE_CREEP_NUMBERS; i++) {
-                    GreenUnits.add(new Melee(GreenUnits.getBarrack(greenLane).getLocation_x(),
-                                                GreenUnits.getBarrack(greenLane).getLocation_y(),
-                                                greenLane, "GREEN"));
-                    RedUnits.add(new Melee(RedUnits.getBarrack(redLane).getLocation_x(),
-                                                RedUnits.getBarrack(redLane).getLocation_y(),
-                                                greenLane, "RED"));
-                }
+                
                 
             }
         }
@@ -192,5 +179,41 @@ public class GamePlay {
             }
         }
         return null;
+    }
+
+    public void spawnCreep(){
+        
+        String greenLane  = whichLane((int) (Math.random() * GreenUnits.getTowers().size()) + 1);
+        String redLane  = whichLane((int) (Math.random() * RedUnits.getTowers().size()) + 1);
+        ArrayList<Creep> redCreep = new ArrayList<>(); 
+        ArrayList<Creep> greenCreep = new ArrayList<>(); 
+        
+
+        for (int i = 0; i < RANGED_CREEP_NUMBERS; i++) {
+            greenCreep.add(new Ranged(GreenUnits.getBarrack(greenLane).getLocation_x(),
+                                        GreenUnits.getBarrack(greenLane).getLocation_y(),
+                                        greenLane, "GREEN"));
+            GreenUnits.add(greenCreep);
+
+            redCreep.add(new Ranged(RedUnits.getBarrack(redLane).getLocation_x(),
+                                        RedUnits.getBarrack(redLane).getLocation_y(),
+                                        greenLane, "RED"));
+            RedUnits.add(redCreep);
+            }
+        for (int i = 0; i < MELEE_CREEP_NUMBERS; i++) {
+            greenCreep.add(new Melee(GreenUnits.getBarrack(greenLane).getLocation_x(),
+                                        GreenUnits.getBarrack(greenLane).getLocation_y(),
+                                        greenLane, "GREEN"));
+            GreenUnits.add(greenCreep);
+
+            redCreep.add(new Melee(RedUnits.getBarrack(redLane).getLocation_x(),
+                                        RedUnits.getBarrack(redLane).getLocation_y(),
+                                        greenLane, "RED"));
+            RedUnits.add(redCreep);
+        }
+        CreepRunnable greenCreepRunnable = new CreepRunnable(greenCreep);
+        new Thread(creepRunnable).start(); 
+        CreepRunnable redCreepRunnable = new CreepRunnable(redCreep);
+        new Thread(creepRunnable).start(); 
     }
 }
