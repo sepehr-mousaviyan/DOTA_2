@@ -8,10 +8,10 @@ import java.util.logging.Logger;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-        Logger logger =  Logger.getLogger(App.class.getName());
+        Logger logger =  Logger.getLogger(ClientApp.class.getName());
         Connection client = new Connection();
         if(client.getStatusConnection()) {
-            App.main(args);
+            ClientApp.main(args);
         }
         else{
             logger.log(Level.FINER,"connection to server failed in App class in main method");
