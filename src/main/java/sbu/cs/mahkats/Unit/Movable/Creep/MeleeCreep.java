@@ -3,8 +3,8 @@ package sbu.cs.mahkats.Unit.Movable.Creep;
 import sbu.cs.mahkats.Configuration.Config;
 import sbu.cs.mahkats.Configuration.Units.CreepConfig;
 
-public class Melee extends Creep {
-    public Melee(int Location_x, int Location_y, String lane, String teamName) {
+public class MeleeCreep extends Creep {
+    public MeleeCreep(int Location_x, int Location_y, String lane, String teamName) {
         super(lane, teamName);
         Config creepConfig = CreepConfig.getInstance();
         damage = creepConfig.getIntValue("creep.melee.damage");

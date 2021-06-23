@@ -2,9 +2,12 @@ package sbu.cs.mahkats.Unit;
 
 import sbu.cs.mahkats.Unit.Building.Ancient.Ancient;
 import sbu.cs.mahkats.Unit.Building.Barrack.Barrack;
+import sbu.cs.mahkats.Unit.Building.Barrack.RangedBarrack;
+import sbu.cs.mahkats.Unit.Building.Barrack.MeleeBarrack;
 import sbu.cs.mahkats.Unit.Building.Building;
 import sbu.cs.mahkats.Unit.Building.Tower.Tower;
 import sbu.cs.mahkats.Unit.Movable.Creep.Creep;
+import sbu.cs.mahkats.Unit.Movable.Creep.RangedCreep;
 import sbu.cs.mahkats.Unit.Movable.Hero.Hero;
 import sbu.cs.mahkats.Unit.Movable.Movable;
 import sbu.cs.mahkats.Unit.Unit;
@@ -15,7 +18,9 @@ public class unitList {
     private String teamName;
     private ArrayList <Creep> creeps = new ArrayList<>();
     private ArrayList <Hero> heros = new ArrayList<>();
-    private ArrayList <Barrack> barracks = new ArrayList<>();
+    private ArrayList <MeleeBarrack> meleeBarracks = new ArrayList<>();
+    private ArrayList <RangedBarrack> rangedBarracks = new ArrayList<>();
+
     private ArrayList <Tower> towers = new ArrayList<>();
     private Ancient ancient;
     private final int BASE_TOWER_NUMBERS = 3;
@@ -26,33 +31,40 @@ public class unitList {
         ancient = new Ancient(teamName);
 
         //towers unit making
-        for (int i = 0; i < BASE_TOWER_NUMBERS) {
-            this.towers.add(new Tower("base", teamName, i));
+        for (int i = 0; i < BASE_TOWER_NUMBERS; i++) {
+            this.towers.add(new Tower("BASE", teamName, i));
         }
     
-        for (int i = 0; i < LANE_TOWER_NUMBERS) {
-            this.towers.add(new Tower("bottom", teamName, i));
+        for (int i = 0; i < LANE_TOWER_NUMBERS; i++) {
+            this.towers.add(new Tower("BOTTOM", teamName, i));
         }
         
-        for (int i = 0; i < LANE_TOWER_NUMBERS) {
-            this.towers.add(new Tower("middle", teamName, i));
+        for (int i = 0; i < LANE_TOWER_NUMBERS; i++) {
+            this.towers.add(new Tower("MIDDLE", teamName, i));
         }
 
-        for (int i = 0; i < LANE_TOWER_NUMBERS) {
-            this.towers.add(new Tower("top", teamName, i));
+        for (int i = 0; i < LANE_TOWER_NUMBERS; i++) {
+            this.towers.add(new Tower("TOP", teamName, i));
         }
 
         //barracks unit making
+        this.meleeBarracks.add(new MeleeBarrack("TOP", teamName));
+        this.meleeBarracks.add(new MeleeBarrack("MIDDLE", teamName));
+        this.meleeBarracks.add(new MeleeBarrack("BOTTOM", teamName));
         
+        this.rangedBarracks.add(new RangedBarrack("TOP", teamName));
+        this.rangedBarracks.add(new RangedBarrack("MIDDLE", teamName));
+        this.rangedBarracks.add(new RangedBarrack("BOTTOM", teamName));    
     }
+    
     public void add(Creep creep) {
         creeps.add(creep);
     }
     public void add(Hero hero) {
         heros.add(hero);
     }
-    public void add(Barrack barrack) {
-        barracks.add(barrack);
+    public void add(MeleeBarrack meleeBarrack) {
+        meleeBarracks.add(meleeBarrack);
     }
     public void add(Tower tower) {
         towers.add(tower);
@@ -95,17 +107,21 @@ public class unitList {
     }
 
 
-    public Barrack getBarrack(String lane) {
-        for(Barrack b : barracks){
-            if(b.getLane().equals(lane)){
-                return b;
+    public Barrack getRangedBarrack(String lane) {
+        for(Barrack rangedB : rangedBarracks){
+            if(rangedB.getLane().equals(lane)){
+                return rangedB;
             }
         }
         return null;
     }
-    
-    public ArrayList<Barrack> getBarracks(){
-        return barracks;
+
+    public MeleeBarrack getMeleeBarracks(String lane) {
+        for(MeleeBarrack meleeB : meleeBarracks){
+            if(meleeB.getLane().equals(lane)){
+                return meleeB;
+            }
+        }
     }
 
     public Ancient getAncient(){
@@ -116,11 +132,15 @@ public class unitList {
         ArrayList<Unit> all = new ArrayList<Unit>();
         all.addAll(creeps);
         all.addAll(towers);
-        all.addAll(barracks);
+        all.addAll(meleeBarracks);
+        all.addAll(rangedBarracks);
         all.addAll(heros);
         all.add(ancient);
         return all;
     }
 
+    public void add(RangedCreep rangedCreep) {
+        creeps.add(rangedCreep);
+    }
 }
 

@@ -4,6 +4,7 @@ import sbu.cs.mahkats.Configuration.Config;
 import sbu.cs.mahkats.Configuration.Units.BuildingConfig;
 
 public class RangedBarrack extends Barrack {
+    private ArrayList <RangedCreep> rangedCreeps;
     public RangedBarrack(String lane, String teamName) {
         super(lane, teamName);
         Config config = BuildingConfig.getInstance("BarrackConfig");
@@ -40,5 +41,8 @@ public class RangedBarrack extends Barrack {
                     break;
             }
         }
+    }
+    public void addCreep(RangedCreep rangedCreep) {
+        rangedCreeps.add(rangedCreep);
     }
 }
