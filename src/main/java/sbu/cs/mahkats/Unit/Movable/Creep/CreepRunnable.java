@@ -17,14 +17,14 @@ public class CreepRunnable implements Runnable {
                 c.getDefender().takeDamage(c.getDamage());
             }
             else {
-                creep.move();
+                c.move(c.getLane());
+            }
         }
         
     }
 
     @Override
     public void run(){
-
         int lastTurn = GamePlay.getTurn();
         while(true) {
             if (GamePlay.getTurn() - lastTurn == 1) {

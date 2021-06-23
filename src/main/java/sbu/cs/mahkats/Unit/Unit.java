@@ -61,12 +61,16 @@ public abstract class Unit {
     }
 
     public boolean getStatusAttacker(){
-        return isTrue;
+        return isAttacking;
     }
 
-
+    /**
+     * check if unit can hit defender return true and set status of attacking unit is on
+     * @param defender
+     * @return status of attacking
+     */
     public boolean canHit(Unit defender) {
-        if(range ==1) {
+        if(range == 1) {
             for(int i = Location_x - 1 ; i <= Location_x + 1 ; i++){
                 for(int j = Location_y - 1 ; j <= Location_y + 1 ; j++){
                     if(defender.getLocation_x() == i && defender.getLocation_y() == j){

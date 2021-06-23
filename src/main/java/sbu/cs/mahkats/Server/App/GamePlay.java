@@ -1,10 +1,11 @@
 package sbu.cs.mahkats.Server.App;
 
 
-import com.sun.javafx.print.Units;
-import org.javatuples.Tuple;
+import sbu.cs.mahkats.Configuration.Config;
+import sbu.cs.mahkats.Configuration.InterfaceConfig;
 import sbu.cs.mahkats.Unit.Building.Tower.Tower;
 import sbu.cs.mahkats.Unit.Movable.Creep.Creep;
+import sbu.cs.mahkats.Unit.Movable.Creep.CreepRunnable;
 import sbu.cs.mahkats.Unit.Movable.Creep.Melee;
 import sbu.cs.mahkats.Unit.Movable.Creep.Ranged;
 import sbu.cs.mahkats.Unit.Movable.Hero.Hero;
@@ -13,28 +14,38 @@ import sbu.cs.mahkats.Unit.unitList;
 import sbu.cs.mahkats.Unit.Building.Barrack.Barrack;
 
 import java.util.ArrayList;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class GamePlay {
-
-
-    private final int REFRESH_RATE = 1000;
-    private final int CREEP_GENERATE_TIME = 60;
+    private static int REFRESH_RATE;           //the time of a turn
+    private static int CREEP_GENERATE_TIME;    //the turn of spawn a group of creep 
     
-    private final int RANGED_CREEP_NUMBERS = 1;
-    private final int MELEE_CREEP_NUMBERS = 3;
+    private static int RANGED_CREEP_NUMBERS;   //number of ranged creep in a spawn grop
+    private static int MELEE_CREEP_NUMBERS;    //number of melee creep in a spawn grop
+
+    private static int MAP_HEIGHT; //game map height
+    private static int MAP_WIDTH;  //game map width
+    private static int LANE_WIDTH; //width of the lanes ()
     
-    private unitList GreenUnits;
-    private unitList RedUnits;
+    private unitList GreenUnits; // all the red units objects 
+    private unitList RedUnits;  // all the green units objects
 
     private static int turn = 0;
 
     public GamePlay() {
-        GreenUnits = new unitList("GREEN");
-        RedUnits = new unitList("RED");
-    }
+        Config config = InterfaceConfig.getInstance();
+        MAP_HEIGHT  = config.getIntValue("map.height");
+        MAP_WIDTH   = config.getIntValue("map.width");
+        LANE_WIDTH  = config.getIntValue("map.lane.width");
 
-    public static int getTurn() {
-        return turn;
+        config = Config.getInstance();
+        REFRESH_RATE         = config.getIntValue("game.refreshRate");
+        CREEP_GENERATE_TIME  = config.getIntValue("game.creep.generateTime");
+        RANGED_CREEP_NUMBERS = config.getIntValue("game.creep.ranged.numbers");
+        MELEE_CREEP_NUMBERS  = config.getIntValue("game.creep.melee.numbers");
+
+        GreenUnits = new unitList("GREEN");
+        RedUnits   = new unitList("RED");
     }
 
     public void play() {
@@ -47,15 +58,16 @@ public class GamePlay {
                 e.printStackTrace();
             }
         }).start();
-        
-        
-        int lastTurnCreepSpawn = turn;
+
+
+        AtomicInteger lastTurnCreepSpawn = new AtomicInteger(turn);
         new Thread(()->{
-            if (turn - lastTurnCreepSpawn == 60) {
+            if (turn - lastTurnCreepSpawn.get() == 60) {
                 spawnCreep();
-                lastTurnCreepSpawn = turn;
+                lastTurnCreepSpawn.set(turn);
             }
         }).start();
+        int lastTurn = turn;
         while(true) {
             if (turn - lastTurn == 1) {
                 checkMap();
@@ -66,7 +78,12 @@ public class GamePlay {
         }
 
     }
-    
+
+    /**
+     * determine the lane of number
+     * @param choice
+     * @return name of lane
+     */
     private String whichLane(int choice){
         switch (choice) {
             case 1:
@@ -80,6 +97,10 @@ public class GamePlay {
         }
     }
 
+    /**
+     * check the map if some one can attack other
+     * @return array lis
+     */
     public ArrayList checkMap() {
         ArrayList<Unit> greenUnits = GreenUnits.getAll();
         ArrayList<Unit> redUnits = RedUnits.getAll();
@@ -181,8 +202,10 @@ public class GamePlay {
         return null;
     }
 
+    /**
+     * 
+     */
     public void spawnCreep(){
-        
         String greenLane  = whichLane((int) (Math.random() * GreenUnits.getTowers().size()) + 1);
         String redLane  = whichLane((int) (Math.random() * RedUnits.getTowers().size()) + 1);
         ArrayList<Creep> redCreep = new ArrayList<>(); 
@@ -212,8 +235,41 @@ public class GamePlay {
             RedUnits.add(redCreep);
         }
         CreepRunnable greenCreepRunnable = new CreepRunnable(greenCreep);
-        new Thread(creepRunnable).start(); 
+        new Thread(greenCreepRunnable).start();
         CreepRunnable redCreepRunnable = new CreepRunnable(redCreep);
-        new Thread(creepRunnable).start(); 
+        new Thread(redCreepRunnable).start();
+    }
+
+    
+    public static int getREFRESH_RATE() {
+        return REFRESH_RATE;
+    }
+
+    public static int getCREEP_GENERATE_TIME() {
+        return CREEP_GENERATE_TIME;
+    }
+
+    public static int getRANGED_CREEP_NUMBERS() {
+        return RANGED_CREEP_NUMBERS;
+    }
+
+    public static int getMELEE_CREEP_NUMBERS() {
+        return MELEE_CREEP_NUMBERS;
+    }
+
+    public static int getMAP_HEIGHT() {
+        return MAP_HEIGHT;
+    }
+
+    public static int getMAP_WIDTH() {
+        return MAP_WIDTH;
+    }
+
+    public static int getLANE_WIDTH() {
+        return LANE_WIDTH;
+    }
+
+    public static int getTurn() {
+        return turn;
     }
 }
