@@ -2,8 +2,8 @@ package sbu.cs.mahkats.Api;
 
 import com.google.gson.JsonObject;
 import org.javatuples.Pair;
-import sbu.cs.mahkats.Server.Model.Unit.Building.Building;
-import sbu.cs.mahkats.Server.Model.Unit.Movable.Movable;
+import sbu.cs.mahkats.Unit.Building.Building;
+import sbu.cs.mahkats.Unit.Movable.Movable;
 
 public class GamePlayData extends Data{
     private final Long token;

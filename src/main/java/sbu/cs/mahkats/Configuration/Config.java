@@ -35,4 +35,8 @@ public class Config {
         return config.getString(key).equalsIgnoreCase("true");
     }
 
+    public double getDoubleValue(String key){
+        return Double.parseDouble(config.getString(key));
+    }
+
 }
