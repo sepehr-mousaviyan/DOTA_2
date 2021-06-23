@@ -18,16 +18,32 @@ public class unitList {
     private ArrayList <Barrack> barracks = new ArrayList<>();
     private ArrayList <Tower> towers = new ArrayList<>();
     private Ancient ancient;
+    private final int BASE_TOWER_NUMBERS = 3;
+    private final int LANE_TOWER_NUMBERS = 3;
     public unitList(String teamName) {
         this.teamName = teamName;
+        //ancient unit making
         ancient = new Ancient(teamName);
-        this.towers.add(new Tower("Bottom", teamName));
-        this.towers.add(new Tower("Middle", teamName));
-        this.towers.add(new Tower("Top", teamName));
 
-        this.barracks.add(new Barrack("Bottom", teamName));
-        this.barracks.add(new Barrack("Middle", teamName));
-        this.barracks.add(new Barrack("Top", teamName));
+        //towers unit making
+        for (int i = 0; i < BASE_TOWER_NUMBERS) {
+            this.towers.add(new Tower("base", teamName, i));
+        }
+    
+        for (int i = 0; i < LANE_TOWER_NUMBERS) {
+            this.towers.add(new Tower("bottom", teamName, i));
+        }
+        
+        for (int i = 0; i < LANE_TOWER_NUMBERS) {
+            this.towers.add(new Tower("middle", teamName, i));
+        }
+
+        for (int i = 0; i < LANE_TOWER_NUMBERS) {
+            this.towers.add(new Tower("top", teamName, i));
+        }
+
+        //barracks unit making
+        
     }
     public void add(Creep creep) {
         creeps.add(creep);
