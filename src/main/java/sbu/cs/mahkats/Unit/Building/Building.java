@@ -7,13 +7,13 @@ import sbu.cs.mahkats.Unit.Unit;
 public abstract class Building extends Unit {
     protected String lane;
 
-    public Building(String teamName, String lane) {
-        super(teamName);
+    public Building(String teamName, String lane, String unitType) {
+        super(teamName, unitType);
         this.lane = lane;
     }
 
-    public Building(String teamName) {
-        super(teamName);
+    public Building(String teamName, String unitType) {
+        super(teamName, unitType);
     }
     
     public String getLane(){
@@ -24,7 +24,7 @@ public abstract class Building extends Unit {
     public String toString() {
         return new Api().toJson(new Pair<>("hp", hp),
                 new Pair<>("hp_regeneration", hp_regeneration),
-                new Pair<>("damage", damage),
+                new Pair<>("damage", minimum_damage),
                 new Pair<>("armor", armor),
                 new Pair<>("range", range),
                 new Pair<>("Location_x", Location_x),

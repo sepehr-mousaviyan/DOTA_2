@@ -1,34 +1,56 @@
 package sbu.cs.mahkats.Unit;
 
-import java.io.Serializable;
+import sbu.cs.mahkats.Server.App.GamePlay;
 
 public abstract class Unit {
     protected double hp = 0;
     protected double hp_regeneration = 0;
-    protected double damage = 0;
+    protected double minimum_damage = 0;
+    protected double maximum_damage = 0;
     protected double armor = 0;
     protected double range = 0;
-    protected String teamName = "";
+    protected double experience;
+    protected final String teamName;
     protected Boolean isAttacking = false;
     protected Unit defender = null;
+    protected  boolean isDie = false;
+    protected final String unitType;
     
     protected int Location_x = 0;
     protected int Location_y = 0;
 
-    public Unit(String teamName) {
+    public Unit(String teamName, String unitType) {
         this.teamName = teamName;
+        this.unitType = unitType;
     }
 
     public String getTeamName(){
         return teamName;
     }
 
-    public void Hp_regenerate(){
+    public void hp_regenerate(){
         hp  = hp  + hp_regeneration;
     }
     //TODO damage giving for hero
 
+    /**
+     * reduce the hp of this unit
+     * @param damage
+     */
     public void takeDamage(double damage) {
+        if((damage - armor) > hp){
+            hp = 0;
+            if(unitType.equals("Ancient")){
+                //TODO: end of game
+                return;
+            }
+            if(unitType.equals("Hero")){
+                //TODO: hero go to respawn time
+                return;
+            }
+            //TODO: message this to client
+            this.destroy();
+        }
         hp = hp - (damage - armor);
     }
 
@@ -44,8 +66,8 @@ public abstract class Unit {
         return range;
     }
 
-    public double getDamage() {
-        return damage;
+    public double minimum_damage() {
+        return minimum_damage;
     }
 
     public void setDefender(Unit defender){
@@ -62,6 +84,30 @@ public abstract class Unit {
 
     public boolean getStatusAttacker(){
         return isAttacking;
+    }
+
+    public String getUnitType() {
+        return unitType;
+    }
+
+    public boolean getStatusDie(){
+        return isDie;
+    }
+
+    public void reduce_hp(double reduce){ hp -= reduce; }
+
+    public void reduceDamage(double reduced){
+        this.minimum_damage -= reduced;
+        this.maximum_damage -= reduced;
+    }
+
+    public void addDamage(double added){
+        this.minimum_damage += added;
+        this.maximum_damage += added;
+    }
+
+    public double getDamage(){
+        return (Math.random()  * (maximum_damage - minimum_damage)) + minimum_damage;
     }
 
     /**
@@ -88,5 +134,14 @@ public abstract class Unit {
         }
         isAttacking = false;
         return isAttacking;
+    }
+
+    public void destroy(){
+        GamePlay.destroy(this);
+        isDie = true;
+    }
+
+    public boolean equals(Unit unit){
+        return unit.getUnitType().equals(unitType);
     }
 }

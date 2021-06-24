@@ -1,6 +1,7 @@
 package sbu.cs.mahkats.Unit.Movable.Creep;
 
 import sbu.cs.mahkats.Server.App.GamePlay;
+import sbu.cs.mahkats.Unit.Unit;
 
 import java.util.ArrayList;
 
@@ -23,11 +24,16 @@ public class CreepRunnable implements Runnable {
         
     }
 
+    private void checkCreepsAlive(){
+        creeps.removeIf(Unit::getStatusDie);
+    }
+
     @Override
     public void run(){
         int lastTurn = GamePlay.getTurn();
         while(true) {
-            if (GamePlay.getTurn() - lastTurn == 1) {
+            if (GamePlay.getTurn() > lastTurn) {
+                checkCreepsAlive();
                 handler();
                 lastTurn = GamePlay.getTurn();
             }
