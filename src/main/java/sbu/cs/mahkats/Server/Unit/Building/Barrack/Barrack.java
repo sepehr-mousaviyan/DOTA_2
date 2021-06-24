@@ -6,8 +6,8 @@ import sbu.cs.mahkats.Configuration.Units.BuildingConfig;
 import sbu.cs.mahkats.Server.Unit.Building.Building;
 
 public class Barrack extends Building {
-    public Barrack(String lane, String teamName) {
-        super(teamName, "Barrack");
+    public Barrack(String lane, String teamName , int code) {
+        super(teamName, "Barrack" , code);
         this.lane = lane;
         Config config = BuildingConfig.getInstance("BarrackConfig");
         switch (lane) {

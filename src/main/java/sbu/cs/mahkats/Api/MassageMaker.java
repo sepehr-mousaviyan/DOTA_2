@@ -3,6 +3,8 @@ package sbu.cs.mahkats.Api;
 
 import com.google.gson.JsonObject;
 import org.javatuples.Pair;
+import sbu.cs.mahkats.Api.Data.GamePlayData;
+import sbu.cs.mahkats.Api.Data.UserData;
 
 public class MassageMaker{
 

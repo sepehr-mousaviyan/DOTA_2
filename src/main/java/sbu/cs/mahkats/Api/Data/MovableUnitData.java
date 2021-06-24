@@ -1,8 +1,8 @@
-package sbu.cs.mahkats.Api;
+package sbu.cs.mahkats.Api.Data;
 
 import com.google.gson.JsonObject;
 import org.javatuples.Pair;
-import sbu.cs.mahkats.Server.Unit.Unit;
+import sbu.cs.mahkats.Api.Api;
 
 public class MovableUnitData extends GamePlayData{
     protected int level;

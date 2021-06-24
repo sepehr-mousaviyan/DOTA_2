@@ -1,4 +1,4 @@
-package sbu.cs.mahkats.Api;
+package sbu.cs.mahkats.Api.Data;
 
 public class JsonData<T> extends Data{
     String status;

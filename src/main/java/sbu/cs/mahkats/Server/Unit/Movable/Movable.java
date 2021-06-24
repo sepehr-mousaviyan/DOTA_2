@@ -1,7 +1,5 @@
 package sbu.cs.mahkats.Server.Unit.Movable;
 
-import org.javatuples.Pair;
-import sbu.cs.mahkats.Api.Api;
 import sbu.cs.mahkats.Server.App.GamePlay;
 import sbu.cs.mahkats.Server.Unit.Movable.Hero.Ability;
 import sbu.cs.mahkats.Server.Unit.Unit;
@@ -15,8 +13,8 @@ public abstract class Movable extends Unit {
     protected Ability ability3;
     protected Ability ability4;
 
-    public Movable(String teamName, String unitType) {
-        super(teamName, unitType);
+    public Movable(String teamName, String unitType , int code) {
+        super(teamName, unitType, code);
     }
 
     /**

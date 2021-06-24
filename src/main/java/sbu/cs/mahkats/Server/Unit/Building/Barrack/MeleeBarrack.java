@@ -9,8 +9,8 @@ import sbu.cs.mahkats.Server.Unit.Movable.Creep.MeleeCreep;
 
 public class MeleeBarrack extends Barrack {
     private final ArrayList<MeleeCreep> meleeCreeps = new ArrayList<>();
-    public MeleeBarrack(String lane, String teamName) {
-        super(lane, teamName);
+    public MeleeBarrack(String lane, String teamName , int code) {
+        super(lane, teamName , code);
         Config config = BuildingConfig.getInstance("BarrackConfig");
         hp = config.getDoubleValue("barrack.melee.hp");
         hp_regeneration = config.getDoubleValue("barack.melee.hp_regeneration");

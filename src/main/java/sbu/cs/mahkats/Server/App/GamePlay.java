@@ -32,6 +32,8 @@ public class GamePlay {
     private static unitList GreenUnits; // all the red units objects
     private static unitList RedUnits;  // all the green units objects
 
+    private static int last_code = 1;
+
     private final static Logger logger = Logger.getLogger(GamePlay.class.getName());;
 
     private static int turn = 0;
@@ -226,12 +228,14 @@ public class GamePlay {
         for (int i = 0; i < RANGED_CREEP_NUMBERS; i++) {
             greenRangedCreep.add(new RangedCreep(GreenUnits.getRangedBarrack(greenLane).getLocation_x(),
                                         GreenUnits.getRangedBarrack(greenLane).getLocation_y(),
-                                        greenLane, "GREEN"));
+                                        greenLane, "GREEN" , last_code));
+            addCode();
             
             redRangedCreep.add(new RangedCreep(RedUnits.getRangedBarrack(redLane).getLocation_x(),
                                         RedUnits.getRangedBarrack(redLane).getLocation_y(),
-                                        greenLane, "RED"));
-            }
+                                        greenLane, "RED" , last_code));
+            addCode();
+        }
         GreenUnits.addCreeps(new ArrayList<>(greenRangedCreep));
         GreenUnits.getRangedBarrack(greenLane).addCreep(greenRangedCreep);
         RedUnits.addCreeps(new ArrayList<>(redRangedCreep));
@@ -240,11 +244,13 @@ public class GamePlay {
         for (int i = 0; i < MELEE_CREEP_NUMBERS; i++) {
             greenMeleeCreep.add(new MeleeCreep(GreenUnits.getMeleeBarracks(greenLane).getLocation_x(),
                                         GreenUnits.getMeleeBarracks(greenLane).getLocation_y(),
-                                        greenLane, "GREEN")); 
+                                        greenLane, "GREEN" , last_code));
+            addCode();
 
             redMeleeCreep.add(new MeleeCreep(RedUnits.getMeleeBarracks(redLane).getLocation_x(),
                                         RedUnits.getMeleeBarracks(redLane).getLocation_y(),
-                                        greenLane, "RED"));
+                                        greenLane, "RED" , last_code));
+            addCode();
             RedUnits.addCreeps(new ArrayList<>(redMeleeCreep));
         }
         GreenUnits.addCreeps(new ArrayList<>(greenMeleeCreep));
@@ -312,5 +318,11 @@ public class GamePlay {
     public static int getTurn() {
         return turn;
     }
+
+    public static int getLast_code(){ return last_code; }
+
+    public static void addCode(){ last_code++; }
+
+    public static int get_add_Code(){ return last_code++; }
 
 }

@@ -2,6 +2,7 @@ package sbu.cs.mahkats.Api;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import sbu.cs.mahkats.Api.Data.*;
 
 public class Parser{
     public static Boolean getStatus(JsonObject json){

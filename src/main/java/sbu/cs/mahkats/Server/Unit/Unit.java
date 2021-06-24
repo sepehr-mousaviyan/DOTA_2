@@ -15,13 +15,15 @@ public abstract class Unit {
     protected Unit defender = null;
     protected  boolean isDie = false;
     protected final String unitType;
+    protected final int code;
     
     protected int Location_x = 0;
     protected int Location_y = 0;
 
-    public Unit(String teamName, String unitType) {
+    public Unit(String teamName, String unitType , int code) {
         this.teamName = teamName;
         this.unitType = unitType;
+        this.code = code;
     }
 
     public String getTeamName(){
