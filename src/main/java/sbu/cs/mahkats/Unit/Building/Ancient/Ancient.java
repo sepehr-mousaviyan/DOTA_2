@@ -7,7 +7,7 @@ import sbu.cs.mahkats.Unit.Building.Building;
 
 public class Ancient extends Building {
     public Ancient(String teamName) {
-        super(teamName);
+        super(teamName, "Ancient");
         Config config = BuildingConfig.getInstance("AncientConfig");
         hp = config.getDoubleValue("ancient.hp");
         hp_regeneration = config.getDoubleValue("ancient.hp_regeneration");

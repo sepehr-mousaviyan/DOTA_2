@@ -1,7 +1,5 @@
 package sbu.cs.mahkats.Unit.Movable;
 
-import javax.lang.model.util.ElementScanner6;
-
 import org.javatuples.Pair;
 import sbu.cs.mahkats.Api.Api;
 import sbu.cs.mahkats.Server.App.GamePlay;
@@ -18,8 +16,8 @@ public abstract class Movable extends Unit {
     Ability ability3;
     Ability ability4;
 
-    public Movable(String teamName) {
-        super(teamName);
+    public Movable(String teamName , String unitType) {
+        super(teamName, unitType);
     }
 
     /**
@@ -69,7 +67,7 @@ public abstract class Movable extends Unit {
     public String toString() {
         return new Api().toJson(new Pair<>("hp", hp),
                 new Pair<>("hp_regeneration", hp_regeneration),
-                new Pair<>("damage", damage),
+                new Pair<>("damage", minimum_damage),
                 new Pair<>("armor", armor),
                 new Pair<>("range", range),
                 new Pair<>("Location_x", Location_x),

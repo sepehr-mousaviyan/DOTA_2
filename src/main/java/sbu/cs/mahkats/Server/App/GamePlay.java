@@ -3,7 +3,9 @@ package sbu.cs.mahkats.Server.App;
 
 import sbu.cs.mahkats.Configuration.Config;
 import sbu.cs.mahkats.Configuration.InterfaceConfig;
+import sbu.cs.mahkats.Server.Connection.DataBase.DataBase;
 import sbu.cs.mahkats.Unit.Building.Tower.Tower;
+import sbu.cs.mahkats.Unit.Building.Tower.TowerRunnable;
 import sbu.cs.mahkats.Unit.Movable.Creep.Creep;
 import sbu.cs.mahkats.Unit.Movable.Creep.CreepRunnable;
 import sbu.cs.mahkats.Unit.Movable.Creep.MeleeCreep;
@@ -15,20 +17,23 @@ import sbu.cs.mahkats.Unit.Building.Barrack.Barrack;
 
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.logging.Logger;
 
 public class GamePlay {
     private static int REFRESH_RATE;           //the time of a turn
     private static int CREEP_GENERATE_TIME;    //the turn of spawn a group of creep 
     
-    private static int RANGED_CREEP_NUMBERS;   //number of ranged creep in a spawn grop
-    private static int MELEE_CREEP_NUMBERS;    //number of melee creep in a spawn grop
+    private static int RANGED_CREEP_NUMBERS;   //number of ranged creep in a spawn group
+    private static int MELEE_CREEP_NUMBERS;    //number of melee creep in a spawn group
 
     private static int MAP_HEIGHT; //game map height
     private static int MAP_WIDTH;  //game map width
     private static int LANE_WIDTH; //width of the lanes ()
     
-    private final unitList GreenUnits; // all the red units objects
-    private final unitList RedUnits;  // all the green units objects
+    private static unitList GreenUnits; // all the red units objects
+    private static unitList RedUnits;  // all the green units objects
+
+    private final static Logger logger = Logger.getLogger(GamePlay.class.getName());;
 
     private static int turn = 0;
 
@@ -51,8 +56,9 @@ public class GamePlay {
     public void play() {
 
         new Thread(() -> {
+            logger.info("the thread that checks and add turn is running");
             try {
-                Thread.currentThread().sleep(REFRESH_RATE);
+                Thread.sleep(REFRESH_RATE);
                 turn ++;
             } catch (InterruptedException e) {
                 e.printStackTrace();
@@ -62,21 +68,27 @@ public class GamePlay {
 
         AtomicInteger lastTurnCreepSpawn = new AtomicInteger(turn);
         new Thread(()->{
+            logger.info("the thread that for spawn creep is running");
             if (turn - lastTurnCreepSpawn.get() == 60) {
                 spawnCreep();
                 lastTurnCreepSpawn.set(turn);
             }
         }).start();
+
+        ArrayList<Tower> towers = new ArrayList<>(GreenUnits.getTowers());
+        towers.addAll(RedUnits.getTowers());
+        TowerRunnable towerRunnable = new TowerRunnable(towers);
+        new Thread(towerRunnable).start();
         int lastTurn = turn;
+        logger.info("game start");
         while(true) {
             if (turn - lastTurn == 1) {
                 checkMap();
+                hpRegenerateAll();
                 lastTurn = turn;
-                
-                
+                //TODO: message information units to client
             }
         }
-
     }
 
     /**
@@ -99,9 +111,8 @@ public class GamePlay {
 
     /**
      * check the map if some one can attack other
-     * @return array lis
      */
-    public ArrayList checkMap() {
+    public void checkMap() {
         ArrayList<Unit> greenUnits = GreenUnits.getAll();
         ArrayList<Unit> redUnits = RedUnits.getAll();
 
@@ -111,8 +122,8 @@ public class GamePlay {
         ArrayList<Tower> greenTowers = GreenUnits.getTowers();
         ArrayList<Tower> redTowers = RedUnits.getTowers();
 
-        ArrayList<Hero> greenHeros = GreenUnits.getHeros();
-        ArrayList<Hero> redHeros = RedUnits.getHeros();
+        ArrayList<Hero> greenHeroes = GreenUnits.getHeros();
+        ArrayList<Hero> redHeroes = RedUnits.getHeros();
 
         ArrayList<Barrack> greenBarracks = GreenUnits.getBarracks();
         ArrayList<Barrack> redBarracks = RedUnits.getBarracks();
@@ -141,7 +152,7 @@ public class GamePlay {
                 }
             }
             //heroes
-            for(Hero redH : redHeros) {
+            for(Hero redH : redHeroes) {
                 if (green.canHit(redH)) {
                     green.setDefender(redH);
                     green.setStatusAttacker(true);
@@ -183,8 +194,8 @@ public class GamePlay {
                 }
             }
             //heroes
-            for(Hero greenH : greenHeros) {
-                if (red.canHit((Unit) greenH)) {
+            for(Hero greenH : greenHeroes) {
+                if (red.canHit(greenH)) {
                     red.setDefender(greenH);
                     red.setStatusAttacker(true);
                     continue main;
@@ -199,7 +210,6 @@ public class GamePlay {
                 }
             }
         }
-        return null;
     }
 
     /**
@@ -247,8 +257,30 @@ public class GamePlay {
         new Thread(greenCreepRunnable).start();
         CreepRunnable redCreepRunnable = new CreepRunnable(RedUnits.getCreeps());
         new Thread(redCreepRunnable).start();
+        logger.info("spawn a creep for green");
+        logger.info("spawn a creep for red");
     }
 
+    /**
+     * regenerate all hp of units
+     */
+    public void hpRegenerateAll(){
+        ArrayList<Unit> units = GreenUnits.getAll();
+        units.addAll(RedUnits.getAll());
+        for(Unit unit : units){
+            unit.hp_regenerate();
+        }
+    }
+
+    public static void destroy(Unit unit){
+        if(unit.getTeamName().equals("GREEN")){
+            GreenUnits.remove(unit);
+            logger.info("a " + unit.getUnitType() + " is destroyed!");
+            return;
+        }
+        RedUnits.remove(unit);
+        logger.info("a " + unit.getUnitType() + " is destroyed!");
+    }
     
     public static int getREFRESH_RATE() {
         return REFRESH_RATE;
@@ -281,4 +313,5 @@ public class GamePlay {
     public static int getTurn() {
         return turn;
     }
+
 }

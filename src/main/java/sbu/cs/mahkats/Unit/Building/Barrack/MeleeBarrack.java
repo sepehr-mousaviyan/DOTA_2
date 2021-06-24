@@ -4,13 +4,13 @@ import java.util.ArrayList;
 
 import sbu.cs.mahkats.Configuration.Config;
 import sbu.cs.mahkats.Configuration.Units.BuildingConfig;
+import sbu.cs.mahkats.Unit.Movable.Creep.Creep;
 import sbu.cs.mahkats.Unit.Movable.Creep.MeleeCreep;
 
 public class MeleeBarrack extends Barrack {
-    private ArrayList<MeleeCreep> meleeCreeps;
+    private final ArrayList<MeleeCreep> meleeCreeps = new ArrayList<>();
     public MeleeBarrack(String lane, String teamName) {
         super(lane, teamName);
-        meleeCreeps = new ArrayList<>();
         Config config = BuildingConfig.getInstance("BarrackConfig");
         hp = config.getDoubleValue("barrack.melee.hp");
         hp_regeneration = config.getDoubleValue("barack.melee.hp_regeneration");
@@ -49,5 +49,13 @@ public class MeleeBarrack extends Barrack {
 
     public void addCreep(ArrayList<MeleeCreep> meleeCreep) {
         this.meleeCreeps.addAll(meleeCreep);
+    }
+
+    public void removeCreep(Creep creep){
+        meleeCreeps.remove(creep);
+        for(Creep c : meleeCreeps){
+            c.reduce_hp(20);
+            c.reduceDamage(3);
+        }
     }
 }

@@ -2,12 +2,13 @@ package sbu.cs.mahkats.Unit.Building.Barrack;
 
 import sbu.cs.mahkats.Configuration.Config;
 import sbu.cs.mahkats.Configuration.Units.BuildingConfig;
+import sbu.cs.mahkats.Unit.Movable.Creep.Creep;
 import sbu.cs.mahkats.Unit.Movable.Creep.RangedCreep;
 
 import java.util.ArrayList;
 
 public class RangedBarrack extends Barrack {
-    private ArrayList <RangedCreep> rangedCreeps;
+    private final ArrayList <RangedCreep> rangedCreeps = new ArrayList<>();
     public RangedBarrack(String lane, String teamName) {
         super(lane, teamName);
         Config config = BuildingConfig.getInstance("BarrackConfig");
@@ -47,5 +48,13 @@ public class RangedBarrack extends Barrack {
     }
     public void addCreep(ArrayList<RangedCreep> rangedCreep) {
         this.rangedCreeps.addAll(rangedCreep);
+    }
+
+    public void removeCreep(Creep creep){
+        rangedCreeps.remove(creep);
+        for(Creep c : rangedCreeps){
+            c.reduce_hp(20);
+            c.reduceDamage(3);
+        }
     }
 }

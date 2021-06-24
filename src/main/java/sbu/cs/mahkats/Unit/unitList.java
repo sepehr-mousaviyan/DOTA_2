@@ -6,7 +6,6 @@ import sbu.cs.mahkats.Unit.Building.Barrack.RangedBarrack;
 import sbu.cs.mahkats.Unit.Building.Barrack.MeleeBarrack;
 import sbu.cs.mahkats.Unit.Building.Tower.Tower;
 import sbu.cs.mahkats.Unit.Movable.Creep.Creep;
-import sbu.cs.mahkats.Unit.Movable.Creep.RangedCreep;
 import sbu.cs.mahkats.Unit.Movable.Hero.Hero;
 import java.util.ArrayList;
 
@@ -155,8 +154,27 @@ public class unitList {
         return all;
     }
 
-    public void add(RangedCreep rangedCreep) {
-        creeps.add(rangedCreep);
+    public void remove(Unit unit){
+        for(Creep creep : creeps){
+            if(creep.equals(unit)){
+                creeps.remove(creep);
+                if(creep.getType().equals("Ranged")) {
+                    for (RangedBarrack rangedBarrack : rangedBarracks) {
+                        rangedBarrack.removeCreep(creep);
+                    }
+                }
+                else{
+                    for (MeleeBarrack meleeBarrack : meleeBarracks) {
+                        meleeBarrack.removeCreep(creep);
+                    }
+                }
+                return;
+            }
+        }
+
+        rangedBarracks.removeIf(rangedBarrack -> rangedBarrack.equals(unit));
+        meleeBarracks.removeIf(meleeBarrack -> meleeBarrack.equals(unit));
+        towers.removeIf(tower -> tower.equals(unit));
     }
 }
 
