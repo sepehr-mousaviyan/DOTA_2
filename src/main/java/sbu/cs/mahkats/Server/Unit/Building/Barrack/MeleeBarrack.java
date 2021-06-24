@@ -1,11 +1,11 @@
-package sbu.cs.mahkats.Unit.Building.Barrack;
+package sbu.cs.mahkats.Server.Unit.Building.Barrack;
 
 import java.util.ArrayList;
 
 import sbu.cs.mahkats.Configuration.Config;
 import sbu.cs.mahkats.Configuration.Units.BuildingConfig;
-import sbu.cs.mahkats.Unit.Movable.Creep.Creep;
-import sbu.cs.mahkats.Unit.Movable.Creep.MeleeCreep;
+import sbu.cs.mahkats.Server.Unit.Movable.Creep.Creep;
+import sbu.cs.mahkats.Server.Unit.Movable.Creep.MeleeCreep;
 
 public class MeleeBarrack extends Barrack {
     private final ArrayList<MeleeCreep> meleeCreeps = new ArrayList<>();

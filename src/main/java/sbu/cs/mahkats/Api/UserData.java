@@ -3,7 +3,7 @@ package sbu.cs.mahkats.Api;
 import com.google.gson.JsonObject;
 import org.javatuples.Pair;
 
-public class UserData extends Data {
+public class UserData implements Data {
     private String username;
     private String password;
     private String email;

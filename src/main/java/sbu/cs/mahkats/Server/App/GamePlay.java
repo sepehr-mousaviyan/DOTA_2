@@ -3,17 +3,16 @@ package sbu.cs.mahkats.Server.App;
 
 import sbu.cs.mahkats.Configuration.Config;
 import sbu.cs.mahkats.Configuration.InterfaceConfig;
-import sbu.cs.mahkats.Server.Connection.DataBase.DataBase;
-import sbu.cs.mahkats.Unit.Building.Tower.Tower;
-import sbu.cs.mahkats.Unit.Building.Tower.TowerRunnable;
-import sbu.cs.mahkats.Unit.Movable.Creep.Creep;
-import sbu.cs.mahkats.Unit.Movable.Creep.CreepRunnable;
-import sbu.cs.mahkats.Unit.Movable.Creep.MeleeCreep;
-import sbu.cs.mahkats.Unit.Movable.Creep.RangedCreep;
-import sbu.cs.mahkats.Unit.Movable.Hero.Hero;
-import sbu.cs.mahkats.Unit.Unit;
-import sbu.cs.mahkats.Unit.unitList;
-import sbu.cs.mahkats.Unit.Building.Barrack.Barrack;
+import sbu.cs.mahkats.Server.Unit.Building.Tower.Tower;
+import sbu.cs.mahkats.Server.Unit.Building.Tower.TowerRunnable;
+import sbu.cs.mahkats.Server.Unit.Movable.Creep.Creep;
+import sbu.cs.mahkats.Server.Unit.Movable.Creep.CreepRunnable;
+import sbu.cs.mahkats.Server.Unit.Movable.Creep.MeleeCreep;
+import sbu.cs.mahkats.Server.Unit.Movable.Creep.RangedCreep;
+import sbu.cs.mahkats.Server.Unit.Movable.Hero.Hero;
+import sbu.cs.mahkats.Server.Unit.Unit;
+import sbu.cs.mahkats.Server.Unit.unitList;
+import sbu.cs.mahkats.Server.Unit.Building.Barrack.Barrack;
 
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicInteger;

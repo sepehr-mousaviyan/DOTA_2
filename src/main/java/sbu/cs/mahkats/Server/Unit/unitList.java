@@ -1,12 +1,12 @@
-package sbu.cs.mahkats.Unit;
+package sbu.cs.mahkats.Server.Unit;
 
-import sbu.cs.mahkats.Unit.Building.Ancient.Ancient;
-import sbu.cs.mahkats.Unit.Building.Barrack.Barrack;
-import sbu.cs.mahkats.Unit.Building.Barrack.RangedBarrack;
-import sbu.cs.mahkats.Unit.Building.Barrack.MeleeBarrack;
-import sbu.cs.mahkats.Unit.Building.Tower.Tower;
-import sbu.cs.mahkats.Unit.Movable.Creep.Creep;
-import sbu.cs.mahkats.Unit.Movable.Hero.Hero;
+import sbu.cs.mahkats.Server.Unit.Building.Ancient.Ancient;
+import sbu.cs.mahkats.Server.Unit.Building.Barrack.Barrack;
+import sbu.cs.mahkats.Server.Unit.Building.Barrack.RangedBarrack;
+import sbu.cs.mahkats.Server.Unit.Building.Barrack.MeleeBarrack;
+import sbu.cs.mahkats.Server.Unit.Building.Tower.Tower;
+import sbu.cs.mahkats.Server.Unit.Movable.Creep.Creep;
+import sbu.cs.mahkats.Server.Unit.Movable.Hero.Hero;
 import java.util.ArrayList;
 
 public class unitList {

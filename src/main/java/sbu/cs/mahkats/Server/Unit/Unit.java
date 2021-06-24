@@ -1,4 +1,4 @@
-package sbu.cs.mahkats.Unit;
+package sbu.cs.mahkats.Server.Unit;
 
 import sbu.cs.mahkats.Server.App.GamePlay;
 

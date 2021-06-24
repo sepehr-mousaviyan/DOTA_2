@@ -1,4 +1,4 @@
-package sbu.cs.mahkats.Unit.Movable.Creep;
+package sbu.cs.mahkats.Server.Unit.Movable.Creep;
 
 import sbu.cs.mahkats.Configuration.Config;
 import sbu.cs.mahkats.Configuration.Units.CreepConfig;

@@ -1,8 +1,8 @@
-package sbu.cs.mahkats.Unit.Building;
+package sbu.cs.mahkats.Server.Unit.Building;
 
 import org.javatuples.Pair;
 import sbu.cs.mahkats.Api.Api;
-import sbu.cs.mahkats.Unit.Unit;
+import sbu.cs.mahkats.Server.Unit.Unit;
 
 public abstract class Building extends Unit {
     protected String lane;
@@ -19,15 +19,5 @@ public abstract class Building extends Unit {
     public String getLane(){
         return lane;
     }
-    
 
-    public String toString() {
-        return new Api().toJson(new Pair<>("hp", hp),
-                new Pair<>("hp_regeneration", hp_regeneration),
-                new Pair<>("damage", minimum_damage),
-                new Pair<>("armor", armor),
-                new Pair<>("range", range),
-                new Pair<>("Location_x", Location_x),
-                new Pair<>("Location_y", Location_y)).toString();
-    }
 }

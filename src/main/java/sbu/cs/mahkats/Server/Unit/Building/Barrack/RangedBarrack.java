@@ -1,9 +1,9 @@
-package sbu.cs.mahkats.Unit.Building.Barrack;
+package sbu.cs.mahkats.Server.Unit.Building.Barrack;
 
 import sbu.cs.mahkats.Configuration.Config;
 import sbu.cs.mahkats.Configuration.Units.BuildingConfig;
-import sbu.cs.mahkats.Unit.Movable.Creep.Creep;
-import sbu.cs.mahkats.Unit.Movable.Creep.RangedCreep;
+import sbu.cs.mahkats.Server.Unit.Movable.Creep.Creep;
+import sbu.cs.mahkats.Server.Unit.Movable.Creep.RangedCreep;
 
 import java.util.ArrayList;
 

@@ -1,6 +1,6 @@
-package sbu.cs.mahkats.Unit.Movable.Creep;
+package sbu.cs.mahkats.Server.Unit.Movable.Creep;
 
-import sbu.cs.mahkats.Unit.Movable.Movable;
+import sbu.cs.mahkats.Server.Unit.Movable.Movable;
 
 public class Creep extends Movable {
     String typeCreep;

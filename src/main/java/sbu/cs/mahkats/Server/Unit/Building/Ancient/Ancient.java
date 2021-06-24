@@ -1,9 +1,9 @@
-package sbu.cs.mahkats.Unit.Building.Ancient;
+package sbu.cs.mahkats.Server.Unit.Building.Ancient;
 
 import sbu.cs.mahkats.Configuration.Config;
 import sbu.cs.mahkats.Configuration.InterfaceConfig;
 import sbu.cs.mahkats.Configuration.Units.BuildingConfig;
-import sbu.cs.mahkats.Unit.Building.Building;
+import sbu.cs.mahkats.Server.Unit.Building.Building;
 
 public class Ancient extends Building {
     public Ancient(String teamName) {
