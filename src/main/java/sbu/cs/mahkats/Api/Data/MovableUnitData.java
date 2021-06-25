@@ -31,14 +31,16 @@ public class MovableUnitData extends GamePlayData{
     @Override
     public JsonObject makeJson() {
         String str = super.makeJson().toString();
-        str = str.substring(1 , str.length() - 1) + ", ";
-        return new Api().toJson(str + new Api().toJson(new Pair<>("level", level),
-                        new Pair<>("experience", experience),
-                        new Pair<>("mana", mana),
-                        new Pair<>("mana_regeneration", mana_regeneration),
-                        new Pair<>("ability1", ability1),
-                        new Pair<>("ability2", ability2),
-                        new Pair<>("ability3", ability3),
-                        new Pair<>("ability4", ability4)).toString());
+        if(error != null) {
+            str = str.substring(1, str.length() - 1) + ", ";
+            return new Api().toJson(str + new Api().toJson(new Pair<>("level", level),
+                    new Pair<>("mana", mana),
+                    new Pair<>("mana_regeneration", mana_regeneration),
+                    new Pair<>("ability1", ability1),
+                    new Pair<>("ability2", ability2),
+                    new Pair<>("ability3", ability3),
+                    new Pair<>("ability4", ability4)).toString());
+        }
+        return new Api().toJson(str);
     }
 }

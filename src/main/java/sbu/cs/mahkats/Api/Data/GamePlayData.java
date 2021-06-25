@@ -94,12 +94,22 @@ public class GamePlayData implements Data{
     }
 
     public JsonObject makeJson(){
-        return new Api().toJson(new Pair<>("hp", hp),
-                new Pair<>("hp_regeneration", hp_regeneration),
-                new Pair<>("damage", minimum_damage),
-                new Pair<>("armor", armor),
-                new Pair<>("range", range),
-                new Pair<>("Location_x", Location_x),
-                new Pair<>("Location_y", Location_y));
+        if(error != null) {
+            return new Api().toJson(new Pair<>("token", token),
+                    new Pair<>("hp", hp),
+                    new Pair<>("hp_regeneration", hp_regeneration),
+                    new Pair<>("minimum_damage", minimum_damage),
+                    new Pair<>("maximum_damage", maximum_damage),
+                    new Pair<>("armor", armor),
+                    new Pair<>("range", range),
+                    new Pair<>("experience", experience),
+                    new Pair<>("isAttacking", isAttacking),
+                    new Pair<>("code_defender", code_defender),
+                    new Pair<>("isDie", isDie),
+                    new Pair<>("code", code),
+                    new Pair<>("Location_x", Location_x),
+                    new Pair<>("Location_y", Location_y));
+        }
+        return new Api().toJson(new Pair<>("error", error), new Pair<>("token", token));
     }
 }
