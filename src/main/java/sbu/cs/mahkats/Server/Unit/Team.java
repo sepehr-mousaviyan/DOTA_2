@@ -1,4 +1,4 @@
-package sbu.cs.mahkats.Unit;
+package sbu.cs.mahkats.Server.Unit;
 
 public enum Team {
     GREEN,

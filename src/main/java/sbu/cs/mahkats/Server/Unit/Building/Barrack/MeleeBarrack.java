@@ -1,16 +1,16 @@
-package sbu.cs.mahkats.Unit.Building.Barrack;
+package sbu.cs.mahkats.Server.Unit.Building.Barrack;
 
 import java.util.ArrayList;
 
 import sbu.cs.mahkats.Configuration.Config;
 import sbu.cs.mahkats.Configuration.Units.BuildingConfig;
-import sbu.cs.mahkats.Unit.Movable.Creep.Creep;
-import sbu.cs.mahkats.Unit.Movable.Creep.MeleeCreep;
+import sbu.cs.mahkats.Server.Unit.Movable.Creep.Creep;
+import sbu.cs.mahkats.Server.Unit.Movable.Creep.MeleeCreep;
 
 public class MeleeBarrack extends Barrack {
     private final ArrayList<MeleeCreep> meleeCreeps = new ArrayList<>();
-    public MeleeBarrack(String lane, String teamName) {
-        super(lane, teamName);
+    public MeleeBarrack(String lane, String teamName , int code) {
+        super(lane, teamName , code);
         Config config = BuildingConfig.getInstance("BarrackConfig");
         hp = config.getDoubleValue("barrack.melee.hp");
         hp_regeneration = config.getDoubleValue("barack.melee.hp_regeneration");

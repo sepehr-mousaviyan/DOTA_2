@@ -3,17 +3,16 @@ package sbu.cs.mahkats.Server.App;
 
 import sbu.cs.mahkats.Configuration.Config;
 import sbu.cs.mahkats.Configuration.InterfaceConfig;
-import sbu.cs.mahkats.Server.Connection.DataBase.DataBase;
-import sbu.cs.mahkats.Unit.Building.Tower.Tower;
-import sbu.cs.mahkats.Unit.Building.Tower.TowerRunnable;
-import sbu.cs.mahkats.Unit.Movable.Creep.Creep;
-import sbu.cs.mahkats.Unit.Movable.Creep.CreepRunnable;
-import sbu.cs.mahkats.Unit.Movable.Creep.MeleeCreep;
-import sbu.cs.mahkats.Unit.Movable.Creep.RangedCreep;
-import sbu.cs.mahkats.Unit.Movable.Hero.Hero;
-import sbu.cs.mahkats.Unit.Unit;
-import sbu.cs.mahkats.Unit.unitList;
-import sbu.cs.mahkats.Unit.Building.Barrack.Barrack;
+import sbu.cs.mahkats.Server.Unit.Building.Tower.Tower;
+import sbu.cs.mahkats.Server.Unit.Building.Tower.TowerRunnable;
+import sbu.cs.mahkats.Server.Unit.Movable.Creep.Creep;
+import sbu.cs.mahkats.Server.Unit.Movable.Creep.CreepRunnable;
+import sbu.cs.mahkats.Server.Unit.Movable.Creep.MeleeCreep;
+import sbu.cs.mahkats.Server.Unit.Movable.Creep.RangedCreep;
+import sbu.cs.mahkats.Server.Unit.Movable.Hero.Hero;
+import sbu.cs.mahkats.Server.Unit.Unit;
+import sbu.cs.mahkats.Server.Unit.unitList;
+import sbu.cs.mahkats.Server.Unit.Building.Barrack.Barrack;
 
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -32,6 +31,8 @@ public class GamePlay {
     
     private static unitList GreenUnits; // all the red units objects
     private static unitList RedUnits;  // all the green units objects
+
+    private static int last_code = 1;
 
     private final static Logger logger = Logger.getLogger(GamePlay.class.getName());;
 
@@ -227,12 +228,14 @@ public class GamePlay {
         for (int i = 0; i < RANGED_CREEP_NUMBERS; i++) {
             greenRangedCreep.add(new RangedCreep(GreenUnits.getRangedBarrack(greenLane).getLocation_x(),
                                         GreenUnits.getRangedBarrack(greenLane).getLocation_y(),
-                                        greenLane, "GREEN"));
+                                        greenLane, "GREEN" , last_code));
+            addCode();
             
             redRangedCreep.add(new RangedCreep(RedUnits.getRangedBarrack(redLane).getLocation_x(),
                                         RedUnits.getRangedBarrack(redLane).getLocation_y(),
-                                        greenLane, "RED"));
-            }
+                                        greenLane, "RED" , last_code));
+            addCode();
+        }
         GreenUnits.addCreeps(new ArrayList<>(greenRangedCreep));
         GreenUnits.getRangedBarrack(greenLane).addCreep(greenRangedCreep);
         RedUnits.addCreeps(new ArrayList<>(redRangedCreep));
@@ -241,11 +244,13 @@ public class GamePlay {
         for (int i = 0; i < MELEE_CREEP_NUMBERS; i++) {
             greenMeleeCreep.add(new MeleeCreep(GreenUnits.getMeleeBarracks(greenLane).getLocation_x(),
                                         GreenUnits.getMeleeBarracks(greenLane).getLocation_y(),
-                                        greenLane, "GREEN")); 
+                                        greenLane, "GREEN" , last_code));
+            addCode();
 
             redMeleeCreep.add(new MeleeCreep(RedUnits.getMeleeBarracks(redLane).getLocation_x(),
                                         RedUnits.getMeleeBarracks(redLane).getLocation_y(),
-                                        greenLane, "RED"));
+                                        greenLane, "RED" , last_code));
+            addCode();
             RedUnits.addCreeps(new ArrayList<>(redMeleeCreep));
         }
         GreenUnits.addCreeps(new ArrayList<>(greenMeleeCreep));
@@ -313,5 +318,11 @@ public class GamePlay {
     public static int getTurn() {
         return turn;
     }
+
+    public static int getLast_code(){ return last_code; }
+
+    public static void addCode(){ last_code++; }
+
+    public static int get_add_Code(){ return last_code++; }
 
 }

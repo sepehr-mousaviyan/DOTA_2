@@ -1,7 +1,7 @@
-package sbu.cs.mahkats.Unit.Building.Tower;
+package sbu.cs.mahkats.Server.Unit.Building.Tower;
 
 import sbu.cs.mahkats.Server.App.GamePlay;
-import sbu.cs.mahkats.Unit.Unit;
+import sbu.cs.mahkats.Server.Unit.Unit;
 
 import java.util.ArrayList;
 

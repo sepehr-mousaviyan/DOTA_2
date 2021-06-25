@@ -1,12 +1,13 @@
-package sbu.cs.mahkats.Unit;
+package sbu.cs.mahkats.Server.Unit;
 
-import sbu.cs.mahkats.Unit.Building.Ancient.Ancient;
-import sbu.cs.mahkats.Unit.Building.Barrack.Barrack;
-import sbu.cs.mahkats.Unit.Building.Barrack.RangedBarrack;
-import sbu.cs.mahkats.Unit.Building.Barrack.MeleeBarrack;
-import sbu.cs.mahkats.Unit.Building.Tower.Tower;
-import sbu.cs.mahkats.Unit.Movable.Creep.Creep;
-import sbu.cs.mahkats.Unit.Movable.Hero.Hero;
+import sbu.cs.mahkats.Server.App.GamePlay;
+import sbu.cs.mahkats.Server.Unit.Building.Ancient.Ancient;
+import sbu.cs.mahkats.Server.Unit.Building.Barrack.Barrack;
+import sbu.cs.mahkats.Server.Unit.Building.Barrack.RangedBarrack;
+import sbu.cs.mahkats.Server.Unit.Building.Barrack.MeleeBarrack;
+import sbu.cs.mahkats.Server.Unit.Building.Tower.Tower;
+import sbu.cs.mahkats.Server.Unit.Movable.Creep.Creep;
+import sbu.cs.mahkats.Server.Unit.Movable.Hero.Hero;
 import java.util.ArrayList;
 
 public class unitList {
@@ -23,33 +24,33 @@ public class unitList {
     public unitList(String teamName) {
         this.teamName = teamName;
         //ancient unit making
-        ancient = new Ancient(teamName);
+        ancient = new Ancient(teamName , GamePlay.get_add_Code());
 
         //towers unit making
         for (int i = 0; i < BASE_TOWER_NUMBERS; i++) {
-            this.towers.add(new Tower("BASE", teamName, i));
+            this.towers.add(new Tower("BASE", teamName, i , GamePlay.get_add_Code()));
         }
     
         for (int i = 0; i < LANE_TOWER_NUMBERS; i++) {
-            this.towers.add(new Tower("BOTTOM", teamName, i));
+            this.towers.add(new Tower("BOTTOM", teamName, i , GamePlay.get_add_Code()));
         }
         
         for (int i = 0; i < LANE_TOWER_NUMBERS; i++) {
-            this.towers.add(new Tower("MIDDLE", teamName, i));
+            this.towers.add(new Tower("MIDDLE", teamName, i , GamePlay.get_add_Code()));
         }
 
         for (int i = 0; i < LANE_TOWER_NUMBERS; i++) {
-            this.towers.add(new Tower("TOP", teamName, i));
+            this.towers.add(new Tower("TOP", teamName, i , GamePlay.get_add_Code()));
         }
 
         //barracks unit making
-        this.meleeBarracks.add(new MeleeBarrack("TOP", teamName));
-        this.meleeBarracks.add(new MeleeBarrack("MIDDLE", teamName));
-        this.meleeBarracks.add(new MeleeBarrack("BOTTOM", teamName));
+        this.meleeBarracks.add(new MeleeBarrack("TOP", teamName , GamePlay.get_add_Code()));
+        this.meleeBarracks.add(new MeleeBarrack("MIDDLE", teamName , GamePlay.get_add_Code()));
+        this.meleeBarracks.add(new MeleeBarrack("BOTTOM", teamName , GamePlay.get_add_Code()));
         
-        this.rangedBarracks.add(new RangedBarrack("TOP", teamName));
-        this.rangedBarracks.add(new RangedBarrack("MIDDLE", teamName));
-        this.rangedBarracks.add(new RangedBarrack("BOTTOM", teamName));    
+        this.rangedBarracks.add(new RangedBarrack("TOP", teamName , GamePlay.get_add_Code()));
+        this.rangedBarracks.add(new RangedBarrack("MIDDLE", teamName , GamePlay.get_add_Code()));
+        this.rangedBarracks.add(new RangedBarrack("BOTTOM", teamName , GamePlay.get_add_Code()));
     }
     
     public void add(Creep creep) {

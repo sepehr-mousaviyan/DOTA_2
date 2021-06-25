@@ -4,7 +4,7 @@ import com.google.gson.JsonObject;
 import org.apache.log4j.Logger;
 import org.javatuples.Pair;
 import sbu.cs.mahkats.Api.MassageMaker;
-import sbu.cs.mahkats.Api.UserData;
+import sbu.cs.mahkats.Api.Data.UserData;
 
 public class Player {
     private static long TOKEN;

@@ -6,7 +6,7 @@ import org.javatuples.Pair;
 import sbu.cs.mahkats.Api.Api;
 import sbu.cs.mahkats.Api.MassageMaker;
 import sbu.cs.mahkats.Api.Parser;
-import sbu.cs.mahkats.Api.UserData;
+import sbu.cs.mahkats.Api.Data.UserData;
 import sbu.cs.mahkats.Server.Connection.DataBase.DataBase;
 import sbu.cs.mahkats.Server.PlayerData;
 import sbu.cs.mahkats.Server.Player;

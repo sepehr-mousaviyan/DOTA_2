@@ -1,7 +1,7 @@
-package sbu.cs.mahkats.Unit.Movable.Creep;
+package sbu.cs.mahkats.Server.Unit.Movable.Creep;
 
 import sbu.cs.mahkats.Server.App.GamePlay;
-import sbu.cs.mahkats.Unit.Unit;
+import sbu.cs.mahkats.Server.Unit.Unit;
 
 import java.util.ArrayList;
 

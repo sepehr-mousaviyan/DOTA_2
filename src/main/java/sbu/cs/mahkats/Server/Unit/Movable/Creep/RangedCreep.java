@@ -1,11 +1,11 @@
-package sbu.cs.mahkats.Unit.Movable.Creep;
+package sbu.cs.mahkats.Server.Unit.Movable.Creep;
 
 import sbu.cs.mahkats.Configuration.Config;
 import sbu.cs.mahkats.Configuration.Units.CreepConfig;
 
 public class RangedCreep extends Creep{
-    public RangedCreep(int Location_x, int Location_y, String lane, String teamName) {
-        super(lane , teamName, "RangedCreep");
+    public RangedCreep(int Location_x, int Location_y, String lane, String teamName , int code) {
+        super(lane , teamName, "RangedCreep" , code);
         Config creepConfig = CreepConfig.getInstance();
         minimum_damage = creepConfig.getDoubleValue("creep.ranged.minimum.damage");
         maximum_damage = creepConfig.getDoubleValue("creep.ranged.maximum.damage");
