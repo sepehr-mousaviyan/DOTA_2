@@ -2,7 +2,7 @@ package sbu.cs.mahkats.Server.Connection.Client;
 
 import org.apache.log4j.Logger;
 import sbu.cs.mahkats.Configuration.Config;
-
+import sbu.cs.mahkats.Server.App.GamePlay;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -51,6 +51,6 @@ public class Connection implements Runnable {
         Client client = new Client(Thread.currentThread().getId(), socket);
         clients.add(client);
         client.handler();
-        client.play();
+        new GamePlay().play(client);
     }
 }

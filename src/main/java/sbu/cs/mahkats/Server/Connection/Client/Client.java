@@ -57,9 +57,7 @@ public class Client {
         player = new Player();
     }
     
-    public void play() {
-        MassageMaker massageMaker = new MassageMaker();
-        
+    public void sendData() {
         unitList greenUnits = GamePlay.getGreenUnits();
         unitList redUnits = GamePlay.getGreenUnits();
         Ancient greenAncient = greenUnits.getAncient();
@@ -82,7 +80,7 @@ public class Client {
         sendTowerData(redTowers, "tower" , "ok");
         sendBarrackData(greenBarracks, "barrack" , "ok");
         sendBarrackData(redBarracks, "barrack" , "ok");
-        
+        send(new MassageMaker().massage("ok" , "End").toString());
     }
 
     public void sendAncientData(Ancient ancient, String action, String status){

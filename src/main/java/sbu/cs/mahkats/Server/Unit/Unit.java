@@ -122,7 +122,6 @@ public abstract class Unit {
                 //TODO: hero go to respawn time
                 return;
             }
-            //TODO: message this to client
             this.destroy();
         }
         hp = hp - (damage - armor);
