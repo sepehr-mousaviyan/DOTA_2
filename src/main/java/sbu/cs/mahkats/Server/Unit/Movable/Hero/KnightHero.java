@@ -7,5 +7,6 @@ public class KnightHero extends Hero {
     public KnightHero(String teamName, int code) {
         super(teamName, code);
         Config heroConfig = HeroConfig.getInstance("Knight");
+
     }
 }
