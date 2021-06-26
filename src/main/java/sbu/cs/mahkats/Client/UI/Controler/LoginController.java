@@ -14,7 +14,7 @@ import sbu.cs.mahkats.Configuration.Config;
 
 import java.io.IOException;
 
-public class LoginController {
+public class LoginController  {
     private static Config config = Config.getInstance();
     private static final int USERNAME_LENGTH = config.getIntValue("input.limit.userName");
     private static final int PASSWORD_LENGTH = config.getIntValue("input.limit.passWord");
