@@ -89,7 +89,7 @@ public class Client {
         BuildingData ancientData = new BuildingData(TOKEN , ancient.getHp(), ancient.getHp_regeneration() ,
                 ancient.getMinimum_damage() , ancient.getMaximum_damage() , ancient.getArmor() , ancient.getRange() ,
                 ancient.getExperience() , ancient.getStatusAttacker() , ancient.getDefender().getCode() ,
-                ancient.getStatusDie() , ancient.getCode() , ancient.getTeamName() , "Ancient");
+                ancient.getStatusDie() , ancient.getCode() , "Ancient", ancient.getTeamName() );
         send(new MassageMaker().massage(status , action , ancientData).toString());
     }
 
@@ -98,9 +98,9 @@ public class Client {
             HeroData heroData = new HeroData(TOKEN , hero.getHp(), hero.getHp_regeneration() ,
                 hero.getMinimum_damage() , hero.getMaximum_damage() , hero.getArmor() , hero.getRange() ,
                 hero.getExperience() , hero.getStatusAttacker() , hero.getDefender().getCode() ,
-                hero.getStatusDie() , hero.getCode(), hero.getTeamName() , hero.getLevel() , hero.getMana() , 
+                hero.getStatusDie() , hero.getCode(), hero.getLevel() , hero.getMana() ,
                 hero.getMana_regeneration() , hero.getAbility1().toString() , hero.getAbility2().toString() , 
-                hero.getAbility3().toString() , hero.getAbility4().toString());
+                hero.getAbility3().toString() , hero.getAbility4().toString(), hero.getTeamName() );
             send(new MassageMaker().massage(status , action , heroData).toString());
         }
 
@@ -111,8 +111,8 @@ public class Client {
             CreepData creepData = new CreepData(TOKEN , creep.getHp(), creep.getHp_regeneration() ,
                 creep.getMinimum_damage() , creep.getMaximum_damage() , creep.getArmor() , creep.getRange() ,
                 creep.getExperience() , creep.getStatusAttacker() , creep.getDefender().getCode() ,
-                creep.getStatusDie() , creep.getCode(), creep.getTeamName() , creep.getLevel() , creep.getMana() , 
-                creep.getMana_regeneration());  
+                creep.getStatusDie() , creep.getCode(), creep.getLevel() , creep.getMana() ,
+                creep.getMana_regeneration(), creep.getType(), creep.getTeamName());
             send(new MassageMaker().massage(status , action , creepData).toString());      
         }
     }
