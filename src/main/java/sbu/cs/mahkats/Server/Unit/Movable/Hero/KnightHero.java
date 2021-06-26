@@ -5,8 +5,7 @@ import sbu.cs.mahkats.Configuration.Units.HeroConfig;
 
 public class KnightHero extends Hero {
     public KnightHero(String teamName, int code) {
-        super(teamName, code);
-        Config heroConfig = HeroConfig.getInstance("Knight");
+        super(teamName, code, "knight");
 
     }
 }
