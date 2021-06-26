@@ -51,5 +51,6 @@ public class Connection implements Runnable {
         Client client = new Client(Thread.currentThread().getId(), socket);
         clients.add(client);
         client.handler();
+        client.play();
     }
 }

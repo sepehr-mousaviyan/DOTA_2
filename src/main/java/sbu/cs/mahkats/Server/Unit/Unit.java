@@ -26,12 +26,84 @@ public abstract class Unit {
         this.code = code;
     }
 
+
+    public double getHp() {
+        return hp;
+    }
+
+    public void setHp(double hp) {
+        this.hp = hp;
+    }
+
+    public void setHp_regeneration(double hp_regeneration) {
+        this.hp_regeneration = hp_regeneration;
+    }
+
+    public void setMinimum_damage(double minimum_damage) {
+        this.minimum_damage = minimum_damage;
+    }
+
+    public void setMaximum_damage(double maximum_damage) {
+        this.maximum_damage = maximum_damage;
+    }
+
+    public double getArmor() {
+        return armor;
+    }
+
+    public void setArmor(double armor) {
+        this.armor = armor;
+    }
+
+    public void setRange(double range) {
+        this.range = range;
+    }
+
+    public double getExperience() {
+        return experience;
+    }
+
+    public void setExperience(double experience) {
+        this.experience = experience;
+    }
+
+    public Boolean getAttacking() {
+        return isAttacking;
+    }
+
+    public void setAttacking(Boolean attacking) {
+        isAttacking = attacking;
+    }
+
+    public boolean isDie() {
+        return isDie;
+    }
+
+    public void setDie(boolean die) {
+        isDie = die;
+    }
+
+    public int getCode() {
+        return code;
+    }
+
+    public void setLocation_x(int location_x) {
+        Location_x = location_x;
+    }
+
+    public void setLocation_y(int location_y) {
+        Location_y = location_y;
+    }
+
     public String getTeamName(){
         return teamName;
     }
 
-    public void hp_regenerate(){
+    public void hp_regenerate() {
         hp  = hp  + hp_regeneration;
+        if (hp > 100) {
+            hp = 100;
+        }
     }
     //TODO damage giving for hero
 
@@ -68,8 +140,12 @@ public abstract class Unit {
         return range;
     }
 
-    public double minimum_damage() {
+    public double getMinimum_damage() {
         return minimum_damage;
+    }
+
+    public double getMaximum_damage() {
+        return maximum_damage;
     }
 
     public void setDefender(Unit defender){
@@ -95,6 +171,8 @@ public abstract class Unit {
     public boolean getStatusDie(){
         return isDie;
     }
+
+    public double getHp_regeneration(){ return hp_regeneration; }
 
     public void reduce_hp(double reduce){ hp -= reduce; }
 
@@ -131,7 +209,7 @@ public abstract class Unit {
         if(range == 2 || range == 3){
             if (Math.abs(defender.getLocation_x() - Location_x) + Math.abs(defender.getLocation_y() - Location_y) <= range) {
                 isAttacking = true;
-                return true;
+                return isAttacking;
             }
         }
         isAttacking = false;

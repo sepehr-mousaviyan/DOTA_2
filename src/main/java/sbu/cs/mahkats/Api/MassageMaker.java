@@ -44,4 +44,5 @@ public class MassageMaker{
                 new Pair<>("action" , action),
                 new Pair<>("content", heroData.makeJson()));
     }
+
 }

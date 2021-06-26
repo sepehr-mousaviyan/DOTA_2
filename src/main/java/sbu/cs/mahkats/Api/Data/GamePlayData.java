@@ -20,8 +20,9 @@ public class GamePlayData implements Data{
     protected String error;
     protected int Location_x;
     protected int Location_y;
+    protected String teamName;
 
-    public GamePlayData(Long token, double hp, double hp_regeneration, double minimum_damage, double maximum_damage, double armor, double range, double experience, Boolean isAttacking, int code_defender, boolean isDie, int code) {
+    public GamePlayData(Long token, double hp, double hp_regeneration, double minimum_damage, double maximum_damage, double armor, double range, double experience, Boolean isAttacking, int code_defender, boolean isDie, int code, String teamName) {
         this.token = token;
         this.hp = hp;
         this.hp_regeneration = hp_regeneration;
@@ -34,6 +35,7 @@ public class GamePlayData implements Data{
         this.code_defender = code_defender;
         this.isDie = isDie;
         this.code = code;
+        this.teamName = teamName;
     }
 
     public GamePlayData(Long token, String error) {
