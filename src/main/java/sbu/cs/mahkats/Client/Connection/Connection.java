@@ -118,4 +118,8 @@ public class Connection {
         return error;
     }
 
+    public static void runReceiver(){
+        new Thread(new ReceiveDataRunnable(dataInputStream)).start();
+    }
+
 }
