@@ -20,4 +20,5 @@ public class PlayerData {
     public boolean equals(PlayerData obj) {
         return this.username.equals(obj.getUsername());
     }
+
 }
