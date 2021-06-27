@@ -36,7 +36,7 @@ public class GamePlay {
 
     private static int last_code = 1;
 
-    private final static Logger logger = Logger.getLogger(GamePlay.class.getName());;
+    private final static Logger logger = Logger.getLogger(GamePlay.class.getName());
 
     private static int turn = 0;
 
@@ -89,7 +89,6 @@ public class GamePlay {
                 checkMap();
                 hpRegenerateAll();
                 //TODO: communicate
-                communicate();
                 client.sendData();
                 lastTurn = turn;
 
@@ -139,7 +138,7 @@ public class GamePlay {
             if(green.canHit(RedUnits.getAncient())){
                 green.setDefender(RedUnits.getAncient());
                 green.setStatusAttacker(true);
-                continue main;
+                continue;
             }
             //creeps
             for(Creep redC : redCreeps){
@@ -218,30 +217,32 @@ public class GamePlay {
         }
     }
 
-    public void abilityHit(int gunshot, Hero hero, Ability ability) {
+    public static void abilityHit(int gunshot, Hero hero, Ability ability) {
         int shots = 0;
         ArrayList<Unit> greenUnits = GreenUnits.getAll();
         ArrayList<Unit> redUnits = RedUnits.getAll();
         for (Unit greenU : greenUnits) {
             if (gunshot != 0 && hero.canHit(greenU, ability)) {
-                shots++;
                 if(shots >= gunshot) {
                     break;
                 }
-                hero.setStatusAttacker(true);
-                hero.setDefender(greenU);
+                shots++;
+                greenU.takeDamage(ability.getDamage() , hero);
             }
-            else if (gunshot == 0 && hero.canHit(greenU, ability) {
-                hero.setStatusAttacker(true);
-                hero.setDefender(greenU);
+            else if (gunshot == 0 && hero.canHit(greenU, ability)) {
+                greenU.takeDamage(ability.getDamage() , hero);
             }
         }
         for (Unit redU : redUnits) {
             if (gunshot != 0 && hero.canHit(redU, ability)) {
+                if(shots >= gunshot) {
+                    break;
+                }
                 shots++;
-                hero.setStatusAttacker(true);
-                hero.setStatusAttacker(true);
-                hero.setDefender(redUnits);
+                redU.takeDamage(ability.getDamage() , hero);
+            }
+            else if (gunshot == 0 && hero.canHit(redU, ability)) {
+                redU.takeDamage(ability.getDamage() , hero);
             }
         }
     }

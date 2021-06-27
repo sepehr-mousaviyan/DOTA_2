@@ -1,7 +1,6 @@
 package sbu.cs.mahkats.Server.Unit.Movable;
 
 import sbu.cs.mahkats.Server.App.GamePlay;
-import sbu.cs.mahkats.Server.Unit.Movable.Hero.Ability.Ability;
 import sbu.cs.mahkats.Server.Unit.Unit;
 
 public abstract class Movable extends Unit {

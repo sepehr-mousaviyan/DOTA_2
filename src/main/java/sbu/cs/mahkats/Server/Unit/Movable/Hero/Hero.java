@@ -7,8 +7,6 @@ import sbu.cs.mahkats.Server.App.GamePlay;
 import sbu.cs.mahkats.Server.Unit.Movable.Movable;
 
 public class Hero extends Movable {
-
-
     protected String hero_name;
 
     protected Ability ability1;
@@ -23,27 +21,26 @@ public class Hero extends Movable {
     protected double levelUp_benefit_armor;
     protected double levelUp_benefit_hp_regeneration;
     protected double levelUp_benefit_mana_regeneration;
+    protected boolean isLevelUp;
 
     protected int LEVEL_NUMBERS;
     protected int[] LEVEL_XP;
 
     public Hero(String teamName , int code, String hero_name) {
         super(teamName ,"Hero" , code);
+        isLevelUp = false;
 
         this.hero_name = hero_name;
         ability1 = new Ability(hero_name, 1);
         ability2 = new Ability(hero_name, 2);
         ability3 = new Ability(hero_name, 3);
 
-        Config levelUpConfig = HeroConfig.getInstance("Level_Xp");
-        
-        LEVEL_NUMBERS = heroConfig.getIntValue("hero.level_numbers");
-        LEVEL_XP = new int[LEVEL_NUMBERS];
-        for (int i = 0; i < LEVEL_NUMBERS; i++ ) {
-            LEVEL_XP[i] = levelUpConfig.getIntValue("hero.xp_needed.level" + i);
-        }
+        ability1.setUnlock();
+        ability2.setCanUnlock();
 
         Config heroConfig = HeroConfig.getInstance(hero_name);
+
+        LEVEL_NUMBERS = heroConfig.getIntValue("hero.level_numbers");
         hp = max_hp = heroConfig.getIntValue("hero." + hero_name + ".hp");
         mana = max_mana = heroConfig.getIntValue("hero." + hero_name + ".mana");
         minimum_damage = heroConfig.getIntValue("hero." + hero_name + ".minimum.damage");
@@ -60,6 +57,12 @@ public class Hero extends Movable {
         levelUp_benefit_hp_regeneration = heroConfig.getDoubleValue("hero." + hero_name + ".levelUp_benefit.hp_regeneration");
         levelUp_benefit_mana_regeneration = heroConfig.getDoubleValue("hero." + hero_name + ".levelUp_benefit.mana_regeneration");
 
+        Config levelUpConfig = HeroConfig.getInstance("Level_Xp");
+
+        LEVEL_XP = new int[LEVEL_NUMBERS];
+        for (int i = 0; i < LEVEL_NUMBERS; i++ ) {
+            LEVEL_XP[i] = levelUpConfig.getIntValue("hero.xp_needed.level" + i);
+        }
     }
 
     public void levelUp() {
@@ -73,6 +76,12 @@ public class Hero extends Movable {
             hp_regeneration += levelUp_benefit_hp_regeneration;
             mana_regeneration += levelUp_benefit_mana_regeneration;
             GamePlay.heroLevelUp();
+            if(!ability3.isMaxStage() || !ability2.isMaxStage() || !ability1.isMaxStage()) {
+                isLevelUp = true;
+            }
+            if(ability3.getUNLOCK_LEVEL() == level){
+                ability3.setCanUnlock();
+            }
         }  
     }
 
@@ -83,12 +92,50 @@ public class Hero extends Movable {
         return false;
     }
 
-    public Ability getLEVEL_NUMBERS() {
+    /**
+     * upgrade ability but if can not do that return false
+     * @param choice the number of ability
+     * @return if can upgrade return true otherwise return false
+     */
+    public boolean upgradeAbility(int choice){
+        if(isLevelUp){
+            switch (choice){
+                case 1:
+                    if(!ability1.stageUp()){
+                        return false;
+                    }
+                    break;
+                case 2:
+                    if(!ability2.stageUp()){
+                        return false;
+                    }
+                    break;
+                case 3:
+                    if(!ability3.stageUp()){
+                        return false;
+                    }
+                    break;
+            }
+            isLevelUp = false;
+            return true;
+        }
+        return false;
+    }
+
+    public void addRegularExperience(double extraExperience) {
+        experience += extraExperience;
+    }
+
+    public void addHeroExperience(double extraExperience) {
+        experience += 100 + 0.13 * extraExperience;
+    }
+
+    public int getLEVEL_NUMBERS() {
         return LEVEL_NUMBERS;
     }
 
-    public Ability getLEVEL_XP() {
-        return LEVEL_XP;
+    public int getLEVEL_XP() {
+        return LEVEL_XP[level];
     }
 
     public Ability getAbility1() {

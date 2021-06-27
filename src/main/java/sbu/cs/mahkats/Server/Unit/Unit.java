@@ -1,6 +1,8 @@
 package sbu.cs.mahkats.Server.Unit;
 
 import sbu.cs.mahkats.Server.App.GamePlay;
+import sbu.cs.mahkats.Server.Unit.Movable.Hero.Ability.Ability;
+import sbu.cs.mahkats.Server.Unit.Movable.Hero.Hero;
 
 public abstract class Unit {
     protected double hp = 0;
@@ -123,6 +125,26 @@ public abstract class Unit {
             if(unitType.equals("Hero")){
                 //TODO: hero go to respawn time
                 return;
+            }
+            this.destroy();
+        }
+        hp = hp - (damage - armor);
+    }
+
+    public void takeDamage(double damage , Hero hero) {
+        if((damage - armor) > hp){
+            hp = 0;
+            if(unitType.equals("Ancient")){
+                //TODO: end of game
+                return;
+            }
+            else if(unitType.equals("Hero")){
+                //TODO: hero go to respawn time
+                hero.addHeroExperience(this.experience);
+                return;
+            }
+            else{
+                hero.addRegularExperience(this.experience);
             }
             this.destroy();
         }

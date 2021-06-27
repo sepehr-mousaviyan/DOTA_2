@@ -2,23 +2,34 @@ package sbu.cs.mahkats.Server.Unit.Movable.Hero.Ability;
 
 import sbu.cs.mahkats.Configuration.Config;
 import sbu.cs.mahkats.Configuration.Units.HeroConfig;
+import sbu.cs.mahkats.Server.App.GamePlay;
+import sbu.cs.mahkats.Server.Unit.Movable.Hero.Hero;
+import sbu.cs.mahkats.Server.Unit.Unit;
 
 public class Ability {
     private final String NAME;
-    private final int UNLOCK_LEVEL;
-    private final int GUNSHOT;
-    private final int STAGE_NUMBERS;
+    private final int UNLOCK_LEVEL; //the level can this ability unlock
+    private final int GUNSHOT;  //the number of unit can hit in one turn
+    private final int STAGE_NUMBERS;    //maximum level
     private final int RANGE;
-    private final int [] DAMAGE;
-    private final int [] MANA_COST;
-    private final int [] RELOAD_DURATION;
-    private final int [] DURATION;
-
-    private int stage;
+    private final double [] DAMAGE;     //the list of damage sort of level
+    private final int [] MANA_COST;     //the list of mana that should cost for one use ability sort of level
+    private final int [] RELOAD_DURATION;   //the list of turn that should stay for can use again ability sort of level
+    private final int [] DURATION;      //the list of turn that duration a use ability sort of level
+    
+    private int left_duration_turn; //the count duration of ability for end
+    private int left_duration_reload_turn;  //the count turn until unlock again ability to use
+    private boolean isAvailable;    //if ability is not in reload is true
+    private int reloadDuration;
+    private int stage;      //level of ability
+    private boolean isUnlock;   //if hero unlock this is true
+    private boolean canUnlock;  // if hero can unlock this is true
 
     public Ability(String hero_name, int ability_number) {
         
         stage = 0;
+        isUnlock = false;
+        isAvailable = true;
         
         Config heroConfig = HeroConfig.getInstance(hero_name);
 
@@ -28,7 +39,7 @@ public class Ability {
         STAGE_NUMBERS = heroConfig.getIntValue("hero." + hero_name + ".ability" + ability_number +".stage_numbers");
         RANGE = heroConfig.getIntValue("hero." + hero_name + ".ability" + ability_number + ".range");
 
-        DAMAGE = new int[STAGE_NUMBERS];
+        DAMAGE = new double[STAGE_NUMBERS];
         MANA_COST = new int[STAGE_NUMBERS];
         RELOAD_DURATION = new int[STAGE_NUMBERS];
         DURATION = new int[STAGE_NUMBERS];
@@ -40,19 +51,164 @@ public class Ability {
             RELOAD_DURATION[i] = heroConfig.getIntValue("hero." + hero_name + ".ability" + ability_number + ".reload_duration." + stage_number);
             DURATION[i] = heroConfig.getIntValue("hero." + hero_name + ".ability" + ability_number + ".duration." + stage_number);
         }
-
-
     }
 
-    public void start() {
-        switch(this.NAME) {
-            case "breathFire":
-                breathFire();
-                break;
+    /**
+     * this function for using ability
+     * @param hero that use this ability
+     */
+    public void use(Hero hero) {
+        if(isAvailable){
+            switch(this.NAME) {
+                case "breathFire":
+                    new Thread(()->{
+                        left_duration_turn = DURATION[stage];
+                        int lastTurn = GamePlay.getTurn();
+                        while(left_duration_turn != 0) {
+                            if(lastTurn < GamePlay.getTurn()) {
+                            breathFire(hero);
+                            left_duration_turn--;
+                            lastTurn = GamePlay.getTurn();
+                            }
+                        }
+                    });
+                    break;
+                case "dragonTail":
+                    //TODO recieve from client
+                    new Thread(()->{
+                        left_duration_turn = DURATION[stage];
+                        int lastTurn = GamePlay.getTurn();
+                        while(left_duration_turn != 0) {
+                            if(lastTurn < GamePlay.getTurn()) {
+                                dragonTail(hero, hero.getDefender());
+                                left_duration_turn--;
+                                lastTurn = GamePlay.getTurn();
+                            }
+                        }
+                    });
+                    break;
+                
+
+                case "elderDragonForm":
+                    //TODO
+                    new Thread(()->{
+                        left_duration_turn = DURATION[stage];
+                        int lastTurn = GamePlay.getTurn();
+                        while(left_duration_turn != 0) {
+                            if(lastTurn < GamePlay.getTurn()) {
+                                //elderDragonForm(hero);
+                                left_duration_turn--;
+                                lastTurn = GamePlay.getTurn();
+                            }
+                        }
+                    });
+                    break;
+
+                case "frostArrows":
+                    //TODO
+                    break;
+                    
+                case "multiArrow":
+                    new Thread(()->{
+                        left_duration_turn = DURATION[stage];
+                        int lastTurn = GamePlay.getTurn();
+                        while(left_duration_turn != 0) {
+                            if(lastTurn < GamePlay.getTurn()) {
+                                multiArrow(hero);
+                                left_duration_turn--;
+                                lastTurn = GamePlay.getTurn();
+                            }
+                        }
+                    });
+                    break;
+                    
+                case "marksmanship":
+                    new Thread(()->{
+                        left_duration_turn = DURATION[stage];
+                        int lastTurn = GamePlay.getTurn();
+                        while(left_duration_turn != 0) {
+                            if(lastTurn < GamePlay.getTurn()) {
+                                marksmanship(hero);
+                                left_duration_turn--;
+                                lastTurn = GamePlay.getTurn();
+                            }
+                        }
+                    });
+                    //TODO
+                    break;
+            }
+            isAvailable = false;
         }
+        //count reload duration
+        new Thread(()->{
+            left_duration_reload_turn = RELOAD_DURATION[stage];
+            int lastTurn = GamePlay.getTurn();
+            while(left_duration_reload_turn != 0) {
+                if(lastTurn < GamePlay.getTurn()) {
+                    left_duration_reload_turn--;
+                    lastTurn = GamePlay.getTurn();
+                }
+            }
+            isAvailable = true;
+        });
     }
 
-    public void breathFire() {
+    /**
+     * if can level up ability do that and return true
+     * @return can stage up or not
+     */
+    public boolean stageUp() {
+        if (stage < STAGE_NUMBERS - 1) {
+            stage++;
+            return true;
+        }
+        return false;
         
     }
+
+    public int getLeft_duration_turn(){ return left_duration_turn; }
+
+    public void breathFire(Hero hero) {
+        GamePlay.abilityHit(GUNSHOT, hero, this);
+    }
+
+    public void dragonTail(Hero hero, Unit defender) {
+        defender.takeDamage(this.getDamage() , hero);
+    }
+
+    public void multiArrow(Hero hero) {
+        GamePlay.abilityHit(GUNSHOT, hero, this);
+    }
+
+    public void marksmanship(Hero hero) {
+        GamePlay.abilityHit(GUNSHOT, hero, this);
+    }
+
+    public double getDamage(){
+        return DAMAGE[stage];
+    }
+    
+    public boolean getIsUnlock() {
+        return isUnlock;
+    }
+
+    public int getRange(){ return RANGE; }
+
+    public void levelUp(){
+        stage++;
+    }
+
+    public void setUnlock(){
+        isUnlock = true;
+    }
+
+    public void setCanUnlock(){
+        isUnlock = true;
+    }
+
+    public int getUNLOCK_LEVEL() {
+        return UNLOCK_LEVEL;
+    }
+
+    public boolean isMaxStage(){ return (stage >= STAGE_NUMBERS); }
 }
