@@ -155,6 +155,16 @@ public class unitList {
         return all;
     }
 
+    public ArrayList<Unit> getAll_withoutHero(){
+        ArrayList<Unit> all = new ArrayList<Unit>();
+        all.addAll(creeps);
+        all.addAll(towers);
+        all.addAll(meleeBarracks);
+        all.addAll(rangedBarracks);
+        all.add(ancient);
+        return all;
+    }
+
     public void remove(Unit unit){
         for(Creep creep : creeps){
             if(creep.equals(unit)){

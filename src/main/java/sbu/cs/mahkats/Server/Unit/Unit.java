@@ -4,10 +4,12 @@ import sbu.cs.mahkats.Server.App.GamePlay;
 
 public abstract class Unit {
     protected double hp = 0;
+    protected double max_hp = 0;
     protected double hp_regeneration = 0;
     protected double minimum_damage = 0;
     protected double maximum_damage = 0;
     protected double armor = 0;
+    protected double max_armor = 0;
     protected double range = 0;
     protected double experience;
     protected final String teamName;
@@ -206,6 +208,27 @@ public abstract class Unit {
             }
         }
         if(range == 2 || range == 3){
+            if (Math.abs(defender.getLocation_x() - Location_x) + Math.abs(defender.getLocation_y() - Location_y) <= range) {
+                isAttacking = true;
+                return isAttacking;
+            }
+        }
+        isAttacking = false;
+        return isAttacking;
+    }
+
+     public boolean canHit(Unit defender , Ability ability) {
+        if(ability.getRange() == 1) {
+            for(int i = Location_x - 1 ; i <= Location_x + 1 ; i++){
+                for(int j = Location_y - 1 ; j <= Location_y + 1 ; j++){
+                    if(defender.getLocation_x() == i && defender.getLocation_y() == j){
+                        isAttacking = true;
+                        return isAttacking;
+                    }
+                }
+            }
+        }
+        if(ability.getRange() == 2 || ability.getRange() == 3){
             if (Math.abs(defender.getLocation_x() - Location_x) + Math.abs(defender.getLocation_y() - Location_y) <= range) {
                 isAttacking = true;
                 return isAttacking;

@@ -7,15 +7,8 @@ import sbu.cs.mahkats.Server.Unit.Unit;
 public abstract class Movable extends Unit {
     protected int level;
     protected int mana;
+    protected int max_mana;
     protected int mana_regeneration;
-    protected Ability ability1;
-    protected Ability ability2;
-    protected Ability ability3;
-<<<<<<< HEAD
-    protected Ability ability4;
-    
-=======
->>>>>>> Knight hero configs added
 
     public Movable(String teamName, String unitType , int code) {
         super(teamName, unitType, code);
