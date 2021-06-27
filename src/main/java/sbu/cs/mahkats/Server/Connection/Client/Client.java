@@ -4,16 +4,27 @@ import com.google.gson.JsonObject;
 import org.apache.log4j.Logger;
 import org.javatuples.Pair;
 import sbu.cs.mahkats.Api.Api;
+import sbu.cs.mahkats.Api.Data.BuildingData;
+import sbu.cs.mahkats.Api.Data.CreepData;
+import sbu.cs.mahkats.Api.Data.HeroData;
 import sbu.cs.mahkats.Api.MassageMaker;
 import sbu.cs.mahkats.Api.Parser;
 import sbu.cs.mahkats.Api.Data.UserData;
+import sbu.cs.mahkats.Server.App.GamePlay;
 import sbu.cs.mahkats.Server.Connection.DataBase.DataBase;
+import sbu.cs.mahkats.Server.Unit.Building.Tower.Tower;
+import sbu.cs.mahkats.Server.Unit.unitList;
+import sbu.cs.mahkats.Server.Unit.Building.Ancient.Ancient;
+import sbu.cs.mahkats.Server.Unit.Building.Barrack.Barrack;
+import sbu.cs.mahkats.Server.Unit.Movable.Creep.Creep;
+import sbu.cs.mahkats.Server.Unit.Movable.Hero.Hero;
 import sbu.cs.mahkats.Server.PlayerData;
 import sbu.cs.mahkats.Server.Player;
 
 import java.io.*;
 import java.net.Socket;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class Client {
     private long ThreadID;
@@ -23,6 +34,7 @@ public class Client {
     private DataOutputStream dataOutputStream;
     private DataBase dataBase;
     private Player player;
+    public long TOKEN;
 
     private final static Logger LOGGER = Logger.getLogger(Client.class.getName());
 
@@ -43,6 +55,84 @@ public class Client {
             LOGGER.fatal("server can not connect to IO client!",throwables);
         }
         player = new Player();
+    }
+    
+    public void sendData() {
+        unitList greenUnits = GamePlay.getGreenUnits();
+        unitList redUnits = GamePlay.getGreenUnits();
+        Ancient greenAncient = greenUnits.getAncient();
+        Ancient redAncient = redUnits.getAncient();
+        ArrayList<Hero> greenHeroes= greenUnits.getHeros();
+        ArrayList<Hero> redHeroes= redUnits.getHeros();
+        ArrayList<Creep> greenCreeps= greenUnits.getCreeps();
+        ArrayList<Creep> redCreeps= redUnits.getCreeps();
+        ArrayList<Tower> greenTowers= greenUnits.getTowers();
+        ArrayList<Tower> redTowers= redUnits.getTowers();
+        ArrayList<Barrack> greenBarracks= greenUnits.getBarracks();
+        ArrayList<Barrack> redBarracks= redUnits.getBarracks();
+        sendAncientData(greenAncient , "ancient" , "ok");
+        sendAncientData(redAncient , "ancient" , "ok");
+        sendHeroData(greenHeroes, "hero" , "ok");
+        sendHeroData(redHeroes, "hero" , "ok");
+        sendCreepData(greenCreeps, "creep" , "ok");
+        sendCreepData(redCreeps, "creep" , "ok");
+        sendTowerData(greenTowers, "tower" , "ok");
+        sendTowerData(redTowers, "tower" , "ok");
+        sendBarrackData(greenBarracks, "barrack" , "ok");
+        sendBarrackData(redBarracks, "barrack" , "ok");
+        send(new MassageMaker().massage("ok" , "End").toString());
+    }
+
+    public void sendAncientData(Ancient ancient, String action, String status){
+        BuildingData ancientData = new BuildingData(TOKEN , ancient.getHp(), ancient.getHp_regeneration() ,
+                ancient.getMinimum_damage() , ancient.getMaximum_damage() , ancient.getArmor() , ancient.getRange() ,
+                ancient.getExperience() , ancient.getStatusAttacker() , ancient.getDefender().getCode() ,
+                ancient.getStatusDie() , ancient.getCode() , "Ancient", ancient.getTeamName() );
+        send(new MassageMaker().massage(status , action , ancientData).toString());
+    }
+
+    public void sendHeroData(ArrayList <Hero> heroes, String action, String status) {
+        for(Hero hero : heroes){
+            HeroData heroData = new HeroData(TOKEN , hero.getHp(), hero.getHp_regeneration() ,
+                hero.getMinimum_damage() , hero.getMaximum_damage() , hero.getArmor() , hero.getRange() ,
+                hero.getExperience() , hero.getStatusAttacker() , hero.getDefender().getCode() ,
+                hero.getStatusDie() , hero.getCode(), hero.getLevel() , hero.getMana() ,
+                hero.getMana_regeneration() , hero.getAbility1().toString() , hero.getAbility2().toString() , 
+                hero.getAbility3().toString() , hero.getAbility4().toString(), hero.getTeamName() );
+            send(new MassageMaker().massage(status , action , heroData).toString());
+        }
+
+    }
+
+    public void sendCreepData(ArrayList <Creep> creeps, String action, String status){
+        for(Creep creep : creeps){
+            CreepData creepData = new CreepData(TOKEN , creep.getHp(), creep.getHp_regeneration() ,
+                creep.getMinimum_damage() , creep.getMaximum_damage() , creep.getArmor() , creep.getRange() ,
+                creep.getExperience() , creep.getStatusAttacker() , creep.getDefender().getCode() ,
+                creep.getStatusDie() , creep.getCode(), creep.getLevel() , creep.getMana() ,
+                creep.getMana_regeneration(), creep.getType(), creep.getTeamName());
+            send(new MassageMaker().massage(status , action , creepData).toString());      
+        }
+    }
+
+    public void sendTowerData(ArrayList <Tower> towers, String action, String status){
+        for(Tower tower : towers){
+            BuildingData towerData = new BuildingData(TOKEN , tower.getHp(), tower.getHp_regeneration() ,
+                tower.getMinimum_damage() , tower.getMaximum_damage() , tower.getArmor() , tower.getRange() ,
+                tower.getExperience() , tower.getStatusAttacker() , tower.getDefender().getCode() ,
+                tower.getStatusDie() , tower.getCode() , tower.getTeamName(), "Tower");
+            send(new MassageMaker().massage(status , action , towerData).toString());    
+        }
+    }
+
+    public void sendBarrackData(ArrayList <Barrack> greenBarracks, String action, String status){
+        for(Barrack barrack : greenBarracks){
+            BuildingData barrackData = new BuildingData(TOKEN , barrack.getHp(), barrack.getHp_regeneration() ,
+                barrack.getMinimum_damage() , barrack.getMaximum_damage() , barrack.getArmor() , barrack.getRange() ,
+                barrack.getExperience() , barrack.getStatusAttacker() , barrack.getDefender().getCode() ,
+                barrack.getStatusDie() , barrack.getCode() , barrack.getTeamName() , "Barrack");
+            send(new MassageMaker().massage(status , action , barrackData).toString());    
+        }
     }
 
     /**
@@ -93,21 +183,26 @@ public class Client {
                     password = Parser.parseUserData(json).getPassword();
                     String email = Parser.parseUserData(json).getEmail();
                     res = dataBase.signupRequest(username, password, email);
-                    send(player.ResSignup(res, new PlayerData(username, password)));
-                    break;
+                    send(player.ResSignup(res, new PlayerData(username, password), this));
+                    return;
 
                 case "signin":
                     username = Parser.parseUserData(json).getUsername();
                     password = Parser.parseUserData(json).getPassword();
                     res = dataBase.loginRequest(username, password);
-                    send(player.ResSignin(res, new PlayerData(username, password)));
-                    break;
-
+                    send(player.ResSignin(res, new PlayerData(username, password), this));
+                    return;
+                    
+        
                 default:
                     break;
             }
 
         }
 
+    }
+
+    public void setTOKEN(long TOKEN) {
+        this.TOKEN = TOKEN;
     }
 }

@@ -12,6 +12,7 @@ public abstract class Movable extends Unit {
     protected Ability ability2;
     protected Ability ability3;
     protected Ability ability4;
+    
 
     public Movable(String teamName, String unitType , int code) {
         super(teamName, unitType, code);
@@ -57,5 +58,14 @@ public abstract class Movable extends Unit {
                 }
                 break;
         }
+    }
+    public int getMana() {
+        return mana;
+    }
+    public int getMana_regeneration() {
+        return mana_regeneration;
+    }
+    public int getLevel() {
+        return level;
     }
 }

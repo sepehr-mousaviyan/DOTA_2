@@ -3,11 +3,20 @@ package sbu.cs.mahkats.Server;
 import com.google.gson.JsonObject;
 import org.apache.log4j.Logger;
 import org.javatuples.Pair;
+import sbu.cs.mahkats.Api.Data.GamePlayData;
+import sbu.cs.mahkats.Api.Data.HeroData;
 import sbu.cs.mahkats.Api.MassageMaker;
 import sbu.cs.mahkats.Api.Data.UserData;
+import sbu.cs.mahkats.Server.App.GamePlay;
+import sbu.cs.mahkats.Server.Connection.Client.Client;
+import sbu.cs.mahkats.Server.Unit.Movable.Hero.Hero;
+import sbu.cs.mahkats.Server.Unit.Unit;
+import sbu.cs.mahkats.Server.Unit.unitList;
+
+import java.util.ArrayList;
 
 public class Player {
-    private static long TOKEN;
+    private long TOKEN;
     private PlayerData playerData;
 
     private final static Logger LOGGER = Logger.getLogger(Player.class.getName());
@@ -20,9 +29,9 @@ public class Player {
      * @param res response massage
      * @param playerData is the information of player that should be storage
      */
-    public String ResSignup(Pair res, PlayerData playerData) {
+    public String ResSignup(Pair res, PlayerData playerData, Client client) {
         if (res.getValue0().equals(Boolean.TRUE)) {
-            TOKEN = (long) res.getValue1();
+            client.setTOKEN ((long) res.getValue1());
             UserData userData = new UserData(TOKEN);
             MassageMaker massageMaker = new MassageMaker();
             JsonObject json = massageMaker.massage("OK", "res_signup", userData);
@@ -52,9 +61,9 @@ public class Player {
      * @param res response massage
      * @param playerData is the information of player that should be storage
      */
-    public String ResSignin(Pair res, PlayerData playerData) {
+    public String ResSignin(Pair res, PlayerData playerData, Client client) {
         if (res.contains(Boolean.TRUE)) {
-            TOKEN = (long) res.getValue1();
+            client.setTOKEN ((long) res.getValue1());
             UserData userData = new UserData(TOKEN);
             MassageMaker massageMaker = new MassageMaker();
             JsonObject json = massageMaker.massage("OK", "res_signin", userData);
@@ -75,4 +84,7 @@ public class Player {
             return json.toString();
         }
     }
+
+
+
 }

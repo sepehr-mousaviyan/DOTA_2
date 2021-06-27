@@ -44,4 +44,9 @@ public class MassageMaker{
                 new Pair<>("action" , action),
                 new Pair<>("content", heroData.makeJson()));
     }
+
+    public JsonObject massage(String status, String action){
+        return new Api().toJson(new Pair<>("status" , status),
+                new Pair<>("action" , action));
+    }
 }

@@ -3,6 +3,7 @@ package sbu.cs.mahkats.Server.App;
 
 import sbu.cs.mahkats.Configuration.Config;
 import sbu.cs.mahkats.Configuration.InterfaceConfig;
+import sbu.cs.mahkats.Server.Connection.Client.Client;
 import sbu.cs.mahkats.Server.Unit.Building.Tower.Tower;
 import sbu.cs.mahkats.Server.Unit.Building.Tower.TowerRunnable;
 import sbu.cs.mahkats.Server.Unit.Movable.Creep.Creep;
@@ -54,7 +55,7 @@ public class GamePlay {
         RedUnits   = new unitList("RED");
     }
 
-    public void play() {
+    public void play(Client client) {
 
         new Thread(() -> {
             logger.info("the thread that checks and add turn is running");
@@ -86,8 +87,11 @@ public class GamePlay {
             if (turn - lastTurn == 1) {
                 checkMap();
                 hpRegenerateAll();
+                //TODO: communicate
+                communicate();
+                client.sendData();
                 lastTurn = turn;
-                //TODO: message information units to client
+
             }
         }
     }
@@ -277,6 +281,10 @@ public class GamePlay {
         }
     }
 
+    void communicate() {
+
+    }
+
     public static void destroy(Unit unit){
         if(unit.getTeamName().equals("GREEN")){
             GreenUnits.remove(unit);
@@ -325,4 +333,11 @@ public class GamePlay {
 
     public static int get_add_Code(){ return last_code++; }
 
+    public static unitList getGreenUnits() {
+        return GreenUnits;
+    }
+
+    public static unitList getRedUnits() {
+        return RedUnits;
+    }
 }
