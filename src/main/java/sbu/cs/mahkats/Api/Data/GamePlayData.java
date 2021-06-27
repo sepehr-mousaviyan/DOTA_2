@@ -95,6 +95,18 @@ public class GamePlayData implements Data{
         return error;
     }
 
+    public int getLocation_x() {
+        return Location_x;
+    }
+
+    public int getLocation_y() {
+        return Location_y;
+    }
+
+    public String getTeamName() {
+        return teamName;
+    }
+
     public JsonObject makeJson(){
         if(error != null) {
             return new Api().toJson(new Pair<>("token", token),
