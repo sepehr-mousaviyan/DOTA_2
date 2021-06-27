@@ -63,4 +63,11 @@ public class Parser{
         String content = buildingData.getContent().toString();
         return gson.fromJson(new Api().toJson(content), AbilityData.class);
     }
+
+    public static ActionHeroData parseActionHeroData(JsonObject json) {
+        Gson gson = new Gson();
+        JsonData buildingData = gson.fromJson(json , JsonData.class);
+        String content = buildingData.getContent().toString();
+        return gson.fromJson(new Api().toJson(content), ActionHeroData.class);
+    }
 }
