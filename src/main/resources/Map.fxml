@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -52,7 +51,7 @@
             <Image url="@Photos/Tower_Radiant_model2.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="pic" fitHeight="50.0" fitWidth="50.0" layoutX="301.0" layoutY="376.0" onMouseEntered="#show" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="pic" fitHeight="50.0" fitWidth="50.0" layoutX="301.0" layoutY="376.0" onMouseClicked="#test" pickOnBounds="true" preserveRatio="true" styleClass="Style">
          <image>
             <Image url="@Photos/Tower_Radiant_model2.png" />
          </image>
@@ -192,6 +191,5 @@
             <Image url="@Photos/Tower_Dire_model.png" />
          </image>
       </ImageView>
-      <Label fx:id="showHp" layoutX="799.0" layoutY="90.0" prefHeight="75.0" prefWidth="146.0" style="-fx-background-color: red;" />
    </children>
 </AnchorPane>

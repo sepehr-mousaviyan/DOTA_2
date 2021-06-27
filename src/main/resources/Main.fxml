@@ -14,7 +14,7 @@
    <children>
       <ImageView fitHeight="768.0" fitWidth="1024.0" pickOnBounds="true" smooth="false">
          <image>
-            <Image url="@Photos/signin_background.jpg" />
+            <Image url="@Photos/login_background.jpg" />
          </image>
       </ImageView>
       <Label layoutX="269.0" layoutY="59.0" prefHeight="133.0" prefWidth="493.0" text="Create Your Account Gamer!" textFill="#f5f3f3">

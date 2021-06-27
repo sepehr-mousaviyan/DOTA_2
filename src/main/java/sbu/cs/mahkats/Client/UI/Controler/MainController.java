@@ -121,12 +121,12 @@ public class MainController implements Initializable {
         }
 
         else if(true
-               // Connection.checkUserSignUp(userNameInput.getText(),passInput.getText(),emailInput.getText())
+                //Connection.checkUserSignUp(userNameInput.getText(),passInput.getText(),emailInput.getText())
         ){
             if(true
-                    //Connection.getCheckStatus()
+                   // Connection.getCheckStatus()
             ){
-                Connection.runReceiver();
+              //  Connection.runReceiver();
                 //TODO: go to menu and list of heroes
                 //for now go to map screen
                 try {
@@ -138,6 +138,7 @@ public class MainController implements Initializable {
 
                     logStage.setScene(logScene);
                     logStage.show();
+
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
