@@ -1,6 +1,5 @@
 package sbu.cs.mahkats.Api;
 
-
 import com.google.gson.JsonObject;
 import org.javatuples.Pair;
 import sbu.cs.mahkats.Api.Data.*;
@@ -59,7 +58,13 @@ public class MassageMaker{
         for(int i = 0 ; i < number; i++){
             heroList.add(new Pair<>("hero" + i, heroData[i].makeJson()));
         }
-        Pair contentProperties = new Pair<String, Pair>("content" , new Pair("heloList" , heroList));
+        Pair contentProperties = new Pair<>("content", new Pair("heroList", heroList));
         return new Api().toJson(statusProperties, actionProperties, contentProperties);
+    }
+
+    public JsonObject massage(String status, String action, AbilityData abilityData){
+        return new Api().toJson(new Pair<>("status" , status),
+                new Pair<>("action" , action),
+                new Pair<>("content", abilityData.makeJson()));
     }
 }

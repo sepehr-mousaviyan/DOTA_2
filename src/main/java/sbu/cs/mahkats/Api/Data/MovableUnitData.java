@@ -45,8 +45,7 @@ public class MovableUnitData extends GamePlayData{
                     new Pair<>("mana_regeneration", mana_regeneration),
                     new Pair<>("ability1", ability1),
                     new Pair<>("ability2", ability2),
-                    new Pair<>("ability3", ability3),
-                    new Pair<>("ability4", ability4)).toString());
+                    new Pair<>("ability3", ability3)).toString());
         }
         return new Api().toJson(str);
     }
