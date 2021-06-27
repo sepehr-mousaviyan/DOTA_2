@@ -11,6 +11,7 @@ import sbu.cs.mahkats.Server.Unit.Movable.Creep.CreepRunnable;
 import sbu.cs.mahkats.Server.Unit.Movable.Creep.MeleeCreep;
 import sbu.cs.mahkats.Server.Unit.Movable.Creep.RangedCreep;
 import sbu.cs.mahkats.Server.Unit.Movable.Hero.Hero;
+import sbu.cs.mahkats.Server.Unit.Movable.Hero.Ability.Ability;
 import sbu.cs.mahkats.Server.Unit.Unit;
 import sbu.cs.mahkats.Server.Unit.unitList;
 import sbu.cs.mahkats.Server.Unit.Building.Barrack.Barrack;
@@ -118,8 +119,8 @@ public class GamePlay {
      * check the map if some one can attack other
      */
     public void checkMap() {
-        ArrayList<Unit> greenUnits = GreenUnits.getAll();
-        ArrayList<Unit> redUnits = RedUnits.getAll();
+        ArrayList<Unit> greenUnits = GreenUnits.getAll_withoutHero();
+        ArrayList<Unit> redUnits = RedUnits.getAll_withoutHero();
 
         ArrayList<Creep> greenCreeps = GreenUnits.getCreeps();
         ArrayList<Creep> redCreeps = RedUnits.getCreeps();
@@ -217,6 +218,35 @@ public class GamePlay {
         }
     }
 
+    public void abilityHit(int gunshot, Hero hero, Ability ability) {
+        int shots = 0;
+        ArrayList<Unit> greenUnits = GreenUnits.getAll();
+        ArrayList<Unit> redUnits = RedUnits.getAll();
+        for (Unit greenU : greenUnits) {
+            if (gunshot != 0 && hero.canHit(greenU, ability)) {
+                shots++;
+                if(shots >= gunshot) {
+                    break;
+                }
+                hero.setStatusAttacker(true);
+                hero.setDefender(greenU);
+            }
+            else if (gunshot == 0 && hero.canHit(greenU, ability) {
+                hero.setStatusAttacker(true);
+                hero.setDefender(greenU);
+            }
+        }
+        for (Unit redU : redUnits) {
+            if (gunshot != 0 && hero.canHit(redU, ability)) {
+                shots++;
+                hero.setStatusAttacker(true);
+                hero.setStatusAttacker(true);
+                hero.setDefender(redUnits);
+            }
+        }
+    }
+
+
     /**
      * this function spawn a group of creep from a random barracks
      */
@@ -281,7 +311,8 @@ public class GamePlay {
         }
     }
 
-    void communicate() {
+    public static void heroLevelUp () {
+        //TODO: do what client says
 
     }
 

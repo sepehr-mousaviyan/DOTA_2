@@ -4,25 +4,22 @@ import sbu.cs.mahkats.Configuration.Config;
 import sbu.cs.mahkats.Configuration.Units.HeroConfig;
 
 public class Ability {
-    String NAME;
+    private final String NAME;
+    private final int UNLOCK_LEVEL;
+    private final int GUNSHOT;
+    private final int STAGE_NUMBERS;
+    private final int RANGE;
+    private final int [] DAMAGE;
+    private final int [] MANA_COST;
+    private final int [] RELOAD_DURATION;
+    private final int [] DURATION;
 
-    int UNLOCK_LEVEL;
-
-    int GUNSHOT;
-
-    int STAGE_NUMBERS;
-
-    int RANGE;
-
-    int [] DAMAGE;
-
-    int [] MANA_COST;
-
-    int [] RELOAD_DURATION;
-
-    int [] DURATION;
+    private int stage;
 
     public Ability(String hero_name, int ability_number) {
+        
+        stage = 0;
+        
         Config heroConfig = HeroConfig.getInstance(hero_name);
 
         NAME = heroConfig.getStringValue("hero." + hero_name + ".ability" + ability_number +".name");
@@ -30,6 +27,12 @@ public class Ability {
         GUNSHOT = heroConfig.getIntValue("hero." + hero_name + ".ability" + ability_number +".gunshot");
         STAGE_NUMBERS = heroConfig.getIntValue("hero." + hero_name + ".ability" + ability_number +".stage_numbers");
         RANGE = heroConfig.getIntValue("hero." + hero_name + ".ability" + ability_number + ".range");
+
+        DAMAGE = new int[STAGE_NUMBERS];
+        MANA_COST = new int[STAGE_NUMBERS];
+        RELOAD_DURATION = new int[STAGE_NUMBERS];
+        DURATION = new int[STAGE_NUMBERS];
+
         for (int i = 0; i < STAGE_NUMBERS; i++) {
             int stage_number = i + 1;
             DAMAGE[i] = heroConfig.getIntValue("hero." + hero_name + ".ability" + ability_number + ".damage." + stage_number);
@@ -39,5 +42,17 @@ public class Ability {
         }
 
 
+    }
+
+    public void start() {
+        switch(this.NAME) {
+            case "breathFire":
+                breathFire();
+                break;
+        }
+    }
+
+    public void breathFire() {
+        
     }
 }
