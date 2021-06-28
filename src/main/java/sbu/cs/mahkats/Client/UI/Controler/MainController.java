@@ -120,13 +120,9 @@ public class MainController implements Initializable {
             invalidRespond.setText("YOUR LENGTH OF FIELDS ARE TOO LONG!");
         }
 
-        else if(true
-                //Connection.checkUserSignUp(userNameInput.getText(),passInput.getText(),emailInput.getText())
-        ){
-            if(true
-                   // Connection.getCheckStatus()
-            ){
-              //  Connection.runReceiver();
+        else if(Connection.checkUserSignUp(userNameInput.getText(),passInput.getText(),emailInput.getText())){
+            if(Connection.getCheckStatus()){
+                Connection.runReceiver();
                 //TODO: go to menu and list of heroes
                 //for now go to map screen
                 try {

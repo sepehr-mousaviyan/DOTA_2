@@ -23,6 +23,8 @@ public class ReceiveDataRunnable implements Runnable{
 
     @Override
     public void run() {
+        MapController mapController = new MapController();
+
         while(true){
             String message = "";
             try {
@@ -44,7 +46,7 @@ public class ReceiveDataRunnable implements Runnable{
                     break;
                 case "End":
                     //TODO: refresh the game
-                    MapController.checkUnits(heroes,creeps,buildings);
+                    mapController.checkUnits(heroes,creeps,buildings);
                     break;
             }
         }
