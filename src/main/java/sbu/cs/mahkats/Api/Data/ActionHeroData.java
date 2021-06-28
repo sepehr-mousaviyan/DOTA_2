@@ -39,7 +39,37 @@ public class ActionHeroData implements Data{
         this.choice = choice;
     }
 
+    public long getToken() {
+        return token;
+    }
 
+    public String getHeroName() {
+        return heroName;
+    }
+
+    public int getHeroCode() {
+        return heroCode;
+    }
+
+    public int getAbilityName() {
+        return abilityName;
+    }
+
+    public int getDefenderCode() {
+        return defenderCode;
+    }
+
+    public int getLocation_x() {
+        return location_x;
+    }
+
+    public int getLocation_y() {
+        return location_y;
+    }
+
+    public int getChoice() {
+        return choice;
+    }
 
     @Override
     public JsonObject makeJson() {

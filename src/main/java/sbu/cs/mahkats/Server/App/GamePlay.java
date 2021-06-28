@@ -35,12 +35,13 @@ public class GamePlay {
     private static unitList RedUnits;  // all the green units objects
 
     private static int last_code = 1;
+    private static boolean is_start = false;
 
     private final static Logger logger = Logger.getLogger(GamePlay.class.getName());
 
     private static int turn = 0;
 
-    public GamePlay() {
+    public GamePlay(String heroName1 , String heroName2) {
         Config config = InterfaceConfig.getInstance();
         MAP_HEIGHT  = config.getIntValue("map.height");
         MAP_WIDTH   = config.getIntValue("map.width");
@@ -56,8 +57,8 @@ public class GamePlay {
         RedUnits   = new unitList("RED");
     }
 
-    public void play(Client client) {
-
+    public void play(ArrayList<Client> clients) {
+        is_start = true;
         new Thread(() -> {
             logger.info("the thread that checks and add turn is running");
             try {
@@ -89,7 +90,9 @@ public class GamePlay {
                 checkMap();
                 hpRegenerateAll();
                 //TODO: communicate
-                client.sendData();
+                for(Client client : clients) {
+                    client.sendData();
+                }
                 lastTurn = turn;
 
             }
@@ -127,8 +130,8 @@ public class GamePlay {
         ArrayList<Tower> greenTowers = GreenUnits.getTowers();
         ArrayList<Tower> redTowers = RedUnits.getTowers();
 
-        ArrayList<Hero> greenHeroes = GreenUnits.getHeros();
-        ArrayList<Hero> redHeroes = RedUnits.getHeros();
+        ArrayList<Hero> greenHeroes = GreenUnits.getHeroes();
+        ArrayList<Hero> redHeroes = RedUnits.getHeroes();
 
         ArrayList<Barrack> greenBarracks = GreenUnits.getBarracks();
         ArrayList<Barrack> redBarracks = RedUnits.getBarracks();
@@ -372,4 +375,6 @@ public class GamePlay {
     public static unitList getRedUnits() {
         return RedUnits;
     }
+
+    public static boolean isStarted(){ return is_start; }
 }

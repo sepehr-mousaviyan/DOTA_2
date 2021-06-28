@@ -4,15 +4,14 @@ import com.google.gson.JsonObject;
 import org.apache.log4j.Logger;
 import org.javatuples.Pair;
 import sbu.cs.mahkats.Api.Api;
-import sbu.cs.mahkats.Api.Data.BuildingData;
-import sbu.cs.mahkats.Api.Data.CreepData;
-import sbu.cs.mahkats.Api.Data.HeroData;
+import sbu.cs.mahkats.Api.Data.*;
 import sbu.cs.mahkats.Api.MassageMaker;
 import sbu.cs.mahkats.Api.Parser;
-import sbu.cs.mahkats.Api.Data.UserData;
 import sbu.cs.mahkats.Server.App.GamePlay;
 import sbu.cs.mahkats.Server.Connection.DataBase.DataBase;
 import sbu.cs.mahkats.Server.Unit.Building.Tower.Tower;
+import sbu.cs.mahkats.Server.Unit.Movable.Hero.KnightHero;
+import sbu.cs.mahkats.Server.Unit.Movable.Hero.RangedHero;
 import sbu.cs.mahkats.Server.Unit.unitList;
 import sbu.cs.mahkats.Server.Unit.Building.Ancient.Ancient;
 import sbu.cs.mahkats.Server.Unit.Building.Barrack.Barrack;
@@ -62,8 +61,8 @@ public class Client {
         unitList redUnits = GamePlay.getGreenUnits();
         Ancient greenAncient = greenUnits.getAncient();
         Ancient redAncient = redUnits.getAncient();
-        ArrayList<Hero> greenHeroes= greenUnits.getHeros();
-        ArrayList<Hero> redHeroes= redUnits.getHeros();
+        ArrayList<Hero> greenHeroes= greenUnits.getHeroes();
+        ArrayList<Hero> redHeroes= redUnits.getHeroes();
         ArrayList<Creep> greenCreeps= greenUnits.getCreeps();
         ArrayList<Creep> redCreeps= redUnits.getCreeps();
         ArrayList<Tower> greenTowers= greenUnits.getTowers();
@@ -93,15 +92,19 @@ public class Client {
 
     public void sendHeroData(ArrayList <Hero> heroes, String action, String status) {
         for(Hero hero : heroes){
-            HeroData heroData = new HeroData(TOKEN , hero.getHp(), hero.getHp_regeneration() ,
-                hero.getMinimum_damage() , hero.getMaximum_damage() , hero.getArmor() , hero.getRange() ,
-                hero.getExperience() , hero.getStatusAttacker() , hero.getDefender().getCode() ,
-                hero.getStatusDie() , hero.getCode(), hero.getLevel() , hero.getMana() ,
-                hero.getMana_regeneration() , hero.getAbility1().toString() , hero.getAbility2().toString() , 
-                hero.getAbility3().toString() , hero.getAbility4().toString(), hero.getTeamName() );
+            HeroData heroData = makeHeroData(hero);
             send(new MassageMaker().massage(status , action , heroData).toString());
         }
 
+    }
+
+    private HeroData makeHeroData(Hero hero) {
+        return new HeroData(TOKEN , hero.getHp(), hero.getHp_regeneration() ,
+            hero.getMinimum_damage() , hero.getMaximum_damage() , hero.getArmor() , hero.getRange() ,
+            hero.getExperience() , hero.getStatusAttacker() , hero.getDefender().getCode() ,
+            hero.getStatusDie() , hero.getCode(), hero.getLevel() , hero.getMana() ,
+            hero.getMana_regeneration() , hero.getAbility1().toString() , hero.getAbility2().toString() ,
+            hero.getAbility3().toString() , hero.getTeamName() );
     }
 
     public void sendCreepData(ArrayList <Creep> creeps, String action, String status){
@@ -200,6 +203,28 @@ public class Client {
 
         }
 
+    }
+
+    public void sendListHero(){
+        Hero hero = new KnightHero("" , 0);
+        HeroData knight = makeHeroData(hero);
+        hero = new RangedHero("" , 0);
+        HeroData ranged = makeHeroData(hero);
+        send(new MassageMaker().massage("ok", "listHero" , 2 , knight , ranged).toString());
+    }
+
+    public String getSelectHero(){
+        String data = "";
+        try {
+            data = dataInputStream.readUTF();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        ActionHeroData actionHeroData = Parser.parseActionHeroData(new Api().toJson(data));
+        if(actionHeroData.getChoice() == 5){
+            return actionHeroData.getHeroName();
+        }
+        return null;
     }
 
     public void setTOKEN(long TOKEN) {

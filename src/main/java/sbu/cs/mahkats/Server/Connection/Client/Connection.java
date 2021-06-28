@@ -15,6 +15,7 @@ public class Connection implements Runnable {
     private ServerSocket serverSocket;
     private Socket socket;
     private ArrayList<Client> clients;
+    private ArrayList<String> heroName;
 
     private final static Logger LOGGER = Logger.getLogger(Connection.class.getName());
     private final static ReentrantLock lock = new ReentrantLock();
@@ -45,12 +46,18 @@ public class Connection implements Runnable {
         }
     }
 
+    public ArrayList<String> getHeroName(){ return heroName;}
+
+    public ArrayList<Client> getClients() {
+        return clients;
+    }
 
     @Override
     public void run() {
         Client client = new Client(Thread.currentThread().getId(), socket);
         clients.add(client);
         client.handler();
-        new GamePlay().play(client);
+        client.sendListHero();
+        heroName.add(client.getSelectHero());
     }
 }
