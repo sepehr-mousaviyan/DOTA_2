@@ -1,5 +1,7 @@
 package sbu.cs.mahkats.Server.Unit.Movable;
 
+import sbu.cs.mahkats.Configuration.Config;
+import sbu.cs.mahkats.Configuration.InterfaceConfig;
 import sbu.cs.mahkats.Server.App.GamePlay;
 import sbu.cs.mahkats.Server.Unit.Unit;
 
@@ -20,7 +22,7 @@ public abstract class Movable extends Unit {
      * @param Location_y
      */
     public void move(int Location_x, int Location_y) {
-        this.Location_x = Location_x;
+        this.Location_x = Location_x ;
         this.Location_y = Location_y;
 
     }
@@ -31,25 +33,29 @@ public abstract class Movable extends Unit {
      * @param lane
      */
     public void move(String lane) {
+        int temp_chunk_size = chunk_size;
+        if(teamName.equals("Red")){
+            temp_chunk_size *= -1;
+        }
         switch (lane) {
             case "BOTTOM":
                 if (Location_x < GamePlay.getMAP_WIDTH()) {
-                    Location_x++;
+                    Location_x += temp_chunk_size;
                 } else if (Location_x == GamePlay.getMAP_WIDTH() && Location_y < GamePlay.getMAP_HEIGHT()) {
-                    Location_y++;
+                    Location_y += temp_chunk_size;
                 }
                 break;
             case "MIDDLE":
                 if (Location_x < GamePlay.getMAP_WIDTH() && Location_y < GamePlay.getMAP_HEIGHT()) {
-                    Location_x++;
-                    Location_y++;
+                    Location_x += temp_chunk_size;
+                    Location_y += temp_chunk_size;
                 }
                 break;
             case "TOP":
                 if (Location_y < GamePlay.getMAP_HEIGHT()) {
-                    Location_y++;
+                    Location_y += temp_chunk_size;
                 } else if (Location_y == GamePlay.getMAP_HEIGHT() && Location_x < GamePlay.getMAP_WIDTH()) {
-                    Location_x++;
+                    Location_x += temp_chunk_size;
                 }
                 break;
         }

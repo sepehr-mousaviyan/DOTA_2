@@ -1,5 +1,7 @@
 package sbu.cs.mahkats.Server.Unit;
 
+import sbu.cs.mahkats.Configuration.Config;
+import sbu.cs.mahkats.Configuration.InterfaceConfig;
 import sbu.cs.mahkats.Server.App.GamePlay;
 import sbu.cs.mahkats.Server.Unit.Movable.Hero.Ability.Ability;
 import sbu.cs.mahkats.Server.Unit.Movable.Hero.Hero;
@@ -20,6 +22,7 @@ public abstract class Unit {
     protected  boolean isDie = false;
     protected final String unitType;
     protected final int code;
+    protected final int chunk_size;
     
     protected int Location_x = 0;
     protected int Location_y = 0;
@@ -28,6 +31,8 @@ public abstract class Unit {
         this.teamName = teamName;
         this.unitType = unitType;
         this.code = code;
+        Config config = InterfaceConfig.getInstance();
+        chunk_size = config.getIntValue("game.chunk.size");
     }
 
 
@@ -202,9 +207,9 @@ public abstract class Unit {
      */
     public boolean canHit(Unit defender) {
         if(range == 1) {
-            for(int i = Location_x - 1 ; i <= Location_x + 1 ; i++){
+            for(int i = Location_x/chunk_size - chunk_size ; i <= Location_x/chunk_size + chunk_size ; i++){
                 for(int j = Location_y - 1 ; j <= Location_y + 1 ; j++){
-                    if(defender.getLocation_x() == i && defender.getLocation_y() == j){
+                    if(defender.getLocation_x() == i / chunk_size && defender.getLocation_y() == j / chunk_size){
                         isAttacking = true;
                         return isAttacking;
                     }
@@ -212,7 +217,7 @@ public abstract class Unit {
             }
         }
         if(range == 2 || range == 3){
-            if (Math.abs(defender.getLocation_x() - Location_x) + Math.abs(defender.getLocation_y() - Location_y) <= range) {
+            if (Math.abs(defender.getLocation_x() - Location_x) + Math.abs(defender.getLocation_y() - Location_y) <= (range * chunk_size)) {
                 isAttacking = true;
                 return isAttacking;
             }
@@ -221,11 +226,17 @@ public abstract class Unit {
         return isAttacking;
     }
 
+    /**
+     * check if ability can hit defender return true and set status of attacking unit is on
+     * @param defender
+     * @param ability
+     * @return status of attacking
+     */
      public boolean canHit(Unit defender , Ability ability) {
         if(ability.getRange() == 1) {
-            for(int i = Location_x - 1 ; i <= Location_x + 1 ; i++){
+            for(int i = Location_x/chunk_size - chunk_size ; i <= Location_x/chunk_size + chunk_size ; i++){
                 for(int j = Location_y - 1 ; j <= Location_y + 1 ; j++){
-                    if(defender.getLocation_x() == i && defender.getLocation_y() == j){
+                    if(defender.getLocation_x() == i / chunk_size && defender.getLocation_y() == j / chunk_size){
                         isAttacking = true;
                         return isAttacking;
                     }
@@ -233,7 +244,7 @@ public abstract class Unit {
             }
         }
         if(ability.getRange() == 2 || ability.getRange() == 3){
-            if (Math.abs(defender.getLocation_x() - Location_x) + Math.abs(defender.getLocation_y() - Location_y) <= range) {
+            if (Math.abs(defender.getLocation_x() - Location_x) + Math.abs(defender.getLocation_y() - Location_y) <= (range * chunk_size)) {
                 isAttacking = true;
                 return isAttacking;
             }
