@@ -53,6 +53,82 @@ public class AbilityData implements Data{
         this.error = error;
     }
 
+    public long getToken() {
+        return token;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getUnlock_level() {
+        return unlock_level;
+    }
+
+    public int getGunShot() {
+        return gunShot;
+    }
+
+    public int getMax_stage() {
+        return max_stage;
+    }
+
+    public int getRange() {
+        return range;
+    }
+
+    public double getDamage() {
+        return damage;
+    }
+
+    public int getManaCost() {
+        return manaCost;
+    }
+
+    public int getReloadDuration() {
+        return reloadDuration;
+    }
+
+    public int getDuration() {
+        return duration;
+    }
+
+    public int getLeft_duration_turn() {
+        return left_duration_turn;
+    }
+
+    public int getLeft_duration_reload_turn() {
+        return left_duration_reload_turn;
+    }
+
+    public boolean isAvailable() {
+        return isAvailable;
+    }
+
+    public int getStage() {
+        return stage;
+    }
+
+    public boolean isUnlock() {
+        return isUnlock;
+    }
+
+    public boolean isCanUnlock() {
+        return canUnlock;
+    }
+
+    public ArrayList<Integer> getDefendersCode() {
+        return defendersCode;
+    }
+
+    public int getHeroCode() {
+        return heroCode;
+    }
+
+    public String getError() {
+        return error;
+    }
+
     @Override
     public JsonObject makeJson() {
         if(error != null) {
