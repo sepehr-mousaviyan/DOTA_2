@@ -75,6 +75,7 @@ public class GamePlay {
             if (turn - lastTurn >= 1) {
                 checkMap();
                 hpRegenerateAll();
+                manaRegenerateAll();
                 for(Client client : clients) {
                     client.sendData();
                     logger.info("send data");
@@ -336,8 +337,10 @@ public class GamePlay {
                                     hero.addDefenders(defender_unit);
                                 }
                             }
-                            Hero finalHero = hero;
-                            new Thread(()-> ability.use(finalHero)).start();
+                            if(hero.reduceMana(ability.getMANA_COST())) {
+                                Hero finalHero = hero;
+                                new Thread(() -> ability.use(finalHero)).start();
+                            }
                         }
                     }
                     break;
@@ -407,6 +410,14 @@ public class GamePlay {
         units.addAll(RedUnits.getAll());
         for(Unit unit : units){
             unit.hp_regenerate();
+        }
+    }
+
+    public void manaRegenerateAll(){
+        ArrayList<Hero> heroes = GreenUnits.getHeroes();
+        heroes.addAll(RedUnits.getHeroes());
+        for(Hero hero : heroes){
+            hero.mana_regeneration();
         }
     }
 

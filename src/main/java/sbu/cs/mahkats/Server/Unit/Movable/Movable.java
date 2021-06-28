@@ -1,7 +1,5 @@
 package sbu.cs.mahkats.Server.Unit.Movable;
 
-import sbu.cs.mahkats.Configuration.Config;
-import sbu.cs.mahkats.Configuration.InterfaceConfig;
 import sbu.cs.mahkats.Server.App.GamePlay;
 import sbu.cs.mahkats.Server.Unit.Unit;
 
@@ -60,6 +58,22 @@ public abstract class Movable extends Unit {
                 break;
         }
     }
+
+    public boolean reduceMana(double reduce){
+        if(mana < reduce){
+            return false;
+        }
+        mana -= reduce;
+        return true;
+    }
+
+    public void mana_regeneration(){
+        mana += mana_regeneration;
+        if(max_mana < mana){
+            mana = max_mana;
+        }
+    }
+
     public int getMana() {
         return mana;
     }

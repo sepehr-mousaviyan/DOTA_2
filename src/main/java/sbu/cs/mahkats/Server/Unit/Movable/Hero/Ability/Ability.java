@@ -225,5 +225,9 @@ public class Ability {
         return NAME;
     }
 
+    public int getMANA_COST() {
+        return MANA_COST[stage];
+    }
+
     public boolean isMaxStage(){ return (stage >= STAGE_NUMBERS); }
 }
