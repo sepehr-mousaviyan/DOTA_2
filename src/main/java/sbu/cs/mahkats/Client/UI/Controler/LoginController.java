@@ -66,9 +66,7 @@ public class LoginController  {
                 if(Connection.checkUserSignIn(userNameInput.getText(),passInput.getText())){
                     if(Connection.getCheckStatus()){
                         Connection.runReceiver();
-                        //TODO: go to menu and list of heroes
-                        //for now go to map screen
-                        Parent logParent = FXMLLoader.load(getClass().getResource("/Map.fxml"));
+                        Parent logParent = FXMLLoader.load(getClass().getResource("/LoadingScreenOne.fxml"));
                         Stage logStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
                         Scene logScene = new Scene(logParent);

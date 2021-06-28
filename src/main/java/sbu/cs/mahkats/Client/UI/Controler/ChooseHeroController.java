@@ -31,8 +31,8 @@ public class ChooseHeroController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        String videoOneAddress = "";
-        String videoTwoAddress = "";
+        String videoOneAddress = "D:\\TERM 2\\AP\\APFinalProject\\DOTA_2\\src\\main\\resources\\Photos\\video_2021-06-28_18-43-17.mp4";
+        String videoTwoAddress = "D:\\TERM 2\\AP\\APFinalProject\\DOTA_2\\src\\main\\resources\\Photos\\video_2021-06-28_18-43-30.mp4";
 
         Media mediaOne = new Media(videoOneAddress);
         Media mediaTwo = new Media(videoTwoAddress);

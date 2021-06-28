@@ -131,7 +131,7 @@ public class MainController implements Initializable {
                 //for now go to choose hero screen
                 try {
                     Parent logParent = null;
-                    logParent = FXMLLoader.load(getClass().getResource("/ChooseHeroScreen.fxml"));
+                    logParent = FXMLLoader.load(getClass().getResource("/LoadingScreenOne.fxml"));
                     Stage logStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
                     Scene logScene = new Scene(logParent);
