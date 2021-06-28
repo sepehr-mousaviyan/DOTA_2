@@ -322,10 +322,22 @@ public class GamePlay {
                     abilitis= hero.getAbilities();
                     for(Ability ability : abilitis) {
                         if (ability.getNAME().equals(actionHeroData.getAbilityName())) {
+                            int[] codes = actionHeroData.getDefendersCode();
+
                             if(actionHeroData.getDefenderCode() != 0){
                                 hero.setDefender(defender);
                             }
-                            ability.use(hero);
+                            else if(codes != null){
+                                for (int code: codes) {
+                                    Unit defender_unit = GreenUnits.getUnit(code);
+                                    if(defender_unit == null){
+                                        defender_unit = RedUnits.getUnit(code);
+                                    }
+                                    hero.addDefenders(defender_unit);
+                                }
+                            }
+                            Hero finalHero = hero;
+                            new Thread(()-> ability.use(finalHero)).start();
                         }
                     }
                     break;

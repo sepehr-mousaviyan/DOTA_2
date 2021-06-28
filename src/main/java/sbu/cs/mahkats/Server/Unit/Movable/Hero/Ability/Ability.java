@@ -6,6 +6,8 @@ import sbu.cs.mahkats.Server.App.GamePlay;
 import sbu.cs.mahkats.Server.Unit.Movable.Hero.Hero;
 import sbu.cs.mahkats.Server.Unit.Unit;
 
+import java.util.ArrayList;
+
 public class Ability {
     private final String NAME;
     private final int UNLOCK_LEVEL; //the level can this ability unlock
@@ -59,98 +61,96 @@ public class Ability {
      */
     public void use(Hero hero) {
         if(isAvailable){
+            int lastTurn;
+            double temp_damage;
             switch(this.NAME) {
                 case "breathFire":
-                    new Thread(()->{
-                        left_duration_turn = DURATION[stage];
-                        int lastTurn = GamePlay.getTurn();
-                        while(left_duration_turn != 0) {
-                            if(lastTurn < GamePlay.getTurn()) {
+                    left_duration_turn = DURATION[stage];
+                    lastTurn = GamePlay.getTurn();
+                    while(left_duration_turn != 0) {
+                        if(lastTurn < GamePlay.getTurn()) {
                             breathFire(hero);
                             left_duration_turn--;
                             lastTurn = GamePlay.getTurn();
-                            }
                         }
-                    });
+                    }
                     break;
                 case "dragonTail":
-                    //TODO recieve from client
-                    new Thread(()->{
-                        left_duration_turn = DURATION[stage];
-                        int lastTurn = GamePlay.getTurn();
-                        while(left_duration_turn != 0) {
-                            if(lastTurn < GamePlay.getTurn()) {
-                                dragonTail(hero, hero.getDefender());
-                                left_duration_turn--;
-                                lastTurn = GamePlay.getTurn();
-                          }
+                    left_duration_turn = DURATION[stage];
+                    lastTurn = GamePlay.getTurn();
+                    while(left_duration_turn != 0) {
+                        if(lastTurn < GamePlay.getTurn()) {
+                            dragonTail(hero, hero.getDefender());
+                            left_duration_turn--;
+                            lastTurn = GamePlay.getTurn();
                         }
-                    });
+                    }
                     break;
-                
 
                 case "elderDragonForm":
-                    //TODO
-                    new Thread(()->{
-                        left_duration_turn = DURATION[stage];
-                        int lastTurn = GamePlay.getTurn();
-                        while(left_duration_turn != 0) {
-                            if(lastTurn < GamePlay.getTurn()) {
-                                //elderDragonForm(hero);
-                                left_duration_turn--;
-                                lastTurn = GamePlay.getTurn();
-                            }
+                    left_duration_turn = DURATION[stage];
+                    lastTurn = GamePlay.getTurn();
+                    double temp_range = hero.getRange();
+                    temp_damage = hero.getMinimum_damage();
+                    hero.setRange(2);
+                    hero.setMinimum_damage(this.getDamage());
+                    while(left_duration_turn != 0) {
+                        if(lastTurn < GamePlay.getTurn()) {
+                            left_duration_turn--;
                         }
-                    });
+                    }
+                    hero.setRange(temp_range);
+                    hero.setMinimum_damage(temp_damage);
                     break;
 
                 case "frostArrows":
-                    //TODO
+                    left_duration_turn = DURATION[stage];
+                    lastTurn = GamePlay.getTurn();
+                    temp_damage = hero.getMinimum_damage();
+                    hero.setMinimum_damage(this.getDamage());
+                    while(left_duration_turn != 0) {
+                        if(lastTurn < GamePlay.getTurn()) {
+                            left_duration_turn--;
+                        }
+                    }
+                    hero.setMinimum_damage(temp_damage);
                     break;
                     
                 case "multiArrow":
-                    new Thread(()->{
-                        left_duration_turn = DURATION[stage];
-                        int lastTurn = GamePlay.getTurn();
-                        while(left_duration_turn != 0) {
-                            if(lastTurn < GamePlay.getTurn()) {
-                                multiArrow(hero);
-                                left_duration_turn--;
-                                lastTurn = GamePlay.getTurn();
-                            }
+                    left_duration_turn = DURATION[stage];
+                    lastTurn = GamePlay.getTurn();
+                    while(left_duration_turn != 0) {
+                        if(lastTurn < GamePlay.getTurn()) {
+                            multiArrow(hero);
+                            left_duration_turn--;
+                            lastTurn = GamePlay.getTurn();
                         }
-                    });
+                    }
                     break;
                     
                 case "marksmanship":
-                    new Thread(()->{
+                    if(left_duration_turn == 0) {
                         left_duration_turn = DURATION[stage];
-                        int lastTurn = GamePlay.getTurn();
-                        while(left_duration_turn != 0) {
-                            if(lastTurn < GamePlay.getTurn()) {
-                                marksmanship(hero);
-                                left_duration_turn--;
-                                lastTurn = GamePlay.getTurn();
-                            }
-                        }
-                    });
-                    //TODO
+                    }
+                    marksmanship(hero);
+                    left_duration_turn--;
+                    if(left_duration_turn != 0){
+                        return;
+                    }
                     break;
             }
             isAvailable = false;
         }
         //count reload duration
-        new Thread(()->{
-            left_duration_reload_turn = RELOAD_DURATION[stage];
-            int lastTurn = GamePlay.getTurn();
-            while(left_duration_reload_turn != 0) {
-                if(lastTurn < GamePlay.getTurn()) {
-                    left_duration_reload_turn--;
-                    lastTurn = GamePlay.getTurn();
-                }
+        left_duration_reload_turn = RELOAD_DURATION[stage];
+        int lastTurn = GamePlay.getTurn();
+        while(left_duration_reload_turn != 0) {
+            if(lastTurn < GamePlay.getTurn()) {
+                left_duration_reload_turn--;
+                lastTurn = GamePlay.getTurn();
             }
-            isAvailable = true;
-        });
+        }
+        isAvailable = true;
     }
 
     /**
@@ -177,7 +177,13 @@ public class Ability {
     }
 
     public void multiArrow(Hero hero) {
-        GamePlay.abilityHit(GUNSHOT, hero, this);
+        ArrayList<Unit> defenders = hero.getDefenders();
+        for(Unit defender : defenders){
+            if(defender.getUnitType().equals("Hero")){
+                ((Hero)defender).takeDamage(this.getDamage());
+            }
+            else defender.takeDamage(this.getDamage());
+        }
     }
 
     public void marksmanship(Hero hero) {

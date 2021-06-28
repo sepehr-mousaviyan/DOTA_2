@@ -6,6 +6,7 @@ import sbu.cs.mahkats.Configuration.Units.HeroConfig;
 import sbu.cs.mahkats.Server.Unit.Movable.Hero.Ability.Ability;
 import sbu.cs.mahkats.Server.App.GamePlay;
 import sbu.cs.mahkats.Server.Unit.Movable.Movable;
+import sbu.cs.mahkats.Server.Unit.Unit;
 
 import java.util.ArrayList;
 
@@ -17,6 +18,7 @@ public class Hero extends Movable {
     protected Ability ability3;
 
     protected ArrayList<Ability> abilties;
+    protected ArrayList<Unit> defenders;
 
     protected short level;
 
@@ -181,12 +183,21 @@ public class Hero extends Movable {
         experience += 100 + 0.13 * extraExperience;
     }
 
+    public void addDefenders(Unit defender) {
+        defenders.add(defender);
+    }
+
     public int getLEVEL_NUMBERS() {
         return LEVEL_NUMBERS;
     }
 
     public int getLEVEL_XP() {
         return LEVEL_XP[level];
+    }
+
+
+    public ArrayList<Unit> getDefenders() {
+        return defenders;
     }
 
     public int getRemainRespawnTime() {
