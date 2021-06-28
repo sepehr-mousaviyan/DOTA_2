@@ -104,12 +104,11 @@ public abstract class Unit {
     }
 
     public void hp_regenerate() {
-        hp  = hp  + hp_regeneration;
+        hp = hp + hp_regeneration;
         if (hp > 100) {
             hp = 100;
         }
     }
-    //TODO damage giving for hero
 
     /**
      * reduce the hp of this unit
@@ -118,14 +117,7 @@ public abstract class Unit {
     public void takeDamage(double damage) {
         if((damage - armor) > hp){
             hp = 0;
-            if(unitType.equals("Ancient")){
-                //TODO: end of game
-                return;
-            }
-            if(unitType.equals("Hero")){
-                //TODO: hero go to respawn time
-                return;
-            }
+            isDie = false;
             this.destroy();
         }
         hp = hp - (damage - armor);
@@ -134,18 +126,8 @@ public abstract class Unit {
     public void takeDamage(double damage , Hero hero) {
         if((damage - armor) > hp){
             hp = 0;
-            if(unitType.equals("Ancient")){
-                //TODO: end of game
-                return;
-            }
-            else if(unitType.equals("Hero")){
-                //TODO: hero go to respawn time
-                hero.addHeroExperience(this.experience);
-                return;
-            }
-            else{
-                hero.addRegularExperience(this.experience);
-            }
+            isDie = true;
+            hero.addRegularExperience(this.experience);
             this.destroy();
         }
         hp = hp - (damage - armor);

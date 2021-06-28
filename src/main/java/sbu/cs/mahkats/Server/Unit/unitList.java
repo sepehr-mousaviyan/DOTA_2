@@ -20,7 +20,7 @@ public class unitList {
     private Ancient ancient;
     private final int BASE_TOWER_NUMBERS = 3;
     private final int LANE_TOWER_NUMBERS = 3;
-    public unitList(String teamName) {
+    public unitList(String teamName , String heroName) {
         this.teamName = teamName;
         //ancient unit making
         ancient = new Ancient(teamName , GamePlay.get_add_Code());
@@ -50,6 +50,8 @@ public class unitList {
         this.rangedBarracks.add(new RangedBarrack("TOP", teamName , GamePlay.get_add_Code()));
         this.rangedBarracks.add(new RangedBarrack("MIDDLE", teamName , GamePlay.get_add_Code()));
         this.rangedBarracks.add(new RangedBarrack("BOTTOM", teamName , GamePlay.get_add_Code()));
+
+        this.heroes.add(new Hero(teamName , GamePlay.get_add_Code() , heroName));
     }
     
     public void add(Creep creep) {
@@ -78,10 +80,6 @@ public class unitList {
         for(RangedBarrack b : barracks){
             rangedBarracks.add(b);
         }
-    }
-
-    public void addHero(String name){
-        heroes.add(new Hero(teamName , GamePlay.get_add_Code() , name));
     }
     
     public Tower getTower(String lane) {
@@ -155,7 +153,7 @@ public class unitList {
         return all;
     }
 
-    public Hero getUnit(int code){
+    public Unit getUnit(int code){
         ArrayList<Unit> all = this.getAll();
         for(Unit unit : all){
             if(unit.getCode() == code){

@@ -1,10 +1,13 @@
 package sbu.cs.mahkats.Server.Unit.Movable.Hero;
 
 import sbu.cs.mahkats.Configuration.Config;
+import sbu.cs.mahkats.Configuration.InterfaceConfig;
 import sbu.cs.mahkats.Configuration.Units.HeroConfig;
 import sbu.cs.mahkats.Server.Unit.Movable.Hero.Ability.Ability;
 import sbu.cs.mahkats.Server.App.GamePlay;
 import sbu.cs.mahkats.Server.Unit.Movable.Movable;
+
+import java.util.ArrayList;
 
 public class Hero extends Movable {
     protected String hero_name;
@@ -23,7 +26,9 @@ public class Hero extends Movable {
     protected double levelUp_benefit_armor;
     protected double levelUp_benefit_hp_regeneration;
     protected double levelUp_benefit_mana_regeneration;
+    protected int remainRespawnTime;
     protected boolean isLevelUp;
+    protected boolean isRespawnTime;
 
     protected int LEVEL_NUMBERS;
     protected int[] LEVEL_XP;
@@ -31,6 +36,8 @@ public class Hero extends Movable {
     public Hero(String teamName , int code, String hero_name) {
         super(teamName ,"Hero" , code);
         isLevelUp = false;
+        isRespawnTime = false;
+        remainRespawnTime = 10;
 
         this.hero_name = hero_name;
         ability1 = new Ability(hero_name, 1);
@@ -129,6 +136,43 @@ public class Hero extends Movable {
         return false;
     }
 
+    public void respawnTime(){
+        isRespawnTime = true;
+        remainRespawnTime *= 1.9;
+    }
+
+    public void respawnAgain(){
+        Location_x = 10;
+        Location_y = 10;
+        if(teamName.equals("RED")){
+            Config config = InterfaceConfig.getInstance();
+            Location_x = config.getIntValue("map.width") - Location_x;
+            Location_y = config.getIntValue("map.height") - Location_y;
+        }
+    }
+
+    public void takeDamage(double damage){
+        if((damage - armor) > hp){
+            hp = 0;
+            isDie = false;
+            this.respawnTime();
+            return;
+        }
+        hp = hp - (damage - armor);
+    }
+
+    @Override
+    public void takeDamage(double damage , Hero hero) {
+        if((damage - armor) > hp){
+            hp = 0;
+            isDie = true;
+            this.respawnTime();
+            hero.addHeroExperience(this.experience);
+            return;
+        }
+        hp = hp - (damage - armor);
+    }
+
     public void addRegularExperience(double extraExperience) {
         experience += extraExperience;
     }
@@ -145,7 +189,15 @@ public class Hero extends Movable {
         return LEVEL_XP[level];
     }
 
-    public ArrayList<Ability> getAbilitis() {
+    public int getRemainRespawnTime() {
+        return remainRespawnTime;
+    }
+
+    public boolean isRespawnTime() {
+        return isRespawnTime;
+    }
+
+    public ArrayList<Ability> getAbilities() {
         return abilties;
     }
 
