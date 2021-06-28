@@ -19,6 +19,7 @@ public class ActionHeroData implements Data{
      * 3- update ability
      * 4- attack the unit
      * 5- select the hero
+     * 6- use ability
      */
     private int choice;
 
@@ -39,7 +40,37 @@ public class ActionHeroData implements Data{
         this.choice = choice;
     }
 
+    public long getToken() {
+        return token;
+    }
 
+    public String getHeroName() {
+        return heroName;
+    }
+
+    public int getHeroCode() {
+        return heroCode;
+    }
+
+    public int getAbilityName() {
+        return abilityName;
+    }
+
+    public int getDefenderCode() {
+        return defenderCode;
+    }
+
+    public int getLocation_x() {
+        return location_x;
+    }
+
+    public int getLocation_y() {
+        return location_y;
+    }
+
+    public int getChoice() {
+        return choice;
+    }
 
     @Override
     public JsonObject makeJson() {
