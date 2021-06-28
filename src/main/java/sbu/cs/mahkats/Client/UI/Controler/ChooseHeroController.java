@@ -31,8 +31,8 @@ public class ChooseHeroController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        String videoOneAddress = "D:\\TERM 2\\AP\\APFinalProject\\DOTA_2\\src\\main\\resources\\Photos\\video_2021-06-28_18-43-17.mp4";
-        String videoTwoAddress = "D:\\TERM 2\\AP\\APFinalProject\\DOTA_2\\src\\main\\resources\\Photos\\video_2021-06-28_18-43-30.mp4";
+        String videoOneAddress = "/video_2021-06-28_18-43-17.mp4";
+        String videoTwoAddress = "/video_2021-06-28_18-43-30.mp4";
 
         Media mediaOne = new Media(videoOneAddress);
         Media mediaTwo = new Media(videoTwoAddress);
@@ -59,7 +59,7 @@ public class ChooseHeroController implements Initializable {
         try {
 
             //for now go to map
-            Parent logParent = FXMLLoader.load(getClass().getResource("/Map.fxml"));
+            Parent logParent = FXMLLoader.load(getClass().getResource("/LoadingScreenTwo.fxml"));
             Stage logStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
             Scene logScene = new Scene(logParent);

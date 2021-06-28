@@ -70,10 +70,9 @@ public class MapController implements Initializable {
 
             }
             for (CreepData creep : creeps) {
-                //TODO: draw game
                 if(creep.getTeamName().equals("RED")){
                     if(creep.getTypeCreep().equals("Ranged")) {
-                        InputStream stream = new FileInputStream("D:\\TERM 2\\AP\\APFinalProject\\DOTA_2\\src\\main\\resources\\Photos\\dire_ranged_creep.png");
+                        InputStream stream = new FileInputStream("/dire_ranged_creep.png");
                         Image image = new Image(stream);
                         ImageView imageView = new ImageView();
                         imageView.setImage(image);
@@ -83,20 +82,18 @@ public class MapController implements Initializable {
                         imageView.setFitWidth(25);
 
                         if (creep.isDie()) {
-                            //TODO: delete unit in ui
                             creeps.remove(creep);
                             imageView.setImage(null);
                         }
                         mainAnchor.getChildren().add(imageView);
                         if (creep.getAttacking()) {
-                            //TODO: animation of attack
                             animationAttackMethod(imageView);
                         }
 
                     }
                     else {
 
-                        InputStream stream = new FileInputStream("D:\\TERM 2\\AP\\APFinalProject\\DOTA_2\\src\\main\\resources\\Photos\\dire_melee_creep.png");
+                        InputStream stream = new FileInputStream("/dire_melee_creep.png");
                         Image image = new Image(stream);
                         ImageView imageView = new ImageView();
                         imageView.setImage(image);
@@ -106,13 +103,11 @@ public class MapController implements Initializable {
                         imageView.setFitWidth(25);
 
                         if (creep.isDie()) {
-                            //TODO: delete unit in ui
                             creeps.remove(creep);
                             imageView.setImage(null);
                         }
                         mainAnchor.getChildren().add(imageView);
                         if (creep.getAttacking()) {
-                            //TODO: animation of attack
                             animationAttackMethod(imageView);
                         }
 
@@ -121,7 +116,7 @@ public class MapController implements Initializable {
 
                 else {
                     if(creep.getTypeCreep().equals("Ranged")){
-                        InputStream stream = new FileInputStream("D:\\TERM 2\\AP\\APFinalProject\\DOTA_2\\src\\main\\resources\\Photos\\radiant_ranged_creep.png");
+                        InputStream stream = new FileInputStream("/radiant_ranged_creep.png");
                         Image image = new Image(stream);
                         ImageView imageView = new ImageView();
                         imageView.setImage(image);
@@ -131,18 +126,16 @@ public class MapController implements Initializable {
                         imageView.setFitWidth(25);
 
                         if (creep.isDie()) {
-                            //TODO: delete unit in ui
                             creeps.remove(creep);
                             imageView.setImage(null);
                         }
                         mainAnchor.getChildren().add(imageView);
                         if (creep.getAttacking()) {
-                            //TODO: animation of attack
                             animationAttackMethod(imageView);
                         }
                     }
                     else {
-                        InputStream stream = new FileInputStream("D:\\TERM 2\\AP\\APFinalProject\\DOTA_2\\src\\main\\resources\\Photos\\radiant_melee_creep.png");
+                        InputStream stream = new FileInputStream("/radiant_melee_creep.png");
                         Image image = new Image(stream);
                         ImageView imageView = new ImageView();
                         imageView.setImage(image);
@@ -152,23 +145,20 @@ public class MapController implements Initializable {
                         imageView.setFitWidth(25);
 
                         if (creep.isDie()) {
-                            //TODO: delete unit in ui
                             creeps.remove(creep);
                             imageView.setImage(null);
                         }
                         mainAnchor.getChildren().add(imageView);
                         if (creep.getAttacking()) {
-                            //TODO: animation of attack
                             animationAttackMethod(imageView);
                         }
                     }
                 }
             }
             for (BuildingData building : buildings) {
-                //TODO: draw game
                 if (building.getTypeBuilding().equals("Tower")) {
                     if (building.getTeamName().equals("RED")){
-                        InputStream stream = new FileInputStream("D:\\TERM 2\\AP\\APFinalProject\\DOTA_2\\src\\main\\resources\\Photos\\Tower_Dire_model.png");
+                        InputStream stream = new FileInputStream("/Tower_Dire_model.png");
                         Image image = new Image(stream);
                         ImageView imageView = new ImageView();
                         imageView.setImage(image);
@@ -178,18 +168,16 @@ public class MapController implements Initializable {
                         imageView.setFitWidth(50);
 
                         if (building.getAttacking()) {
-                            //TODO: animation of attack
                             animationAttackMethod(imageView);
                         }
                         mainAnchor.getChildren().add(imageView);
                         if (building.isDie()) {
-                            //TODO: delete unit in ui
                             buildings.remove(building);
                             imageView.setImage(null);
                         }
                     }
                     if (building.getTeamName().equals("Green")){
-                        InputStream stream = new FileInputStream("D:\\TERM 2\\AP\\APFinalProject\\DOTA_2\\src\\main\\resources\\Photos\\Tower_Radiant_model2.png");
+                        InputStream stream = new FileInputStream("/Tower_Radiant_model2.png");
                         Image image = new Image(stream);
                         ImageView imageView = new ImageView();
                         imageView.setImage(image);
@@ -199,12 +187,10 @@ public class MapController implements Initializable {
                         imageView.setFitWidth(50);
 
                         if (building.getAttacking()) {
-                            //TODO: animation of attack
                             animationAttackMethod(imageView);
                         }
                         mainAnchor.getChildren().add(imageView);
                         if (building.isDie()) {
-                            //TODO: delete unit in ui
                             buildings.remove(building);
                             imageView.setImage(null);
                         }
@@ -213,7 +199,7 @@ public class MapController implements Initializable {
 
                 if (building.getTypeBuilding().equals("Ancient")){
                     if (building.getTeamName().equals("RED")){
-                        InputStream stream = new FileInputStream("D:\\TERM 2\\AP\\APFinalProject\\DOTA_2\\src\\main\\resources\\Photos\\Ancient_Dire_model5.png");
+                        InputStream stream = new FileInputStream("/Ancient_Dire_model5.png");
                         Image image = new Image(stream);
                         ImageView imageView = new ImageView();
                         imageView.setImage(image);
@@ -223,18 +209,16 @@ public class MapController implements Initializable {
                         imageView.setFitWidth(80);
 
                         if (building.getAttacking()) {
-                            //TODO: animation of attack
                             animationAttackMethod(imageView);
                         }
                         mainAnchor.getChildren().add(imageView);
                         if (building.isDie()) {
-                            //TODO: delete unit in ui
                             buildings.remove(building);
                             imageView.setImage(null);
                         }
                     }
                     if (building.getTeamName().equals("GREEN")){
-                        InputStream stream = new FileInputStream("D:\\TERM 2\\AP\\APFinalProject\\DOTA_2\\src\\main\\resources\\Photos\\Ancient_Radiant_model.png");
+                        InputStream stream = new FileInputStream("/Ancient_Radiant_model.png");
                         Image image = new Image(stream);
                         ImageView imageView = new ImageView();
                         imageView.setImage(image);
@@ -243,13 +227,11 @@ public class MapController implements Initializable {
                         imageView.setFitHeight(80);
                         imageView.setFitWidth(75);
                         if (building.isDie()) {
-                            //TODO: delete unit in ui
                             buildings.remove(building);
                             imageView.setImage(null);
                         }
                         mainAnchor.getChildren().add(imageView);
                         if (building.getAttacking()) {
-                            //TODO: animation of attack
                             animationAttackMethod(imageView);
                         }
                     }
@@ -257,7 +239,7 @@ public class MapController implements Initializable {
                 }
                 if (building.getTypeBuilding().equals("Ranged")){
                     if (building.getTeamName().equals("RED")){
-                        InputStream stream = new FileInputStream("D:\\TERM 2\\AP\\APFinalProject\\DOTA_2\\src\\main\\resources\\Photos\\Ancient_Radiant_model.png");
+                        InputStream stream = new FileInputStream("/Ancient_Radiant_model.png");
                         Image image = new Image(stream);
                         ImageView imageView = new ImageView();
                         imageView.setImage(image);
@@ -266,18 +248,16 @@ public class MapController implements Initializable {
                         imageView.setFitHeight(50);
                         imageView.setFitWidth(41);
                         if (building.isDie()) {
-                            //TODO: delete unit in ui
                             buildings.remove(building);
                             imageView.setImage(null);
                         }
                         mainAnchor.getChildren().add(imageView);
                         if (building.getAttacking()) {
-                            //TODO: animation of attack
                             animationAttackMethod(imageView);
                         }
                     }
                     if (building.getTeamName().equals("GREEN")){
-                        InputStream stream = new FileInputStream("D:\\TERM 2\\AP\\APFinalProject\\DOTA_2\\src\\main\\resources\\Photos\\Ancient_Radiant_model.png");
+                        InputStream stream = new FileInputStream("/Ancient_Radiant_model.png");
                         Image image = new Image(stream);
                         ImageView imageView = new ImageView();
                         imageView.setImage(image);
@@ -286,20 +266,18 @@ public class MapController implements Initializable {
                         imageView.setFitHeight(50);
                         imageView.setFitWidth(41);
                         if (building.isDie()) {
-                            //TODO: delete unit in ui
                             buildings.remove(building);
                             imageView.setImage(null);
                         }
                         mainAnchor.getChildren().add(imageView);
                         if (building.getAttacking()) {
-                            //TODO: animation of attack
                             animationAttackMethod(imageView);
                         }
                     }
                 }
                 if (building.getTypeBuilding().equals("MELEE")){
                     if (building.getTeamName().equals("RED")){
-                        InputStream stream = new FileInputStream("D:\\TERM 2\\AP\\APFinalProject\\DOTA_2\\src\\main\\resources\\Photos\\Ancient_Radiant_model.png");
+                        InputStream stream = new FileInputStream("/Ancient_Radiant_model.png");
                         Image image = new Image(stream);
                         ImageView imageView = new ImageView();
                         imageView.setImage(image);
@@ -308,18 +286,16 @@ public class MapController implements Initializable {
                         imageView.setFitHeight(50);
                         imageView.setFitWidth(41);
                         if (building.isDie()) {
-                            //TODO: delete unit in ui
                             buildings.remove(building);
                             imageView.setImage(null);
                         }
                         mainAnchor.getChildren().add(imageView);
                         if (building.getAttacking()) {
-                            //TODO: animation of attack
                             animationAttackMethod(imageView);
                         }
                     }
                     if (building.getTeamName().equals("GREEN")){
-                        InputStream stream = new FileInputStream("D:\\TERM 2\\AP\\APFinalProject\\DOTA_2\\src\\main\\resources\\Photos\\Ancient_Radiant_model.png");
+                        InputStream stream = new FileInputStream("Ancient_Radiant_model.png");
                         Image image = new Image(stream);
                         ImageView imageView = new ImageView();
                         imageView.setImage(image);
@@ -328,26 +304,15 @@ public class MapController implements Initializable {
                         imageView.setFitHeight(50);
                         imageView.setFitWidth(41);
                         if (building.isDie()) {
-                            //TODO: delete unit in ui
                             buildings.remove(building);
                             imageView.setImage(null);
                         }
                         mainAnchor.getChildren().add(imageView);
                         if (building.getAttacking()) {
-                            //TODO: animation of attack
                             animationAttackMethod(imageView);
                         }
                     }
                 }
-
-                if (building.getAttacking()) {
-                    //TODO: animation of attack
-                }
-                if (building.isDie()) {
-                    //TODO: delete unit in ui
-                    buildings.remove(building);
-                }
-
             }
         }catch (Exception e){
             e.printStackTrace();

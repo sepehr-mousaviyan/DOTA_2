@@ -45,7 +45,6 @@ public class ReceiveDataRunnable implements Runnable{
                     updateCreepData(Parser.parseCreepData(josnMessage));
                     break;
                 case "End":
-                    //TODO: refresh the game
                     mapController.checkUnits(heroes,creeps,buildings);
                     break;
             }

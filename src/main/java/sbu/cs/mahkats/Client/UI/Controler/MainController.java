@@ -127,8 +127,6 @@ public class MainController implements Initializable {
                     Connection.getCheckStatus()
             ){
                 Connection.runReceiver();
-                //TODO: go to menu and list of heroes
-                //for now go to choose hero screen
                 try {
                     Parent logParent = null;
                     logParent = FXMLLoader.load(getClass().getResource("/LoadingScreenOne.fxml"));
