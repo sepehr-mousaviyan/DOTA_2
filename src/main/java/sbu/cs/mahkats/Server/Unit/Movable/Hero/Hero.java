@@ -11,6 +11,8 @@ import sbu.cs.mahkats.Server.Unit.Unit;
 import java.util.ArrayList;
 
 public class Hero extends Movable {
+
+
     protected String hero_name;
 
     protected Ability ability1;
@@ -43,20 +45,18 @@ public class Hero extends Movable {
 
         this.hero_name = hero_name;
         ability1 = new Ability(hero_name, 1);
-        abilties.add(ability1);
         ability2 = new Ability(hero_name, 2);
-        abilties.add(ability2);
         ability3 = new Ability(hero_name, 3);
-        abilties.add(ability3);
 
+        Config levelUpConfig = HeroConfig.getInstance("Level_Xp");
         
-
-        ability1.setUnlock();
-        ability2.setCanUnlock();
+        LEVEL_NUMBERS = heroConfig.getIntValue("hero.level_numbers");
+        LEVEL_XP = new int[LEVEL_NUMBERS];
+        for (int i = 0; i < LEVEL_NUMBERS; i++ ) {
+            LEVEL_XP[i] = levelUpConfig.getIntValue("hero.xp_needed.level" + i);
+        }
 
         Config heroConfig = HeroConfig.getInstance(hero_name);
-
-        LEVEL_NUMBERS = heroConfig.getIntValue("hero.level_numbers");
         hp = max_hp = heroConfig.getIntValue("hero." + hero_name + ".hp");
         mana = max_mana = heroConfig.getIntValue("hero." + hero_name + ".mana");
         minimum_damage = heroConfig.getIntValue("hero." + hero_name + ".minimum.damage");
@@ -73,12 +73,6 @@ public class Hero extends Movable {
         levelUp_benefit_hp_regeneration = heroConfig.getDoubleValue("hero." + hero_name + ".levelUp_benefit.hp_regeneration");
         levelUp_benefit_mana_regeneration = heroConfig.getDoubleValue("hero." + hero_name + ".levelUp_benefit.mana_regeneration");
 
-        Config levelUpConfig = HeroConfig.getInstance("Level_Xp");
-
-        LEVEL_XP = new int[LEVEL_NUMBERS];
-        for (int i = 0; i < LEVEL_NUMBERS; i++ ) {
-            LEVEL_XP[i] = levelUpConfig.getIntValue("hero.xp_needed.level" + i);
-        }
     }
 
     public void levelUp() {
@@ -92,12 +86,6 @@ public class Hero extends Movable {
             hp_regeneration += levelUp_benefit_hp_regeneration;
             mana_regeneration += levelUp_benefit_mana_regeneration;
             GamePlay.heroLevelUp();
-            if(!ability3.isMaxStage() || !ability2.isMaxStage() || !ability1.isMaxStage()) {
-                isLevelUp = true;
-            }
-            if(ability3.getUNLOCK_LEVEL() == level){
-                ability3.setCanUnlock();
-            }
         }  
     }
 

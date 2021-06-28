@@ -3,8 +3,6 @@ package sbu.cs.mahkats.Server.Unit;
 import sbu.cs.mahkats.Configuration.Config;
 import sbu.cs.mahkats.Configuration.InterfaceConfig;
 import sbu.cs.mahkats.Server.App.GamePlay;
-import sbu.cs.mahkats.Server.Unit.Movable.Hero.Ability.Ability;
-import sbu.cs.mahkats.Server.Unit.Movable.Hero.Hero;
 
 public abstract class Unit {
     protected double hp = 0;

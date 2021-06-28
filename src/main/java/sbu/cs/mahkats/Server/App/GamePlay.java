@@ -39,13 +39,12 @@ public class GamePlay {
     private static unitList RedUnits;  // all the green units objects
 
     private static int last_code = 1;
-    private static boolean is_start = false;
 
-    private final static Logger logger = Logger.getLogger(GamePlay.class.getName());
+    private final static Logger logger = Logger.getLogger(GamePlay.class.getName());;
 
     private static int turn = 0;
 
-    public GamePlay(String heroName1 , String heroName2) {
+    public GamePlay() {
         Config config = InterfaceConfig.getInstance();
         MAP_HEIGHT  = config.getIntValue("map.height");
         MAP_WIDTH   = config.getIntValue("map.width");
@@ -145,8 +144,8 @@ public class GamePlay {
         ArrayList<Tower> greenTowers = GreenUnits.getTowers();
         ArrayList<Tower> redTowers = RedUnits.getTowers();
 
-        ArrayList<Hero> greenHeroes = GreenUnits.getHeroes();
-        ArrayList<Hero> redHeroes = RedUnits.getHeroes();
+        ArrayList<Hero> greenHeroes = GreenUnits.getHeros();
+        ArrayList<Hero> redHeroes = RedUnits.getHeros();
 
         ArrayList<Barrack> greenBarracks = GreenUnits.getBarracks();
         ArrayList<Barrack> redBarracks = RedUnits.getBarracks();
@@ -156,7 +155,7 @@ public class GamePlay {
             if(green.canHit(RedUnits.getAncient())){
                 green.setDefender(RedUnits.getAncient());
                 green.setStatusAttacker(true);
-                continue;
+                continue main;
             }
             //creeps
             for(Creep redC : redCreeps){
@@ -235,27 +234,26 @@ public class GamePlay {
         }
     }
 
-    public static void abilityHit(int gunshot, Hero hero, Ability ability) {
+    public void abilityHit(int gunshot, Hero hero, Ability ability) {
         int shots = 0;
         ArrayList<Unit> greenUnits = GreenUnits.getAll();
         ArrayList<Unit> redUnits = RedUnits.getAll();
         for (Unit greenU : greenUnits) {
             if (gunshot != 0 && hero.canHit(greenU, ability)) {
+                shots++;
                 if(shots >= gunshot) {
                     break;
                 }
-                shots++;
-                greenU.takeDamage(ability.getDamage() , hero);
+                hero.setStatusAttacker(true);
+                hero.setDefender(greenU);
             }
-            else if (gunshot == 0 && hero.canHit(greenU, ability)) {
-                greenU.takeDamage(ability.getDamage() , hero);
+            else if (gunshot == 0 && hero.canHit(greenU, ability) {
+                hero.setStatusAttacker(true);
+                hero.setDefender(greenU);
             }
         }
         for (Unit redU : redUnits) {
             if (gunshot != 0 && hero.canHit(redU, ability)) {
-                if(shots >= gunshot) {
-                    break;
-                }
                 shots++;
                 redU.takeDamage(ability.getDamage() , hero);
             }
@@ -481,6 +479,4 @@ public class GamePlay {
     public static unitList getRedUnits() {
         return RedUnits;
     }
-
-    public static boolean isStarted(){ return is_start; }
 }

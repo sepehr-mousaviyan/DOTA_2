@@ -49,11 +49,6 @@ public class Connection implements Runnable {
         }
     }
 
-    public ArrayList<String> getHeroName(){ return heroName;}
-
-    public ArrayList<Client> getClients() {
-        return clients;
-    }
 
     synchronized private static boolean setRedTrue(){ 
         if(!isRed){ 

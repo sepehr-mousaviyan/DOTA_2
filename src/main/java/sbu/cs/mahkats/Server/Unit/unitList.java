@@ -13,9 +13,10 @@ import java.util.ArrayList;
 public class unitList {
     private String teamName;
     private ArrayList <Creep> creeps = new ArrayList<>();
-    private ArrayList <Hero> heroes = new ArrayList<>();
+    private ArrayList <Hero> heros = new ArrayList<>();
     private ArrayList <MeleeBarrack> meleeBarracks = new ArrayList<>();
     private ArrayList <RangedBarrack> rangedBarracks = new ArrayList<>();
+
     private ArrayList <Tower> towers = new ArrayList<>();
     private Ancient ancient;
     private final int BASE_TOWER_NUMBERS = 3;
@@ -57,6 +58,9 @@ public class unitList {
     public void add(Creep creep) {
         creeps.add(creep);
     }
+    public void add(Hero hero) {
+        heros.add(hero);
+    }
     public void add(MeleeBarrack meleeBarrack) {
         meleeBarracks.add(meleeBarrack);
     }
@@ -95,8 +99,8 @@ public class unitList {
         return towers;
     }
 
-    public ArrayList<Hero> getHeroes() {
-        return heroes;
+    public ArrayList<Hero> getHeros() {
+        return heros;
     }
 
     public Creep getCreep(String lane) {
@@ -148,7 +152,7 @@ public class unitList {
         all.addAll(towers);
         all.addAll(meleeBarracks);
         all.addAll(rangedBarracks);
-        all.addAll(heroes);
+        all.addAll(heros);
         all.add(ancient);
         return all;
     }
