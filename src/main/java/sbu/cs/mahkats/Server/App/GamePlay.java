@@ -1,6 +1,8 @@
 package sbu.cs.mahkats.Server.App;
 
 
+import sbu.cs.mahkats.Api.Parser;
+import sbu.cs.mahkats.Api.Data.ActionHeroData;
 import sbu.cs.mahkats.Configuration.Config;
 import sbu.cs.mahkats.Configuration.InterfaceConfig;
 import sbu.cs.mahkats.Server.Connection.Client.Client;
@@ -246,6 +248,51 @@ public class GamePlay {
             }
             else if (gunshot == 0 && hero.canHit(redU, ability)) {
                 redU.takeDamage(ability.getDamage() , hero);
+            }
+        }
+    }
+
+    public void recieveHeroData(ArrayList<Client> clients) {
+        for(Client client : clients){
+            String data = client.receive();
+            ActionHeroData actionHeroData = Parser.parseActionHeroData(new Api().toJson(data));
+            Hero hero = GreenUnits.getHero(actionHeroData.getHeroCode());
+            if(hero == null){
+                hero = RedUnits.getHero(actionHeroData.getHeroCode());
+            }
+            switch (actionHeroData.getChoice()){
+                case 1:
+                    hero.move(actionHeroData.getLocation_x(), actionHeroData.getLocation_y());
+                    break;
+                case 2:
+                    for(Ability ability : hero.getAbilities()) {
+                        if (ability.getNAME().equals(actionHeroData.getAbilityName()) {
+                            if(!ability.setUnlock()) {
+                                //TODO
+                            } 
+                        }
+                    }
+
+                    break;
+                case 3:
+                    for(Ability ability : hero.getAbilities()) {
+                        if (ability.getNAME().equals(actionHeroData.getAbilityName()) {
+                            if(!ability.stageUp()) {
+                                //TODO
+                            }
+                        }
+                    }
+
+                    break;
+                case 4:
+                    Unit unit = GreenUnits.getUnit(actionHeroData.getHeroCode());
+                    if(unit == null){
+                        unit = RedUnits.getUnit(actionHeroData.getHeroCode());
+                    }
+        
+                    unit.takeDamage(hero.getDamage());
+                    break;
+                
             }
         }
     }

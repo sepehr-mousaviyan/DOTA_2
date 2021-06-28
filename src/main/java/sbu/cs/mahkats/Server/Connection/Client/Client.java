@@ -158,6 +158,21 @@ public class Client {
         return data;
     }
 
+    public String receiveData() {
+        String data = null;
+        try {
+            data = dataInputStream.readUTF();
+            LOGGER.info("message received.");
+        } catch (IOException e) {
+            UserData userData = new UserData("couldn't receive, please send it again!" );
+            // MassageMaker massageMaker = new MassageMaker();
+            // JsonObject json = massageMaker.massage("fail", "receive", userData);
+            // this.send(json.toString());
+            // LOGGER.fatal("message didn't received successfully!", e);
+        }
+        return data;
+    }
+
     /**
      * this function is just for sending
      * @param data

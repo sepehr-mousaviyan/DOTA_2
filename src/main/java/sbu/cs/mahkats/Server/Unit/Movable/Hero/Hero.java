@@ -13,6 +13,8 @@ public class Hero extends Movable {
     protected Ability ability2;
     protected Ability ability3;
 
+    protected ArrayList<Ability> abilties;
+
     protected short level;
 
     protected double levelUp_benefit_hp;
@@ -32,8 +34,13 @@ public class Hero extends Movable {
 
         this.hero_name = hero_name;
         ability1 = new Ability(hero_name, 1);
+        abilties.add(ability1);
         ability2 = new Ability(hero_name, 2);
+        abilties.add(ability2);
         ability3 = new Ability(hero_name, 3);
+        abilties.add(ability3);
+
+        
 
         ability1.setUnlock();
         ability2.setCanUnlock();
@@ -136,6 +143,10 @@ public class Hero extends Movable {
 
     public int getLEVEL_XP() {
         return LEVEL_XP[level];
+    }
+
+    public ArrayList<Ability> getAbilitis() {
+        return abilties;
     }
 
     public Ability getAbility1() {

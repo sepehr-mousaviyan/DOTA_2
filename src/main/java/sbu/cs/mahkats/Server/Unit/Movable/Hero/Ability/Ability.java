@@ -83,7 +83,7 @@ public class Ability {
                                 dragonTail(hero, hero.getDefender());
                                 left_duration_turn--;
                                 lastTurn = GamePlay.getTurn();
-                            }
+                          }
                         }
                     });
                     break;
@@ -198,8 +198,13 @@ public class Ability {
         stage++;
     }
 
-    public void setUnlock(){
-        isUnlock = true;
+    public boolean setUnlock(){
+        if (!isUnlock) {
+            isUnlock = true;
+            return true;
+        }
+        return false;
+        
     }
 
     public void setCanUnlock(){
@@ -208,6 +213,10 @@ public class Ability {
 
     public int getUNLOCK_LEVEL() {
         return UNLOCK_LEVEL;
+    }
+
+    public String getNAME() {
+        return NAME;
     }
 
     public boolean isMaxStage(){ return (stage >= STAGE_NUMBERS); }

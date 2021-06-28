@@ -7,7 +7,7 @@ public class ServerApp {
         Connection server = new Connection();
         while(server.getHeroName().size() < 2){
             Thread.sleep(1500);
-        }
+        }     
         new GamePlay(server.getHeroName().get(0) , server.getHeroName().get(1)).play(server.getClients());
     }
 }

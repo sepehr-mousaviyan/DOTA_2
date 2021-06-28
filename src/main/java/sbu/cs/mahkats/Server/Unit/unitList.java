@@ -155,6 +155,25 @@ public class unitList {
         return all;
     }
 
+    public Hero getUnit(int code){
+        ArrayList<Unit> all = this.getAll();
+        for(Unit unit : all){
+            if(unit.getCode() == code){
+                return unit;
+            }
+        }
+        return null;
+    }
+
+    public Hero getHero(int code){
+        for(Hero hero : heroes){
+            if(hero.getCode() == code){
+                return hero;
+            }
+        }
+        return null;
+    }
+
     public ArrayList<Unit> getAll_withoutHero(){
         ArrayList<Unit> all = new ArrayList<Unit>();
         all.addAll(creeps);
