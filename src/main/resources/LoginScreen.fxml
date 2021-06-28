@@ -4,6 +4,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.Blend?>
+<?import javafx.scene.effect.BoxBlur?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -15,8 +16,11 @@
          <image>
             <Image url="@Photos/signin_background.jpg" />
          </image>
+         <effect>
+            <BoxBlur height="1.5" width="1.5" />
+         </effect>
       </ImageView>
-      <Label layoutX="48.0" layoutY="70.0" prefHeight="81.0" prefWidth="459.0" text="Welcome Back!">
+      <Label layoutX="73.0" layoutY="70.0" prefHeight="81.0" prefWidth="459.0" text="Welcome Back!">
          <font>
             <Font name="Corbel" size="48.0" />
          </font>

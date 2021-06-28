@@ -4,6 +4,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.Blend?>
+<?import javafx.scene.effect.BoxBlur?>
 <?import javafx.scene.effect.ColorAdjust?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -16,6 +17,9 @@
          <image>
             <Image url="@Photos/login_background.jpg" />
          </image>
+         <effect>
+            <BoxBlur height="2.0" width="2.0" />
+         </effect>
       </ImageView>
       <Label layoutX="269.0" layoutY="59.0" prefHeight="133.0" prefWidth="493.0" text="Create Your Account Gamer!" textFill="#f5f3f3">
          <font>

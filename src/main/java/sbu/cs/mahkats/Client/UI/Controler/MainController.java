@@ -120,14 +120,18 @@ public class MainController implements Initializable {
             invalidRespond.setText("YOUR LENGTH OF FIELDS ARE TOO LONG!");
         }
 
-        else if(Connection.checkUserSignUp(userNameInput.getText(),passInput.getText(),emailInput.getText())){
-            if(Connection.getCheckStatus()){
+        else if(
+                Connection.checkUserSignUp(userNameInput.getText(),passInput.getText(),emailInput.getText())
+        ){
+            if(
+                    Connection.getCheckStatus()
+            ){
                 Connection.runReceiver();
                 //TODO: go to menu and list of heroes
-                //for now go to map screen
+                //for now go to choose hero screen
                 try {
                     Parent logParent = null;
-                    logParent = FXMLLoader.load(getClass().getResource("/Map.fxml"));
+                    logParent = FXMLLoader.load(getClass().getResource("/ChooseHeroScreen.fxml"));
                     Stage logStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
                     Scene logScene = new Scene(logParent);
