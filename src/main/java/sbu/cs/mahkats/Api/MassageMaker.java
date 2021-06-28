@@ -1,9 +1,10 @@
 package sbu.cs.mahkats.Api;
 
-
 import com.google.gson.JsonObject;
 import org.javatuples.Pair;
 import sbu.cs.mahkats.Api.Data.*;
+
+import java.util.ArrayList;
 
 public class MassageMaker{
 
@@ -48,5 +49,28 @@ public class MassageMaker{
     public JsonObject massage(String status, String action){
         return new Api().toJson(new Pair<>("status" , status),
                 new Pair<>("action" , action));
+    }
+
+    public JsonObject massage(String status, String action, int number, HeroData ...heroData){
+        Pair<String, String> statusProperties = new Pair<>("status" , status);
+        Pair<String, String> actionProperties = new Pair<>("action" , action);
+        ArrayList<Pair<String, JsonObject>> heroList = new ArrayList<>();
+        for(int i = 0 ; i < number; i++){
+            heroList.add(new Pair<>("hero" + i, heroData[i].makeJson()));
+        }
+        Pair contentProperties = new Pair<>("content", new Pair("heroList", heroList));
+        return new Api().toJson(statusProperties, actionProperties, contentProperties);
+    }
+
+    public JsonObject massage(String status, String action, AbilityData abilityData){
+        return new Api().toJson(new Pair<>("status" , status),
+                new Pair<>("action" , action),
+                new Pair<>("content", abilityData.makeJson()));
+    }
+
+    public JsonObject massage(String status, String action, ActionHeroData actionHeroData){
+        return new Api().toJson(new Pair<>("status" , status),
+                new Pair<>("action" , action),
+                new Pair<>("content", actionHeroData.makeJson()));
     }
 }
