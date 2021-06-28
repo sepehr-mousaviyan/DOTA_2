@@ -8,9 +8,9 @@ public class HeroConfig extends Config{
     private static String hero;
 
     private HeroConfig(String hero_name) {
-        this.bundle = "TowerConfig";
+        this.bundle = "HeroConfig";
         hero = hero_name;
-        config = ResourceBundle.getBundle("Hero/" + hero);
+        config = ResourceBundle.getBundle("UnitConfig/Movable/Hero/" + hero);
     }
 
     public static Config getInstance(String hero_name)

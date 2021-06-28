@@ -1,18 +1,14 @@
 package sbu.cs.mahkats.Server.Unit.Movable;
 
 import sbu.cs.mahkats.Server.App.GamePlay;
-import sbu.cs.mahkats.Server.Unit.Movable.Hero.Ability;
+import sbu.cs.mahkats.Server.Unit.Movable.Hero.Ability.Ability;
 import sbu.cs.mahkats.Server.Unit.Unit;
 
 public abstract class Movable extends Unit {
     protected int level;
     protected int mana;
+    protected int max_mana;
     protected int mana_regeneration;
-    protected Ability ability1;
-    protected Ability ability2;
-    protected Ability ability3;
-    protected Ability ability4;
-    
 
     public Movable(String teamName, String unitType , int code) {
         super(teamName, unitType, code);
