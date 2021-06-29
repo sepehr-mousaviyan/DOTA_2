@@ -1,23 +1,28 @@
 package sbu.cs.mahkats.Server.App;
 
 
+import sbu.cs.mahkats.Api.Api;
+import sbu.cs.mahkats.Api.Data.ActionHeroData;
+import sbu.cs.mahkats.Api.MassageMaker;
+import sbu.cs.mahkats.Api.Parser;
 import sbu.cs.mahkats.Configuration.Config;
 import sbu.cs.mahkats.Configuration.InterfaceConfig;
 import sbu.cs.mahkats.Server.Connection.Client.Client;
+import sbu.cs.mahkats.Server.Unit.Building.Barrack.Barrack;
 import sbu.cs.mahkats.Server.Unit.Building.Tower.Tower;
 import sbu.cs.mahkats.Server.Unit.Building.Tower.TowerRunnable;
 import sbu.cs.mahkats.Server.Unit.Movable.Creep.Creep;
 import sbu.cs.mahkats.Server.Unit.Movable.Creep.CreepRunnable;
 import sbu.cs.mahkats.Server.Unit.Movable.Creep.MeleeCreep;
 import sbu.cs.mahkats.Server.Unit.Movable.Creep.RangedCreep;
+import sbu.cs.mahkats.Server.Unit.Movable.Hero.Ability.Ability;
 import sbu.cs.mahkats.Server.Unit.Movable.Hero.Hero;
 import sbu.cs.mahkats.Server.Unit.Unit;
 import sbu.cs.mahkats.Server.Unit.unitList;
-import sbu.cs.mahkats.Server.Unit.Building.Barrack.Barrack;
 
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.logging.Logger;
+import org.apache.log4j.Logger;
 
 public class GamePlay {
     private static int REFRESH_RATE;           //the time of a turn
@@ -34,12 +39,13 @@ public class GamePlay {
     private static unitList RedUnits;  // all the green units objects
 
     private static int last_code = 1;
+    private static boolean is_start = false;
 
-    private final static Logger logger = Logger.getLogger(GamePlay.class.getName());;
+    private final static Logger logger = Logger.getLogger(GamePlay.class.getName());
 
     private static int turn = 0;
 
-    public GamePlay() {
+    public GamePlay(String heroName1 , String heroName2) {
         Config config = InterfaceConfig.getInstance();
         MAP_HEIGHT  = config.getIntValue("map.height");
         MAP_WIDTH   = config.getIntValue("map.width");
@@ -51,48 +57,60 @@ public class GamePlay {
         RANGED_CREEP_NUMBERS = config.getIntValue("game.creep.ranged.numbers");
         MELEE_CREEP_NUMBERS  = config.getIntValue("game.creep.melee.numbers");
 
-        GreenUnits = new unitList("GREEN");
-        RedUnits   = new unitList("RED");
+        GreenUnits = new unitList("GREEN" , heroName1);
+        RedUnits   = new unitList("RED" , heroName2);
     }
 
-    public void play(Client client) {
-
-        new Thread(() -> {
-            logger.info("the thread that checks and add turn is running");
-            try {
-                Thread.sleep(REFRESH_RATE);
-                turn ++;
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }).start();
-
-
-        AtomicInteger lastTurnCreepSpawn = new AtomicInteger(turn);
-        new Thread(()->{
-            logger.info("the thread that for spawn creep is running");
-            if (turn - lastTurnCreepSpawn.get() == 60) {
-                spawnCreep();
-                lastTurnCreepSpawn.set(turn);
-            }
-        }).start();
-
+    public void play(ArrayList<Client> clients) {
+        is_start = true;
+        int lastTurnCreepSpawn = turn;
         ArrayList<Tower> towers = new ArrayList<>(GreenUnits.getTowers());
         towers.addAll(RedUnits.getTowers());
         TowerRunnable towerRunnable = new TowerRunnable(towers);
         new Thread(towerRunnable).start();
         int lastTurn = turn;
+
         logger.info("game start");
         while(true) {
-            if (turn - lastTurn == 1) {
+            if (turn - lastTurn >= 1) {
                 checkMap();
                 hpRegenerateAll();
-                //TODO: communicate
-                communicate();
-                client.sendData();
-                lastTurn = turn;
+                manaRegenerateAll();
+                for(Client client : clients) {
+                    client.sendData();
+                    logger.info("send data");
+                }
+                recieveHeroData(clients);
 
+                //check end game
+                if(GreenUnits.getAncient().isDie()){
+                    endGame("GREEN", clients);
+                    logger.info("Green is lost");
+                    break;
+                }
+                if(RedUnits.getAncient().isDie()){
+                    endGame("Red", clients);
+                    logger.info("Red is lost");
+                    break;
+                }
+                if (turn - lastTurnCreepSpawn == 60) {
+                    spawnCreep();
+                    lastTurnCreepSpawn = turn;
+                }
+                try {
+                    Thread.sleep(REFRESH_RATE);
+                    lastTurn = turn;
+                    turn ++;
+                } catch (InterruptedException e) {
+                    logger.fatal("can not go next turn" , e);
+                }
             }
+        }
+    }
+
+    private void endGame(String name, ArrayList<Client> clients) {
+        for(Client client : clients) {
+            client.send(new MassageMaker().massage("EndGame", name).toString());
         }
     }
 
@@ -118,8 +136,8 @@ public class GamePlay {
      * check the map if some one can attack other
      */
     public void checkMap() {
-        ArrayList<Unit> greenUnits = GreenUnits.getAll();
-        ArrayList<Unit> redUnits = RedUnits.getAll();
+        ArrayList<Unit> greenUnits = GreenUnits.getAll_withoutHero();
+        ArrayList<Unit> redUnits = RedUnits.getAll_withoutHero();
 
         ArrayList<Creep> greenCreeps = GreenUnits.getCreeps();
         ArrayList<Creep> redCreeps = RedUnits.getCreeps();
@@ -127,8 +145,8 @@ public class GamePlay {
         ArrayList<Tower> greenTowers = GreenUnits.getTowers();
         ArrayList<Tower> redTowers = RedUnits.getTowers();
 
-        ArrayList<Hero> greenHeroes = GreenUnits.getHeros();
-        ArrayList<Hero> redHeroes = RedUnits.getHeros();
+        ArrayList<Hero> greenHeroes = GreenUnits.getHeroes();
+        ArrayList<Hero> redHeroes = RedUnits.getHeroes();
 
         ArrayList<Barrack> greenBarracks = GreenUnits.getBarracks();
         ArrayList<Barrack> redBarracks = RedUnits.getBarracks();
@@ -138,7 +156,7 @@ public class GamePlay {
             if(green.canHit(RedUnits.getAncient())){
                 green.setDefender(RedUnits.getAncient());
                 green.setStatusAttacker(true);
-                continue main;
+                continue;
             }
             //creeps
             for(Creep redC : redCreeps){
@@ -217,6 +235,120 @@ public class GamePlay {
         }
     }
 
+    public static void abilityHit(int gunshot, Hero hero, Ability ability) {
+        int shots = 0;
+        ArrayList<Unit> greenUnits = GreenUnits.getAll();
+        ArrayList<Unit> redUnits = RedUnits.getAll();
+        for (Unit greenU : greenUnits) {
+            if (gunshot != 0 && hero.canHit(greenU, ability)) {
+                if(shots >= gunshot) {
+                    break;
+                }
+                shots++;
+                greenU.takeDamage(ability.getDamage() , hero);
+            }
+            else if (gunshot == 0 && hero.canHit(greenU, ability)) {
+                greenU.takeDamage(ability.getDamage() , hero);
+            }
+        }
+        for (Unit redU : redUnits) {
+            if (gunshot != 0 && hero.canHit(redU, ability)) {
+                if(shots >= gunshot) {
+                    break;
+                }
+                shots++;
+                redU.takeDamage(ability.getDamage() , hero);
+            }
+            else if (gunshot == 0 && hero.canHit(redU, ability)) {
+                redU.takeDamage(ability.getDamage() , hero);
+            }
+        }
+    }
+
+    public void recieveHeroData(ArrayList<Client> clients) {
+        for(Client client : clients){
+            String data = client.receiveData();
+            ActionHeroData actionHeroData = Parser.parseActionHeroData(new Api().toJson(data));
+            Hero hero = GreenUnits.getHero(actionHeroData.getHeroCode());
+            ArrayList<Ability> abilitis;
+            if(hero == null){
+                hero = RedUnits.getHero(actionHeroData.getHeroCode());
+            }
+            switch (actionHeroData.getChoice()){
+                //move hero
+                case 1:
+                    hero.move(actionHeroData.getLocation_x(), actionHeroData.getLocation_y());
+                    break;
+
+                //add new ability
+                case 2:
+                    abilitis= hero.getAbilities();
+                    for(Ability ability : abilitis) {
+                        if (ability.getNAME().equals(actionHeroData.getAbilityName())) {
+                            if(!ability.setUnlock()) {
+                                //TODO
+                            } 
+                        }
+                    }
+                    break;
+
+                //update ability
+                case 3:
+                    abilitis= hero.getAbilities();
+                    for(Ability ability : abilitis) {
+                        if (ability.getNAME().equals(actionHeroData.getAbilityName())) {
+                            if(!ability.stageUp()) {
+                                //TODO
+                            }
+                        }
+                    }
+                    break;
+
+                //attack the unit
+                case 4:
+                    Unit unit = GreenUnits.getUnit(actionHeroData.getHeroCode());
+                    if(unit == null){
+                        unit = RedUnits.getUnit(actionHeroData.getHeroCode());
+                    }
+        
+                    unit.takeDamage(hero.getDamage());
+                    break;
+
+                //use ability
+                case 6:
+                    Unit defender = GreenUnits.getUnit(actionHeroData.getDefenderCode());
+                    if(defender == null){
+                        defender = RedUnits.getUnit(actionHeroData.getDefenderCode());
+                    }
+                    abilitis= hero.getAbilities();
+                    for(Ability ability : abilitis) {
+                        if (ability.getNAME().equals(actionHeroData.getAbilityName())) {
+                            int[] codes = actionHeroData.getDefendersCode();
+
+                            if(actionHeroData.getDefenderCode() != 0){
+                                hero.setDefender(defender);
+                            }
+                            else if(codes != null){
+                                for (int code: codes) {
+                                    Unit defender_unit = GreenUnits.getUnit(code);
+                                    if(defender_unit == null){
+                                        defender_unit = RedUnits.getUnit(code);
+                                    }
+                                    hero.addDefenders(defender_unit);
+                                }
+                            }
+                            if(hero.reduceMana(ability.getMANA_COST())) {
+                                Hero finalHero = hero;
+                                new Thread(() -> ability.use(finalHero)).start();
+                            }
+                        }
+                    }
+                    break;
+            }
+        }
+    }
+
+
     /**
      * this function spawn a group of creep from a random barracks
      */
@@ -281,7 +413,16 @@ public class GamePlay {
         }
     }
 
-    void communicate() {
+    public void manaRegenerateAll(){
+        ArrayList<Hero> heroes = GreenUnits.getHeroes();
+        heroes.addAll(RedUnits.getHeroes());
+        for(Hero hero : heroes){
+            hero.mana_regeneration();
+        }
+    }
+
+    public static void heroLevelUp () {
+        //TODO: do what client says
 
     }
 
@@ -340,4 +481,6 @@ public class GamePlay {
     public static unitList getRedUnits() {
         return RedUnits;
     }
+
+    public static boolean isStarted(){ return is_start; }
 }

@@ -25,7 +25,7 @@ public class Tower extends Building {
         if(teamName.equals("Red")){
             config = InterfaceConfig.getInstance();
             Location_x = config.getIntValue("map.width") - Location_x;
-            Location_y = config.getIntValue("map.heigth") - Location_y;
+            Location_y = config.getIntValue("map.height") - Location_y;
         }
     }
 }

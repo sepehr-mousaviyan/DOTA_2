@@ -1,13 +1,19 @@
 package sbu.cs.mahkats.Server.Unit;
 
+import sbu.cs.mahkats.Configuration.Config;
+import sbu.cs.mahkats.Configuration.InterfaceConfig;
 import sbu.cs.mahkats.Server.App.GamePlay;
+import sbu.cs.mahkats.Server.Unit.Movable.Hero.Ability.Ability;
+import sbu.cs.mahkats.Server.Unit.Movable.Hero.Hero;
 
 public abstract class Unit {
     protected double hp = 0;
+    protected double max_hp = 0;
     protected double hp_regeneration = 0;
     protected double minimum_damage = 0;
     protected double maximum_damage = 0;
     protected double armor = 0;
+    protected double max_armor = 0;
     protected double range = 0;
     protected double experience;
     protected final String teamName;
@@ -16,6 +22,7 @@ public abstract class Unit {
     protected  boolean isDie = false;
     protected final String unitType;
     protected final int code;
+    protected final int chunk_size;
     
     protected int Location_x = 0;
     protected int Location_y = 0;
@@ -24,6 +31,8 @@ public abstract class Unit {
         this.teamName = teamName;
         this.unitType = unitType;
         this.code = code;
+        Config config = InterfaceConfig.getInstance();
+        chunk_size = config.getIntValue("game.chunk.size");
     }
 
 
@@ -100,12 +109,11 @@ public abstract class Unit {
     }
 
     public void hp_regenerate() {
-        hp  = hp  + hp_regeneration;
+        hp = hp + hp_regeneration;
         if (hp > 100) {
             hp = 100;
         }
     }
-    //TODO damage giving for hero
 
     /**
      * reduce the hp of this unit
@@ -114,14 +122,17 @@ public abstract class Unit {
     public void takeDamage(double damage) {
         if((damage - armor) > hp){
             hp = 0;
-            if(unitType.equals("Ancient")){
-                //TODO: end of game
-                return;
-            }
-            if(unitType.equals("Hero")){
-                //TODO: hero go to respawn time
-                return;
-            }
+            isDie = false;
+            this.destroy();
+        }
+        hp = hp - (damage - armor);
+    }
+
+    public void takeDamage(double damage , Hero hero) {
+        if((damage - armor) > hp){
+            hp = 0;
+            isDie = true;
+            hero.addRegularExperience(this.experience);
             this.destroy();
         }
         hp = hp - (damage - armor);
@@ -196,9 +207,9 @@ public abstract class Unit {
      */
     public boolean canHit(Unit defender) {
         if(range == 1) {
-            for(int i = Location_x - 1 ; i <= Location_x + 1 ; i++){
+            for(int i = Location_x/chunk_size - chunk_size ; i <= Location_x/chunk_size + chunk_size ; i++){
                 for(int j = Location_y - 1 ; j <= Location_y + 1 ; j++){
-                    if(defender.getLocation_x() == i && defender.getLocation_y() == j){
+                    if(defender.getLocation_x() == i / chunk_size && defender.getLocation_y() == j / chunk_size){
                         isAttacking = true;
                         return isAttacking;
                     }
@@ -206,7 +217,34 @@ public abstract class Unit {
             }
         }
         if(range == 2 || range == 3){
-            if (Math.abs(defender.getLocation_x() - Location_x) + Math.abs(defender.getLocation_y() - Location_y) <= range) {
+            if (Math.abs(defender.getLocation_x() - Location_x) + Math.abs(defender.getLocation_y() - Location_y) <= (range * chunk_size)) {
+                isAttacking = true;
+                return isAttacking;
+            }
+        }
+        isAttacking = false;
+        return isAttacking;
+    }
+
+    /**
+     * check if ability can hit defender return true and set status of attacking unit is on
+     * @param defender
+     * @param ability
+     * @return status of attacking
+     */
+     public boolean canHit(Unit defender , Ability ability) {
+        if(ability.getRange() == 1) {
+            for(int i = Location_x/chunk_size - chunk_size ; i <= Location_x/chunk_size + chunk_size ; i++){
+                for(int j = Location_y - 1 ; j <= Location_y + 1 ; j++){
+                    if(defender.getLocation_x() == i / chunk_size && defender.getLocation_y() == j / chunk_size){
+                        isAttacking = true;
+                        return isAttacking;
+                    }
+                }
+            }
+        }
+        if(ability.getRange() == 2 || ability.getRange() == 3){
+            if (Math.abs(defender.getLocation_x() - Location_x) + Math.abs(defender.getLocation_y() - Location_y) <= (range * chunk_size)) {
                 isAttacking = true;
                 return isAttacking;
             }

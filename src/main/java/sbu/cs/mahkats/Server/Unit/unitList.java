@@ -13,15 +13,14 @@ import java.util.ArrayList;
 public class unitList {
     private String teamName;
     private ArrayList <Creep> creeps = new ArrayList<>();
-    private ArrayList <Hero> heros = new ArrayList<>();
+    private ArrayList <Hero> heroes = new ArrayList<>();
     private ArrayList <MeleeBarrack> meleeBarracks = new ArrayList<>();
     private ArrayList <RangedBarrack> rangedBarracks = new ArrayList<>();
-
     private ArrayList <Tower> towers = new ArrayList<>();
     private Ancient ancient;
     private final int BASE_TOWER_NUMBERS = 3;
     private final int LANE_TOWER_NUMBERS = 3;
-    public unitList(String teamName) {
+    public unitList(String teamName , String heroName) {
         this.teamName = teamName;
         //ancient unit making
         ancient = new Ancient(teamName , GamePlay.get_add_Code());
@@ -51,13 +50,12 @@ public class unitList {
         this.rangedBarracks.add(new RangedBarrack("TOP", teamName , GamePlay.get_add_Code()));
         this.rangedBarracks.add(new RangedBarrack("MIDDLE", teamName , GamePlay.get_add_Code()));
         this.rangedBarracks.add(new RangedBarrack("BOTTOM", teamName , GamePlay.get_add_Code()));
+
+        this.heroes.add(new Hero(teamName , GamePlay.get_add_Code() , heroName));
     }
     
     public void add(Creep creep) {
         creeps.add(creep);
-    }
-    public void add(Hero hero) {
-        heros.add(hero);
     }
     public void add(MeleeBarrack meleeBarrack) {
         meleeBarracks.add(meleeBarrack);
@@ -97,8 +95,8 @@ public class unitList {
         return towers;
     }
 
-    public ArrayList<Hero> getHeros() {
-        return heros;
+    public ArrayList<Hero> getHeroes() {
+        return heroes;
     }
 
     public Creep getCreep(String lane) {
@@ -150,7 +148,36 @@ public class unitList {
         all.addAll(towers);
         all.addAll(meleeBarracks);
         all.addAll(rangedBarracks);
-        all.addAll(heros);
+        all.addAll(heroes);
+        all.add(ancient);
+        return all;
+    }
+
+    public Unit getUnit(int code){
+        ArrayList<Unit> all = this.getAll();
+        for(Unit unit : all){
+            if(unit.getCode() == code){
+                return unit;
+            }
+        }
+        return null;
+    }
+
+    public Hero getHero(int code){
+        for(Hero hero : heroes){
+            if(hero.getCode() == code){
+                return hero;
+            }
+        }
+        return null;
+    }
+
+    public ArrayList<Unit> getAll_withoutHero(){
+        ArrayList<Unit> all = new ArrayList<Unit>();
+        all.addAll(creeps);
+        all.addAll(towers);
+        all.addAll(meleeBarracks);
+        all.addAll(rangedBarracks);
         all.add(ancient);
         return all;
     }
