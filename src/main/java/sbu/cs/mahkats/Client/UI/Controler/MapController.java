@@ -26,24 +26,6 @@ public class MapController implements Initializable {
     private AnchorPane mainAnchor;
 
     @FXML
-    private Button BreathFire;
-
-    @FXML
-    private Button ElderDragon;
-
-    @FXML
-    private Button dragonTail;
-
-    @FXML
-    private Button Frost;
-
-    @FXML
-    private Button Multi;
-
-    @FXML
-    private Button Markmanship;
-
-    @FXML
     private Label teamNameOnMap;
 
     @FXML
@@ -51,6 +33,28 @@ public class MapController implements Initializable {
 
     @FXML
     private Label showArmor;
+
+    @FXML
+    private Label heroName;
+
+    @FXML
+    private ImageView ability1;
+
+    @FXML
+    private ImageView ability2;
+
+    @FXML
+    private ImageView ability3;
+
+    @FXML
+    private Label ability1_stage;
+
+    @FXML
+    private Label ability2_stage;
+
+    @FXML
+    private Label ability3_stage;
+
 
 
     public static void animationAttackMethod(ImageView pic){
@@ -85,6 +89,30 @@ public class MapController implements Initializable {
         try {
             for (HeroData hero : heroes) {
                 //TODO: draw game
+                if (hero.getTypeHero().equals("Ranged")){
+                    InputStream stream_hero = new FileInputStream("/rangerHero.png");
+                    InputStream stream_a1 = new FileInputStream("/rangerHero.png");
+                    InputStream stream_a2 = new FileInputStream("/rangerHero.png");
+                    InputStream stream_a3 = new FileInputStream("/rangerHero.png");
+                    Image image_hero = new Image(stream_hero);
+                    Image image_a1 = new Image(stream_hero);
+                    Image image_a2 = new Image(stream_hero);
+                    Image image_a3 = new Image(stream_hero);
+                    ImageView imageView_hero = new ImageView();
+
+                    imageView_hero.setImage(image_hero);
+                    imageView_hero.setX(hero.getLocation_x());
+                    imageView_hero.setY(hero.getLocation_y());
+                    imageView_hero.setFitHeight(35);
+                    imageView_hero.setFitWidth(35);
+
+                    ability1.setImage(image_a1);
+                    ability2.setImage(image_a2);
+                    ability3.setImage(image_a3);
+
+                    ability1_stage.setText(hero.getA);
+
+                }
                 if (hero.getAttacking()) {
                     //TODO: animation of attack
 
@@ -435,7 +463,7 @@ public class MapController implements Initializable {
                         }
                     }
                     if (building.getTeamName().equals("GREEN")){
-                        InputStream stream = new FileInputStream("Ancient_Radiant_model.png");
+                        InputStream stream = new FileInputStream("/Ancient_Radiant_model.png");
                         Image image = new Image(stream);
                         ImageView imageView = new ImageView();
                         imageView.setImage(image);
@@ -500,8 +528,10 @@ public class MapController implements Initializable {
 
     }
 
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
         teamNameOnMap.setText();
     }
 }

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane prefHeight="768.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sbu.cs.mahkats.Client.UI.Controler.EndGameController">
+   <children>
+      <ImageView fitHeight="768.0" fitWidth="1024.0" pickOnBounds="true">
+         <image>
+            <Image url="@../../../../wallpapersdota2.com-599.jpg" />
+         </image>
+      </ImageView>
+      <Pane layoutX="327.0" layoutY="200.0" prefHeight="88.0" prefWidth="397.0" style="-fx-background-color: d9d5d4; -fx-background-radius: 40; -fx-border-radius: 30; -fx-border-color: f2886d; -fx-border-width: 5;" />
+      <Label fx:id="winnerTeam" layoutX="343.0" layoutY="199.0" prefHeight="88.0" prefWidth="116.0">
+         <font>
+            <Font size="42.0" />
+         </font>
+      </Label>
+      <Label layoutX="467.0" layoutY="189.0" prefHeight="108.0" prefWidth="286.0" text="TEAM WINS!">
+         <font>
+            <Font size="42.0" />
+         </font>
+      </Label>
+      <Label layoutX="152.0" layoutY="726.0" prefHeight="34.0" prefWidth="190.0" style="-fx-background-color: aba9a9; -fx-background-radius: 30;" text="        made by MahKatS" />
+      <Label layoutX="462.0" layoutY="420.0" onMouseClicked="#exitGame" prefHeight="53.0" prefWidth="155.0" style="-fx-background-color: d9d5d4; -fx-background-radius: 30; -fx-border-color: f2886d; -fx-border-radius: 25; -fx-border-width: 3;" text="           Exit">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>
