@@ -106,8 +106,8 @@ public class ChooseHeroController implements Initializable {
     void playHero1(MouseEvent event) {
         mediaPlayerOne.play();
         for (HeroData hero : heroes){
-            if (hero.getTypeHero.equals("Knight")){
-                heroName.setText("Dragon Night");
+            if (hero.getTypeHero().equals("Knight")){
+                heroName.setText("Dragon " + hero.getTypeHero());
                 abilityOne.setText("Breath Fire");
                 abilityTwo.setText("Dragon Tail");
                 abilityThree.setText("Elder Dragon Form");
@@ -120,8 +120,8 @@ public class ChooseHeroController implements Initializable {
     void playHero2(MouseEvent event) {
         mediaPlayerTwo.play();
         for (HeroData hero : heroes){
-            if (hero.getTypeHero.equals("Ranged")){
-                heroName.setText("Drow Ranger");
+            if (hero.getTypeHero().equals("Ranged")){
+                heroName.setText("Drow" + hero.getTypeHero());
                 abilityOne.setText("Frost Arrows");
                 abilityTwo.setText("Multi Arrow");
                 abilityThree.setText("Marksmanship");
