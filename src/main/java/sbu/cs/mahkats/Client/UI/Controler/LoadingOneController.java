@@ -9,11 +9,14 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import javafx.stage.Stage;
+import sbu.cs.mahkats.Client.Connection.Connection;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class LoadingOneController implements Initializable {
+
+    boolean isReceived = false;
 
     @FXML
     private MediaView loadingVideo;
@@ -25,8 +28,11 @@ public class LoadingOneController implements Initializable {
         MediaPlayer mediaPlayer = new MediaPlayer(media);
         loadingVideo.setMediaPlayer(mediaPlayer);
         mediaPlayer.play();
+        new Thread(()-> {
+            Connection.getHeroesData()
+        })
 
-        if (true) {
+         if (isReceived) {
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/ChooseHeroScreen.fxml"));
                 Parent root1 = fxmlLoader.load();

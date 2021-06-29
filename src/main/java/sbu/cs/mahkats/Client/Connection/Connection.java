@@ -6,6 +6,9 @@ import sbu.cs.mahkats.Api.Api;
 import sbu.cs.mahkats.Api.MassageMaker;
 import sbu.cs.mahkats.Api.Parser;
 import sbu.cs.mahkats.Api.Data.UserData;
+//import sbu.cs.mahkats.Client.UI.Controler.ReceiveDataRunnable;
+import sbu.cs.mahkats.Client.UI.Controler.ChooseHeroController;
+import sbu.cs.mahkats.Client.UI.Controler.ReceiveDataRunnable;
 import sbu.cs.mahkats.Configuration.Config;
 
 import java.io.*;
@@ -120,6 +123,16 @@ public class Connection {
 
     public static void runReceiver(){
         new Thread(new ReceiveDataRunnable(dataInputStream)).start();
+    }
+
+    public static void getHeroesData(){
+        String data;
+        try {
+            data = dataInputStream.readUTF();
+            ChooseHeroController.setHeroes(Parser.getHeroesListData(new Api().toJson(data)));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }

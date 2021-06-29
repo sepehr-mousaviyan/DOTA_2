@@ -47,6 +47,7 @@ public class ReceiveDataRunnable implements Runnable{
                 case "End":
                     mapController.checkUnits(heroes,creeps,buildings);
                     break;
+
             }
         }
     }
