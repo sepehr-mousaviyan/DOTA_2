@@ -2,7 +2,10 @@ package sbu.cs.mahkats.Api;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import org.javatuples.Pair;
 import sbu.cs.mahkats.Api.Data.*;
+
+import java.util.ArrayList;
 
 public class Parser{
     public static Boolean getStatus(JsonObject json){
@@ -40,5 +43,24 @@ public class Parser{
         JsonData buildingData = gson.fromJson(json , JsonData.class);
         String content = buildingData.getContent().toString();
         return gson.fromJson(new Api().toJson(content), BuildingData.class);
+    }
+
+    public static ArrayList<HeroData> parseListHeroesData(JsonObject json) {
+        Gson gson = new Gson();
+        JsonData buildingData = gson.fromJson(json , JsonData.class);
+        String content = buildingData.getContent().toString();
+        ArrayList<Pair<String, JsonObject>> heroes =  gson.fromJson(new Api().toJson(content), ArrayList.class);
+        ArrayList<HeroData> heroesData = new ArrayList<>();
+        for(Pair<String, JsonObject> pair : heroes){
+            heroesData.add(gson.fromJson(new Api().toJson(pair.getValue1().toString()), HeroData.class));
+        }
+        return heroesData;
+    }
+
+    public static AbilityData parseAbilityData(JsonObject json) {
+        Gson gson = new Gson();
+        JsonData buildingData = gson.fromJson(json , JsonData.class);
+        String content = buildingData.getContent().toString();
+        return gson.fromJson(new Api().toJson(content), AbilityData.class);
     }
 }
