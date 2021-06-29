@@ -33,6 +33,30 @@ public class MovableUnitData extends GamePlayData{
         super(token, error);
     }
 
+    public int getLevel() {
+        return level;
+    }
+
+    public int getMana() {
+        return mana;
+    }
+
+    public int getMana_regeneration() {
+        return mana_regeneration;
+    }
+
+    public String getAbility1() {
+        return ability1;
+    }
+
+    public String getAbility2() {
+        return ability2;
+    }
+
+    public String getAbility3() {
+        return ability3;
+    }
+
     @Override
     public JsonObject makeJson() {
         String str = super.makeJson().toString();
