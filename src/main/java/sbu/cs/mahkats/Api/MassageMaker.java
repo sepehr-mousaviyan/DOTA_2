@@ -5,6 +5,8 @@ import com.google.gson.JsonObject;
 import org.javatuples.Pair;
 import sbu.cs.mahkats.Api.Data.*;
 
+import java.util.ArrayList;
+
 public class MassageMaker{
 
     public JsonObject massage(String status, String action, UserData user){
@@ -43,6 +45,23 @@ public class MassageMaker{
         return new Api().toJson(new Pair<>("status" , status),
                 new Pair<>("action" , action),
                 new Pair<>("content", heroData.makeJson()));
+    }
+
+    public JsonObject massage(String status, String action, int number, HeroData ...heroData){
+        Pair<String, String> statusProperties = new Pair<>("status" , status);
+        Pair<String, String> actionProperties = new Pair<>("action" , action);
+        ArrayList<Pair<String, JsonObject>> heroList = new ArrayList<>();
+        for(int i = 0 ; i < number; i++){
+            heroList.add(new Pair<>("hero" + i, heroData[i].makeJson()));
+        }
+        Pair contentProperties = new Pair<>("content", new Pair("heroList", heroList));
+        return new Api().toJson(statusProperties, actionProperties, contentProperties);
+    }
+
+    public JsonObject massage(String status, String action, AbilityData abilityData){
+        return new Api().toJson(new Pair<>("status" , status),
+                new Pair<>("action" , action),
+                new Pair<>("content", abilityData.makeJson()));
     }
 
     public JsonObject massage(String status, String action){

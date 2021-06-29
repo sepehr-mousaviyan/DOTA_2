@@ -12,6 +12,7 @@ public class ActionHeroData implements Data{
     private int defenderCode = 0;
     private int location_x = 0;
     private int location_y = 0;
+    private int[] defendersCode = null;
     /**
      * possible of choice:
      * 1- move hero
@@ -29,6 +30,15 @@ public class ActionHeroData implements Data{
         this.heroCode = heroCode;
         this.abilityName = abilityName;
         this.defenderCode = defenderCode;
+        this.choice = choice;
+    }
+
+    public ActionHeroData(long token, String heroName, int heroCode, int abilityName, int[] defendersCode, int choice) {
+        this.token = token;
+        this.heroName = heroName;
+        this.heroCode = heroCode;
+        this.abilityName = abilityName;
+        this.defendersCode = defendersCode;
         this.choice = choice;
     }
 
@@ -72,14 +82,26 @@ public class ActionHeroData implements Data{
         return choice;
     }
 
+    public int[] getDefendersCode() {
+        return defendersCode;
+    }
+
     @Override
     public JsonObject makeJson() {
         if (location_x == 0 || location_y == 0){
+            if(defendersCode == null) {
+                return new Api().toJson(new Pair<>("token", token),
+                        new Pair<>("heroName", heroName),
+                        new Pair<>("heroCode", heroCode),
+                        new Pair<>("abilityName", abilityName),
+                        new Pair<>("defenderCode", defenderCode),
+                        new Pair<>("choice", choice));
+            }
             return new Api().toJson(new Pair<>("token", token),
                     new Pair<>("heroName", heroName),
                     new Pair<>("heroCode", heroCode),
                     new Pair<>("abilityName", abilityName),
-                    new Pair<>("defenderCode", defenderCode),
+                    new Pair<>("defendersCode", defendersCode),
                     new Pair<>("choice", choice));
         }
         return new Api().toJson(new Pair<>("token", token),

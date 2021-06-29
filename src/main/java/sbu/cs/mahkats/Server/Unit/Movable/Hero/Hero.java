@@ -141,11 +141,21 @@ public class Hero extends Movable {
     public void respawnTime(){
         isRespawnTime = true;
         remainRespawnTime *= 1.9;
+        new Thread(()->{
+            int lastTurn = GamePlay.getTurn();
+           while(remainRespawnTime != 0){
+               if(lastTurn > GamePlay.getTurn()){
+                   remainRespawnTime--;
+               }
+           }
+           respawnAgain();
+        });
     }
 
     public void respawnAgain(){
         Location_x = 10;
         Location_y = 10;
+        isRespawnTime = false;
         if(teamName.equals("RED")){
             Config config = InterfaceConfig.getInstance();
             Location_x = config.getIntValue("map.width") - Location_x;

@@ -10,6 +10,7 @@ import sbu.cs.mahkats.Api.Parser;
 import sbu.cs.mahkats.Server.App.GamePlay;
 import sbu.cs.mahkats.Server.Connection.DataBase.DataBase;
 import sbu.cs.mahkats.Server.Unit.Building.Tower.Tower;
+import sbu.cs.mahkats.Server.Unit.Movable.Hero.Ability.Ability;
 import sbu.cs.mahkats.Server.Unit.Movable.Hero.KnightHero;
 import sbu.cs.mahkats.Server.Unit.Movable.Hero.RangedHero;
 import sbu.cs.mahkats.Server.Unit.unitList;
@@ -69,6 +70,8 @@ public class Client {
         ArrayList<Tower> redTowers= redUnits.getTowers();
         ArrayList<Barrack> greenBarracks= greenUnits.getBarracks();
         ArrayList<Barrack> redBarracks= redUnits.getBarracks();
+        ArrayList<Ability> greenAbility = greenUnits.getHeroes().get(0).getAbilities();
+        ArrayList<Ability> redAbility = redUnits.getHeroes().get(0).getAbilities();
         sendAncientData(greenAncient , "ancient" , "ok");
         sendAncientData(redAncient , "ancient" , "ok");
         sendHeroData(greenHeroes, "hero" , "ok");
@@ -79,6 +82,8 @@ public class Client {
         sendTowerData(redTowers, "tower" , "ok");
         sendBarrackData(greenBarracks, "barrack" , "ok");
         sendBarrackData(redBarracks, "barrack" , "ok");
+        sendAbilityData(greenAbility, "ability", "ok");
+        sendAbilityData(redAbility, "ability", "ok");
         send(new MassageMaker().massage("ok" , "End").toString());
     }
 
@@ -135,6 +140,18 @@ public class Client {
                 barrack.getExperience() , barrack.getStatusAttacker() , barrack.getDefender().getCode() ,
                 barrack.getStatusDie() , barrack.getCode() , barrack.getTeamName() , "Barrack");
             send(new MassageMaker().massage(status , action , barrackData).toString());    
+        }
+    }
+
+    public void sendAbilityData(ArrayList <Ability> abilities, String action, String status){
+        for(Ability ability : abilities){
+            AbilityData abilityData = new AbilityData(TOKEN , ability.getNAME(), ability.getUNLOCK_LEVEL() ,
+                    ability.getGUNSHOT() , ability.getSTAGE_NUMBERS() , ability.getRange() , ability.getDamage() ,
+                    ability.getMANA_COST() , ability.getReloadDuration() , ability.getDuration(),
+                    ability.getLeft_duration_turn() , ability.getLeft_duration_reload_turn(),
+                    ability.isAvailable() , ability.getStage(), ability.getIsUnlock(),
+                    ability.canUnlock(), null , 0 );
+            send(new MassageMaker().massage(status , action , abilityData).toString());
         }
     }
 

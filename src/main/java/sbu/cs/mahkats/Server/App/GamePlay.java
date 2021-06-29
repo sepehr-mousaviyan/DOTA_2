@@ -324,7 +324,6 @@ public class GamePlay {
                     for(Ability ability : abilitis) {
                         if (ability.getNAME().equals(actionHeroData.getAbilityName())) {
                             int[] codes = actionHeroData.getDefendersCode();
-
                             if(actionHeroData.getDefenderCode() != 0){
                                 hero.setDefender(defender);
                             }

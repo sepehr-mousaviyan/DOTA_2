@@ -231,4 +231,41 @@ public class Ability {
     }
 
     public boolean isMaxStage(){ return (stage >= STAGE_NUMBERS); }
+
+    public int getGUNSHOT() {
+        return GUNSHOT;
+    }
+
+    public int getSTAGE_NUMBERS() {
+        return STAGE_NUMBERS;
+    }
+
+    public int getRANGE() {
+        return RANGE;
+    }
+
+    public int getLeft_duration_reload_turn() {
+        return left_duration_reload_turn;
+    }
+
+    public boolean isAvailable() {
+        return isAvailable;
+    }
+
+    public int getReloadDuration() {
+        return reloadDuration;
+    }
+
+    public int getStage() {
+        return stage;
+    }
+
+    public boolean canUnlock() {
+        return  canUnlock;
+    }
+
+    public int getDuration() {
+        return DURATION[stage];
+    }
+
 }
