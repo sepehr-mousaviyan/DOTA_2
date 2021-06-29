@@ -7,18 +7,17 @@ import sbu.cs.mahkats.Server.Unit.Movable.Hero.Hero;
 import sbu.cs.mahkats.Server.Unit.Unit;
 
 import java.util.ArrayList;
-
 public class Ability {
     private final String NAME;
-    private final int UNLOCK_LEVEL; //the level can this ability unlock
-    private final int GUNSHOT;  //the number of unit can hit in one turn
-    private final int STAGE_NUMBERS;    //maximum level
+    private final int UNLOCK_LEVEL;
+    private final int GUNSHOT;
+    private final int STAGE_NUMBERS;
     private final int RANGE;
     private final double [] DAMAGE;     //the list of damage sort of level
     private final int [] MANA_COST;     //the list of mana that should cost for one use ability sort of level
     private final int [] RELOAD_DURATION;   //the list of turn that should stay for can use again ability sort of level
     private final int [] DURATION;      //the list of turn that duration a use ability sort of level
-    
+
     private int left_duration_turn; //the count duration of ability for end
     private int left_duration_reload_turn;  //the count turn until unlock again ability to use
     private boolean isAvailable;    //if ability is not in reload is true
@@ -32,7 +31,7 @@ public class Ability {
         stage = 0;
         isUnlock = false;
         isAvailable = true;
-        
+
         Config heroConfig = HeroConfig.getInstance(hero_name);
 
         NAME = heroConfig.getStringValue("hero." + hero_name + ".ability" + ability_number +".name");
@@ -53,6 +52,8 @@ public class Ability {
             RELOAD_DURATION[i] = heroConfig.getIntValue("hero." + hero_name + ".ability" + ability_number + ".reload_duration." + stage_number);
             DURATION[i] = heroConfig.getIntValue("hero." + hero_name + ".ability" + ability_number + ".duration." + stage_number);
         }
+
+
     }
 
     /**
@@ -115,7 +116,7 @@ public class Ability {
                     }
                     hero.setMinimum_damage(temp_damage);
                     break;
-                    
+
                 case "multiArrow":
                     left_duration_turn = DURATION[stage];
                     lastTurn = GamePlay.getTurn();
@@ -127,7 +128,7 @@ public class Ability {
                         }
                     }
                     break;
-                    
+
                 case "marksmanship":
                     if(left_duration_turn == 0) {
                         left_duration_turn = DURATION[stage];

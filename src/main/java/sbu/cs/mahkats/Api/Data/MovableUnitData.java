@@ -11,8 +11,9 @@ public class MovableUnitData extends GamePlayData{
     protected String ability1;
     protected String ability2;
     protected String ability3;
+    protected String ability4;
 
-    public MovableUnitData(Long token, double hp, double hp_regeneration, double minimum_damage, double maximum_damage, double armor, double range, double experience, Boolean isAttacking, int defender, boolean isDie, int code, int level, int mana, int mana_regeneration, String ability1, String ability2, String ability3, String teamName) {
+    public MovableUnitData(Long token, double hp, double hp_regeneration, double minimum_damage, double maximum_damage, double armor, double range, double experience, Boolean isAttacking, int defender, boolean isDie, int code, int level, int mana, int mana_regeneration, String ability1, String ability2, String ability3, String ability4, String teamName) {
         super(token, hp, hp_regeneration, minimum_damage, maximum_damage, armor, range, experience, isAttacking, defender, isDie, code ,teamName);
         this.level = level;
         this.mana = mana;
@@ -20,6 +21,7 @@ public class MovableUnitData extends GamePlayData{
         this.ability1 = ability1;
         this.ability2 = ability2;
         this.ability3 = ability3;
+        this.ability4 = ability4;
     }
 
     public MovableUnitData(Long token, double hp, double hp_regeneration, double minimum_damage, double maximum_damage, double armor, double range, double experience, Boolean isAttacking, int defender, boolean isDie, int code, int level, int mana, int mana_regeneration, String teamName) {
@@ -43,7 +45,8 @@ public class MovableUnitData extends GamePlayData{
                     new Pair<>("mana_regeneration", mana_regeneration),
                     new Pair<>("ability1", ability1),
                     new Pair<>("ability2", ability2),
-                    new Pair<>("ability3", ability3)).toString());
+                    new Pair<>("ability3", ability3),
+                    new Pair<>("ability4", ability4)).toString());
         }
         return new Api().toJson(str);
     }
