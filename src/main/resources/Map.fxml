@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane fx:id="mainAnchor" prefHeight="768.0" prefWidth="1026.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sbu.cs.mahkats.Client.UI.Controler.MapController">
    <children>
@@ -51,7 +53,7 @@
             <Image url="@Photos/Tower_Radiant_model2.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="pic" fitHeight="50.0" fitWidth="50.0" layoutX="301.0" layoutY="376.0" onMouseClicked="#test" pickOnBounds="true" preserveRatio="true" styleClass="Style">
+      <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="301.0" layoutY="376.0" pickOnBounds="true" preserveRatio="true" styleClass="Style">
          <image>
             <Image url="@Photos/Tower_Radiant_model2.png" />
          </image>
@@ -96,12 +98,12 @@
             <Image url="@Photos/Tower_Dire_model.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="greenAnceint" fitHeight="80.0" fitWidth="75.0" layoutX="83.0" layoutY="581.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="80.0" fitWidth="75.0" layoutX="83.0" layoutY="581.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@Photos/Ancient_Radiant_model.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="redAncient" fitHeight="80.0" fitWidth="80.0" layoutX="616.0" layoutY="88.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="616.0" layoutY="88.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@Photos/Ancient_Dire_model5.png" />
          </image>
@@ -191,5 +193,65 @@
             <Image url="@Photos/Tower_Dire_model.png" />
          </image>
       </ImageView>
+      <Label layoutX="729.0" layoutY="40.0" prefHeight="48.0" prefWidth="148.0" text="Team Name :" textFill="#dadada">
+         <font>
+            <Font size="25.0" />
+         </font>
+      </Label>
+      <Label fx:id="teamNameOnMap" layoutX="891.0" layoutY="33.0" prefHeight="57.0" prefWidth="107.0" textFill="#f8f7f7">
+         <font>
+            <Font size="39.0" />
+         </font>
+      </Label>
+      <Label layoutX="760.0" layoutY="123.0" prefHeight="48.0" prefWidth="245.0" text="Drow Ranger Abilities" textFill="#dadada">
+         <font>
+            <Font size="25.0" />
+         </font>
+      </Label>
+      <ImageView fitHeight="57.0" fitWidth="57.0" layoutX="765.0" layoutY="170.0" pickOnBounds="true" smooth="false">
+         <image>
+            <Image url="@Photos/Breathe_Fire_icon.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="57.0" fitWidth="57.0" layoutX="842.0" layoutY="169.0" pickOnBounds="true" smooth="false">
+         <image>
+            <Image url="@Photos/Dragon_Tail_icon.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="57.0" fitWidth="57.0" layoutX="922.0" layoutY="172.0" pickOnBounds="true" smooth="false">
+         <image>
+            <Image url="@Photos/Elder_Dragon_Form_icon.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="760.0" layoutY="295.0" prefHeight="48.0" prefWidth="256.0" text="Dragon Night Abilities" textFill="#dadada">
+         <font>
+            <Font size="25.0" />
+         </font>
+      </Label>
+      <ImageView fitHeight="57.0" fitWidth="57.0" layoutX="841.0" layoutY="346.0" pickOnBounds="true" smooth="false">
+         <image>
+            <Image url="@Photos/Multishot_icon.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="57.0" fitWidth="57.0" layoutX="767.0" layoutY="346.0" pickOnBounds="true" smooth="false">
+         <image>
+            <Image url="@Photos/Frost_Arrows_icon.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="57.0" fitWidth="57.0" layoutX="925.0" layoutY="346.0" pickOnBounds="true" smooth="false">
+         <image>
+            <Image url="@Photos/Marksmanship_icon.png" />
+         </image>
+      </ImageView>
+      <Label fx:id="showXP" layoutX="754.0" layoutY="480.0" prefHeight="57.0" prefWidth="256.0" style="-fx-background-color: f0eded; -fx-background-radius: 30; -fx-border-color: cf4444; -fx-border-radius: 25; -fx-border-width: 5;">
+         <font>
+            <Font size="23.0" />
+         </font>
+      </Label>
+      <Label fx:id="showArmor" layoutX="755.0" layoutY="559.0" prefHeight="57.0" prefWidth="256.0" style="-fx-background-color: f0eded; -fx-background-radius: 30; -fx-border-color: cf4444; -fx-border-radius: 25; -fx-border-width: 5;">
+         <font>
+            <Font size="23.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

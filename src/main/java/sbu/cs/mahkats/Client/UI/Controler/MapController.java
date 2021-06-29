@@ -1,8 +1,11 @@
 package sbu.cs.mahkats.Client.UI.Controler;
 
 import javafx.animation.RotateTransition;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -19,29 +22,52 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class MapController implements Initializable {
-
-    @FXML
-    ImageView pic;
-
     @FXML
     private AnchorPane mainAnchor;
 
+    @FXML
+    private Button BreathFire;
+
+    @FXML
+    private Button ElderDragon;
+
+    @FXML
+    private Button dragonTail;
+
+    @FXML
+    private Button Frost;
+
+    @FXML
+    private Button Multi;
+
+    @FXML
+    private Button Markmanship;
+
+    @FXML
+    private Label teamNameOnMap;
+
+    @FXML
+    private Label showXP;
+
+    @FXML
+    private Label showArmor;
+
 
     public static void animationAttackMethod(ImageView pic){
-        RotateTransition rotate1 = new RotateTransition(Duration.millis(200),pic);
-        rotate1.setFromAngle(-15);
-        rotate1.setToAngle(15);
+        RotateTransition rotate1 = new RotateTransition(Duration.millis(100),pic);
+        rotate1.setFromAngle(-10);
+        rotate1.setToAngle(10);
         rotate1.play();
         rotate1.setOnFinished((e) -> {
             try {
-                RotateTransition rotate2 = new RotateTransition(Duration.millis(200),pic);
-                rotate2.setFromAngle(15);
-                rotate2.setToAngle(-15);
+                RotateTransition rotate2 = new RotateTransition(Duration.millis(100),pic);
+                rotate2.setFromAngle(10);
+                rotate2.setToAngle(-10);
                 rotate2.play();
                 rotate2.setOnFinished((ex) -> {
                     try {
-                        RotateTransition rotate3 = new RotateTransition(Duration.millis(200),pic);
-                        rotate3.setFromAngle(-15);
+                        RotateTransition rotate3 = new RotateTransition(Duration.millis(100),pic);
+                        rotate3.setFromAngle(-10);
                         rotate3.setToAngle(0);
                         rotate3.play();
                     }catch (Exception exp){
@@ -80,15 +106,26 @@ public class MapController implements Initializable {
                         imageView.setY(creep.getLocation_y());
                         imageView.setFitHeight(25);
                         imageView.setFitWidth(25);
+                        imageView.setPickOnBounds(true);
 
                         if (creep.isDie()) {
                             creeps.remove(creep);
                             imageView.setImage(null);
                         }
-                        mainAnchor.getChildren().add(imageView);
-                        if (creep.getAttacking()) {
-                            animationAttackMethod(imageView);
+                        else {
+                            mainAnchor.getChildren().add(imageView);
+                            imageView.setOnMouseEntered(new EventHandler<MouseEvent>() {
+                                @Override
+                                public void handle(MouseEvent event) {
+                                    showXP.setText();
+                                    showArmor.setText();
+                                }
+                            });
+                            if (creep.getAttacking()) {
+                                animationAttackMethod(imageView);
+                            }
                         }
+
 
                     }
                     else {
@@ -101,16 +138,25 @@ public class MapController implements Initializable {
                         imageView.setY(creep.getLocation_y());
                         imageView.setFitHeight(25);
                         imageView.setFitWidth(25);
+                        imageView.setPickOnBounds(true);
 
                         if (creep.isDie()) {
                             creeps.remove(creep);
                             imageView.setImage(null);
                         }
-                        mainAnchor.getChildren().add(imageView);
-                        if (creep.getAttacking()) {
-                            animationAttackMethod(imageView);
+                        else {
+                            mainAnchor.getChildren().add(imageView);
+                            imageView.setOnMouseEntered(new EventHandler<MouseEvent>() {
+                                @Override
+                                public void handle(MouseEvent event) {
+                                    showXP.setText();
+                                    showArmor.setText();
+                                }
+                            });
+                            if (creep.getAttacking()) {
+                                animationAttackMethod(imageView);
+                            }
                         }
-
                     }
                 }
 
@@ -124,14 +170,24 @@ public class MapController implements Initializable {
                         imageView.setY(creep.getLocation_y());
                         imageView.setFitHeight(25);
                         imageView.setFitWidth(25);
+                        imageView.setPickOnBounds(true);
 
                         if (creep.isDie()) {
                             creeps.remove(creep);
                             imageView.setImage(null);
                         }
-                        mainAnchor.getChildren().add(imageView);
-                        if (creep.getAttacking()) {
-                            animationAttackMethod(imageView);
+                        else {
+                            mainAnchor.getChildren().add(imageView);
+                            imageView.setOnMouseEntered(new EventHandler<MouseEvent>() {
+                                @Override
+                                public void handle(MouseEvent event) {
+                                    showXP.setText();
+                                    showArmor.setText();
+                                }
+                            });
+                            if (creep.getAttacking()) {
+                                animationAttackMethod(imageView);
+                            }
                         }
                     }
                     else {
@@ -143,14 +199,24 @@ public class MapController implements Initializable {
                         imageView.setY(creep.getLocation_y());
                         imageView.setFitHeight(25);
                         imageView.setFitWidth(25);
+                        imageView.setPickOnBounds(true);
 
                         if (creep.isDie()) {
                             creeps.remove(creep);
                             imageView.setImage(null);
                         }
-                        mainAnchor.getChildren().add(imageView);
-                        if (creep.getAttacking()) {
-                            animationAttackMethod(imageView);
+                        else {
+                            mainAnchor.getChildren().add(imageView);
+                            imageView.setOnMouseEntered(new EventHandler<MouseEvent>() {
+                                @Override
+                                public void handle(MouseEvent event) {
+                                    showXP.setText();
+                                    showArmor.setText();
+                                }
+                            });
+                            if (creep.getAttacking()) {
+                                animationAttackMethod(imageView);
+                            }
                         }
                     }
                 }
@@ -166,14 +232,24 @@ public class MapController implements Initializable {
                         imageView.setY(building.getLocation_y());
                         imageView.setFitHeight(50);
                         imageView.setFitWidth(50);
-
-                        if (building.getAttacking()) {
-                            animationAttackMethod(imageView);
-                        }
-                        mainAnchor.getChildren().add(imageView);
+                        imageView.setPickOnBounds(true);
                         if (building.isDie()) {
                             buildings.remove(building);
                             imageView.setImage(null);
+                        }
+                        else {
+                            mainAnchor.getChildren().add(imageView);
+                            imageView.setOnMouseEntered(new EventHandler<MouseEvent>() {
+                                @Override
+                                public void handle(MouseEvent event) {
+                                    showXP.setText();
+                                    showArmor.setText();
+                                }
+                            });
+                            if (building.getAttacking()) {
+                                animationAttackMethod(imageView);
+                            }
+
                         }
                     }
                     if (building.getTeamName().equals("Green")){
@@ -185,14 +261,24 @@ public class MapController implements Initializable {
                         imageView.setY(building.getLocation_y());
                         imageView.setFitHeight(50);
                         imageView.setFitWidth(50);
+                        imageView.setPickOnBounds(true);
 
-                        if (building.getAttacking()) {
-                            animationAttackMethod(imageView);
-                        }
-                        mainAnchor.getChildren().add(imageView);
                         if (building.isDie()) {
                             buildings.remove(building);
                             imageView.setImage(null);
+                        }
+                        else {
+                            mainAnchor.getChildren().add(imageView);
+                            imageView.setOnMouseEntered(new EventHandler<MouseEvent>() {
+                                @Override
+                                public void handle(MouseEvent event) {
+                                    showXP.setText();
+                                    showArmor.setText();
+                                }
+                            });
+                            if (building.getAttacking()) {
+                                animationAttackMethod(imageView);
+                            }
                         }
                     }
                 }
@@ -207,14 +293,24 @@ public class MapController implements Initializable {
                         imageView.setY(building.getLocation_y());
                         imageView.setFitHeight(80);
                         imageView.setFitWidth(80);
+                        imageView.setPickOnBounds(true);
 
-                        if (building.getAttacking()) {
-                            animationAttackMethod(imageView);
-                        }
-                        mainAnchor.getChildren().add(imageView);
                         if (building.isDie()) {
                             buildings.remove(building);
                             imageView.setImage(null);
+                        }
+                        else {
+                            mainAnchor.getChildren().add(imageView);
+                            imageView.setOnMouseEntered(new EventHandler<MouseEvent>() {
+                                @Override
+                                public void handle(MouseEvent event) {
+                                    showXP.setText();
+                                    showArmor.setText();
+                                }
+                            });
+                            if (building.getAttacking()) {
+                                animationAttackMethod(imageView);
+                            }
                         }
                     }
                     if (building.getTeamName().equals("GREEN")){
@@ -226,13 +322,24 @@ public class MapController implements Initializable {
                         imageView.setY(building.getLocation_y());
                         imageView.setFitHeight(80);
                         imageView.setFitWidth(75);
-                        if (building.isDie()) {
-                            buildings.remove(building);
-                            imageView.setImage(null);
-                        }
-                        mainAnchor.getChildren().add(imageView);
+                        imageView.setPickOnBounds(true);
+
                         if (building.getAttacking()) {
                             animationAttackMethod(imageView);
+                        }
+                        else {
+                            mainAnchor.getChildren().add(imageView);
+                            imageView.setOnMouseEntered(new EventHandler<MouseEvent>() {
+                                @Override
+                                public void handle(MouseEvent event) {
+                                    showXP.setText();
+                                    showArmor.setText();
+                                }
+                            });
+                            if (building.isDie()) {
+                                buildings.remove(building);
+                                imageView.setImage(null);
+                            }
                         }
                     }
 
@@ -247,13 +354,24 @@ public class MapController implements Initializable {
                         imageView.setY(building.getLocation_y());
                         imageView.setFitHeight(50);
                         imageView.setFitWidth(41);
+                        imageView.setPickOnBounds(true);
+
                         if (building.isDie()) {
                             buildings.remove(building);
                             imageView.setImage(null);
                         }
-                        mainAnchor.getChildren().add(imageView);
-                        if (building.getAttacking()) {
-                            animationAttackMethod(imageView);
+                        else {
+                            mainAnchor.getChildren().add(imageView);
+                            imageView.setOnMouseEntered(new EventHandler<MouseEvent>() {
+                                @Override
+                                public void handle(MouseEvent event) {
+                                    showXP.setText();
+                                    showArmor.setText();
+                                }
+                            });
+                            if (building.getAttacking()) {
+                                animationAttackMethod(imageView);
+                            }
                         }
                     }
                     if (building.getTeamName().equals("GREEN")){
@@ -265,13 +383,24 @@ public class MapController implements Initializable {
                         imageView.setY(building.getLocation_y());
                         imageView.setFitHeight(50);
                         imageView.setFitWidth(41);
+                        imageView.setPickOnBounds(true);
+
                         if (building.isDie()) {
                             buildings.remove(building);
                             imageView.setImage(null);
                         }
-                        mainAnchor.getChildren().add(imageView);
-                        if (building.getAttacking()) {
-                            animationAttackMethod(imageView);
+                        else {
+                            mainAnchor.getChildren().add(imageView);
+                            imageView.setOnMouseEntered(new EventHandler<MouseEvent>() {
+                                @Override
+                                public void handle(MouseEvent event) {
+                                    showXP.setText();
+                                    showArmor.setText();
+                                }
+                            });
+                            if (building.getAttacking()) {
+                                animationAttackMethod(imageView);
+                            }
                         }
                     }
                 }
@@ -285,13 +414,24 @@ public class MapController implements Initializable {
                         imageView.setY(building.getLocation_y());
                         imageView.setFitHeight(50);
                         imageView.setFitWidth(41);
+                        imageView.setPickOnBounds(true);
+
                         if (building.isDie()) {
                             buildings.remove(building);
                             imageView.setImage(null);
                         }
-                        mainAnchor.getChildren().add(imageView);
-                        if (building.getAttacking()) {
-                            animationAttackMethod(imageView);
+                        else {
+                            mainAnchor.getChildren().add(imageView);
+                            imageView.setOnMouseEntered(new EventHandler<MouseEvent>() {
+                                @Override
+                                public void handle(MouseEvent event) {
+                                    showXP.setText();
+                                    showArmor.setText();
+                                }
+                            });
+                            if (building.getAttacking()) {
+                                animationAttackMethod(imageView);
+                            }
                         }
                     }
                     if (building.getTeamName().equals("GREEN")){
@@ -303,13 +443,24 @@ public class MapController implements Initializable {
                         imageView.setY(building.getLocation_y());
                         imageView.setFitHeight(50);
                         imageView.setFitWidth(41);
+                        imageView.setPickOnBounds(true);
+
                         if (building.isDie()) {
                             buildings.remove(building);
                             imageView.setImage(null);
                         }
-                        mainAnchor.getChildren().add(imageView);
-                        if (building.getAttacking()) {
-                            animationAttackMethod(imageView);
+                        else {
+                            mainAnchor.getChildren().add(imageView);
+                            imageView.setOnMouseEntered(new EventHandler<MouseEvent>() {
+                                @Override
+                                public void handle(MouseEvent event) {
+                                    showXP.setText();
+                                    showArmor.setText();
+                                }
+                            });
+                            if (building.getAttacking()) {
+                                animationAttackMethod(imageView);
+                            }
                         }
                     }
                 }
@@ -319,8 +470,38 @@ public class MapController implements Initializable {
         }
     }
 
+
+    @FXML
+    void BreathAction(MouseEvent event) {
+
+    }
+
+    @FXML
+    void ElderFormAction(MouseEvent event) {
+
+    }
+
+    @FXML
+    void TailAction(MouseEvent event) {
+
+    }
+    @FXML
+    void FrostAction(MouseEvent event) {
+
+    }
+
+    @FXML
+    void MarkmanshipAction(MouseEvent event) {
+
+    }
+
+    @FXML
+    void MultiAction(MouseEvent event) {
+
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
+        teamNameOnMap.setText();
     }
 }

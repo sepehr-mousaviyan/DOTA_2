@@ -7,17 +7,51 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import javafx.stage.Stage;
+import sbu.cs.mahkats.Api.Data.CreepData;
+import sbu.cs.mahkats.Api.Data.HeroData;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class ChooseHeroController implements Initializable {
+
+    private static ArrayList<HeroData> heroes;
+
+    private static String choosenHeroName;
+
+    public static String getChoosenHeroName() {
+        return choosenHeroName;
+    }
+
+    public static void setChoosenHeroName(String HeroName) {
+        choosenHeroName = HeroName;
+    }
+
+    public static void setHeroes(ArrayList<HeroData> hero) {
+        heroes = hero;
+    }
+
+    @FXML
+    private Label heroName;
+
+    @FXML
+    private Label abilityOne;
+
+    @FXML
+    private Label abilityTwo;
+
+    @FXML
+    private Label abilityThree;
+
 
     @FXML
     private MediaView heroOne;
@@ -27,6 +61,30 @@ public class ChooseHeroController implements Initializable {
 
     MediaPlayer mediaPlayerOne;
     MediaPlayer mediaPlayerTwo;
+
+    @FXML
+    private Button BreathFire;
+
+    @FXML
+    private Button tailAction;
+
+    @FXML
+    private Button elderAction;
+
+    @FXML
+    private Button frostAction;
+
+    @FXML
+    private Button breathAction;
+
+    @FXML
+    private Button markcmanshipAction;
+
+    @FXML
+    void BreathAction(MouseEvent event) {
+
+    }
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -47,11 +105,29 @@ public class ChooseHeroController implements Initializable {
     @FXML
     void playHero1(MouseEvent event) {
         mediaPlayerOne.play();
+        for (HeroData hero : heroes){
+            if (hero.getTypeHero.equals("Knight")){
+                heroName.setText("Dragon Night");
+                abilityOne.setText("Breath Fire");
+                abilityTwo.setText("Dragon Tail");
+                abilityThree.setText("Elder Dragon Form");
+                setChoosenHeroName("Knight");
+            }
+        }
     }
 
     @FXML
     void playHero2(MouseEvent event) {
         mediaPlayerTwo.play();
+        for (HeroData hero : heroes){
+            if (hero.getTypeHero.equals("Ranged")){
+                heroName.setText("Drow Ranger");
+                abilityOne.setText("Frost Arrows");
+                abilityTwo.setText("Multi Arrow");
+                abilityThree.setText("Marksmanship");
+                setChoosenHeroName("Ranged");
+            }
+        }
     }
 
     @FXML
