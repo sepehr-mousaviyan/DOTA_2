@@ -15,6 +15,7 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import javafx.stage.Stage;
+import sbu.cs.mahkats.Api.Data.AbilityData;
 import sbu.cs.mahkats.Api.Data.CreepData;
 import sbu.cs.mahkats.Api.Data.HeroData;
 
@@ -28,10 +29,6 @@ public class ChooseHeroController implements Initializable {
 
     private static String choosenHeroName;
 
-    public static String getChoosenHeroName() {
-        return choosenHeroName;
-    }
-
     public static void setChoosenHeroName(String HeroName) {
         choosenHeroName = HeroName;
     }
@@ -39,19 +36,6 @@ public class ChooseHeroController implements Initializable {
     public static void setHeroes(ArrayList<HeroData> hero) {
         heroes = hero;
     }
-
-    @FXML
-    private Label heroName;
-
-    @FXML
-    private Label abilityOne;
-
-    @FXML
-    private Label abilityTwo;
-
-    @FXML
-    private Label abilityThree;
-
 
     @FXML
     private MediaView heroOne;
@@ -63,27 +47,17 @@ public class ChooseHeroController implements Initializable {
     MediaPlayer mediaPlayerTwo;
 
     @FXML
-    private Button BreathFire;
+    private Label rangerMaxDamage;
 
     @FXML
-    private Button tailAction;
+    private Label rangerMinDamage;
 
     @FXML
-    private Button elderAction;
+    private Label knightMaxDamage;
 
     @FXML
-    private Button frostAction;
+    private Label knightMinDamage;
 
-    @FXML
-    private Button breathAction;
-
-    @FXML
-    private Button markcmanshipAction;
-
-    @FXML
-    void BreathAction(MouseEvent event) {
-
-    }
 
 
     @Override
@@ -99,35 +73,31 @@ public class ChooseHeroController implements Initializable {
 
         heroOne.setMediaPlayer(mediaPlayerOne);
         heroTwo.setMediaPlayer(mediaPlayerTwo);
+
+        for (HeroData hero : heroes){
+            if (hero.getHeroType().equals("Knight")){
+                knightMaxDamage.setText(Double. toString(hero.getMaximum_damage()));
+                knightMinDamage.setText(Double. toString(hero.getMinimum_damage()));
+            }
+            if (hero.getHeroType().equals("Ranged")){
+                rangerMaxDamage.setText(Double. toString(hero.getMaximum_damage()));
+                rangerMinDamage.setText(Double. toString(hero.getMinimum_damage()));
+            }
+            mediaPlayerOne.play();
+            mediaPlayerTwo.play();
+
+        }
     }
 
 
     @FXML
     void playHero1(MouseEvent event) {
-        mediaPlayerOne.play();
-        for (HeroData hero : heroes){
-            if (hero.getTypeHero().equals("Knight")){
-                heroName.setText("Dragon " + hero.getTypeHero());
-                abilityOne.setText("Breath Fire");
-                abilityTwo.setText("Dragon Tail");
-                abilityThree.setText("Elder Dragon Form");
-                setChoosenHeroName("Knight");
-            }
-        }
+        setChoosenHeroName("Knight");
     }
 
     @FXML
     void playHero2(MouseEvent event) {
-        mediaPlayerTwo.play();
-        for (HeroData hero : heroes){
-            if (hero.getTypeHero().equals("Ranged")){
-                heroName.setText("Drow" + hero.getTypeHero());
-                abilityOne.setText("Frost Arrows");
-                abilityTwo.setText("Multi Arrow");
-                abilityThree.setText("Marksmanship");
-                setChoosenHeroName("Ranged");
-            }
-        }
+        setChoosenHeroName("Ranged");
     }
 
     @FXML
@@ -146,4 +116,5 @@ public class ChooseHeroController implements Initializable {
             e.printStackTrace();
         }
     }
+
 }

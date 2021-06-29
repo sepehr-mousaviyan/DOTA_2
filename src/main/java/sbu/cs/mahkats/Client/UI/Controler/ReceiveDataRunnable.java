@@ -2,10 +2,12 @@ package sbu.cs.mahkats.Client.UI.Controler;
 
 import com.google.gson.JsonObject;
 import sbu.cs.mahkats.Api.Api;
+import sbu.cs.mahkats.Api.Data.AbilityData;
 import sbu.cs.mahkats.Api.Data.BuildingData;
 import sbu.cs.mahkats.Api.Data.CreepData;
 import sbu.cs.mahkats.Api.Data.HeroData;
 import sbu.cs.mahkats.Api.Parser;
+import sbu.cs.mahkats.Client.Connection.Connection;
 
 import java.io.DataInputStream;
 import java.io.IOException;
@@ -15,6 +17,7 @@ public class ReceiveDataRunnable implements Runnable{
     private final ArrayList<BuildingData> buildings = new ArrayList<>();
     private final ArrayList<HeroData> heroes = new ArrayList<>();
     private final ArrayList<CreepData> creeps = new ArrayList<>();
+    private final ArrayList<AbilityData> abilities = new ArrayList<>();
     private final DataInputStream dataInputStream;
 
     public ReceiveDataRunnable(DataInputStream dataInputStream) {
@@ -44,12 +47,17 @@ public class ReceiveDataRunnable implements Runnable{
                 case "Creep":
                     updateCreepData(Parser.parseCreepData(josnMessage));
                     break;
+                case "Ability" :
+                    updateAbilityData(Parser.parseAbilityData(josnMessage));
+                    break;
                 case "End":
+                    Connection.sendHeroAction(mapController.getMove());
                     mapController.checkUnits(heroes,creeps,buildings);
                     break;
-                case "EndGame" :
+                case "GREEN" :
+                    mapController.setFinished("Green");
                     //TODO
-                    String winner = action
+                    ///////////////-
 
             }
         }
@@ -80,6 +88,14 @@ public class ReceiveDataRunnable implements Runnable{
             }
         }
         creeps.add(creepData);
+    }
+    public void updateAbilityData(AbilityData abilityData){
+        for(int i = 0 ; i < abilities.size() ; i++){
+            if(abilities.get(i).getName().equals(abilityData.getName())){
+                abilities.remove(abilities.get(i));
+            }
+        }
+        abilities.add(abilityData);
     }
 
 }

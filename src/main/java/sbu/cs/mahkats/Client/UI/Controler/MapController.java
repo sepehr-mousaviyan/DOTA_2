@@ -1,27 +1,47 @@
 package sbu.cs.mahkats.Client.UI.Controler;
 
 import javafx.animation.RotateTransition;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 import sbu.cs.mahkats.Api.Data.BuildingData;
 import sbu.cs.mahkats.Api.Data.CreepData;
 import sbu.cs.mahkats.Api.Data.HeroData;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class MapController implements Initializable {
+
+    private char move;
+
+    private static String winnerTeamName;
+
+    public void setWinnerTeamName(String winner) {
+        winnerTeamName = winner;
+    }
+
+    public String getWinnerName() {
+        return winnerTeamName;
+    }
+
+    public char getMove() {
+        return move;
+    }
+
     @FXML
     private AnchorPane mainAnchor;
 
@@ -29,10 +49,10 @@ public class MapController implements Initializable {
     private Label teamNameOnMap;
 
     @FXML
-    private Label showXP;
+    private Label showHP;
 
     @FXML
-    private Label showArmor;
+    private Label showMana;
 
     @FXML
     private Label heroName;
@@ -88,40 +108,89 @@ public class MapController implements Initializable {
    public void checkUnits(ArrayList<HeroData> heroes, ArrayList<CreepData> creeps, ArrayList<BuildingData> buildings) {
         try {
             for (HeroData hero : heroes) {
-                //TODO: draw game
-                if (hero.getTypeHero().equals("Ranged")){
-                    InputStream stream_hero = new FileInputStream("/rangerHero.png");
-                    InputStream stream_a1 = new FileInputStream("/rangerHero.png");
-                    InputStream stream_a2 = new FileInputStream("/rangerHero.png");
-                    InputStream stream_a3 = new FileInputStream("/rangerHero.png");
-                    Image image_hero = new Image(stream_hero);
-                    Image image_a1 = new Image(stream_hero);
-                    Image image_a2 = new Image(stream_hero);
-                    Image image_a3 = new Image(stream_hero);
-                    ImageView imageView_hero = new ImageView();
+                if (hero.getHeroType().equals("Ranged")){
+                    if (hero.isDie()) {
+                        heroes.remove(hero);
+                    }
+                    else {
+                        heroName.setText("Drow Ranger");
+                        InputStream stream_hero = new FileInputStream("/rangerHero.png");
+                        InputStream stream_a1 = new FileInputStream("/Frost_Arrows_icon.png");
+                        InputStream stream_a2 = new FileInputStream("/Multishot_icon.png");
+                        InputStream stream_a3 = new FileInputStream("/Marksmanship_icon.png");
+                        Image image_hero = new Image(stream_hero);
+                        Image image_a1 = new Image(stream_a1);
+                        Image image_a2 = new Image(stream_a2);
+                        Image image_a3 = new Image(stream_a3);
+                        ImageView imageView_hero = new ImageView();
 
-                    imageView_hero.setImage(image_hero);
-                    imageView_hero.setX(hero.getLocation_x());
-                    imageView_hero.setY(hero.getLocation_y());
-                    imageView_hero.setFitHeight(35);
-                    imageView_hero.setFitWidth(35);
+                        imageView_hero.setImage(image_hero);
+                        imageView_hero.setX(hero.getLocation_x());
+                        imageView_hero.setY(hero.getLocation_y());
+                        imageView_hero.setFitHeight(25);
+                        imageView_hero.setFitWidth(25);
 
-                    ability1.setImage(image_a1);
-                    ability2.setImage(image_a2);
-                    ability3.setImage(image_a3);
+                        ability1.setImage(image_a1);
+                        ability2.setImage(image_a2);
+                        ability3.setImage(image_a3);
 
-                    ability1_stage.setText(hero.getA);
+                        mainAnchor.getChildren().add(imageView_hero);
+                        imageView_hero.setPickOnBounds(true);
+                        imageView_hero.setOnMouseEntered(new EventHandler<MouseEvent>() {
+                            @Override
+                            public void handle(MouseEvent event) {
+                                showHP.setText(Double. toString(hero.getHp()));
+                                showMana.setText(Double. toString(hero.getMana()));
+                            }
+                        });
 
+                        if (hero.getAttacking()) {
+                            animationAttackMethod(imageView_hero);
+                        }
+                    }
                 }
-                if (hero.getAttacking()) {
-                    //TODO: animation of attack
 
-                }
-                if (hero.isDie()) {
-                    //TODO: delete unit in ui
-                    heroes.remove(hero);
-                }
+                if (hero.getHeroType().equals("Knight")){
+                    if (hero.isDie()) {
+                        heroes.remove(hero);
+                    }
+                    else {
+                        heroName.setText("Dragon Knight");
+                        InputStream stream_hero = new FileInputStream("/knightHero.png");
+                        InputStream stream_a1 = new FileInputStream("/Breathe_Fire_icon.png");
+                        InputStream stream_a2 = new FileInputStream("/Dragon_Tail_icon.png");
+                        InputStream stream_a3 = new FileInputStream("/Elder_Dragon_Form_icon.png");
+                        Image image_hero = new Image(stream_hero);
+                        Image image_a1 = new Image(stream_a1);
+                        Image image_a2 = new Image(stream_a2);
+                        Image image_a3 = new Image(stream_a3);
+                        ImageView imageView_hero = new ImageView();
 
+                        imageView_hero.setImage(image_hero);
+                        imageView_hero.setX(hero.getLocation_x());
+                        imageView_hero.setY(hero.getLocation_y());
+                        imageView_hero.setFitHeight(25);
+                        imageView_hero.setFitWidth(25);
+
+                        ability1.setImage(image_a1);
+                        ability2.setImage(image_a2);
+                        ability3.setImage(image_a3);
+
+                        mainAnchor.getChildren().add(imageView_hero);
+                        imageView_hero.setPickOnBounds(true);
+                        imageView_hero.setOnMouseEntered(new EventHandler<MouseEvent>() {
+                            @Override
+                            public void handle(MouseEvent event) {
+                                showHP.setText(Double. toString(hero.getHp()));
+                                showMana.setText(Double. toString(hero.getMana()));
+                            }
+                        });
+
+                        if (hero.getAttacking()) {
+                            animationAttackMethod(imageView_hero);
+                        }
+                    }
+                }
             }
             for (CreepData creep : creeps) {
                 if(creep.getTeamName().equals("RED")){
@@ -145,16 +214,14 @@ public class MapController implements Initializable {
                             imageView.setOnMouseEntered(new EventHandler<MouseEvent>() {
                                 @Override
                                 public void handle(MouseEvent event) {
-                                    showXP.setText();
-                                    showArmor.setText();
+                                    showHP.setText(Double. toString(creep.getHp()));
+                                    showMana.setText("");
                                 }
                             });
                             if (creep.getAttacking()) {
                                 animationAttackMethod(imageView);
                             }
                         }
-
-
                     }
                     else {
 
@@ -177,8 +244,8 @@ public class MapController implements Initializable {
                             imageView.setOnMouseEntered(new EventHandler<MouseEvent>() {
                                 @Override
                                 public void handle(MouseEvent event) {
-                                    showXP.setText();
-                                    showArmor.setText();
+                                    showHP.setText(Double. toString(creep.getHp()));
+                                    showMana.setText("");
                                 }
                             });
                             if (creep.getAttacking()) {
@@ -209,8 +276,8 @@ public class MapController implements Initializable {
                             imageView.setOnMouseEntered(new EventHandler<MouseEvent>() {
                                 @Override
                                 public void handle(MouseEvent event) {
-                                    showXP.setText();
-                                    showArmor.setText();
+                                    showHP.setText(Double. toString(creep.getHp()));
+                                    showMana.setText("");
                                 }
                             });
                             if (creep.getAttacking()) {
@@ -238,8 +305,8 @@ public class MapController implements Initializable {
                             imageView.setOnMouseEntered(new EventHandler<MouseEvent>() {
                                 @Override
                                 public void handle(MouseEvent event) {
-                                    showXP.setText();
-                                    showArmor.setText();
+                                    showHP.setText(Double. toString(creep.getHp()));
+                                    showMana.setText("");
                                 }
                             });
                             if (creep.getAttacking()) {
@@ -270,8 +337,8 @@ public class MapController implements Initializable {
                             imageView.setOnMouseEntered(new EventHandler<MouseEvent>() {
                                 @Override
                                 public void handle(MouseEvent event) {
-                                    showXP.setText();
-                                    showArmor.setText();
+                                    showHP.setText(Double. toString(building.getHp()));
+                                    showMana.setText("");
                                 }
                             });
                             if (building.getAttacking()) {
@@ -300,8 +367,8 @@ public class MapController implements Initializable {
                             imageView.setOnMouseEntered(new EventHandler<MouseEvent>() {
                                 @Override
                                 public void handle(MouseEvent event) {
-                                    showXP.setText();
-                                    showArmor.setText();
+                                    showHP.setText(Double. toString(building.getHp()));
+                                    showMana.setText("");
                                 }
                             });
                             if (building.getAttacking()) {
@@ -332,8 +399,8 @@ public class MapController implements Initializable {
                             imageView.setOnMouseEntered(new EventHandler<MouseEvent>() {
                                 @Override
                                 public void handle(MouseEvent event) {
-                                    showXP.setText();
-                                    showArmor.setText();
+                                    showHP.setText(Double. toString(building.getHp()));
+                                    showMana.setText("");
                                 }
                             });
                             if (building.getAttacking()) {
@@ -360,8 +427,8 @@ public class MapController implements Initializable {
                             imageView.setOnMouseEntered(new EventHandler<MouseEvent>() {
                                 @Override
                                 public void handle(MouseEvent event) {
-                                    showXP.setText();
-                                    showArmor.setText();
+                                    showHP.setText(Double. toString(building.getHp()));
+                                    showMana.setText("");
                                 }
                             });
                             if (building.isDie()) {
@@ -393,8 +460,8 @@ public class MapController implements Initializable {
                             imageView.setOnMouseEntered(new EventHandler<MouseEvent>() {
                                 @Override
                                 public void handle(MouseEvent event) {
-                                    showXP.setText();
-                                    showArmor.setText();
+                                    showHP.setText(Double. toString(building.getHp()));
+                                    showMana.setText("");
                                 }
                             });
                             if (building.getAttacking()) {
@@ -422,8 +489,8 @@ public class MapController implements Initializable {
                             imageView.setOnMouseEntered(new EventHandler<MouseEvent>() {
                                 @Override
                                 public void handle(MouseEvent event) {
-                                    showXP.setText();
-                                    showArmor.setText();
+                                    showHP.setText(Double. toString(building.getHp()));
+                                    showMana.setText("");
                                 }
                             });
                             if (building.getAttacking()) {
@@ -453,8 +520,8 @@ public class MapController implements Initializable {
                             imageView.setOnMouseEntered(new EventHandler<MouseEvent>() {
                                 @Override
                                 public void handle(MouseEvent event) {
-                                    showXP.setText();
-                                    showArmor.setText();
+                                    showHP.setText(Double. toString(building.getHp()));
+                                    showMana.setText("");
                                 }
                             });
                             if (building.getAttacking()) {
@@ -482,8 +549,8 @@ public class MapController implements Initializable {
                             imageView.setOnMouseEntered(new EventHandler<MouseEvent>() {
                                 @Override
                                 public void handle(MouseEvent event) {
-                                    showXP.setText();
-                                    showArmor.setText();
+                                    showHP.setText(Double. toString(building.getHp()));
+                                    showMana.setText("");
                                 }
                             });
                             if (building.getAttacking()) {
@@ -498,40 +565,46 @@ public class MapController implements Initializable {
         }
     }
 
-
-    @FXML
-    void BreathAction(MouseEvent event) {
-
+    public void setFinished(String winnerName){
+        try {
+            if (winnerName.equals("GREEN"))
+                setWinnerTeamName("Green");
+            else
+                setWinnerTeamName("Red");
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/EndGame.fxml"));
+            Parent root1 = fxmlLoader.load();
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root1));
+            stage.show();
+        } catch (Exception  e){
+            e.printStackTrace();
+        }
     }
 
     @FXML
-    void ElderFormAction(MouseEvent event) {
-
+    void downFunction(ActionEvent event) {
+        move = 'd';
     }
 
     @FXML
-    void TailAction(MouseEvent event) {
-
-    }
-    @FXML
-    void FrostAction(MouseEvent event) {
-
+    void leftAction(ActionEvent event) {
+        move = 'l';
     }
 
     @FXML
-    void MarkmanshipAction(MouseEvent event) {
-
+    void rightFunctin(ActionEvent event) {
+        move = 'r';
     }
 
     @FXML
-    void MultiAction(MouseEvent event) {
-
+    void upFunction(ActionEvent event) {
+        move = 'u';
     }
 
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        teamNameOnMap.setText();
+        teamNameOnMap.setText(getWinnerName());
     }
 }

@@ -141,4 +141,9 @@ public class Connection {
         send(actionHeroData.makeJson().toString);
     }
 
+    public static void sendHeroAction(char ch){
+        //TODO
+
+    }
+
 }

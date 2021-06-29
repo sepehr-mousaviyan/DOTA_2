@@ -109,4 +109,5 @@ public class ActionHeroData implements Data{
                 new Pair<>("location_x", location_x),
                 new Pair<>("location_y", location_y));
     }
+
 }
