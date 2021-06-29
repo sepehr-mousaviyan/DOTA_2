@@ -13,186 +13,6 @@
             <Image url="@Photos/map.jpg" />
          </image>
       </ImageView>
-      <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="616.0" layoutY="593.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@Photos/Tower_Radiant_model2.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="398.0" layoutY="593.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@Photos/Tower_Radiant_model2.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="213.0" layoutY="593.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@Photos/Tower_Radiant_model2.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="164.0" layoutY="505.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@Photos/Tower_Radiant_model2.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="97.0" layoutY="463.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@Photos/Tower_Radiant_model2.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="97.0" layoutY="356.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@Photos/Tower_Radiant_model2.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="97.0" layoutY="243.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@Photos/Tower_Radiant_model2.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="238.0" layoutY="437.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@Photos/Tower_Radiant_model2.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="301.0" layoutY="376.0" pickOnBounds="true" preserveRatio="true" styleClass="Style">
-         <image>
-            <Image url="@Photos/Tower_Radiant_model2.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="616.0" layoutY="438.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@Photos/Tower_Dire_model.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="616.0" layoutY="325.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@Photos/Tower_Dire_model.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="376.0" layoutY="309.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@Photos/Tower_Dire_model.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="448.0" layoutY="243.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@Photos/Tower_Dire_model.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="515.0" layoutY="182.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@Photos/Tower_Dire_model.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="97.0" layoutY="88.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@Photos/Tower_Dire_model.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="315.0" layoutY="88.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@Photos/Tower_Dire_model.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="500.0" layoutY="88.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@Photos/Tower_Dire_model.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="80.0" fitWidth="75.0" layoutX="83.0" layoutY="581.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@Photos/Ancient_Radiant_model.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="616.0" layoutY="88.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@Photos/Ancient_Dire_model5.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="97.0" layoutY="543.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@Photos/Tower_Radiant_model2.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="133.0" layoutY="593.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@Photos/Tower_Radiant_model2.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="580.0" layoutY="88.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@Photos/Tower_Dire_model.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="616.0" layoutY="136.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@Photos/Tower_Dire_model.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="50.0" fitWidth="41.0" layoutX="181.0" layoutY="564.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@Photos/Melee_Barracks_Radiant_model.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="50.0" fitWidth="41.0" layoutX="115.0" layoutY="510.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@Photos/Melee_Barracks_Radiant_model.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="50.0" fitWidth="41.0" layoutX="58.0" layoutY="505.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@Photos/Ranged_Barracks_Radiant_model.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="50.0" fitWidth="41.0" layoutX="140.0" layoutY="532.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@Photos/Ranged_Barracks_Radiant_model.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="50.0" fitWidth="41.0" layoutX="179.0" layoutY="597.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@Photos/Ranged_Barracks_Radiant_model.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="50.0" fitWidth="40.0" layoutX="180.0" layoutY="639.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@Photos/Melee_Barracks_Radiant_model_flip.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="50.0" fitWidth="41.0" layoutX="541.0" layoutY="136.0" pickOnBounds="true" preserveRatio="true" rotate="55.3">
-         <image>
-            <Image url="@Photos/Melee_Barracks_Dire_model.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="50.0" fitWidth="41.0" layoutX="576.0" layoutY="204.0" pickOnBounds="true" preserveRatio="true" rotate="15.9">
-         <image>
-            <Image url="@Photos/Melee_Barracks_Dire_model.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="50.0" fitWidth="41.0" layoutX="666.0" layoutY="204.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@Photos/Melee_Barracks_Dire_model.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="50.0" fitWidth="41.0" layoutX="535.0" layoutY="95.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@Photos/Ranged_Barracks_Dire_model.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="50.0" fitWidth="41.0" layoutX="541.0" layoutY="175.0" pickOnBounds="true" preserveRatio="true" rotate="-10.6">
-         <image>
-            <Image url="@Photos/Ranged_Barracks_Dire_model.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="50.0" fitWidth="41.0" layoutX="610.0" layoutY="205.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@Photos/Ranged_Barracks_Dire_model.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="616.0" layoutY="225.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@Photos/Tower_Dire_model.png" />
-         </image>
-      </ImageView>
       <Label layoutX="729.0" layoutY="40.0" prefHeight="48.0" prefWidth="148.0" text="Team Name :" textFill="#dadada">
          <font>
             <Font size="25.0" />
@@ -203,46 +23,14 @@
             <Font size="39.0" />
          </font>
       </Label>
-      <Label layoutX="760.0" layoutY="123.0" prefHeight="48.0" prefWidth="245.0" text="Drow Ranger Abilities" textFill="#dadada">
+      <Label id="heroName" fx:id="heroName" layoutX="760.0" layoutY="123.0" prefHeight="48.0" prefWidth="245.0" textFill="#dadada">
          <font>
             <Font size="25.0" />
          </font>
       </Label>
-      <ImageView fitHeight="57.0" fitWidth="57.0" layoutX="765.0" layoutY="170.0" pickOnBounds="true" smooth="false">
-         <image>
-            <Image url="@Photos/Breathe_Fire_icon.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="57.0" fitWidth="57.0" layoutX="842.0" layoutY="169.0" pickOnBounds="true" smooth="false">
-         <image>
-            <Image url="@Photos/Dragon_Tail_icon.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="57.0" fitWidth="57.0" layoutX="922.0" layoutY="172.0" pickOnBounds="true" smooth="false">
-         <image>
-            <Image url="@Photos/Elder_Dragon_Form_icon.png" />
-         </image>
-      </ImageView>
-      <Label layoutX="760.0" layoutY="295.0" prefHeight="48.0" prefWidth="256.0" text="Dragon Night Abilities" textFill="#dadada">
-         <font>
-            <Font size="25.0" />
-         </font>
-      </Label>
-      <ImageView fitHeight="57.0" fitWidth="57.0" layoutX="841.0" layoutY="346.0" pickOnBounds="true" smooth="false">
-         <image>
-            <Image url="@Photos/Multishot_icon.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="57.0" fitWidth="57.0" layoutX="767.0" layoutY="346.0" pickOnBounds="true" smooth="false">
-         <image>
-            <Image url="@Photos/Frost_Arrows_icon.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="57.0" fitWidth="57.0" layoutX="925.0" layoutY="346.0" pickOnBounds="true" smooth="false">
-         <image>
-            <Image url="@Photos/Marksmanship_icon.png" />
-         </image>
-      </ImageView>
+      <ImageView fx:id="ability1" fitHeight="57.0" fitWidth="57.0" layoutX="765.0" layoutY="170.0" pickOnBounds="true" smooth="false" />
+      <ImageView fx:id="ability2" fitHeight="57.0" fitWidth="57.0" layoutX="842.0" layoutY="169.0" pickOnBounds="true" smooth="false" />
+      <ImageView fx:id="ability3" fitHeight="57.0" fitWidth="57.0" layoutX="922.0" layoutY="172.0" pickOnBounds="true" smooth="false" />
       <Label fx:id="showXP" layoutX="754.0" layoutY="480.0" prefHeight="57.0" prefWidth="256.0" style="-fx-background-color: f0eded; -fx-background-radius: 30; -fx-border-color: cf4444; -fx-border-radius: 25; -fx-border-width: 5;">
          <font>
             <Font size="23.0" />
@@ -251,6 +39,21 @@
       <Label fx:id="showArmor" layoutX="755.0" layoutY="559.0" prefHeight="57.0" prefWidth="256.0" style="-fx-background-color: f0eded; -fx-background-radius: 30; -fx-border-color: cf4444; -fx-border-radius: 25; -fx-border-width: 5;">
          <font>
             <Font size="23.0" />
+         </font>
+      </Label>
+      <Label fx:id="ability1_stage" layoutX="769.0" layoutY="242.0" prefHeight="28.0" prefWidth="57.0" textFill="#e8dfdf">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="ability2_stage" layoutX="845.0" layoutY="242.0" prefHeight="28.0" prefWidth="57.0" textFill="#f5f5f5">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="ability3_stage" layoutX="929.0" layoutY="242.0" prefHeight="28.0" prefWidth="57.0" textFill="#f8f8f8">
+         <font>
+            <Font size="18.0" />
          </font>
       </Label>
    </children>
