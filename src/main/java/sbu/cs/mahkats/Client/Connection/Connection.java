@@ -5,6 +5,7 @@ import org.apache.log4j.Logger;
 import sbu.cs.mahkats.Api.Api;
 import sbu.cs.mahkats.Api.MassageMaker;
 import sbu.cs.mahkats.Api.Parser;
+import sbu.cs.mahkats.Api.Data.ActionHeroData;
 import sbu.cs.mahkats.Api.Data.UserData;
 //import sbu.cs.mahkats.Client.UI.Controler.ReceiveDataRunnable;
 import sbu.cs.mahkats.Client.UI.Controler.ChooseHeroController;
@@ -129,10 +130,15 @@ public class Connection {
         String data;
         try {
             data = dataInputStream.readUTF();
-            ChooseHeroController.setHeroes(Parser.getHeroesListData(new Api().toJson(data)));
+            ChooseHeroController.setHeroes(ChooseHeroController.setHeroes(Parser.getHeroesListData(new Api().toJson(data))));
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public static void sendSelectedHero(String hero_name){
+        ActionHeroData actionHeroData = new ActionHeroData(TOKEN, hero_name , 0, 0, 0, 5);
+        send(actionHeroData.makeJson().toString);
     }
 
 }

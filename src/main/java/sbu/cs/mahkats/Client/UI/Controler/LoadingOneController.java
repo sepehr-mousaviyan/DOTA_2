@@ -23,14 +23,15 @@ public class LoadingOneController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        Thread thread = new Thread(()-> {
+            Connection.getHeroesData();
+        }).start();
         String videoOneAddress = "/video_2021-06-28_21-56-03.mp4";
         Media media = new Media(videoOneAddress);
         MediaPlayer mediaPlayer = new MediaPlayer(media);
         loadingVideo.setMediaPlayer(mediaPlayer);
         mediaPlayer.play();
-        new Thread(()-> {
-            Connection.getHeroesData()
-        })
+        thread.join();
 
          if (isReceived) {
             try {
