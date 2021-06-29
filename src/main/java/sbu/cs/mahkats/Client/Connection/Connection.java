@@ -6,6 +6,7 @@ import sbu.cs.mahkats.Api.Api;
 import sbu.cs.mahkats.Api.MassageMaker;
 import sbu.cs.mahkats.Api.Parser;
 import sbu.cs.mahkats.Api.Data.UserData;
+//import sbu.cs.mahkats.Client.UI.Controler.ReceiveDataRunnable;
 import sbu.cs.mahkats.Configuration.Config;
 
 import java.io.*;
@@ -117,5 +118,9 @@ public class Connection {
         }
         return error;
     }
+
+//    public static void runReceiver(){
+//        new Thread(new ReceiveDataRunnable(dataInputStream)).start();
+//    }
 
 }

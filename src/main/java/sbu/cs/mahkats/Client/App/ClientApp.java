@@ -8,8 +8,6 @@ import javafx.stage.Stage;
 import sbu.cs.mahkats.Configuration.Config;
 import sbu.cs.mahkats.Configuration.InterfaceConfig;
 
-import java.io.IOException;
-
 public class ClientApp extends Application {
 
     @Override
@@ -17,8 +15,10 @@ public class ClientApp extends Application {
         Config config = InterfaceConfig.getInstance();
         Parent root = FXMLLoader.load(getClass().getResource("/Main.fxml"));
 
+
         primaryStage.setTitle(config.getStringValue("stage.title"));
         Scene scene = new Scene(root);
+        scene.getStylesheets().add("/style.css");
 
         primaryStage.setScene(scene);
         primaryStage.show();

@@ -14,7 +14,7 @@ import sbu.cs.mahkats.Configuration.Config;
 
 import java.io.IOException;
 
-public class LoginController {
+public class LoginController  {
     private static Config config = Config.getInstance();
     private static final int USERNAME_LENGTH = config.getIntValue("input.limit.userName");
     private static final int PASSWORD_LENGTH = config.getIntValue("input.limit.passWord");
@@ -65,7 +65,16 @@ public class LoginController {
             try {
                 if(Connection.checkUserSignIn(userNameInput.getText(),passInput.getText())){
                     if(Connection.getCheckStatus()){
+                    //    Connection.runReceiver();
                         //TODO: go to menu and list of heroes
+                        //for now go to map screen
+                        Parent logParent = FXMLLoader.load(getClass().getResource("/Map.fxml"));
+                        Stage logStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+                        Scene logScene = new Scene(logParent);
+
+                        logStage.setScene(logScene);
+                        logStage.show();
                     }
 
 

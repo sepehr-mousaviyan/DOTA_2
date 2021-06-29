@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane fx:id="mainAnchor" prefHeight="768.0" prefWidth="1026.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sbu.cs.mahkats.Client.UI.Controler.MapController">
+   <children>
+      <ImageView fitHeight="750.0" fitWidth="750.0" layoutX="7.0" pickOnBounds="true">
+         <image>
+            <Image url="@Photos/map.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="616.0" layoutY="593.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@Photos/Tower_Radiant_model2.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="398.0" layoutY="593.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@Photos/Tower_Radiant_model2.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="213.0" layoutY="593.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@Photos/Tower_Radiant_model2.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="164.0" layoutY="505.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@Photos/Tower_Radiant_model2.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="97.0" layoutY="463.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@Photos/Tower_Radiant_model2.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="97.0" layoutY="356.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@Photos/Tower_Radiant_model2.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="97.0" layoutY="243.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@Photos/Tower_Radiant_model2.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="238.0" layoutY="437.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@Photos/Tower_Radiant_model2.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="pic" fitHeight="50.0" fitWidth="50.0" layoutX="301.0" layoutY="376.0" onMouseClicked="#test" pickOnBounds="true" preserveRatio="true" styleClass="Style">
+         <image>
+            <Image url="@Photos/Tower_Radiant_model2.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="616.0" layoutY="438.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@Photos/Tower_Dire_model.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="616.0" layoutY="325.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@Photos/Tower_Dire_model.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="376.0" layoutY="309.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@Photos/Tower_Dire_model.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="448.0" layoutY="243.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@Photos/Tower_Dire_model.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="515.0" layoutY="182.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@Photos/Tower_Dire_model.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="97.0" layoutY="88.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@Photos/Tower_Dire_model.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="315.0" layoutY="88.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@Photos/Tower_Dire_model.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="500.0" layoutY="88.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@Photos/Tower_Dire_model.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="greenAnceint" fitHeight="80.0" fitWidth="75.0" layoutX="83.0" layoutY="581.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@Photos/Ancient_Radiant_model.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="redAncient" fitHeight="80.0" fitWidth="80.0" layoutX="616.0" layoutY="88.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@Photos/Ancient_Dire_model5.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="97.0" layoutY="543.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@Photos/Tower_Radiant_model2.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="133.0" layoutY="593.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@Photos/Tower_Radiant_model2.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="580.0" layoutY="88.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@Photos/Tower_Dire_model.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="616.0" layoutY="136.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@Photos/Tower_Dire_model.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="50.0" fitWidth="41.0" layoutX="181.0" layoutY="564.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@Photos/Melee_Barracks_Radiant_model.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="50.0" fitWidth="41.0" layoutX="115.0" layoutY="510.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@Photos/Melee_Barracks_Radiant_model.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="50.0" fitWidth="41.0" layoutX="58.0" layoutY="505.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@Photos/Ranged_Barracks_Radiant_model.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="50.0" fitWidth="41.0" layoutX="140.0" layoutY="532.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@Photos/Ranged_Barracks_Radiant_model.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="50.0" fitWidth="41.0" layoutX="179.0" layoutY="597.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@Photos/Ranged_Barracks_Radiant_model.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="50.0" fitWidth="40.0" layoutX="180.0" layoutY="639.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@Photos/Melee_Barracks_Radiant_model_flip.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="50.0" fitWidth="41.0" layoutX="541.0" layoutY="136.0" pickOnBounds="true" preserveRatio="true" rotate="55.3">
+         <image>
+            <Image url="@Photos/Melee_Barracks_Dire_model.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="50.0" fitWidth="41.0" layoutX="576.0" layoutY="204.0" pickOnBounds="true" preserveRatio="true" rotate="15.9">
+         <image>
+            <Image url="@Photos/Melee_Barracks_Dire_model.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="50.0" fitWidth="41.0" layoutX="666.0" layoutY="204.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@Photos/Melee_Barracks_Dire_model.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="50.0" fitWidth="41.0" layoutX="535.0" layoutY="95.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@Photos/Ranged_Barracks_Dire_model.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="50.0" fitWidth="41.0" layoutX="541.0" layoutY="175.0" pickOnBounds="true" preserveRatio="true" rotate="-10.6">
+         <image>
+            <Image url="@Photos/Ranged_Barracks_Dire_model.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="50.0" fitWidth="41.0" layoutX="610.0" layoutY="205.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@Photos/Ranged_Barracks_Dire_model.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="616.0" layoutY="225.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@Photos/Tower_Dire_model.png" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>
