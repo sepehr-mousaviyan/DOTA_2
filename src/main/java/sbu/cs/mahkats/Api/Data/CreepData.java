@@ -9,6 +9,10 @@ public class CreepData extends MovableUnitData{
 
     public CreepData(Long token, double hp, double hp_regeneration, double minimum_damage, double maximum_damage, double armor, double range, double experience, boolean isAttacking, int defender, boolean isDie, int code, int level, int mana, int mana_regeneration, String ability1, String ability2, String ability3, String typeCreep, String teamName) {
         super(token, hp, hp_regeneration, minimum_damage, maximum_damage, armor, range, experience, isAttacking, defender, isDie, code, level, mana, mana_regeneration, ability1, ability2, ability3, teamName);
+    }
+
+    public CreepData(Long token, double hp, double hp_regeneration, double minimum_damage, double maximum_damage, double armor, double range, double experience, boolean isAttacking, int defender, boolean isDie, int code, int level, int mana, int mana_regeneration, String ability1, String ability2, String ability3, String ability4, String typeCreep, String teamName) {
+        super(token, hp, hp_regeneration, minimum_damage, maximum_damage, armor, range, experience, isAttacking, defender, isDie, code, level, mana, mana_regeneration, ability1, ability2, ability3, ability4, teamName);
         this.typeCreep = typeCreep;
     }
 

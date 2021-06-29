@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.media.MediaView?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane prefHeight="768.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sbu.cs.mahkats.Client.UI.Controler.ChooseHeroController">
+   <children>
+      <AnchorPane prefHeight="768.0" prefWidth="1024.0" style="-fx-background-color: #343434;">
+         <children>
+            <ImageView fitHeight="299.0" fitWidth="1030.0" layoutY="468.0" pickOnBounds="true">
+               <image>
+                  <Image url="@Photos/ChooseHeroScreen_Background.jpg" />
+               </image>
+            </ImageView>
+            <Label layoutX="341.0" layoutY="51.0" prefHeight="63.0" prefWidth="343.0" text="CHOOSE YOUR HERO!" textFill="#f5f5f5">
+               <font>
+                  <Font size="34.0" />
+               </font>
+            </Label>
+            <Label layoutX="821.0" layoutY="676.0" onMouseClicked="#goToSecondWaitingScreen" prefHeight="48.0" prefWidth="161.0" style="-fx-background-radius: 50; -fx-background-color: #afabac; -fx-border-radius: 30;" text=" START GAME">
+               <font>
+                  <Font name="System Bold" size="23.0" />
+               </font>
+            </Label>
+            <MediaView fx:id="heroOne" fitHeight="210.0" fitWidth="170.0" layoutX="717.0" layoutY="315.0" onMouseClicked="#playHero1" preserveRatio="false" smooth="false" />
+            <MediaView fx:id="heroTwo" fitHeight="210.0" fitWidth="170.0" layoutX="442.0" layoutY="341.0" onMouseClicked="#playHero2" preserveRatio="false" smooth="false" />
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>
