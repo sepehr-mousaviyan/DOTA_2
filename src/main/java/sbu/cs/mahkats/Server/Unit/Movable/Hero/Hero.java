@@ -3,6 +3,7 @@ package sbu.cs.mahkats.Server.Unit.Movable.Hero;
 import sbu.cs.mahkats.Configuration.Config;
 import sbu.cs.mahkats.Configuration.InterfaceConfig;
 import sbu.cs.mahkats.Configuration.Units.HeroConfig;
+import sbu.cs.mahkats.Server.Unit.Movable.Creep.Creep;
 import sbu.cs.mahkats.Server.Unit.Movable.Hero.Ability.Ability;
 import sbu.cs.mahkats.Server.App.GamePlay;
 import sbu.cs.mahkats.Server.Unit.Movable.Movable;
@@ -187,6 +188,23 @@ public class Hero extends Movable {
         hp = hp - (damage - armor);
     }
 
+    public void move(char moveChar, Hero hero, int CHUNK_SIZE) {
+        switch(moveChar){
+            case 'w':
+                hero.move(hero.getLocation_x(), hero.getLocation_y() + CHUNK_SIZE);
+                break;
+            case 's':
+                hero.move(hero.getLocation_x(), hero.getLocation_y() - CHUNK_SIZE);
+                break;
+            case 'd':
+                hero.move(hero.getLocation_x() + CHUNK_SIZE, hero.getLocation_y());
+                break;
+            case 'a':
+                hero.move(hero.getLocation_x() - CHUNK_SIZE, hero.getLocation_y());
+                break;
+        }
+    }
+
     public void addRegularExperience(double extraExperience) {
         experience += extraExperience;
     }
@@ -235,6 +253,8 @@ public class Hero extends Movable {
     public Ability getAbility3() {
         return ability3;
     }
+
+
 
     
 
