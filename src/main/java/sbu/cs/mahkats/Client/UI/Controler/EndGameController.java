@@ -1,21 +1,26 @@
 package sbu.cs.mahkats.Client.UI.Controler;
 
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 
-public class EndGameController {
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class EndGameController implements Initializable {
 
     @FXML
     private Label winnerTeam;
 
+
     @FXML
     void exitGame(MouseEvent event) {
-
+        MapController.closeStage();
     }
 
-    @FXML
-    void restartGame(MouseEvent event) {
-
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        winnerTeam.setText(MapController.getWinnerName());
     }
 }

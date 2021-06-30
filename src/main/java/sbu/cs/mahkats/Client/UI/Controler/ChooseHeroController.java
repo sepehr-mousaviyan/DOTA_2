@@ -18,6 +18,7 @@ import javafx.stage.Stage;
 import sbu.cs.mahkats.Api.Data.AbilityData;
 import sbu.cs.mahkats.Api.Data.CreepData;
 import sbu.cs.mahkats.Api.Data.HeroData;
+import sbu.cs.mahkats.Client.Connection.Connection;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -29,9 +30,6 @@ public class ChooseHeroController implements Initializable {
 
     private static String choosenHeroName;
 
-    public static void setChoosenHeroName(String HeroName) {
-        choosenHeroName = HeroName;
-    }
 
     public static void setHeroes(ArrayList<HeroData> hero) {
         heroes = hero;
@@ -92,19 +90,19 @@ public class ChooseHeroController implements Initializable {
 
     @FXML
     void playHero1(MouseEvent event) {
-        setChoosenHeroName("Knight");
+        choosenHeroName = "Knight";
     }
 
     @FXML
     void playHero2(MouseEvent event) {
-        setChoosenHeroName("Ranged");
+        choosenHeroName = "Ranger";
     }
 
     @FXML
     void goToSecondWaitingScreen(MouseEvent event) {
         try {
 
-            //for now go to map
+            Connection.sendSelectedHero(choosenHeroName);
             Parent logParent = FXMLLoader.load(getClass().getResource("/LoadingScreenTwo.fxml"));
             Stage logStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 

@@ -10,7 +10,6 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import javafx.stage.Stage;
 import sbu.cs.mahkats.Client.Connection.Connection;
-
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -23,17 +22,22 @@ public class LoadingOneController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        Thread thread = new Thread(()-> {
-            Connection.getHeroesData();
-        }).start();
+        Thread thread = new Thread(() ->{
+            isReceived = Connection.getHeroesData();
+        });
+        thread.start();
         String videoOneAddress = "/video_2021-06-28_21-56-03.mp4";
         Media media = new Media(videoOneAddress);
         MediaPlayer mediaPlayer = new MediaPlayer(media);
         loadingVideo.setMediaPlayer(mediaPlayer);
         mediaPlayer.play();
-        thread.join();
+        try {
+            thread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
-         if (isReceived) {
+        if (isReceived) {
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/ChooseHeroScreen.fxml"));
                 Parent root1 = fxmlLoader.load();

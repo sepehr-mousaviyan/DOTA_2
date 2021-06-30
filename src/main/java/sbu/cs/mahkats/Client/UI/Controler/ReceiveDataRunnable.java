@@ -19,6 +19,11 @@ public class ReceiveDataRunnable implements Runnable{
     private final ArrayList<CreepData> creeps = new ArrayList<>();
     private final ArrayList<AbilityData> abilities = new ArrayList<>();
     private final DataInputStream dataInputStream;
+    private static String teamName;
+
+    public static void setTeamName(String teamName) {
+        ReceiveDataRunnable.teamName = teamName;
+    }
 
     public ReceiveDataRunnable(DataInputStream dataInputStream) {
         this.dataInputStream = dataInputStream;
@@ -26,7 +31,7 @@ public class ReceiveDataRunnable implements Runnable{
 
     @Override
     public void run() {
-        MapController mapController = new MapController();
+        MapController mapController = new MapController(teamName);
 
         while(true){
             String message = "";
@@ -52,7 +57,7 @@ public class ReceiveDataRunnable implements Runnable{
                     break;
                 case "End":
                     Connection.sendHeroAction(mapController.getMove());
-                    mapController.checkUnits(heroes,creeps,buildings);
+                    mapController.checkUnits(heroes, abilities, creeps, buildings);
                     break;
                 case "GREEN" :
                     mapController.setFinished("Green");

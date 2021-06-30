@@ -15,9 +15,14 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import sbu.cs.mahkats.Api.Data.AbilityData;
 import sbu.cs.mahkats.Api.Data.BuildingData;
 import sbu.cs.mahkats.Api.Data.CreepData;
 import sbu.cs.mahkats.Api.Data.HeroData;
+import sbu.cs.mahkats.Client.Connection.Connection;
+import sbu.cs.mahkats.Configuration.Config;
+import sbu.cs.mahkats.Configuration.Units.HeroConfig;
+
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.net.URL;
@@ -25,6 +30,10 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class MapController implements Initializable {
+
+    private static Stage stage;
+
+    Config config;
 
     private char move;
 
@@ -34,7 +43,7 @@ public class MapController implements Initializable {
         winnerTeamName = winner;
     }
 
-    public String getWinnerName() {
+    public static String getWinnerName() {
         return winnerTeamName;
     }
 
@@ -47,6 +56,10 @@ public class MapController implements Initializable {
 
     @FXML
     private Label teamNameOnMap;
+
+    public MapController(String teamName) {
+        teamNameOnMap.setText(teamName);
+    }
 
     @FXML
     private Label showHP;
@@ -75,6 +88,14 @@ public class MapController implements Initializable {
     @FXML
     private Label ability3_stage;
 
+    @FXML
+    private Label upgrade_new_ability1;
+
+    @FXML
+    private Label upgrade_new_ability2;
+
+    @FXML
+    private Label upgrade_new_ability3;
 
 
     public static void animationAttackMethod(ImageView pic){
@@ -105,7 +126,7 @@ public class MapController implements Initializable {
     }
 
 
-   public void checkUnits(ArrayList<HeroData> heroes, ArrayList<CreepData> creeps, ArrayList<BuildingData> buildings) {
+   public void checkUnits(ArrayList<HeroData> heroes, ArrayList<AbilityData> abilities, ArrayList<CreepData> creeps, ArrayList<BuildingData> buildings) {
         try {
             for (HeroData hero : heroes) {
                 if (hero.getHeroType().equals("Ranged")){
@@ -148,6 +169,108 @@ public class MapController implements Initializable {
                             animationAttackMethod(imageView_hero);
                         }
                     }
+                    config = HeroConfig.getInstance("Ranger");
+                    for (AbilityData ability : abilities){
+                        if(ability.getName().equals(config.getStringValue("hero.ranger.ability1.name"))){
+                            ability1_stage.setText(Integer.toString(ability.getStage()));
+                            if (ability.isUnlock()){
+                                ability1.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                                    @Override
+                                    public void handle(MouseEvent event) {
+                                        Connection.sendUseAbility(ability, hero);
+                                    }
+                                });
+                            }
+                            else {
+                                ability1.setOpacity(0.3);
+                            }
+                            if(ability.isCanUnlock()) {
+                                if (ability.isUnlock()){
+                                    upgrade_new_ability1.setText("UPGRADE");
+                                }
+                                else {
+                                    upgrade_new_ability1.setText("UNLOCK");
+                                }
+                                    upgrade_new_ability1.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                                    @Override
+                                    public void handle(MouseEvent event) {
+                                        if(!ability.isUnlock() && ability.isAvailable()){
+                                            Connection.sendNewAbility(ability, hero);
+                                        }
+                                        if(ability.isUnlock() && ability.isAvailable()){
+                                            Connection.sendUpgradeAbility(ability, hero);
+                                        }
+                                    }
+                                });
+                            }
+                        }
+                        if(ability.getName().equals(config.getStringValue("hero.ranger.ability2.name"))){
+                            ability2_stage.setText(Integer.toString(ability.getStage()));
+                            if (ability.isUnlock()){
+                                ability2.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                                    @Override
+                                    public void handle(MouseEvent event) {
+                                        Connection.sendUseAbility(ability, hero);
+                                    }
+                                });
+                            }
+                            else {
+                                ability2.setOpacity(0.3);
+                            }
+                            if(ability.isCanUnlock()) {
+                                if (ability.isUnlock()){
+                                    upgrade_new_ability2.setText("UPGRADE");
+                                }
+                                else {
+                                    upgrade_new_ability2.setText("UNLOCK");
+                                }
+                                upgrade_new_ability2.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                                    @Override
+                                    public void handle(MouseEvent event) {
+                                        if(!ability.isUnlock() && ability.isAvailable()){
+                                            Connection.sendNewAbility(ability, hero);
+                                        }
+                                        if(ability.isUnlock() && ability.isAvailable()){
+                                            Connection.sendUpgradeAbility(ability, hero);
+                                        }
+                                    }
+                                });
+                            }
+                        }
+                        if(ability.getName().equals(config.getStringValue("hero.ranger.ability3.name"))){
+                            ability3_stage.setText(Integer.toString(ability.getStage()));
+                            if (ability.isUnlock()){
+                                upgrade_new_ability3.setText("UPGRADE");
+                            }
+                            else {
+                                upgrade_new_ability3.setText("UNLOCK");
+                            }
+                            if (ability.isUnlock()){
+                                ability3.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                                    @Override
+                                    public void handle(MouseEvent event) {
+                                        Connection.sendUseAbility(ability, hero);
+                                    }
+                                });
+                            }
+                            else {
+                                ability3.setOpacity(0.3);
+                            }
+                            if(ability.isCanUnlock()) {
+                                upgrade_new_ability3.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                                    @Override
+                                    public void handle(MouseEvent event) {
+                                        if(!ability.isUnlock() && ability.isAvailable()){
+                                            Connection.sendNewAbility(ability, hero);
+                                        }
+                                        if(ability.isUnlock() && ability.isAvailable()){
+                                            Connection.sendUpgradeAbility(ability, hero);
+                                        }
+                                    }
+                                });
+                            }
+                        }
+                    }
                 }
 
                 if (hero.getHeroType().equals("Knight")){
@@ -188,6 +311,108 @@ public class MapController implements Initializable {
 
                         if (hero.getAttacking()) {
                             animationAttackMethod(imageView_hero);
+                        }
+                    }
+                    config = HeroConfig.getInstance("Knight");
+                    for (AbilityData ability : abilities){
+                        if(ability.getName().equals(config.getStringValue("hero.knight.ability1.name"))){
+                            ability1_stage.setText(Integer.toString(ability.getStage()));
+                            if (ability.isUnlock()){
+                                ability1.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                                    @Override
+                                    public void handle(MouseEvent event) {
+                                        Connection.sendUseAbility(ability, hero);
+                                    }
+                                });
+                            }
+                            else {
+                                ability1.setOpacity(0.3);
+                            }
+                            if(ability.isCanUnlock()) {
+                                if (ability.isUnlock()){
+                                    upgrade_new_ability1.setText("UPGRADE");
+                                }
+                                else {
+                                    upgrade_new_ability1.setText("UNLOCK");
+                                }
+                                upgrade_new_ability1.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                                    @Override
+                                    public void handle(MouseEvent event) {
+                                        if(!ability.isUnlock() && ability.isAvailable()){
+                                            Connection.sendNewAbility(ability, hero);
+                                        }
+                                        if(ability.isUnlock() && ability.isAvailable()){
+                                            Connection.sendUpgradeAbility(ability, hero);
+                                        }
+                                    }
+                                });
+                            }
+                        }
+                        if(ability.getName().equals(config.getStringValue("hero.knight.ability2.name"))){
+                            ability2_stage.setText(Integer.toString(ability.getStage()));
+                            if (ability.isUnlock()){
+                                ability2.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                                    @Override
+                                    public void handle(MouseEvent event) {
+                                        Connection.sendUseAbility(ability, hero);
+                                    }
+                                });
+                            }
+                            else {
+                                ability2.setOpacity(0.3);
+                            }
+                            if(ability.isCanUnlock()) {
+                                if (ability.isUnlock()){
+                                    upgrade_new_ability2.setText("UPGRADE");
+                                }
+                                else {
+                                    upgrade_new_ability2.setText("UNLOCK");
+                                }
+                                upgrade_new_ability2.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                                    @Override
+                                    public void handle(MouseEvent event) {
+                                        if(!ability.isUnlock() && ability.isAvailable()){
+                                            Connection.sendNewAbility(ability, hero);
+                                        }
+                                        if(ability.isUnlock() && ability.isAvailable()){
+                                            Connection.sendUpgradeAbility(ability, hero);
+                                        }
+                                    }
+                                });
+                            }
+                        }
+                        if(ability.getName().equals(config.getStringValue("hero.knight.ability3.name"))){
+                            ability3_stage.setText(Integer.toString(ability.getStage()));
+                            if (ability.isUnlock()){
+                                upgrade_new_ability3.setText("UPGRADE");
+                            }
+                            else {
+                                upgrade_new_ability3.setText("UNLOCK");
+                            }
+                            if (ability.isUnlock()){
+                                ability3.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                                    @Override
+                                    public void handle(MouseEvent event) {
+                                        Connection.sendUseAbility(ability, hero);
+                                    }
+                                });
+                            }
+                            else {
+                                ability3.setOpacity(0.3);
+                            }
+                            if(ability.isCanUnlock()) {
+                                upgrade_new_ability3.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                                    @Override
+                                    public void handle(MouseEvent event) {
+                                        if(!ability.isUnlock() && ability.isAvailable()){
+                                            Connection.sendNewAbility(ability, hero);
+                                        }
+                                        if(ability.isUnlock() && ability.isAvailable()){
+                                            Connection.sendUpgradeAbility(ability, hero);
+                                        }
+                                    }
+                                });
+                            }
                         }
                     }
                 }
@@ -573,12 +798,16 @@ public class MapController implements Initializable {
                 setWinnerTeamName("Red");
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/EndGame.fxml"));
             Parent root1 = fxmlLoader.load();
-            Stage stage = new Stage();
+            stage = new Stage();
             stage.setScene(new Scene(root1));
             stage.show();
         } catch (Exception  e){
             e.printStackTrace();
         }
+    }
+
+    public static void closeStage(){
+        stage.close();
     }
 
     @FXML
