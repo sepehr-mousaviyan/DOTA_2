@@ -71,10 +71,16 @@ public class Connection implements Runnable {
         client.sendListHero();
         heroName.add(client.getSelectHero());
         if(setRedTrue()){
-            client.send(new MassageMaker().massage("Begin" , "Green").toString());
+            client.send(new MassageMaker().massage("GREEN" , heroName.get(0)).toString());
+            client.setTeamName("GREEN");
         }
         else{
-            client.send(new MassageMaker().massage("Begin" , "Red").toString());
+            client.setTeamName("RED");
+            if(heroName.get(0).equals("Knigth")){
+                client.send(new MassageMaker().massage("RED" , "Knight").toString());
+            } else {
+                client.send(new MassageMaker().massage("RED" , "Ranger").toString());
+            }
         }
     }
 }

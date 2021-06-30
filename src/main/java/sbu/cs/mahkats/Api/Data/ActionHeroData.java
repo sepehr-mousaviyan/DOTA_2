@@ -6,12 +6,14 @@ import sbu.cs.mahkats.Api.Api;
 
 public class ActionHeroData implements Data{
     private final long token;
+    private String teamName;
     private String heroName = "";
     private int heroCode = 0;
     private int abilityName = 0;
     private int defenderCode = 0;
     private int location_x = 0;
     private int location_y = 0;
+    private char move = null;
     private int[] defendersCode = null;
     /**
      * possible of choice:
@@ -24,13 +26,14 @@ public class ActionHeroData implements Data{
      */
     private int choice;
 
-    public ActionHeroData(long token, String heroName, int heroCode, int abilityName, int defenderCode, int choice) {
+    public ActionHeroData(long token, String heroName, int heroCode, int abilityName, int defenderCode, int choice, String teamName) {
         this.token = token;
         this.heroName = heroName;
         this.heroCode = heroCode;
         this.abilityName = abilityName;
         this.defenderCode = defenderCode;
         this.choice = choice;
+        this.teamName = teamName;
     }
 
     public ActionHeroData(long token, String heroName, int heroCode, int abilityName, int[] defendersCode, int choice) {
@@ -42,12 +45,15 @@ public class ActionHeroData implements Data{
         this.choice = choice;
     }
 
-    public ActionHeroData(long token, int heroCode , int location_x, int location_y, int choice) {
+    public ActionHeroData(long token, int heroCode , char move , int choice) {
         this.token = token;
         this.heroCode = heroCode;
-        this.location_x = location_x;
-        this.location_y = location_y;
+        this.move = move;
         this.choice = choice;
+    }
+
+    public String getTeamName() {
+        return teamName;
     }
 
     public long getToken() {
@@ -85,28 +91,35 @@ public class ActionHeroData implements Data{
     public int[] getDefendersCode() {
         return defendersCode;
     }
+    
+    public char getMove(){
+        return move;
+    }
 
     @Override
     public JsonObject makeJson() {
-        if (location_x == 0 || location_y == 0){
+        if (!move.equals(null){
             if(defendersCode == null) {
                 return new Api().toJson(new Pair<>("token", token),
                         new Pair<>("heroName", heroName),
                         new Pair<>("heroCode", heroCode),
                         new Pair<>("abilityName", abilityName),
                         new Pair<>("defenderCode", defenderCode),
-                        new Pair<>("choice", choice));
+                        new Pair<>("choice", choice),
+                        new Pair<>("teamName", teamName));
             }
             return new Api().toJson(new Pair<>("token", token),
                     new Pair<>("heroName", heroName),
                     new Pair<>("heroCode", heroCode),
                     new Pair<>("abilityName", abilityName),
                     new Pair<>("defendersCode", defendersCode),
-                    new Pair<>("choice", choice));
+                    new Pair<>("choice", choice),
+                    new Pair<>("teamName", teamName));
         }
         return new Api().toJson(new Pair<>("token", token),
                 new Pair<>("heroCode", heroCode),
-                new Pair<>("location_x", location_x),
-                new Pair<>("location_y", location_y));
+                new Pair<>("move", move),
+                new Pair<>("choice", choice),
+                new Pair<>("teamName", teamName));
     }
 }

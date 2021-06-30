@@ -21,7 +21,6 @@ import sbu.cs.mahkats.Server.Unit.Unit;
 import sbu.cs.mahkats.Server.Unit.unitList;
 
 import java.util.ArrayList;
-import java.util.concurrent.atomic.AtomicInteger;
 import org.apache.log4j.Logger;
 
 public class GamePlay {
@@ -38,18 +37,24 @@ public class GamePlay {
     private static unitList GreenUnits; // all the red units objects
     private static unitList RedUnits;  // all the green units objects
 
+    private int CHUNK_SIZE; // size of unit moves
+
+    private String teamName;
+
     private static int last_code = 1;
     private static boolean is_start = false;
 
     private final static Logger logger = Logger.getLogger(GamePlay.class.getName());
 
     private static int turn = 0;
+    private int turn_nth_client = 0; 
 
     public GamePlay(String heroName1 , String heroName2) {
         Config config = InterfaceConfig.getInstance();
         MAP_HEIGHT  = config.getIntValue("map.height");
         MAP_WIDTH   = config.getIntValue("map.width");
         LANE_WIDTH  = config.getIntValue("map.lane.width");
+        CHUNK_SIZE = config.getIntValue("game.chunk.size");
 
         config = Config.getInstance();
         REFRESH_RATE         = config.getIntValue("game.refreshRate");
@@ -73,23 +78,19 @@ public class GamePlay {
         logger.info("game start");
         while(true) {
             if (turn - lastTurn >= 1) {
+                recieveHeroData(clients);
                 checkMap();
                 hpRegenerateAll();
                 manaRegenerateAll();
-                for(Client client : clients) {
-                    client.sendData();
-                    logger.info("send data");
-                }
-                recieveHeroData(clients);
 
                 //check end game
                 if(GreenUnits.getAncient().isDie()){
-                    endGame("GREEN", clients);
+                    endGame("RED", clients);
                     logger.info("Green is lost");
                     break;
                 }
                 if(RedUnits.getAncient().isDie()){
-                    endGame("Red", clients);
+                    endGame("GREEN", clients);
                     logger.info("Red is lost");
                     break;
                 }
@@ -103,6 +104,10 @@ public class GamePlay {
                     turn ++;
                 } catch (InterruptedException e) {
                     logger.fatal("can not go next turn" , e);
+                }
+                for(Client client : clients) {
+                    client.sendData();
+                    logger.info("send data");
                 }
             }
         }
@@ -136,8 +141,8 @@ public class GamePlay {
      * check the map if some one can attack other
      */
     public void checkMap() {
-        ArrayList<Unit> greenUnits = GreenUnits.getAll_withoutHero();
-        ArrayList<Unit> redUnits = RedUnits.getAll_withoutHero();
+        ArrayList<Unit> greenUnits = GreenUnits.getAll();
+        ArrayList<Unit> redUnits = RedUnits.getAll();
 
         ArrayList<Creep> greenCreeps = GreenUnits.getCreeps();
         ArrayList<Creep> redCreeps = RedUnits.getCreeps();
@@ -266,84 +271,111 @@ public class GamePlay {
     }
 
     public void recieveHeroData(ArrayList<Client> clients) {
-        for(Client client : clients){
-            String data = client.receiveData();
-            ActionHeroData actionHeroData = Parser.parseActionHeroData(new Api().toJson(data));
-            Hero hero = GreenUnits.getHero(actionHeroData.getHeroCode());
-            ArrayList<Ability> abilitis;
-            if(hero == null){
-                hero = RedUnits.getHero(actionHeroData.getHeroCode());
-            }
-            switch (actionHeroData.getChoice()){
-                //move hero
-                case 1:
-                    hero.move(actionHeroData.getLocation_x(), actionHeroData.getLocation_y());
-                    break;
+        turn_nth_client++;
+        if(turn_nth_client > 1){
+            turn_nth_client = 0;
+        }
+        Client client = clients.get(turn_nth_client);
+        client.send(new MassageMaker().massage("ok", "startTurn").toString());
+        String data = client.receiveData();
+        ActionHeroData actionHeroData = Parser.parseActionHeroData(new Api().toJson(data));
+        Hero hero = GreenUnits.getHero(actionHeroData.getHeroCode()); 
+        if (hero == null){
+            hero = RedUnits.getHero(actionHeroData.getHeroCode());
+        }
+        teamName = actionHeroData.getTeamName();
+        Hero thisHero = null;
+        if (teamName.equals("GREEN")){
+            thisHero = GreenUnits.getHeroes().get(0);
+        } else if (teamName.equals("RED")){
+            thisHero = RedUnits.getHeroes().get(0);
+        } else {
+            logger.fatal("wrong teamName.");
+        }
+        ArrayList<Ability> abilitis;
+        switch (actionHeroData.getChoice()){
+            //move hero
+            case 1:
+                switch(actionHeroData.getMove()){
+                    case 'w':
+                        thisHero.move(thisHero.getLocation_x(), thisHero.getLocation_y() + CHUNK_SIZE);
+                        break;
+                    case 's':
+                        thisHero.move(thisHero.getLocation_x(), thisHero.getLocation_y() - CHUNK_SIZE);
+                        break;
+                    case 'd':
+                        thisHero.move(thisHero.getLocation_x() + CHUNK_SIZE, thisHero.getLocation_y());
+                        break;
+                    case 'a':
+                        thisHero.move(thisHero.getLocation_x() - CHUNK_SIZE, thisHero.getLocation_y());
+                        break;
 
-                //add new ability
-                case 2:
-                    abilitis= hero.getAbilities();
-                    for(Ability ability : abilitis) {
-                        if (ability.getNAME().equals(actionHeroData.getAbilityName())) {
-                            if(!ability.setUnlock()) {
-                                //TODO
-                            } 
+                }
+                
+                break;
+
+            //add new ability
+            case 2:
+                abilitis= hero.getAbilities();
+                for(Ability ability : abilitis) {
+                    if (ability.getNAME().equals(actionHeroData.getAbilityName())) {
+                        if(!ability.setUnlock()) {
+                            //TODO
+                        } 
+                    }
+                }
+                break;
+
+            //update ability
+            case 3:
+                abilitis= hero.getAbilities();
+                for(Ability ability : abilitis) {
+                    if (ability.getNAME().equals(actionHeroData.getAbilityName())) {
+                        if(!ability.stageUp()) {
+                            //TODO
                         }
                     }
-                    break;
+                }
+                break;
 
-                //update ability
-                case 3:
-                    abilitis= hero.getAbilities();
-                    for(Ability ability : abilitis) {
-                        if (ability.getNAME().equals(actionHeroData.getAbilityName())) {
-                            if(!ability.stageUp()) {
-                                //TODO
-                            }
+            //attack the unit
+            case 4:
+                Unit unit = GreenUnits.getUnit(actionHeroData.getHeroCode());
+                if(unit == null){
+                    unit = RedUnits.getUnit(actionHeroData.getHeroCode());
+                }
+    
+                unit.takeDamage(hero.getDamage());
+                break;
+
+            //use ability
+            case 6:
+                Unit defender = GreenUnits.getUnit(actionHeroData.getDefenderCode());
+                if(defender == null){
+                    defender = RedUnits.getUnit(actionHeroData.getDefenderCode());
+                }
+                abilitis = hero.getAbilities();
+                for(Ability ability : abilitis) {
+                    if (ability.getNAME().equals(actionHeroData.getAbilityName())) {
+                        int[] codes = actionHeroData.getDefendersCode();
+                        if(actionHeroData.getDefenderCode() != 0){
+                            hero.setDefender(defender);
                         }
-                    }
-                    break;
-
-                //attack the unit
-                case 4:
-                    Unit unit = GreenUnits.getUnit(actionHeroData.getHeroCode());
-                    if(unit == null){
-                        unit = RedUnits.getUnit(actionHeroData.getHeroCode());
-                    }
-        
-                    unit.takeDamage(hero.getDamage());
-                    break;
-
-                //use ability
-                case 6:
-                    Unit defender = GreenUnits.getUnit(actionHeroData.getDefenderCode());
-                    if(defender == null){
-                        defender = RedUnits.getUnit(actionHeroData.getDefenderCode());
-                    }
-                    abilitis= hero.getAbilities();
-                    for(Ability ability : abilitis) {
-                        if (ability.getNAME().equals(actionHeroData.getAbilityName())) {
-                            int[] codes = actionHeroData.getDefendersCode();
-                            if(actionHeroData.getDefenderCode() != 0){
-                                hero.setDefender(defender);
-                            }
-                            else if(codes != null){
-                                for (int code: codes) {
-                                    Unit defender_unit = GreenUnits.getUnit(code);
-                                    if(defender_unit == null){
-                                        defender_unit = RedUnits.getUnit(code);
-                                    }
-                                    hero.addDefenders(defender_unit);
+                        else if(codes != null){
+                            for (int code: codes) {
+                                Unit defender_unit = GreenUnits.getUnit(code);
+                                if(defender_unit == null){
+                                    defender_unit = RedUnits.getUnit(code);
                                 }
-                            }
-                            if(hero.reduceMana(ability.getMANA_COST())) {
-                                Hero finalHero = hero;
-                                new Thread(() -> ability.use(finalHero)).start();
+                                hero.addDefenders(defender_unit);
                             }
                         }
+                        if(hero.reduceMana(ability.getMANA_COST())) {
+                            Hero finalHero = hero;
+                            new Thread(() -> ability.use(finalHero)).start();
+                        }
                     }
-                    break;
-            }
+                }
         }
     }
 
@@ -418,11 +450,6 @@ public class GamePlay {
         for(Hero hero : heroes){
             hero.mana_regeneration();
         }
-    }
-
-    public static void heroLevelUp () {
-        //TODO: do what client says
-
     }
 
     public static void destroy(Unit unit){
