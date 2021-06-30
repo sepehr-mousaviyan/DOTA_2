@@ -14,7 +14,6 @@ public class CreepRunnable implements Runnable {
     private void handler() {
         for(Creep c : creeps){
             if (c.getStatusAttacker()) {
-                //TODO: message to client for attack
                 c.getDefender().takeDamage(c.getDamage());
             }
             else {

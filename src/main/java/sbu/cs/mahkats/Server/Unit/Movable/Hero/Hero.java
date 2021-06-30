@@ -91,7 +91,7 @@ public class Hero extends Movable {
             max_armor += levelUp_benefit_armor;
             hp_regeneration += levelUp_benefit_hp_regeneration;
             mana_regeneration += levelUp_benefit_mana_regeneration;
-            GamePlay.heroLevelUp();
+            //GamePlay.LevelUp();
             if(!ability3.isMaxStage() || !ability2.isMaxStage() || !ability1.isMaxStage()) {
                 isLevelUp = true;
             }
@@ -233,5 +233,7 @@ public class Hero extends Movable {
     public Ability getAbility3() {
         return ability3;
     }
+
+    
 
 }

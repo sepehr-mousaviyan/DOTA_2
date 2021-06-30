@@ -16,7 +16,7 @@ public abstract class Unit {
     protected double max_armor = 0;
     protected double range = 0;
     protected double experience;
-    protected final String teamName;
+    protected String teamName;
     protected Boolean isAttacking = false;
     protected Unit defender = null;
     protected  boolean isDie = false;

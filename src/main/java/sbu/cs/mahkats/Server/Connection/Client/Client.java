@@ -35,6 +35,7 @@ public class Client {
     private DataBase dataBase;
     private Player player;
     public long TOKEN;
+    public String teamName;
 
     private final static Logger LOGGER = Logger.getLogger(Client.class.getName());
 
@@ -156,7 +157,7 @@ public class Client {
     }
 
     /**
-     *this function gets the string of massage json and if can't get correctly massage,
+     * this function gets the string of massage json and if can't get correctly massage,
      * it will be send a massage that send again
      * @return string of json massage
      */
@@ -257,5 +258,13 @@ public class Client {
 
     public void setTOKEN(long TOKEN) {
         this.TOKEN = TOKEN;
+    }
+
+    public void setTeamName(String name){
+        teamName = name;
+    }
+
+    public String getTeamName(){
+        return teamName;
     }
 }
