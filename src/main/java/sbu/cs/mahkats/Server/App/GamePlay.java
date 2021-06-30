@@ -296,22 +296,7 @@ public class GamePlay {
         switch (actionHeroData.getChoice()){
             //move hero
             case 1:
-                switch(actionHeroData.getMove()){
-                    case 'w':
-                        thisHero.move(thisHero.getLocation_x(), thisHero.getLocation_y() + CHUNK_SIZE);
-                        break;
-                    case 's':
-                        thisHero.move(thisHero.getLocation_x(), thisHero.getLocation_y() - CHUNK_SIZE);
-                        break;
-                    case 'd':
-                        thisHero.move(thisHero.getLocation_x() + CHUNK_SIZE, thisHero.getLocation_y());
-                        break;
-                    case 'a':
-                        thisHero.move(thisHero.getLocation_x() - CHUNK_SIZE, thisHero.getLocation_y());
-                        break;
-
-                }
-                
+                thisHero.move(actionHeroData.getMove(), thisHero, CHUNK_SIZE);
                 break;
 
             //add new ability

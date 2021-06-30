@@ -104,6 +104,7 @@ public class Ability {
                     }
                     hero.setRange(temp_range);
                     hero.setMinimum_damage(temp_damage);
+                    elderDragonForm();
                     break;
 
                 case "frostArrows":
@@ -117,6 +118,7 @@ public class Ability {
                         }
                     }
                     hero.setMinimum_damage(temp_damage);
+                    frostArrows();
                     break;
 
                 case "multiArrow":
@@ -175,8 +177,17 @@ public class Ability {
         GamePlay.abilityHit(GUNSHOT, hero, this);
     }
 
+    public void elderDragonForm(Hero hero) {
+        GamePlay.abilityHit(GUNSHOT, hero, this);
+    }
+
+    public void frostArrows(Hero hero) {
+        GamePlay.abilityHit(GUNSHOT, hero, this);
+    }
+
     public void dragonTail(Hero hero, Unit defender) {
         defender.takeDamage(this.getDamage() , hero);
+        GamePlay.abilityHit(GUNSHOT, hero, this);
     }
 
     public void multiArrow(Hero hero) {
@@ -187,6 +198,7 @@ public class Ability {
             }
             else defender.takeDamage(this.getDamage());
         }
+        GamePlay.abilityHit(GUNSHOT, hero, this);
     }
 
     public void marksmanship(Hero hero) {
