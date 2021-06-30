@@ -28,6 +28,7 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class MapController implements Initializable {
 
@@ -51,15 +52,15 @@ public class MapController implements Initializable {
         return move;
     }
 
+    public MapController(String teamName) {
+        //teamNameOnMap.setText(teamName);
+    }
+
     @FXML
     private AnchorPane mainAnchor;
 
     @FXML
     private Label teamNameOnMap;
-
-    public MapController(String teamName) {
-        teamNameOnMap.setText(teamName);
-    }
 
     @FXML
     private Label showHP;
@@ -99,7 +100,7 @@ public class MapController implements Initializable {
 
 
     public static void animationAttackMethod(ImageView pic){
-        RotateTransition rotate1 = new RotateTransition(Duration.millis(100),pic);
+    /*RotateTransition rotate1 = new RotateTransition(Duration.millis(100),pic);
         rotate1.setFromAngle(-10);
         rotate1.setToAngle(10);
         rotate1.play();
@@ -122,12 +123,12 @@ public class MapController implements Initializable {
             }catch (Exception ex){
 
             }
-        });
+        });*/
     }
 
 
    public void checkUnits(ArrayList<HeroData> heroes, ArrayList<AbilityData> abilities, ArrayList<CreepData> creeps, ArrayList<BuildingData> buildings) {
-        try {
+       /* try {
             for (HeroData hero : heroes) {
                 if (hero.getHeroType().equals("Ranged")){
                     if (hero.isDie()) {
@@ -787,11 +788,11 @@ public class MapController implements Initializable {
             }
         }catch (Exception e){
             e.printStackTrace();
-        }
+        }*/
     }
 
     public void setFinished(String winnerName){
-        try {
+       /* try {
             if (winnerName.equals("GREEN"))
                 setWinnerTeamName("Green");
             else
@@ -803,7 +804,7 @@ public class MapController implements Initializable {
             stage.show();
         } catch (Exception  e){
             e.printStackTrace();
-        }
+        }*/
     }
 
     public static void closeStage(){
@@ -812,28 +813,38 @@ public class MapController implements Initializable {
 
     @FXML
     void downFunction(ActionEvent event) {
-        move = 'd';
+        move = 's';
     }
 
     @FXML
     void leftAction(ActionEvent event) {
-        move = 'l';
+        move = 'a';
     }
 
     @FXML
     void rightFunctin(ActionEvent event) {
-        move = 'r';
+        move = 'd';
     }
 
     @FXML
     void upFunction(ActionEvent event) {
-        move = 'u';
+        move = 'w';
     }
 
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
-        teamNameOnMap.setText(getWinnerName());
+        /*AtomicBoolean isReceived = new AtomicBoolean(false);
+        Thread thread = new Thread(() ->{
+            isReceived.set(Connection.getTeamName());
+        });
+        thread.start();
+        try {
+            thread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }*/
+        //teamNameOnMap.setText(getWinnerName());
+        //Connection.runReceiver();
     }
 }

@@ -77,6 +77,13 @@ public class GamePlay {
 
         logger.info("game start");
         while(true) {
+            try {
+                Thread.sleep(REFRESH_RATE);
+                lastTurn = turn;
+                turn ++;
+            } catch (InterruptedException e) {
+                logger.fatal("can not go next turn" , e);
+            }
             if (turn - lastTurn >= 1) {
                 recieveHeroData(clients);
                 checkMap();
@@ -97,13 +104,6 @@ public class GamePlay {
                 if (turn - lastTurnCreepSpawn == 60) {
                     spawnCreep();
                     lastTurnCreepSpawn = turn;
-                }
-                try {
-                    Thread.sleep(REFRESH_RATE);
-                    lastTurn = turn;
-                    turn ++;
-                } catch (InterruptedException e) {
-                    logger.fatal("can not go next turn" , e);
                 }
                 for(Client client : clients) {
                     client.sendData();

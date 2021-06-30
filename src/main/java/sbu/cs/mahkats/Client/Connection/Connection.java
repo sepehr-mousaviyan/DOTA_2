@@ -16,6 +16,7 @@ import sbu.cs.mahkats.Configuration.Config;
 
 import java.io.*;
 import java.net.Socket;
+import java.util.ArrayList;
 
 
 public class Connection {
@@ -28,6 +29,8 @@ public class Connection {
     private static long TOKEN;
     private static DataInputStream dataInputStream;
     private static DataOutputStream dataOutputStream;
+
+    private static final ArrayList<String> BufferMessage = new ArrayList<>();
 
     private static final Logger logger = Logger.getLogger(Connection.class.getName());
 
@@ -154,11 +157,8 @@ public class Connection {
     }
 
     public static void sendHeroAction(char ch){
-        try {
-            send(new ActionHeroData(TOKEN, 0, ch , 1).makeJson().toString());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        //send(new ActionHeroData(TOKEN, 0, ch , 1).makeJson().toString());
+        BufferMessage.add(new ActionHeroData(TOKEN, 0, ch , 1).makeJson().toString());
     }
 
     public static boolean getTeamName(){
@@ -175,29 +175,40 @@ public class Connection {
     }
 
     public static void sendNewAbility(AbilityData abilityData, HeroData heroData){
-        try {
-            ActionHeroData actionHeroData = new ActionHeroData(TOKEN, heroData.getHeroType(), heroData.getCode(),abilityData.getName(),0,2, ReceiveDataRunnable.getTeamName());
-            send(actionHeroData.makeJson().toString());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        ActionHeroData actionHeroData = new ActionHeroData(TOKEN, heroData.getHeroType(), heroData.getCode(),abilityData.getName(),0,2, ReceiveDataRunnable.getTeamName());
+        //send(actionHeroData.makeJson().toString());
+        BufferMessage.add(actionHeroData.makeJson().toString());
     }
 
     public static void sendUpgradeAbility(AbilityData abilityData, HeroData heroData){
-        try {
-            ActionHeroData actionHeroData = new ActionHeroData(TOKEN, heroData.getHeroType(), heroData.getCode(),abilityData.getName(),0,3, ReceiveDataRunnable.getTeamName());
-            send(actionHeroData.makeJson().toString());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        ActionHeroData actionHeroData = new ActionHeroData(TOKEN, heroData.getHeroType(), heroData.getCode(),abilityData.getName(),0,3, ReceiveDataRunnable.getTeamName());
+        //send(actionHeroData.makeJson().toString());
+        BufferMessage.add(actionHeroData.makeJson().toString());
     }
 
     public static void sendUseAbility(AbilityData abilityData, HeroData heroData){
-        try {
-            ActionHeroData actionHeroData = new ActionHeroData(TOKEN, heroData.getHeroType(), heroData.getCode(),abilityData.getName(),0,6,  ReceiveDataRunnable.getTeamName());
-            send(actionHeroData.makeJson().toString());
-        } catch (IOException e) {
-            e.printStackTrace();
+        ActionHeroData actionHeroData = new ActionHeroData(TOKEN, heroData.getHeroType(), heroData.getCode(),abilityData.getName(),0,6,  ReceiveDataRunnable.getTeamName());
+        //send(actionHeroData.makeJson().toString());
+        BufferMessage.add(actionHeroData.makeJson().toString());
+    }
+
+    public static void senBufferMessage(){
+        if(BufferMessage.size()==0){
+            try {
+                send(new ActionHeroData(TOKEN, 0, ' ' , 7).makeJson().toString());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        else{
+            for(int i = 0 ; i < BufferMessage.size() && i < 2 ; i++){
+                try {
+                    send(BufferMessage.get(i));
+                    BufferMessage.remove(BufferMessage.get(i));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 

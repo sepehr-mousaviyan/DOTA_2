@@ -104,7 +104,7 @@ public class Ability {
                     }
                     hero.setRange(temp_range);
                     hero.setMinimum_damage(temp_damage);
-                    elderDragonForm();
+                    elderDragonForm(hero);
                     break;
 
                 case "frostArrows":
@@ -118,7 +118,7 @@ public class Ability {
                         }
                     }
                     hero.setMinimum_damage(temp_damage);
-                    frostArrows();
+                    frostArrows(hero);
                     break;
 
                 case "multiArrow":

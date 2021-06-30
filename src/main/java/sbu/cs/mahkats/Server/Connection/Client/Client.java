@@ -197,7 +197,7 @@ public class Client {
         String data = null;
         try {
             data = dataInputStream.readUTF();
-            LOGGER.info("message received.");
+            LOGGER.info("message received.\n"+data);
         } catch (IOException e) {
             LOGGER.fatal("message didn't received successfully!", e);
         }

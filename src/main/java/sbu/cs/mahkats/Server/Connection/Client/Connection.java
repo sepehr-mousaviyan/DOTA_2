@@ -32,7 +32,7 @@ public class Connection implements Runnable {
         } catch (IOException e) {
             LOGGER.fatal("server can not start", e);
         }
-
+        ArrayList<Thread> threads = new ArrayList<>();
         int countPlayer = 0;
         while (countPlayer < NUMBER_PLAYER)
         {
@@ -44,9 +44,19 @@ public class Connection implements Runnable {
             }
             Thread thread = new Thread(this);
             thread.start();
+            threads.add(thread);
             LOGGER.info("player "+ (countPlayer+1) +" is connected!");
             countPlayer++;
         }
+        try {
+            threads.get(0).join();
+            threads.get(1).join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        clients.get(0).send(new MassageMaker().massage("GREEN", "Knight").toString());
+        clients.get(1).send(new MassageMaker().massage("RED", "Ranger").toString());
+        new GamePlay("Knight", "Ranger").play(clients);
     }
 
     public ArrayList<String> getHeroName(){ return heroName;}
@@ -82,11 +92,15 @@ public class Connection implements Runnable {
             } else {
                 client.send(new MassageMaker().massage("RED" , "Ranger").toString());
             }
+        }
+        if(!isRed) {
+            heroName.add("Knight");
+            client.send(new MassageMaker().massage("GREEN", "Knight").toString());
+            isRed = true;
+        }
+        else {
+            heroName.add("Ranger");
+            client.send(new MassageMaker().massage("RED", "Ranger").toString());
         }*/
-        heroName.add("Knight");
-        client.send(new MassageMaker().massage("GREEN" , "Knight").toString());
-        heroName.add("Ranger");
-        client.send(new MassageMaker().massage("GREEN" , "Ranger").toString());
-        new GamePlay(heroName.get(0), heroName.get(1)).play(clients);
     }
 }

@@ -14,10 +14,10 @@ public class EndGameController implements Initializable {
     private Label winnerTeam;
 
 
-    @FXML
+    /*@FXML
     void exitGame(MouseEvent event) {
         MapController.closeStage();
-    }
+    }*/
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {

@@ -30,6 +30,8 @@ public class MainController implements Initializable {
     private static final int EMAIL_LENGTH = config.getIntValue("input.limit.email");
     private static final String regex = "^\\S+@\\S+\\.\\S+$";
 
+    private static Stage logStage;
+
     @FXML
     AnchorPane mainanchor;
 
@@ -130,13 +132,12 @@ public class MainController implements Initializable {
                 try {
                     Parent logParent = null;
                     logParent = FXMLLoader.load(getClass().getResource("/LoadingScreenOne.fxml"));
-                    Stage logStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                    logStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
                     Scene logScene = new Scene(logParent);
 
                     logStage.setScene(logScene);
                     logStage.show();
-                    //LoadingOneController.setStage(logStage);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -159,6 +160,10 @@ public class MainController implements Initializable {
             }
         }
 
+    }
+
+    public static void closeNext(){
+        logStage.close();
     }
 
     private boolean goodInput(String userName, String password, String email){

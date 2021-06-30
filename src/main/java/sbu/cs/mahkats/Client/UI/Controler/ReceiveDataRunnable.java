@@ -19,7 +19,7 @@ public class ReceiveDataRunnable implements Runnable{
     private final ArrayList<CreepData> creeps = new ArrayList<>();
     private final ArrayList<AbilityData> abilities = new ArrayList<>();
     private final DataInputStream dataInputStream;
-    private static String teamName;
+    private static String teamName = "Error";
 
     public static void setTeamName(String teamName) {
         ReceiveDataRunnable.teamName = teamName;
@@ -61,13 +61,16 @@ public class ReceiveDataRunnable implements Runnable{
                     break;
                 case "End":
                     Connection.sendHeroAction(mapController.getMove());
-                    mapController.checkUnits(heroes, abilities, creeps, buildings);
+                    //mapController.checkUnits(heroes, abilities, creeps, buildings);
                     break;
                 case "GREEN" :
-                    mapController.setFinished("Green");
+                    //mapController.setFinished("Green");
                     break;
                 case "RED" :
-                    mapController.setFinished("RED");
+                    //mapController.setFinished("RED");
+                    break;
+                case "StartTurn":
+                    Connection.senBufferMessage();
                     break;
 
             }

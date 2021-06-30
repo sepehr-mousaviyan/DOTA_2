@@ -15,12 +15,16 @@ import java.util.ResourceBundle;
 
 public class LoadingOneController implements Initializable {
 
-    private boolean isReceived = false;
+    private static boolean isReceived = false;
     private static Stage currentStage;
 
-    /*public static void setStage(Stage stage) {
+    public static void setStage(Stage stage) {
         currentStage = stage;
-    }*/
+    }
+
+    public static boolean isIsReceived() {
+        return isReceived;
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -42,7 +46,8 @@ public class LoadingOneController implements Initializable {
         if (isReceived) {
             try {
                 //currentStage.close();
-                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/LoadingScreenTwo.fxml"));
+                //MainController.closeNext();
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/ChooseHeroScreen.fxml"));
                 Parent root1 = fxmlLoader.load();
                 Stage stage = new Stage();
                 stage.setScene(new Scene(root1));
