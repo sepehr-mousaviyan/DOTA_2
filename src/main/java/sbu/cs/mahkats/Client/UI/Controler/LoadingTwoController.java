@@ -26,12 +26,18 @@ public class LoadingTwoController implements Initializable {
             isReceived = Connection.getTeamName();
         });
         thread.start();
-        String videoOneAddress = "/video_2021-06-28_21-56-03.mp4";
-        Media media = new Media(videoOneAddress);
-        MediaPlayer mediaPlayer = new MediaPlayer(media);
-        loadingVideo.setMediaPlayer(mediaPlayer);
-        mediaPlayer.play();
+        //String videoOneAddress = "/video_2021-06-28_21-56-03.mp4";
+        //Media media = new Media(videoOneAddress);
+        //MediaPlayer mediaPlayer = new MediaPlayer(media);
+        //loadingVideo.setMediaPlayer(mediaPlayer);
+       // mediaPlayer.play();
+        try {
+            thread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
+        Connection.runReceiver();
         if (isReceived) {
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Map.fxml"));

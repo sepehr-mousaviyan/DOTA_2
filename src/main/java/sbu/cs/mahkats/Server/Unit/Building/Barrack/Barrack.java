@@ -9,7 +9,9 @@ public class Barrack extends Building {
     public Barrack(String lane, String teamName , int code) {
         super(teamName, "Barrack" , code);
         this.lane = lane;
-        Config config = BuildingConfig.getInstance("BarrackConfig");
+        /*Config config = BuildingConfig.getInstance("BarrackConfig");
+        Location_x = config.getIntValue("barrack.barrack." + top + "Lane.location_x");
+        Location_y = config.getIntValue("barrack.barrack.topLane.location_y");
         switch (lane) {
             case "TOP":
                 Location_x = config.getIntValue("barrack.barrack.topLane.location_x");
@@ -28,6 +30,6 @@ public class Barrack extends Building {
             config = InterfaceConfig.getInstance();
             Location_x = config.getIntValue("map.width") - Location_x;
             Location_y = config.getIntValue("map.heigth") - Location_y;
-        }
+        }*/
     }
 }

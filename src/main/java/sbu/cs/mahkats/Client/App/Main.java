@@ -10,7 +10,7 @@ public class Main {
     public static void main(String[] args) throws IOException {
         Logger logger =  Logger.getLogger(ClientApp.class.getName());
         Connection client = new Connection();
-        if(client.getStatusConnection()) {
+        if(client.getCheckStatus()) {
             ClientApp.main(args);
         }
         else{

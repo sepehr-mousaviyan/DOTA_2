@@ -18,7 +18,7 @@ public class unitList {
     private ArrayList <RangedBarrack> rangedBarracks = new ArrayList<>();
     private ArrayList <Tower> towers = new ArrayList<>();
     private Ancient ancient;
-    private final int BASE_TOWER_NUMBERS = 3;
+    private final int BASE_TOWER_NUMBERS = 2;
     private final int LANE_TOWER_NUMBERS = 3;
     public unitList(String teamName , String heroName) {
         this.teamName = teamName;
@@ -26,20 +26,20 @@ public class unitList {
         ancient = new Ancient(teamName , GamePlay.get_add_Code());
 
         //towers unit making
-        for (int i = 0; i < BASE_TOWER_NUMBERS; i++) {
-            this.towers.add(new Tower("BASE", teamName, i , GamePlay.get_add_Code()));
+        for (int i = 0; i < BASE_TOWER_NUMBERS ; i++) {
+            this.towers.add(new Tower(teamName , "BASE", i + 1 , GamePlay.get_add_Code()));
         }
     
         for (int i = 0; i < LANE_TOWER_NUMBERS; i++) {
-            this.towers.add(new Tower("BOTTOM", teamName, i , GamePlay.get_add_Code()));
+            this.towers.add(new Tower(teamName , "BOTTOM", i + 1 , GamePlay.get_add_Code()));
         }
         
         for (int i = 0; i < LANE_TOWER_NUMBERS; i++) {
-            this.towers.add(new Tower("MIDDLE", teamName, i , GamePlay.get_add_Code()));
+            this.towers.add(new Tower(teamName , "MIDDLE", i + 1 , GamePlay.get_add_Code()));
         }
 
         for (int i = 0; i < LANE_TOWER_NUMBERS; i++) {
-            this.towers.add(new Tower("TOP", teamName, i , GamePlay.get_add_Code()));
+            this.towers.add(new Tower(teamName , "TOP", i + 1 , GamePlay.get_add_Code()));
         }
 
         //barracks unit making

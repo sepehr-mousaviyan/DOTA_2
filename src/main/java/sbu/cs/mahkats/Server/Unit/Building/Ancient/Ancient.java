@@ -18,7 +18,7 @@ public class Ancient extends Building {
         if (teamName.equals("RED")){
             config = InterfaceConfig.getInstance();
             Location_x = config.getIntValue("map.width") - Location_x;
-            Location_y = config.getIntValue("map.heigth") - Location_y;
+            Location_y = config.getIntValue("map.height") - Location_y;
         }
     }
 }

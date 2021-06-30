@@ -2,7 +2,6 @@ package sbu.cs.mahkats.Api;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import org.javatuples.Pair;
 import sbu.cs.mahkats.Api.Data.*;
 
 import java.util.ArrayList;
@@ -56,12 +55,9 @@ public class Parser{
         Gson gson = new Gson();
         JsonData buildingData = gson.fromJson(json , JsonData.class);
         String content = buildingData.getContent().toString();
-        ArrayList<Pair<String, JsonObject>> heroes =  gson.fromJson(new Api().toJson(content), ArrayList.class);
-        ArrayList<HeroData> heroesData = new ArrayList<>();
-        for(Pair<String, JsonObject> pair : heroes){
-            heroesData.add(gson.fromJson(new Api().toJson(pair.getValue1().toString()), HeroData.class));
-        }
-        return heroesData;
+        //HashMap<String, JsonObject> heroes =  gson.fromJson(new Api().toJson(content), HashMap.class);
+        HeroList hero = gson.fromJson(new Api().toJson(content), HeroList.class);
+        return hero.getHeroes();
     }
 
     public static AbilityData parseAbilityData(JsonObject json) {

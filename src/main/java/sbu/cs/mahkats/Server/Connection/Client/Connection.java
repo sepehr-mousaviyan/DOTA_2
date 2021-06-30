@@ -3,6 +3,7 @@ package sbu.cs.mahkats.Server.Connection.Client;
 import org.apache.log4j.Logger;
 import sbu.cs.mahkats.Api.MassageMaker;
 import sbu.cs.mahkats.Configuration.Config;
+import sbu.cs.mahkats.Server.App.GamePlay;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -68,7 +69,8 @@ public class Connection implements Runnable {
         clients.add(client);
         client.handlerLoginSignup();
         client.sendListHero();
-        heroName.add(client.getSelectHero());
+        heroName = new ArrayList<String>();
+        /*heroName.add(client.getSelectHero());
         if(setRedTrue()){
             client.send(new MassageMaker().massage("GREEN" , heroName.get(0)).toString());
             client.setTeamName("GREEN");
@@ -80,6 +82,11 @@ public class Connection implements Runnable {
             } else {
                 client.send(new MassageMaker().massage("RED" , "Ranger").toString());
             }
-        }
+        }*/
+        heroName.add("Knight");
+        client.send(new MassageMaker().massage("GREEN" , "Knight").toString());
+        heroName.add("Ranger");
+        client.send(new MassageMaker().massage("GREEN" , "Ranger").toString());
+        new GamePlay(heroName.get(0), heroName.get(1)).play(clients);
     }
 }

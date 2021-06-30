@@ -19,8 +19,8 @@ public class Tower extends Building {
         hp_regeneration = config.getDoubleValue("tower.hp_regeneration");
         experience = config.getDoubleValue("tower.experience");
 
-        Location_x = config.getIntValue("barrack.tower." + lane.toLowerCase() + "." + choice + ".location_x");
-        Location_y = config.getIntValue("barrack.tower." + lane.toLowerCase() + "." + choice + ".location_y");
+        Location_x = config.getIntValue("tower." + lane.toLowerCase() + "." + choice + ".location_x");
+        Location_y = config.getIntValue("tower." + lane.toLowerCase() + "." + choice + ".location_y");
 
         if(teamName.equals("Red")){
             config = InterfaceConfig.getInstance();

@@ -115,7 +115,8 @@ public class Client {
                 hero.getExperience(), hero.getStatusAttacker(), defender,
                 hero.getStatusDie(), hero.getCode(), hero.getLevel(), hero.getMana(),
                 hero.getMana_regeneration(), hero.getAbility1().toString(), hero.getAbility2().toString(),
-                hero.getAbility3().toString(), hero.getTeamName(), hero.getLocation_x(), hero.getLocation_y());
+                hero.getAbility3().toString(), hero.getTeamName(), hero.getLocation_x(),
+                hero.getLocation_y(), hero.getHero_name());
     }
 
     public void sendCreepData(ArrayList <Creep> creeps, String action, String status){
@@ -210,7 +211,7 @@ public class Client {
     public void send(String data) {
         try {
             dataOutputStream.writeUTF(data);
-            LOGGER.info("message sent.");
+            LOGGER.info("message sent.\n" + data);
         } catch (IOException e) {
             LOGGER.fatal("message didn't sent successfully!", e);
         }
@@ -259,9 +260,11 @@ public class Client {
     }
 
     public String getSelectHero(){
-        String data = "";
+        String data = null;
         try {
-            data = dataInputStream.readUTF();
+            do {
+                data = dataInputStream.readUTF();
+            }while(data == null);
         } catch (IOException e) {
             e.printStackTrace();
         }

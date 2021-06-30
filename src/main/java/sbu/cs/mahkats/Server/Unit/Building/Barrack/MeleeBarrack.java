@@ -3,6 +3,7 @@ package sbu.cs.mahkats.Server.Unit.Building.Barrack;
 import java.util.ArrayList;
 
 import sbu.cs.mahkats.Configuration.Config;
+import sbu.cs.mahkats.Configuration.InterfaceConfig;
 import sbu.cs.mahkats.Configuration.Units.BuildingConfig;
 import sbu.cs.mahkats.Server.Unit.Movable.Creep.Creep;
 import sbu.cs.mahkats.Server.Unit.Movable.Creep.MeleeCreep;
@@ -13,37 +14,17 @@ public class MeleeBarrack extends Barrack {
         super(lane, teamName , code);
         Config config = BuildingConfig.getInstance("BarrackConfig");
         hp = config.getDoubleValue("barrack.melee.hp");
-        hp_regeneration = config.getDoubleValue("barack.melee.hp_regeneration");
-        armor = config.getDoubleValue("barack.melee.armor");
-        experience = config.getDoubleValue("barack.melee.experience");
+        hp_regeneration = config.getDoubleValue("barrack.melee.hp_regeneration");
+        armor = config.getDoubleValue("barrack.melee.armor");
+        experience = config.getDoubleValue("barrack.melee.experience");
+        lane = lane.toLowerCase();
+        Location_x = config.getIntValue("melee.barrack." + lane  + ".lane.x");
+        Location_y = config.getIntValue("melee.barrack." + lane + ".lane.y");
         
-        if(teamName.equals("GREEN")){
-            switch (lane) {
-                case "TOP":
-                    Location_x--;
-                    break;
-                case "MIDDLE":
-                    Location_x --;
-                    Location_y ++;
-                    break;
-                case "BOTTOM":
-                    Location_y ++;
-                    break;
-            }
-        }
-        else if(teamName.equals("Red")){
-            switch (lane) {
-                case "TOP":
-                    Location_x++;
-                    break;
-                case "MIDDLE":
-                    Location_x++;
-                    Location_y--;
-                    break;
-                case "BOTTOM":
-                    Location_y--;
-                    break;
-            }
+        if(teamName.equals("Red")){
+            config = InterfaceConfig.getInstance();
+            Location_x = config.getIntValue("map.width") - Location_x;
+            Location_y = config.getIntValue("map.height") - Location_y;
         }
     }
 

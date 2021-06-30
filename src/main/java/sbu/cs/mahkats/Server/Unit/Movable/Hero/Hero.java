@@ -236,6 +236,7 @@ public class Hero extends Movable {
         return ability3;
     }
 
-    
-
+    public String getHero_name() {
+        return hero_name;
+    }
 }

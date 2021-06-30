@@ -41,9 +41,6 @@ public class ChooseHeroController implements Initializable {
     @FXML
     private MediaView heroTwo;
 
-    MediaPlayer mediaPlayerOne;
-    MediaPlayer mediaPlayerTwo;
-
     @FXML
     private Label rangerMaxDamage;
 
@@ -64,25 +61,25 @@ public class ChooseHeroController implements Initializable {
         String videoOneAddress = "/video_2021-06-28_18-43-17.mp4";
         String videoTwoAddress = "/video_2021-06-28_18-43-30.mp4";
 
-        Media mediaOne = new Media(videoOneAddress);
-        Media mediaTwo = new Media(videoTwoAddress);
-        mediaPlayerOne = new MediaPlayer(mediaOne);
-        mediaPlayerTwo = new MediaPlayer(mediaTwo);
+        //Media mediaOne = new Media(videoOneAddress);
+        //Media mediaTwo = new Media(videoTwoAddress);
+        //mediaPlayerOne = new MediaPlayer(mediaOne);
+        //mediaPlayerTwo = new MediaPlayer(mediaTwo);
 
-        heroOne.setMediaPlayer(mediaPlayerOne);
-        heroTwo.setMediaPlayer(mediaPlayerTwo);
+        //heroOne.setMediaPlayer(mediaPlayerOne);
+        //heroTwo.setMediaPlayer(mediaPlayerTwo);
 
         for (HeroData hero : heroes){
             if (hero.getHeroType().equals("Knight")){
-                knightMaxDamage.setText(Double. toString(hero.getMaximum_damage()));
-                knightMinDamage.setText(Double. toString(hero.getMinimum_damage()));
+                knightMaxDamage.setText(Double.toString(hero.getMaximum_damage()));
+                knightMinDamage.setText(Double.toString(hero.getMinimum_damage()));
             }
-            if (hero.getHeroType().equals("Ranged")){
-                rangerMaxDamage.setText(Double. toString(hero.getMaximum_damage()));
-                rangerMinDamage.setText(Double. toString(hero.getMinimum_damage()));
+            else if (hero.getHeroType().equals("Ranger")){
+                rangerMaxDamage.setText(Double.toString(hero.getMaximum_damage()));
+                rangerMinDamage.setText(Double.toString(hero.getMinimum_damage()));
             }
-            mediaPlayerOne.play();
-            mediaPlayerTwo.play();
+            //mediaPlayerOne.play();
+            //mediaPlayerTwo.play();
 
         }
     }

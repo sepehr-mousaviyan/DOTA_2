@@ -121,8 +121,12 @@ public class MainController implements Initializable {
         }
 
         else if(Connection.checkUserSignUp(userNameInput.getText(),passInput.getText(),emailInput.getText())){
-            if(Connection.getCheckStatus()){
-                Connection.runReceiver();
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            if(Connection.getStatus()){
                 try {
                     Parent logParent = null;
                     logParent = FXMLLoader.load(getClass().getResource("/LoadingScreenOne.fxml"));
@@ -132,7 +136,7 @@ public class MainController implements Initializable {
 
                     logStage.setScene(logScene);
                     logStage.show();
-
+                    //LoadingOneController.setStage(logStage);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

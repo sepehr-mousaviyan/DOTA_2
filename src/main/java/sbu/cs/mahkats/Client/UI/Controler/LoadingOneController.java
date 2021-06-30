@@ -15,10 +15,12 @@ import java.util.ResourceBundle;
 
 public class LoadingOneController implements Initializable {
 
-    boolean isReceived = false;
+    private boolean isReceived = false;
+    private static Stage currentStage;
 
-    @FXML
-    private MediaView loadingVideo;
+    /*public static void setStage(Stage stage) {
+        currentStage = stage;
+    }*/
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -27,10 +29,10 @@ public class LoadingOneController implements Initializable {
         });
         thread.start();
         String videoOneAddress = "/video_2021-06-28_21-56-03.mp4";
-        Media media = new Media(videoOneAddress);
-        MediaPlayer mediaPlayer = new MediaPlayer(media);
-        loadingVideo.setMediaPlayer(mediaPlayer);
-        mediaPlayer.play();
+        //Media media = new Media(videoOneAddress);
+        //MediaPlayer mediaPlayer = new MediaPlayer(media);
+        //loadingVideo.setMediaPlayer(mediaPlayer);
+        //mediaPlayer.play();
         try {
             thread.join();
         } catch (InterruptedException e) {
@@ -39,7 +41,8 @@ public class LoadingOneController implements Initializable {
 
         if (isReceived) {
             try {
-                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/ChooseHeroScreen.fxml"));
+                //currentStage.close();
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/LoadingScreenTwo.fxml"));
                 Parent root1 = fxmlLoader.load();
                 Stage stage = new Stage();
                 stage.setScene(new Scene(root1));

@@ -32,7 +32,7 @@ public class Connection {
     private static final Logger logger = Logger.getLogger(Connection.class.getName());
 
     public static boolean getCheckStatus() {
-        return checkStatus;
+        return statusConnection;
     }
 
     public static long getTOKEN() {
@@ -54,7 +54,8 @@ public class Connection {
         }
     }
 
-    public Boolean getStatusConnection(){return statusConnection;}
+    public static Boolean getStatus(){return checkStatus;}
+
 
     public static boolean checkUserSignUp(String userName, String passWord, String email){
         boolean resault = false;
@@ -65,29 +66,31 @@ public class Connection {
             JsonObject signinObj = massageMaker.massage("OK","signup",user);
             if(send(signinObj.toString())){
                 logger.info("registering a new user was successful ");
+                receive();
+                checkStatus = true;
                 return true;
             }
         } catch (Exception e){
             logger.fatal("email address or username already exist", e);
         }
-        return resault;
+        return checkStatus;
     }
 
     public static boolean checkUserSignIn(String userName, String passWord) throws IOException {
-        boolean resault = false;
 
         try {
             UserData user = new UserData(userName,passWord);
             MassageMaker massageMaker = new MassageMaker();
             JsonObject signinObj = massageMaker.massage("OK","signin",user);
             if(send(signinObj.toString())){
-                resault = true;
+                checkStatus = true;
+
             }
         } catch (Exception e){
             logger.fatal("Account not found", e);
             throw e;
         }
-        return resault;
+        return checkStatus;
 
     }
     public static boolean send(String data) throws IOException {
@@ -96,7 +99,7 @@ public class Connection {
             dataOutputStream.writeUTF(data);
             dataOutputStream.flush();
             resault = true;
-            logger.info("massage has been sent");
+            logger.info("massage has been sent\n" + data);
         } catch (IOException e) {
             logger.fatal("Can not send massage", e);
             throw e;
@@ -116,7 +119,7 @@ public class Connection {
                 error = Parser.parseUserData(json).getError();
             else
                 TOKEN = Parser.parseUserData(json).getToken();
-
+            checkStatus = true;
         } catch (IOException e) {
             logger.fatal("can not receive massage!", e);
             throw e;
@@ -133,6 +136,7 @@ public class Connection {
         try {
             data = dataInputStream.readUTF();
             ChooseHeroController.setHeroes(Parser.parseListHeroesData(new Api().toJson(data)));
+            checkStatus = true;
         } catch (IOException e) {
             e.printStackTrace();
             return false;
@@ -162,7 +166,7 @@ public class Connection {
         try {
             data = dataInputStream.readUTF();
             ReceiveDataRunnable.setTeamName(Parser.getAction(new Api().toJson(data)));
-
+            statusConnection = true;
         } catch (IOException e) {
             e.printStackTrace();
             return false;
