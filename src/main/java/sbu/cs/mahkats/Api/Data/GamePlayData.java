@@ -3,6 +3,8 @@ package sbu.cs.mahkats.Api.Data;
 import com.google.gson.JsonObject;
 import org.javatuples.Pair;
 import sbu.cs.mahkats.Api.Api;
+import sbu.cs.mahkats.Configuration.Config;
+import sbu.cs.mahkats.Configuration.InterfaceConfig;
 
 public class GamePlayData implements Data{
     protected final Long token;
@@ -14,14 +16,14 @@ public class GamePlayData implements Data{
     protected double range = 0;
     protected double experience;
     protected Boolean isAttacking = false;
-    protected int code_defender;
+    protected int code_defender = 0;
     protected boolean isDie = false;
     protected int code = 0;
     protected String error = "";
     protected int Location_x = 0;
     protected int Location_y = 0;
-    protected int max_Location_y;
-    protected String teamName;
+    protected int max_Location_y = 0;
+    protected String teamName = "";
 
     public GamePlayData(Long token, double hp, double hp_regeneration, double minimum_damage, double maximum_damage, double armor, double range, double experience, Boolean isAttacking, int code_defender, boolean isDie, int code, String teamName, int Location_x, int Location_y) {
         this.token = token;

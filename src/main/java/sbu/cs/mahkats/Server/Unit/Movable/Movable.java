@@ -8,9 +8,9 @@ import sbu.cs.mahkats.Server.Unit.Unit;
 
 public abstract class Movable extends Unit {
     protected int level = 1;
-    protected int mana = 0;
-    protected int max_mana;
-    protected int mana_regeneration;
+    protected double mana = 0;
+    protected double max_mana = 0;
+    protected double mana_regeneration = 0;
 
     protected int bottom_max_y;
     protected int bottom_min_x;
@@ -132,10 +132,10 @@ public abstract class Movable extends Unit {
         }
     }
 
-    public int getMana() {
+    public double getMana() {
         return mana;
     }
-    public int getMana_regeneration() {
+    public double getMana_regeneration() {
         return mana_regeneration;
     }
     public int getLevel() {

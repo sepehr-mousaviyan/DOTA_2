@@ -25,6 +25,10 @@ public class ReceiveDataRunnable implements Runnable{
         ReceiveDataRunnable.teamName = teamName;
     }
 
+    public static String getTeamName() {
+        return teamName;
+    }
+
     public ReceiveDataRunnable(DataInputStream dataInputStream) {
         this.dataInputStream = dataInputStream;
     }
@@ -61,8 +65,10 @@ public class ReceiveDataRunnable implements Runnable{
                     break;
                 case "GREEN" :
                     mapController.setFinished("Green");
-                    //TODO
-                    ///////////////-
+                    break;
+                case "RED" :
+                    mapController.setFinished("RED");
+                    break;
 
             }
         }

@@ -120,12 +120,8 @@ public class MainController implements Initializable {
             invalidRespond.setText("YOUR LENGTH OF FIELDS ARE TOO LONG!");
         }
 
-        else if(
-                Connection.checkUserSignUp(userNameInput.getText(),passInput.getText(),emailInput.getText())
-        ){
-            if(
-                    Connection.getCheckStatus()
-            ){
+        else if(Connection.checkUserSignUp(userNameInput.getText(),passInput.getText(),emailInput.getText())){
+            if(Connection.getCheckStatus()){
                 Connection.runReceiver();
                 try {
                     Parent logParent = null;
@@ -208,7 +204,7 @@ public class MainController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        if (!SplashController.isPlayed)
-            loadSplash();
+        if (!SplashController.isPlayed);
+            //loadSplash();
     }
 }

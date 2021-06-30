@@ -3,23 +3,15 @@ package sbu.cs.mahkats.Server;
 import com.google.gson.JsonObject;
 import org.apache.log4j.Logger;
 import org.javatuples.Pair;
-import sbu.cs.mahkats.Api.Data.GamePlayData;
-import sbu.cs.mahkats.Api.Data.HeroData;
 import sbu.cs.mahkats.Api.MassageMaker;
 import sbu.cs.mahkats.Api.Data.UserData;
-import sbu.cs.mahkats.Server.App.GamePlay;
 import sbu.cs.mahkats.Server.Connection.Client.Client;
-import sbu.cs.mahkats.Server.Unit.Movable.Hero.Hero;
-import sbu.cs.mahkats.Server.Unit.Unit;
-import sbu.cs.mahkats.Server.Unit.unitList;
 
-import java.util.ArrayList;
-
-public class Player {
+public class User {
     private long TOKEN;
     private PlayerData playerData;
 
-    private final static Logger LOGGER = Logger.getLogger(Player.class.getName());
+    private final static Logger LOGGER = Logger.getLogger(User.class.getName());
 
     /**
      * parse and check response of sql and if response is Ok add player and
@@ -68,7 +60,7 @@ public class Player {
             MassageMaker massageMaker = new MassageMaker();
             JsonObject json = massageMaker.massage("OK", "res_signin", userData);
             this.playerData = playerData;
-            LOGGER.info(res.getValue0() + " signed in. " + "acces TOKEN: " + TOKEN);
+            LOGGER.info(res.getValue0() + " signed in. " + "acces TOKEN: " + res.getValue1());
             return json.toString();
         } else if (res.getValue0().equals(Boolean.FALSE)) {
             UserData userData = new UserData((String) res.getValue1());

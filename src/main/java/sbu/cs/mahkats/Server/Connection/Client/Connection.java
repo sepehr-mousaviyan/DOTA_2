@@ -1,10 +1,9 @@
 package sbu.cs.mahkats.Server.Connection.Client;
 
 import org.apache.log4j.Logger;
-import sbu.cs.mahkats.Api.Api;
 import sbu.cs.mahkats.Api.MassageMaker;
 import sbu.cs.mahkats.Configuration.Config;
-import sbu.cs.mahkats.Server.App.GamePlay;
+
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -44,7 +43,7 @@ public class Connection implements Runnable {
             }
             Thread thread = new Thread(this);
             thread.start();
-            LOGGER.info("player "+ countPlayer+1 +" is connected!");
+            LOGGER.info("player "+ (countPlayer+1) +" is connected!");
             countPlayer++;
         }
     }
@@ -67,7 +66,7 @@ public class Connection implements Runnable {
     public void run() {
         Client client = new Client(Thread.currentThread().getId(), socket);
         clients.add(client);
-        client.handler();
+        client.handlerLoginSignup();
         client.sendListHero();
         heroName.add(client.getSelectHero());
         if(setRedTrue()){

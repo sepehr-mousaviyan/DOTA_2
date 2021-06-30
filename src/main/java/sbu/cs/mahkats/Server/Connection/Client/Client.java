@@ -19,7 +19,7 @@ import sbu.cs.mahkats.Server.Unit.Building.Barrack.Barrack;
 import sbu.cs.mahkats.Server.Unit.Movable.Creep.Creep;
 import sbu.cs.mahkats.Server.Unit.Movable.Hero.Hero;
 import sbu.cs.mahkats.Server.PlayerData;
-import sbu.cs.mahkats.Server.Player;
+import sbu.cs.mahkats.Server.User;
 
 import java.io.*;
 import java.net.Socket;
@@ -33,7 +33,7 @@ public class Client {
     private DataInputStream dataInputStream;
     private DataOutputStream dataOutputStream;
     private DataBase dataBase;
-    private Player player;
+    private User user;
     public long TOKEN;
     public String teamName;
 
@@ -55,7 +55,7 @@ public class Client {
         } catch (IOException throwables) {
             LOGGER.fatal("server can not connect to IO client!",throwables);
         }
-        player = new Player();
+        user = new User();
     }
     
     public void sendData() {
@@ -91,8 +91,9 @@ public class Client {
     public void sendAncientData(Ancient ancient, String action, String status){
         BuildingData ancientData = new BuildingData(TOKEN , ancient.getHp(), ancient.getHp_regeneration() ,
                 ancient.getMinimum_damage() , ancient.getMaximum_damage() , ancient.getArmor() , ancient.getRange() ,
-                ancient.getExperience() , ancient.getStatusAttacker() , ancient.getDefender().getCode() ,
-                ancient.getStatusDie() , ancient.getCode() , "Ancient", ancient.getTeamName() );
+                ancient.getExperience() , ancient.getStatusAttacker() , 0 ,
+                ancient.getStatusDie() , ancient.getCode() , "Ancient", ancient.getTeamName(), ancient.getLocation_x(),
+                ancient.getLocation_y());
         send(new MassageMaker().massage(status , action , ancientData).toString());
     }
 
@@ -105,31 +106,45 @@ public class Client {
     }
 
     private HeroData makeHeroData(Hero hero) {
-        return new HeroData(TOKEN , hero.getHp(), hero.getHp_regeneration() ,
-            hero.getMinimum_damage() , hero.getMaximum_damage() , hero.getArmor() , hero.getRange() ,
-            hero.getExperience() , hero.getStatusAttacker() , hero.getDefender().getCode() ,
-            hero.getStatusDie() , hero.getCode(), hero.getLevel() , hero.getMana() ,
-            hero.getMana_regeneration() , hero.getAbility1().toString() , hero.getAbility2().toString() ,
-            hero.getAbility3().toString() , hero.getTeamName() );
+        int defender = 0;
+        if(hero.getDefender() != null) {
+            defender = hero.getDefender().getCode();
+        }
+        return new HeroData(TOKEN, hero.getHp(), hero.getHp_regeneration(),
+                hero.getMinimum_damage(), hero.getMaximum_damage(), hero.getArmor(), hero.getRange(),
+                hero.getExperience(), hero.getStatusAttacker(), defender,
+                hero.getStatusDie(), hero.getCode(), hero.getLevel(), hero.getMana(),
+                hero.getMana_regeneration(), hero.getAbility1().toString(), hero.getAbility2().toString(),
+                hero.getAbility3().toString(), hero.getTeamName(), hero.getLocation_x(), hero.getLocation_y());
     }
 
     public void sendCreepData(ArrayList <Creep> creeps, String action, String status){
         for(Creep creep : creeps){
+            int defender = 0;
+            if(creep.getDefender() != null) {
+                defender = creep.getDefender().getCode();
+            }
             CreepData creepData = new CreepData(TOKEN , creep.getHp(), creep.getHp_regeneration() ,
                 creep.getMinimum_damage() , creep.getMaximum_damage() , creep.getArmor() , creep.getRange() ,
-                creep.getExperience() , creep.getStatusAttacker() , creep.getDefender().getCode() ,
+                creep.getExperience() , creep.getStatusAttacker() , defender ,
                 creep.getStatusDie() , creep.getCode(), creep.getLevel() , creep.getMana() ,
-                creep.getMana_regeneration(), creep.getType(), creep.getTeamName());
+                creep.getMana_regeneration(), creep.getType(), creep.getTeamName(), creep.getLocation_x(),
+                    creep.getLocation_y());
             send(new MassageMaker().massage(status , action , creepData).toString());      
         }
     }
 
     public void sendTowerData(ArrayList <Tower> towers, String action, String status){
         for(Tower tower : towers){
+            int defender = 0;
+            if(tower.getDefender() != null) {
+                defender = tower.getDefender().getCode();
+            }
             BuildingData towerData = new BuildingData(TOKEN , tower.getHp(), tower.getHp_regeneration() ,
                 tower.getMinimum_damage() , tower.getMaximum_damage() , tower.getArmor() , tower.getRange() ,
-                tower.getExperience() , tower.getStatusAttacker() , tower.getDefender().getCode() ,
-                tower.getStatusDie() , tower.getCode() , tower.getTeamName(), "Tower");
+                tower.getExperience() , tower.getStatusAttacker() , defender ,
+                tower.getStatusDie() , tower.getCode() , tower.getTeamName(), "Tower",
+                    tower.getLocation_x(), tower.getLocation_y());
             send(new MassageMaker().massage(status , action , towerData).toString());    
         }
     }
@@ -138,8 +153,9 @@ public class Client {
         for(Barrack barrack : greenBarracks){
             BuildingData barrackData = new BuildingData(TOKEN , barrack.getHp(), barrack.getHp_regeneration() ,
                 barrack.getMinimum_damage() , barrack.getMaximum_damage() , barrack.getArmor() , barrack.getRange() ,
-                barrack.getExperience() , barrack.getStatusAttacker() , barrack.getDefender().getCode() ,
-                barrack.getStatusDie() , barrack.getCode() , barrack.getTeamName() , "Barrack");
+                barrack.getExperience() , barrack.getStatusAttacker() , 0 ,
+                barrack.getStatusDie() , barrack.getCode() , barrack.getTeamName() , "Barrack",
+                    barrack.getLocation_x(), barrack.getLocation_y());
             send(new MassageMaker().massage(status , action , barrackData).toString());    
         }
     }
@@ -161,7 +177,7 @@ public class Client {
      * it will be send a massage that send again
      * @return string of json massage
      */
-    public String receive() {
+    public String receiveUserData() {
         String data = null;
         try {
             data = dataInputStream.readUTF();
@@ -200,9 +216,9 @@ public class Client {
         }
     }
 
-    public void handler() {
+    public void handlerLoginSignup() {
         while(true) {
-            String data = receive();
+            String data = receiveUserData();
             Api api = new Api();
             JsonObject json = api.toJson(data);
             Pair res = null;
@@ -215,14 +231,14 @@ public class Client {
                     password = Parser.parseUserData(json).getPassword();
                     String email = Parser.parseUserData(json).getEmail();
                     res = dataBase.signupRequest(username, password, email);
-                    send(player.ResSignup(res, new PlayerData(username, password), this));
+                    send(user.ResSignup(res, new PlayerData(username, password), this));
                     return;
 
                 case "signin":
                     username = Parser.parseUserData(json).getUsername();
                     password = Parser.parseUserData(json).getPassword();
                     res = dataBase.loginRequest(username, password);
-                    send(player.ResSignin(res, new PlayerData(username, password), this));
+                    send(user.ResSignin(res, new PlayerData(username, password), this));
                     return;
                     
         

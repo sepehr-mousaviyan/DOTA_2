@@ -9,6 +9,7 @@ import sbu.cs.mahkats.Server.Unit.Movable.Movable;
 import sbu.cs.mahkats.Server.Unit.Unit;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class Hero extends Movable {
     protected String hero_name;
@@ -40,6 +41,7 @@ public class Hero extends Movable {
         isLevelUp = false;
         isRespawnTime = false;
         remainRespawnTime = 10;
+        abilties = new ArrayList<>();
 
         this.hero_name = hero_name;
         ability1 = new Ability(hero_name, 1);
@@ -48,7 +50,6 @@ public class Hero extends Movable {
         abilties.add(ability2);
         ability3 = new Ability(hero_name, 3);
         abilties.add(ability3);
-
         
 
         ability1.setUnlock();
@@ -56,15 +57,15 @@ public class Hero extends Movable {
 
         Config heroConfig = HeroConfig.getInstance(hero_name);
 
-        LEVEL_NUMBERS = heroConfig.getIntValue("hero.level_numbers");
-        hp = max_hp = heroConfig.getIntValue("hero." + hero_name + ".hp");
-        mana = max_mana = heroConfig.getIntValue("hero." + hero_name + ".mana");
-        minimum_damage = heroConfig.getIntValue("hero." + hero_name + ".minimum.damage");
-        maximum_damage = heroConfig.getIntValue("hero." + hero_name + ".maximum.damage");
-        armor = max_armor = heroConfig.getIntValue("hero." + hero_name + ".armor");
-        range = heroConfig.getIntValue("hero." + hero_name + ".range");
-        hp_regeneration = heroConfig.getIntValue("hero." + hero_name + ".hp_regeneration");
-        mana_regeneration = heroConfig.getIntValue("hero." + hero_name + ".mana_regeneration");
+        hero_name = hero_name.toLowerCase();
+        hp = max_hp = heroConfig.getDoubleValue("hero." + hero_name + ".hp");
+        mana = max_mana = heroConfig.getDoubleValue("hero." + hero_name + ".mana");
+        minimum_damage = heroConfig.getDoubleValue("hero." + hero_name + ".minimum.damage");
+        maximum_damage = heroConfig.getDoubleValue("hero." + hero_name + ".maximum.damage");
+        armor = max_armor = heroConfig.getDoubleValue("hero." + hero_name + ".armor");
+        range = heroConfig.getDoubleValue("hero." + hero_name + ".range");
+        hp_regeneration = heroConfig.getDoubleValue("hero." + hero_name + ".hp_regeneration");
+        mana_regeneration = heroConfig.getDoubleValue("hero." + hero_name + ".mana_regeneration");
 
         levelUp_benefit_hp = heroConfig.getDoubleValue("hero." + hero_name + ".levelUp_benefit.hp");
         levelUp_benefit_mana = heroConfig.getDoubleValue("hero." + hero_name + ".levelUp_benefit.mana");
@@ -75,7 +76,8 @@ public class Hero extends Movable {
 
         Config levelUpConfig = HeroConfig.getInstance("Level_Xp");
 
-        LEVEL_XP = new int[LEVEL_NUMBERS];
+        //LEVEL_NUMBERS = heroConfig.getIntValue("hero.level.numbers");
+        LEVEL_XP = new int[12];
         for (int i = 0; i < LEVEL_NUMBERS; i++ ) {
             LEVEL_XP[i] = levelUpConfig.getIntValue("hero.xp_needed.level" + i);
         }

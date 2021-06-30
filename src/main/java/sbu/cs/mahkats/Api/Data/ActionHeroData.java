@@ -13,7 +13,7 @@ public class ActionHeroData implements Data{
     private int defenderCode = 0;
     private int location_x = 0;
     private int location_y = 0;
-    private char move = null;
+    private char move = ' ';
     private int[] defendersCode = null;
     /**
      * possible of choice:
@@ -26,8 +26,7 @@ public class ActionHeroData implements Data{
      */
     private int choice;
 
-    public ActionHeroData(long token, String heroName, int heroCode, String abilityName, int defenderCode, int choice) {
-    public ActionHeroData(long token, String heroName, int heroCode, int abilityName, int defenderCode, int choice, String teamName) {
+    public ActionHeroData(long token, String heroName, int heroCode, String abilityName, int defenderCode, int choice, String teamName) {
         this.token = token;
         this.heroName = heroName;
         this.heroCode = heroCode;
@@ -99,7 +98,7 @@ public class ActionHeroData implements Data{
 
     @Override
     public JsonObject makeJson() {
-        if (!move.equals(null){
+        if (move == ' '){
             if(defendersCode == null) {
                 return new Api().toJson(new Pair<>("token", token),
                         new Pair<>("heroName", heroName),

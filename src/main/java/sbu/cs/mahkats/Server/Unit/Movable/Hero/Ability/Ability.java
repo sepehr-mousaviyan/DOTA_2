@@ -7,6 +7,8 @@ import sbu.cs.mahkats.Server.Unit.Movable.Hero.Hero;
 import sbu.cs.mahkats.Server.Unit.Unit;
 
 import java.util.ArrayList;
+import java.util.Locale;
+
 public class Ability {
     private final String NAME;
     private final int UNLOCK_LEVEL;
@@ -33,7 +35,7 @@ public class Ability {
         isAvailable = true;
 
         Config heroConfig = HeroConfig.getInstance(hero_name);
-
+        hero_name = hero_name.toLowerCase();
         NAME = heroConfig.getStringValue("hero." + hero_name + ".ability" + ability_number +".name");
         UNLOCK_LEVEL = heroConfig.getIntValue("hero." + hero_name + ".ability" + ability_number +".unlockLevel");
         GUNSHOT = heroConfig.getIntValue("hero." + hero_name + ".ability" + ability_number +".gunshot");
@@ -268,4 +270,8 @@ public class Ability {
         return DURATION[stage];
     }
 
+    @Override
+    public String toString() {
+        return NAME;
+    }
 }

@@ -38,6 +38,13 @@ public class Parser{
         return gson.fromJson(new Api().toJson(content), CreepData.class);
     }
 
+    public static ActionHeroData parseActionHeroData(JsonObject json) {
+        Gson gson = new Gson();
+        JsonData actionHeroData = gson.fromJson(json , JsonData.class);
+        String content = actionHeroData.getContent().toString();
+        return gson.fromJson(new Api().toJson(content), ActionHeroData.class);
+    }
+
     public static BuildingData parseBuildingData(JsonObject json) {
         Gson gson = new Gson();
         JsonData buildingData = gson.fromJson(json , JsonData.class);
@@ -62,12 +69,5 @@ public class Parser{
         JsonData buildingData = gson.fromJson(json , JsonData.class);
         String content = buildingData.getContent().toString();
         return gson.fromJson(new Api().toJson(content), AbilityData.class);
-    }
-
-    public static ActionHeroData parseActionHeroData(JsonObject json) {
-        Gson gson = new Gson();
-        JsonData actionHeroData = gson.fromJson(json , JsonData.class);
-        String content = actionHeroData.getContent().toString();
-        return gson.fromJson(new Api().toJson(content), ActionHeroData.class);
     }
 }
