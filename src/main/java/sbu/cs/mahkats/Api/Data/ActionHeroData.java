@@ -8,7 +8,7 @@ public class ActionHeroData implements Data{
     private final long token;
     private String heroName = "";
     private int heroCode = 0;
-    private int abilityName = 0;
+    private String abilityName;
     private int defenderCode = 0;
     private int location_x = 0;
     private int location_y = 0;
@@ -24,7 +24,7 @@ public class ActionHeroData implements Data{
      */
     private int choice;
 
-    public ActionHeroData(long token, String heroName, int heroCode, int abilityName, int defenderCode, int choice) {
+    public ActionHeroData(long token, String heroName, int heroCode, String abilityName, int defenderCode, int choice) {
         this.token = token;
         this.heroName = heroName;
         this.heroCode = heroCode;
@@ -33,14 +33,14 @@ public class ActionHeroData implements Data{
         this.choice = choice;
     }
 
-    public ActionHeroData(long token, String heroName, int heroCode, int abilityName, int[] defendersCode, int choice) {
-        this.token = token;
-        this.heroName = heroName;
-        this.heroCode = heroCode;
-        this.abilityName = abilityName;
-        this.defendersCode = defendersCode;
-        this.choice = choice;
-    }
+//    public ActionHeroData(long token, String heroName, int heroCode, int abilityName, int[] defendersCode, int choice) {
+//        this.token = token;
+//        this.heroName = heroName;
+//        this.heroCode = heroCode;
+//        this.abilityName = abilityName;
+//        this.defendersCode = defendersCode;
+//        this.choice = choice;
+//    }
 
     public ActionHeroData(long token, int heroCode , int location_x, int location_y, int choice) {
         this.token = token;
@@ -62,7 +62,7 @@ public class ActionHeroData implements Data{
         return heroCode;
     }
 
-    public int getAbilityName() {
+    public String getAbilityName() {
         return abilityName;
     }
 
@@ -109,4 +109,5 @@ public class ActionHeroData implements Data{
                 new Pair<>("location_x", location_x),
                 new Pair<>("location_y", location_y));
     }
+
 }

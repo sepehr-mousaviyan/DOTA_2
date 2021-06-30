@@ -2,10 +2,12 @@ package sbu.cs.mahkats.Client.UI.Controler;
 
 import com.google.gson.JsonObject;
 import sbu.cs.mahkats.Api.Api;
+import sbu.cs.mahkats.Api.Data.AbilityData;
 import sbu.cs.mahkats.Api.Data.BuildingData;
 import sbu.cs.mahkats.Api.Data.CreepData;
 import sbu.cs.mahkats.Api.Data.HeroData;
 import sbu.cs.mahkats.Api.Parser;
+import sbu.cs.mahkats.Client.Connection.Connection;
 
 import java.io.DataInputStream;
 import java.io.IOException;
@@ -15,7 +17,13 @@ public class ReceiveDataRunnable implements Runnable{
     private final ArrayList<BuildingData> buildings = new ArrayList<>();
     private final ArrayList<HeroData> heroes = new ArrayList<>();
     private final ArrayList<CreepData> creeps = new ArrayList<>();
+    private final ArrayList<AbilityData> abilities = new ArrayList<>();
     private final DataInputStream dataInputStream;
+    private static String teamName;
+
+    public static void setTeamName(String teamName) {
+        ReceiveDataRunnable.teamName = teamName;
+    }
 
     public ReceiveDataRunnable(DataInputStream dataInputStream) {
         this.dataInputStream = dataInputStream;
@@ -23,7 +31,7 @@ public class ReceiveDataRunnable implements Runnable{
 
     @Override
     public void run() {
-        MapController mapController = new MapController();
+        MapController mapController = new MapController(teamName);
 
         while(true){
             String message = "";
@@ -44,9 +52,18 @@ public class ReceiveDataRunnable implements Runnable{
                 case "Creep":
                     updateCreepData(Parser.parseCreepData(josnMessage));
                     break;
-                case "End":
-                    mapController.checkUnits(heroes,creeps,buildings);
+                case "Ability" :
+                    updateAbilityData(Parser.parseAbilityData(josnMessage));
                     break;
+                case "End":
+                    Connection.sendHeroAction(mapController.getMove());
+                    mapController.checkUnits(heroes, abilities, creeps, buildings);
+                    break;
+                case "GREEN" :
+                    mapController.setFinished("Green");
+                    //TODO
+                    ///////////////-
+
             }
         }
     }
@@ -76,6 +93,14 @@ public class ReceiveDataRunnable implements Runnable{
             }
         }
         creeps.add(creepData);
+    }
+    public void updateAbilityData(AbilityData abilityData){
+        for(int i = 0 ; i < abilities.size() ; i++){
+            if(abilities.get(i).getName().equals(abilityData.getName())){
+                abilities.remove(abilities.get(i));
+            }
+        }
+        abilities.add(abilityData);
     }
 
 }

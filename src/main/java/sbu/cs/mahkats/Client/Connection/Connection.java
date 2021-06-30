@@ -3,9 +3,15 @@ package sbu.cs.mahkats.Client.Connection;
 import com.google.gson.JsonObject;
 import org.apache.log4j.Logger;
 import sbu.cs.mahkats.Api.Api;
+import sbu.cs.mahkats.Api.Data.AbilityData;
+import sbu.cs.mahkats.Api.Data.HeroData;
 import sbu.cs.mahkats.Api.MassageMaker;
 import sbu.cs.mahkats.Api.Parser;
+import sbu.cs.mahkats.Api.Data.ActionHeroData;
 import sbu.cs.mahkats.Api.Data.UserData;
+//import sbu.cs.mahkats.Client.UI.Controler.ReceiveDataRunnable;
+import sbu.cs.mahkats.Client.UI.Controler.ChooseHeroController;
+import sbu.cs.mahkats.Client.UI.Controler.ReceiveDataRunnable;
 import sbu.cs.mahkats.Configuration.Config;
 
 import java.io.*;
@@ -120,6 +126,72 @@ public class Connection {
 
     public static void runReceiver(){
         new Thread(new ReceiveDataRunnable(dataInputStream)).start();
+    }
+
+    public static boolean getHeroesData(){
+        String data;
+        try {
+            data = dataInputStream.readUTF();
+            ChooseHeroController.setHeroes(ChooseHeroController.setHeroes(Parser.getHeroesListData(new Api().toJson(data))));
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
+    public static void sendSelectedHero(String hero_name){
+        ActionHeroData actionHeroData = new ActionHeroData(TOKEN, hero_name , 0, "", 0, 5);
+        try {
+            send(actionHeroData.makeJson().toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void sendHeroAction(char ch){
+        //TODO
+
+    }
+
+    public static boolean getTeamName(){
+        String data;
+        try {
+            data = dataInputStream.readUTF();
+            ReceiveDataRunnable.setTeamName(Parser.getAction(new Api().toJson(data)));
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
+    public static void sendNewAbility(AbilityData abilityData, HeroData heroData){
+        try {
+            ActionHeroData actionHeroData = new ActionHeroData(TOKEN, heroData.getHeroType(), heroData.getCode(),abilityData.getName(),0,2);
+            send(actionHeroData.makeJson().toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void sendUpgradeAbility(AbilityData abilityData, HeroData heroData){
+        try {
+            ActionHeroData actionHeroData = new ActionHeroData(TOKEN, heroData.getHeroType(), heroData.getCode(),abilityData.getName(),0,3);
+            send(actionHeroData.makeJson().toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void sendUseAbility(AbilityData abilityData, HeroData heroData){
+        try {
+            ActionHeroData actionHeroData = new ActionHeroData(TOKEN, heroData.getHeroType(), heroData.getCode(),abilityData.getName(),0,6);
+            send(actionHeroData.makeJson().toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }

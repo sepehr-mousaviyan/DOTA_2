@@ -7,17 +7,33 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import javafx.stage.Stage;
+import sbu.cs.mahkats.Api.Data.AbilityData;
+import sbu.cs.mahkats.Api.Data.CreepData;
+import sbu.cs.mahkats.Api.Data.HeroData;
+import sbu.cs.mahkats.Client.Connection.Connection;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class ChooseHeroController implements Initializable {
+
+    private static ArrayList<HeroData> heroes;
+
+    private static String choosenHeroName;
+
+
+    public static void setHeroes(ArrayList<HeroData> hero) {
+        heroes = hero;
+    }
 
     @FXML
     private MediaView heroOne;
@@ -27,6 +43,20 @@ public class ChooseHeroController implements Initializable {
 
     MediaPlayer mediaPlayerOne;
     MediaPlayer mediaPlayerTwo;
+
+    @FXML
+    private Label rangerMaxDamage;
+
+    @FXML
+    private Label rangerMinDamage;
+
+    @FXML
+    private Label knightMaxDamage;
+
+    @FXML
+    private Label knightMinDamage;
+
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -41,24 +71,38 @@ public class ChooseHeroController implements Initializable {
 
         heroOne.setMediaPlayer(mediaPlayerOne);
         heroTwo.setMediaPlayer(mediaPlayerTwo);
+
+        for (HeroData hero : heroes){
+            if (hero.getHeroType().equals("Knight")){
+                knightMaxDamage.setText(Double. toString(hero.getMaximum_damage()));
+                knightMinDamage.setText(Double. toString(hero.getMinimum_damage()));
+            }
+            if (hero.getHeroType().equals("Ranged")){
+                rangerMaxDamage.setText(Double. toString(hero.getMaximum_damage()));
+                rangerMinDamage.setText(Double. toString(hero.getMinimum_damage()));
+            }
+            mediaPlayerOne.play();
+            mediaPlayerTwo.play();
+
+        }
     }
 
 
     @FXML
     void playHero1(MouseEvent event) {
-        mediaPlayerOne.play();
+        choosenHeroName = "Knight";
     }
 
     @FXML
     void playHero2(MouseEvent event) {
-        mediaPlayerTwo.play();
+        choosenHeroName = "Ranger";
     }
 
     @FXML
     void goToSecondWaitingScreen(MouseEvent event) {
         try {
 
-            //for now go to map
+            Connection.sendSelectedHero(choosenHeroName);
             Parent logParent = FXMLLoader.load(getClass().getResource("/LoadingScreenTwo.fxml"));
             Stage logStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
@@ -70,4 +114,5 @@ public class ChooseHeroController implements Initializable {
             e.printStackTrace();
         }
     }
+
 }

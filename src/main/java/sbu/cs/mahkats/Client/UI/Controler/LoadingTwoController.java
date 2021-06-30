@@ -9,6 +9,7 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import javafx.stage.Stage;
+import sbu.cs.mahkats.Client.Connection.Connection;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -17,15 +18,21 @@ public class LoadingTwoController implements Initializable {
     @FXML
     private MediaView loadingVideo;
 
+    boolean isReceived = false;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        Thread thread = new Thread(() ->{
+            isReceived = Connection.getTeamName();
+        });
+        thread.start();
         String videoOneAddress = "/video_2021-06-28_21-56-03.mp4";
         Media media = new Media(videoOneAddress);
         MediaPlayer mediaPlayer = new MediaPlayer(media);
         loadingVideo.setMediaPlayer(mediaPlayer);
         mediaPlayer.play();
 
-        if (true) {
+        if (isReceived) {
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Map.fxml"));
                 Parent root1 = fxmlLoader.load();
