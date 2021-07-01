@@ -85,14 +85,34 @@ public class MapController implements Initializable {
     @FXML
     private Label upgrade_new_ability3;
 
-    @FXML
-    private ImageView ability1;
 
     @FXML
-    private ImageView ability2;
+    private Label ability1_stage1;
 
     @FXML
-    private ImageView ability3;
+    private Label ability1_stage2;
+
+    @FXML
+    private Label ability1_stage3;
+
+
+    @FXML
+    private ImageView rAbility1;
+
+    @FXML
+    private ImageView rAbility2;
+
+    @FXML
+    private ImageView rAbility3;
+
+    @FXML
+    private ImageView dAbility1;
+
+    @FXML
+    private ImageView dAbility2;
+
+    @FXML
+    private ImageView dAbility3;
 
 
 
@@ -150,13 +170,7 @@ public class MapController implements Initializable {
                     else {
                         heroName.setText("Drow Ranger");
                         InputStream stream_hero = new FileInputStream("src/main/resources/Photos/rangerHero.png");
-                        InputStream stream_a1 = new FileInputStream("src/main/resources/Photos/Frost_Arrows_icon.png");
-                        InputStream stream_a2 = new FileInputStream("src/main/resources/Photos/Multishot_icon.png");
-                        InputStream stream_a3 = new FileInputStream("src/main/resources/Photos/Marksmanship_icon.png");
                         Image image_hero = new Image(stream_hero);
-                        Image image_a1 = new Image(stream_a1);
-                        Image image_a2 = new Image(stream_a2);
-                        Image image_a3 = new Image(stream_a3);
                         ImageView imageView_hero = new ImageView();
 
                         imageView_hero.setImage(image_hero);
@@ -167,10 +181,6 @@ public class MapController implements Initializable {
 
                         imageView_hero.setFitHeight(25);
                         imageView_hero.setFitWidth(25);
-
-                        ability1.setImage(image_a1);
-                        ability2.setImage(image_a2);
-                        ability3.setImage(image_a3);
 
                         mainAnchor.getChildren().add(imageView_hero);
                         imageView_hero.setPickOnBounds(true);
@@ -191,10 +201,10 @@ public class MapController implements Initializable {
                         if(ability.getName().equals(config.getStringValue("hero.ranger.ability1.name"))){
                             ability1_stage.setText(Integer.toString(ability.getStage()));
                             if (ability.isUnlock()){
-                                ability1.setOnMouseClicked(event -> Connection.sendUseAbility(ability, hero));
+                                rAbility1.setOnMouseClicked(event -> Connection.sendUseAbility(ability, hero));
                             }
                             else {
-                                ability1.setOpacity(0.3);
+                                rAbility1.setOpacity(0.3);
                             }
                             if(ability.isCanUnlock()) {
                                 if (ability.isUnlock()){
@@ -216,7 +226,7 @@ public class MapController implements Initializable {
                         if(ability.getName().equals(config.getStringValue("hero.ranger.ability2.name"))){
                             ability2_stage.setText(Integer.toString(ability.getStage()));
                             if (ability.isUnlock()){
-                                ability2.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                                rAbility2.setOnMouseClicked(new EventHandler<MouseEvent>() {
                                     @Override
                                     public void handle(MouseEvent event) {
                                         Connection.sendUseAbility(ability, hero);
@@ -224,7 +234,7 @@ public class MapController implements Initializable {
                                 });
                             }
                             else {
-                                ability2.setOpacity(0.3);
+                                rAbility2.setOpacity(0.3);
                             }
                             if(ability.isCanUnlock()) {
                                 if (ability.isUnlock()){
@@ -255,7 +265,7 @@ public class MapController implements Initializable {
                                 upgrade_new_ability3.setText("UNLOCK");
                             }
                             if (ability.isUnlock()){
-                                ability3.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                                rAbility3.setOnMouseClicked(new EventHandler<MouseEvent>() {
                                     @Override
                                     public void handle(MouseEvent event) {
                                         Connection.sendUseAbility(ability, hero);
@@ -263,7 +273,7 @@ public class MapController implements Initializable {
                                 });
                             }
                             else {
-                                ability3.setOpacity(0.3);
+                                rAbility3.setOpacity(0.3);
                             }
                             if(ability.isCanUnlock()) {
                                 upgrade_new_ability3.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -289,13 +299,7 @@ public class MapController implements Initializable {
                     else {
                         heroName.setText("Dragon Knight");
                         InputStream stream_hero = new FileInputStream("src/main/resources/Photos/knightHero.png");
-                        InputStream stream_a1 = new FileInputStream("src/main/resources/Photos/Breathe_Fire_icon.png");
-                        InputStream stream_a2 = new FileInputStream("src/main/resources/Photos/Dragon_Tail_icon.png");
-                        InputStream stream_a3 = new FileInputStream("src/main/resources/Photos/Elder_Dragon_Form_icon.png");
                         Image image_hero = new Image(stream_hero);
-                        Image image_a1 = new Image(stream_a1);
-                        Image image_a2 = new Image(stream_a2);
-                        Image image_a3 = new Image(stream_a3);
                         ImageView imageView_hero = new ImageView();
 
                         imageView_hero.setImage(image_hero);
@@ -303,10 +307,6 @@ public class MapController implements Initializable {
                         imageView_hero.setY(hero.getLocation_y());
                         imageView_hero.setFitHeight(25);
                         imageView_hero.setFitWidth(25);
-
-                        ability1.setImage(image_a1);
-                        ability2.setImage(image_a2);
-                        ability3.setImage(image_a3);
 
                         mainAnchor.getChildren().add(imageView_hero);
                         imageView_hero.setPickOnBounds(true);
@@ -328,7 +328,7 @@ public class MapController implements Initializable {
                         if(ability.getName().equals(config.getStringValue("hero.knight.ability1.name"))){
                             ability1_stage.setText(Integer.toString(ability.getStage()));
                             if (ability.isUnlock()){
-                                ability1.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                                dAbility1.setOnMouseClicked(new EventHandler<MouseEvent>() {
                                     @Override
                                     public void handle(MouseEvent event) {
                                         Connection.sendUseAbility(ability, hero);
@@ -336,7 +336,7 @@ public class MapController implements Initializable {
                                 });
                             }
                             else {
-                                ability1.setOpacity(0.3);
+                                dAbility1.setOpacity(0.3);
                             }
                             if(ability.isCanUnlock()) {
                                 if (ability.isUnlock()){
@@ -361,7 +361,7 @@ public class MapController implements Initializable {
                         if(ability.getName().equals(config.getStringValue("hero.knight.ability2.name"))){
                             ability2_stage.setText(Integer.toString(ability.getStage()));
                             if (ability.isUnlock()){
-                                ability2.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                                dAbility2.setOnMouseClicked(new EventHandler<MouseEvent>() {
                                     @Override
                                     public void handle(MouseEvent event) {
                                         Connection.sendUseAbility(ability, hero);
@@ -369,7 +369,7 @@ public class MapController implements Initializable {
                                 });
                             }
                             else {
-                                ability2.setOpacity(0.3);
+                                dAbility2.setOpacity(0.3);
                             }
                             if(ability.isCanUnlock()) {
                                 if (ability.isUnlock()){
@@ -400,7 +400,7 @@ public class MapController implements Initializable {
                                 upgrade_new_ability3.setText("UNLOCK");
                             }
                             if (ability.isUnlock()){
-                                ability3.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                                dAbility3.setOnMouseClicked(new EventHandler<MouseEvent>() {
                                     @Override
                                     public void handle(MouseEvent event) {
                                         Connection.sendUseAbility(ability, hero);
@@ -408,7 +408,7 @@ public class MapController implements Initializable {
                                 });
                             }
                             else {
-                                ability3.setOpacity(0.3);
+                                dAbility3.setOpacity(0.3);
                             }
                             if(ability.isCanUnlock()) {
                                 upgrade_new_ability3.setOnMouseClicked(new EventHandler<MouseEvent>() {
