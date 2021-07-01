@@ -63,25 +63,16 @@ public class MapController implements Initializable {
     private Label teamNameOnMap;
 
     @FXML
+    private Label heroName;
+
+    @FXML
     private Label showHP;
 
     @FXML
     private Label showMana;
 
     @FXML
-    private Label heroName;
-
-    @FXML
-    private ImageView ability1;
-
-    @FXML
-    private ImageView ability2;
-
-    @FXML
-    private ImageView ability3;
-
-    @FXML
-    private Label ability1_stage;
+    private Label ability_stage;
 
     @FXML
     private Label ability2_stage;
@@ -97,7 +88,6 @@ public class MapController implements Initializable {
 
     @FXML
     private Label upgrade_new_ability3;
-
 
     public static void animationAttackMethod(ImageView pic){
     /*RotateTransition rotate1 = new RotateTransition(Duration.millis(100),pic);
