@@ -24,7 +24,7 @@ public class User {
     public String ResSignup(Pair res, PlayerData playerData, Client client) {
         if (res.getValue0().equals(Boolean.TRUE)) {
             client.setTOKEN ((long) res.getValue1());
-            UserData userData = new UserData(TOKEN);
+            UserData userData = new UserData((long) res.getValue1());
             MassageMaker massageMaker = new MassageMaker();
             JsonObject json = massageMaker.massage("OK", "res_signup", userData);
             this.playerData = playerData;
@@ -56,7 +56,7 @@ public class User {
     public String ResSignin(Pair res, PlayerData playerData, Client client) {
         if (res.contains(Boolean.TRUE)) {
             client.setTOKEN ((long) res.getValue1());
-            UserData userData = new UserData(TOKEN);
+            UserData userData = new UserData((long) res.getValue1());
             MassageMaker massageMaker = new MassageMaker();
             JsonObject json = massageMaker.massage("OK", "res_signin", userData);
             this.playerData = playerData;

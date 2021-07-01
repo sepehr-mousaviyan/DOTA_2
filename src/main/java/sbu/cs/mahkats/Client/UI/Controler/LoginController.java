@@ -45,6 +45,8 @@ public class LoginController  {
 
         logStage.setScene(logScene);
         logStage.show();
+
+
     }
 
     @FXML
@@ -77,7 +79,9 @@ public class LoginController  {
 //                        Connection.runReceiver();
                         try {
                             Parent logParent = null;
-                            logParent = FXMLLoader.load(getClass().getResource("/ChooseHeroScreen.fxml"));
+                            System.out.println("before page");
+                            logParent = FXMLLoader.load(getClass().getResource("/GameMap.fxml"));
+                            System.out.println("after page");
                             logStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
                             Scene logScene = new Scene(logParent);

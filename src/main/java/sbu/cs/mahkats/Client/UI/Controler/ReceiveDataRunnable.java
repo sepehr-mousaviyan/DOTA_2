@@ -35,7 +35,7 @@ public class ReceiveDataRunnable implements Runnable{
 
     @Override
     public void run() {
-        MapController mapController = new MapController(teamName);
+        MapController mapController = new MapController();
 
         while(true){
             String message = "";

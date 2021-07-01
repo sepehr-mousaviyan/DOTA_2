@@ -86,8 +86,14 @@ public class Connection {
             MassageMaker massageMaker = new MassageMaker();
             JsonObject signinObj = massageMaker.massage("OK","signin",user);
             if(send(signinObj.toString())){
-                receive();
-                checkStatus = true;
+                String data = receive();
+                if(Parser.parseUserData(new Api().toJson(data)).getError() != null){
+                    checkStatus = true;
+                    return true;
+                }
+                else{
+                    return false;
+                }
 
             }
         } catch (Exception e){

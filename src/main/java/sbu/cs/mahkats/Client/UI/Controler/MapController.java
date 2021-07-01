@@ -52,10 +52,6 @@ public class MapController implements Initializable {
         return move;
     }
 
-    public MapController(String teamName) {
-        //teamNameOnMap.setText(teamName);
-    }
-
     @FXML
     private AnchorPane mainAnchor;
 
@@ -88,6 +84,8 @@ public class MapController implements Initializable {
 
     @FXML
     private Label upgrade_new_ability3;
+
+
 
     public static void animationAttackMethod(ImageView pic){
     /*RotateTransition rotate1 = new RotateTransition(Duration.millis(100),pic);

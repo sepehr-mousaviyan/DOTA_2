@@ -135,7 +135,7 @@ public class ChooseHeroController implements Initializable {
         try {
             Connection.sendSelectedHero(choosenHeroName);
             Parent logParent = null;
-            logParent = FXMLLoader.load(getClass().getResource("/GameMap.fxml"));
+            logParent = FXMLLoader.load(getClass().getResource("/Map.fxml"));
             Stage logStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
             Scene logScene = new Scene(logParent);
