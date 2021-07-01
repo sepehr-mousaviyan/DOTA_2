@@ -14,58 +14,16 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class ReceiveDataRunnable implements Runnable{
-    private final ArrayList<BuildingData> buildings = new ArrayList<>();
-    private final ArrayList<HeroData> heroes = new ArrayList<>();
-    private final ArrayList<CreepData> creeps = new ArrayList<>();
-    private final ArrayList<AbilityData> abilities = new ArrayList<>();
+    private static final ArrayList<BuildingData> buildings = new ArrayList<>();
+    private static final ArrayList<HeroData> heroes = new ArrayList<>();
+    private static final ArrayList<CreepData> creeps = new ArrayList<>();
+    private static final ArrayList<AbilityData> abilities = new ArrayList<>();
     private final DataInputStream dataInputStream;
-    private static String teamName;
-
-    public static void setTeamName(String teamName) {
-        ReceiveDataRunnable.teamName = teamName;
-    }
+    private static String teamName = " ";
+    private static boolean isReloaded = true;
 
     public ReceiveDataRunnable(DataInputStream dataInputStream) {
         this.dataInputStream = dataInputStream;
-    }
-
-    @Override
-    public void run() {
-        MapController mapController = new MapController(teamName);
-
-        while(true){
-            String message = "";
-            try {
-                message = dataInputStream.readUTF();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            JsonObject josnMessage = new Api().toJson(message);
-            String action = Parser.getAction(josnMessage);
-            switch (action){
-                case "Building":
-                    updateBuildingData(Parser.parseBuildingData(josnMessage));
-                    break;
-                case "Hero":
-                    updateHeroData(Parser.parseHeroData(josnMessage));
-                    break;
-                case "Creep":
-                    updateCreepData(Parser.parseCreepData(josnMessage));
-                    break;
-                case "Ability" :
-                    updateAbilityData(Parser.parseAbilityData(josnMessage));
-                    break;
-                case "End":
-                    Connection.sendHeroAction(mapController.getMove());
-                    mapController.checkUnits(heroes, abilities, creeps, buildings);
-                    break;
-                case "GREEN" :
-                    mapController.setFinished("Green");
-                    //TODO
-                    ///////////////-
-
-            }
-        }
     }
 
     public void updateBuildingData(BuildingData buildingData){
@@ -103,4 +61,84 @@ public class ReceiveDataRunnable implements Runnable{
         abilities.add(abilityData);
     }
 
+    public  static ArrayList<BuildingData> getBuildings() {
+        return buildings;
+    }
+
+    public static ArrayList<HeroData> getHeroes() {
+        return heroes;
+    }
+
+    public static ArrayList<CreepData> getCreeps() {
+        return creeps;
+    }
+
+    public static ArrayList<AbilityData> getAbilities() {
+        return abilities;
+    }
+
+    public static void setIsReloaded(boolean isReloaded) {
+        ReceiveDataRunnable.isReloaded = isReloaded;
+    }
+
+    public static boolean isIsReloaded() {
+        return isReloaded;
+    }
+
+    public static String getTeamName() {
+        return teamName;
+    }
+
+    public static void setTeamName(String teamName) {
+        ReceiveDataRunnable.teamName = teamName;
+    }
+
+    @Override
+    public void run() {
+        //MapController mapController = new MapController();
+
+        while(true){
+            String message = "";
+            try {
+                message = dataInputStream.readUTF();
+                System.out.println(message);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            JsonObject josnMessage = Api.toJson(message);
+            if(josnMessage == null){
+                continue;
+            }
+            String action = Parser.getAction(josnMessage);
+            switch (action){
+                case "building":
+                    updateBuildingData(Parser.parseBuildingData(josnMessage));
+                    break;
+                case "hero":
+                    updateHeroData(Parser.parseHeroData(josnMessage));
+                    break;
+                case "creep":
+                    updateCreepData(Parser.parseCreepData(josnMessage));
+                    break;
+                case "ability" :
+                    updateAbilityData(Parser.parseAbilityData(josnMessage));
+                    break;
+                case "End":
+                    Connection.sendHeroAction(MapController.getMove());
+                    //mapController.checkUnits(heroes, abilities, creeps, buildings);
+                    isReloaded = false;
+                    break;
+                case "GREEN" :
+                    //mapController.setFinished("Green");
+                    break;
+                case "RED" :
+                    //mapController.setFinished("RED");
+                    break;
+                case "StartTurn":
+                    Connection.senBufferMessage();
+                    break;
+
+            }
+        }
+    }
 }

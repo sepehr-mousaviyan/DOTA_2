@@ -14,10 +14,12 @@ import sbu.cs.mahkats.Configuration.Config;
 
 import java.io.IOException;
 
-public class LoginController  {
-    private static Config config = Config.getInstance();
+public class LoginController {
+    private static final Config config = Config.getInstance();
     private static final int USERNAME_LENGTH = config.getIntValue("input.limit.userName");
     private static final int PASSWORD_LENGTH = config.getIntValue("input.limit.passWord");
+
+    private static Stage logStage;
 
     @FXML
     private TextField userNameInput;
@@ -43,58 +45,58 @@ public class LoginController  {
 
         logStage.setScene(logScene);
         logStage.show();
+
+
     }
 
     @FXML
     void loginAction(ActionEvent event) {
-        if (passInput.getText().isEmpty() || userNameInput.getText().isEmpty()){
+        if (passInput.getText().isEmpty() || userNameInput.getText().isEmpty()) {
             invalidRespond.setText("");
             emptyRespond.setText("PLEASE ENTER ALL FIELDS!");
-        }
-        else if (!goodInput(userNameInput.getText(),passInput.getText())){
+        } else if (!goodInput(userNameInput.getText(), passInput.getText())) {
             emptyRespond.setText("");
             invalidRespond.setText("DON'T USE ! , / , ? , ) , ( , * , & , % IN YOUR INPUT!");
-        }
-        else if (!checkLength(userNameInput.getText(),passInput.getText())){
+        } else if (!checkLength(userNameInput.getText(), passInput.getText())) {
             emptyRespond.setText("");
             serverRespond.setText("");
             invalidRespond.setText("YOUR LENGTH OF FIELDS ARE TOO LONG!");
-        }
-
-        else {
+        } else {
             try {
-                if(Connection.checkUserSignIn(userNameInput.getText(),passInput.getText())){
-                    if(Connection.getCheckStatus()){
-                        Connection.runReceiver();
-                        Parent logParent = FXMLLoader.load(getClass().getResource("/LoadingScreenOne.fxml"));
-                        Stage logStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                if (Connection.checkUserSignIn(userNameInput.getText(), passInput.getText())) {
+                    if (Connection.getCheckStatus()) {
+                        try {
+                            Parent logParent = null;
+                            logParent = FXMLLoader.load(getClass().getResource("/ChooseHeroScreen.fxml"));
+                            logStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
-                        Scene logScene = new Scene(logParent);
+                            Scene logScene = new Scene(logParent);
 
-                        logStage.setScene(logScene);
-                        logStage.show();
-                    }
-
-
-                    else {
+                            logStage.setScene(logScene);
+                            logStage.show();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    } else {
+                        System.out.println("else");
                         emptyRespond.setText("");
                         invalidRespond.setText("");
                         try {
-                            if (Connection.receive() != null)
+                            if (Connection.receiveSignUpSignIn() != null)
                                 serverRespond.setText("SIGN UP FAILED! Try later");
                         } catch (IOException e) {
                             serverRespond.setText("CONNECTING TO SERVER FAILED");
                         }
                     }
                 }
-            } catch (IOException e) {
+            } catch (IOException | InterruptedException e) {
                 serverRespond.setText("SIGN UP FAILED! Try later");
                 e.printStackTrace();
             }
         }
     }
 
-    private boolean goodInput(String userName, String password){
+    private boolean goodInput(String userName, String password) {
         boolean userName_check, password_check;
         userName_check = checkString(userName);
         password_check = checkString(password);
@@ -102,14 +104,14 @@ public class LoginController  {
         return userName_check && password_check;
     }
 
-    private boolean checkLength(String userName , String passWord){
+    private boolean checkLength(String userName, String passWord) {
         return (userName.length() <= USERNAME_LENGTH) &&
                 (passWord.length() <= PASSWORD_LENGTH);
     }
 
-    private boolean checkString(String str){
+    private boolean checkString(String str) {
         boolean str_check = true;
-        char[] charArray = {'%','&','*','(',')','/',':',';','!','?','$'};
+        char[] charArray = {'%', '&', '*', '(', ')', '/', ':', ';', '!', '?', '$'};
 
         for (int i = 0; i < charArray.length; i++)
             if (str.indexOf(charArray[i]) > -1) {

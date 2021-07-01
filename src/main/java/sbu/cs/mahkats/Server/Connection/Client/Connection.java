@@ -1,10 +1,10 @@
 package sbu.cs.mahkats.Server.Connection.Client;
 
 import org.apache.log4j.Logger;
-import sbu.cs.mahkats.Api.Api;
-import sbu.cs.mahkats.Api.MassageMaker;
+import sbu.cs.mahkats.Api.MessageMaker;
 import sbu.cs.mahkats.Configuration.Config;
 import sbu.cs.mahkats.Server.App.GamePlay;
+
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -32,7 +32,7 @@ public class Connection implements Runnable {
         } catch (IOException e) {
             LOGGER.fatal("server can not start", e);
         }
-
+        ArrayList<Thread> threads = new ArrayList<>();
         int countPlayer = 0;
         while (countPlayer < NUMBER_PLAYER)
         {
@@ -44,9 +44,21 @@ public class Connection implements Runnable {
             }
             Thread thread = new Thread(this);
             thread.start();
-            LOGGER.info("player "+ countPlayer+1 +" is connected!");
+            threads.add(thread);
+            LOGGER.info("player "+ (countPlayer+1) +" is connected!");
             countPlayer++;
         }
+        try {
+            threads.get(0).join();
+            threads.get(1).join();
+            Thread.sleep(10);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        LOGGER.info("start send teamNames");
+        LOGGER.info("start send teamNames");
+        GamePlay gamePlay = GamePlay.getInstance("Knight", "Ranger");
+        gamePlay.play(clients);
     }
 
     public ArrayList<String> getHeroName(){ return heroName;}
@@ -67,14 +79,21 @@ public class Connection implements Runnable {
     public void run() {
         Client client = new Client(Thread.currentThread().getId(), socket);
         clients.add(client);
-        client.handler();
+        client.handlerLoginSignup();
         client.sendListHero();
+        heroName = new ArrayList<>();
         heroName.add(client.getSelectHero());
         if(setRedTrue()){
-            client.send(new MassageMaker().massage("Begin" , "Green").toString());
+            client.send(MessageMaker.message("GREEN", heroName.get(0)).toString());
+            client.setTeamName("GREEN");
         }
-        else{
-            client.send(new MassageMaker().massage("Begin" , "Red").toString());
+        else {
+            client.setTeamName("RED");
+            if (heroName.get(0).equals("Knight")) {
+                client.send(MessageMaker.message("RED", "Knight").toString());
+            } else {
+                client.send(MessageMaker.message("RED", "Ranger").toString());
+            }
         }
     }
 }

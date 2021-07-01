@@ -96,7 +96,7 @@ public class DataBase {
         long token;
         do{
             token = Math.abs(new Random().nextLong());
-        }while( token != last_token );
+        }while( token == last_token );
         last_token = token;
         return new Pair<>(Boolean.TRUE, token);
     }
@@ -132,7 +132,7 @@ public class DataBase {
                     long token;
                     do{
                         token = Math.abs(new Random().nextLong());
-                    }while( token != last_token );
+                    }while( token == last_token );
                     result = new Pair<>(Boolean.TRUE, token);
                     last_token = token;
                 }

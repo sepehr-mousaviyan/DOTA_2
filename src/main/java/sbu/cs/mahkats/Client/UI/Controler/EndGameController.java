@@ -3,7 +3,6 @@ package sbu.cs.mahkats.Client.UI.Controler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
-import javafx.scene.input.MouseEvent;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -14,10 +13,10 @@ public class EndGameController implements Initializable {
     private Label winnerTeam;
 
 
-    @FXML
+    /*@FXML
     void exitGame(MouseEvent event) {
         MapController.closeStage();
-    }
+    }*/
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {

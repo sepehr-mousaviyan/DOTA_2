@@ -35,7 +35,9 @@ public class MapController implements Initializable {
 
     Config config;
 
-    private char move;
+    public String recievedTeamName = "Error";
+
+    private static char move;
 
     private static String winnerTeamName;
 
@@ -47,7 +49,7 @@ public class MapController implements Initializable {
         return winnerTeamName;
     }
 
-    public char getMove() {
+    public static char getMove() {
         return move;
     }
 
@@ -57,27 +59,14 @@ public class MapController implements Initializable {
     @FXML
     private Label teamNameOnMap;
 
-    public MapController(String teamName) {
-        teamNameOnMap.setText(teamName);
-    }
+    @FXML
+    private Label heroName;
 
     @FXML
     private Label showHP;
 
     @FXML
     private Label showMana;
-
-    @FXML
-    private Label heroName;
-
-    @FXML
-    private ImageView ability1;
-
-    @FXML
-    private ImageView ability2;
-
-    @FXML
-    private ImageView ability3;
 
     @FXML
     private Label ability1_stage;
@@ -97,9 +86,20 @@ public class MapController implements Initializable {
     @FXML
     private Label upgrade_new_ability3;
 
+    @FXML
+    private ImageView ability1;
+
+    @FXML
+    private ImageView ability2;
+
+    @FXML
+    private ImageView ability3;
+
+
+
 
     public static void animationAttackMethod(ImageView pic){
-        RotateTransition rotate1 = new RotateTransition(Duration.millis(100),pic);
+        RotateTransition rotate1 = new RotateTransition(Duration.millis(100), pic);
         rotate1.setFromAngle(-10);
         rotate1.setToAngle(10);
         rotate1.play();
@@ -125,20 +125,35 @@ public class MapController implements Initializable {
         });
     }
 
-
-   public void checkUnits(ArrayList<HeroData> heroes, ArrayList<AbilityData> abilities, ArrayList<CreepData> creeps, ArrayList<BuildingData> buildings) {
+    @FXML
+    public void checkUnits(ArrayList<HeroData> heroes, ArrayList<AbilityData> abilities, ArrayList<CreepData> creeps, ArrayList<BuildingData> buildings) {
         try {
+            System.out.println("CheckList *****************");
+           /*heroName = new Label();
+           ability1 = new ImageView();
+           ability2 = new ImageView();
+           ability3 = new ImageView();
+           mainAnchor = new AnchorPane();
+           teamNameOnMap = new Label();
+           showHP = new Label();
+           showMana=new Label();
+           ability1_stage = new Label();
+           ability2_stage = new Label();
+           ability3_stage = new Label();
+           upgrade_new_ability1 = new Label();
+           upgrade_new_ability2 = new Label();
+           upgrade_new_ability3 = new Label();*/
             for (HeroData hero : heroes) {
-                if (hero.getHeroType().equals("Ranged")){
+                if (hero.getHeroType().equals("Ranger")){
                     if (hero.isDie()) {
                         heroes.remove(hero);
                     }
                     else {
                         heroName.setText("Drow Ranger");
-                        InputStream stream_hero = new FileInputStream("/rangerHero.png");
-                        InputStream stream_a1 = new FileInputStream("/Frost_Arrows_icon.png");
-                        InputStream stream_a2 = new FileInputStream("/Multishot_icon.png");
-                        InputStream stream_a3 = new FileInputStream("/Marksmanship_icon.png");
+                        InputStream stream_hero = new FileInputStream("src/main/resources/Photos/rangerHero.png");
+                        InputStream stream_a1 = new FileInputStream("src/main/resources/Photos/Frost_Arrows_icon.png");
+                        InputStream stream_a2 = new FileInputStream("src/main/resources/Photos/Multishot_icon.png");
+                        InputStream stream_a3 = new FileInputStream("src/main/resources/Photos/Marksmanship_icon.png");
                         Image image_hero = new Image(stream_hero);
                         Image image_a1 = new Image(stream_a1);
                         Image image_a2 = new Image(stream_a2);
@@ -147,7 +162,10 @@ public class MapController implements Initializable {
 
                         imageView_hero.setImage(image_hero);
                         imageView_hero.setX(hero.getLocation_x());
+                        System.out.println("********************\n" + hero.getLocation_x());
                         imageView_hero.setY(hero.getLocation_y());
+                        System.out.println("********************\n" + hero.getLocation_y());
+
                         imageView_hero.setFitHeight(25);
                         imageView_hero.setFitWidth(25);
 
@@ -160,8 +178,8 @@ public class MapController implements Initializable {
                         imageView_hero.setOnMouseEntered(new EventHandler<MouseEvent>() {
                             @Override
                             public void handle(MouseEvent event) {
-                                showHP.setText(Double. toString(hero.getHp()));
-                                showMana.setText(Double. toString(hero.getMana()));
+                                showHP.setText(Double.toString(hero.getHp()));
+                                showMana.setText(Double.toString(hero.getMana()));
                             }
                         });
 
@@ -174,12 +192,7 @@ public class MapController implements Initializable {
                         if(ability.getName().equals(config.getStringValue("hero.ranger.ability1.name"))){
                             ability1_stage.setText(Integer.toString(ability.getStage()));
                             if (ability.isUnlock()){
-                                ability1.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                                    @Override
-                                    public void handle(MouseEvent event) {
-                                        Connection.sendUseAbility(ability, hero);
-                                    }
-                                });
+                                ability1.setOnMouseClicked(event -> Connection.sendUseAbility(ability, hero));
                             }
                             else {
                                 ability1.setOpacity(0.3);
@@ -191,15 +204,12 @@ public class MapController implements Initializable {
                                 else {
                                     upgrade_new_ability1.setText("UNLOCK");
                                 }
-                                    upgrade_new_ability1.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                                    @Override
-                                    public void handle(MouseEvent event) {
-                                        if(!ability.isUnlock() && ability.isAvailable()){
-                                            Connection.sendNewAbility(ability, hero);
-                                        }
-                                        if(ability.isUnlock() && ability.isAvailable()){
-                                            Connection.sendUpgradeAbility(ability, hero);
-                                        }
+                                upgrade_new_ability1.setOnMouseClicked(event -> {
+                                    if(!ability.isUnlock() && ability.isAvailable()){
+                                        Connection.sendNewAbility(ability, hero);
+                                    }
+                                    if(ability.isUnlock() && ability.isAvailable()){
+                                        Connection.sendUpgradeAbility(ability, hero);
                                     }
                                 });
                             }
@@ -279,10 +289,10 @@ public class MapController implements Initializable {
                     }
                     else {
                         heroName.setText("Dragon Knight");
-                        InputStream stream_hero = new FileInputStream("/knightHero.png");
-                        InputStream stream_a1 = new FileInputStream("/Breathe_Fire_icon.png");
-                        InputStream stream_a2 = new FileInputStream("/Dragon_Tail_icon.png");
-                        InputStream stream_a3 = new FileInputStream("/Elder_Dragon_Form_icon.png");
+                        InputStream stream_hero = new FileInputStream("src/main/resources/Photos/knightHero.png");
+                        InputStream stream_a1 = new FileInputStream("src/main/resources/Photos/Breathe_Fire_icon.png");
+                        InputStream stream_a2 = new FileInputStream("src/main/resources/Photos/Dragon_Tail_icon.png");
+                        InputStream stream_a3 = new FileInputStream("src/main/resources/Photos/Elder_Dragon_Form_icon.png");
                         Image image_hero = new Image(stream_hero);
                         Image image_a1 = new Image(stream_a1);
                         Image image_a2 = new Image(stream_a2);
@@ -304,8 +314,8 @@ public class MapController implements Initializable {
                         imageView_hero.setOnMouseEntered(new EventHandler<MouseEvent>() {
                             @Override
                             public void handle(MouseEvent event) {
-                                showHP.setText(Double. toString(hero.getHp()));
-                                showMana.setText(Double. toString(hero.getMana()));
+                                showHP.setText(Double.toString(hero.getHp()));
+                                showMana.setText(Double.toString(hero.getMana()));
                             }
                         });
 
@@ -314,6 +324,7 @@ public class MapController implements Initializable {
                         }
                     }
                     config = HeroConfig.getInstance("Knight");
+
                     for (AbilityData ability : abilities){
                         if(ability.getName().equals(config.getStringValue("hero.knight.ability1.name"))){
                             ability1_stage.setText(Integer.toString(ability.getStage()));
@@ -417,10 +428,11 @@ public class MapController implements Initializable {
                     }
                 }
             }
+
             for (CreepData creep : creeps) {
                 if(creep.getTeamName().equals("RED")){
                     if(creep.getTypeCreep().equals("Ranged")) {
-                        InputStream stream = new FileInputStream("/dire_ranged_creep.png");
+                        InputStream stream = new FileInputStream("src/main/resources/Photos/dire_ranged_creep.png");
                         Image image = new Image(stream);
                         ImageView imageView = new ImageView();
                         imageView.setImage(image);
@@ -450,7 +462,7 @@ public class MapController implements Initializable {
                     }
                     else {
 
-                        InputStream stream = new FileInputStream("/dire_melee_creep.png");
+                        InputStream stream = new FileInputStream("src/main/resources/Photos/dire_melee_creep.png");
                         Image image = new Image(stream);
                         ImageView imageView = new ImageView();
                         imageView.setImage(image);
@@ -482,7 +494,7 @@ public class MapController implements Initializable {
 
                 else {
                     if(creep.getTypeCreep().equals("Ranged")){
-                        InputStream stream = new FileInputStream("/radiant_ranged_creep.png");
+                        InputStream stream = new FileInputStream("src/main/resources/Photos/radiant_ranged_creep.png");
                         Image image = new Image(stream);
                         ImageView imageView = new ImageView();
                         imageView.setImage(image);
@@ -511,7 +523,7 @@ public class MapController implements Initializable {
                         }
                     }
                     else {
-                        InputStream stream = new FileInputStream("/radiant_melee_creep.png");
+                        InputStream stream = new FileInputStream("src/main/resources/Photos/radiant_melee_creep.png");
                         Image image = new Image(stream);
                         ImageView imageView = new ImageView();
                         imageView.setImage(image);
@@ -541,10 +553,11 @@ public class MapController implements Initializable {
                     }
                 }
             }
+
             for (BuildingData building : buildings) {
                 if (building.getTypeBuilding().equals("Tower")) {
                     if (building.getTeamName().equals("RED")){
-                        InputStream stream = new FileInputStream("/Tower_Dire_model.png");
+                        InputStream stream = new FileInputStream("src/main/resources/Photos/Tower_Dire_model.png");
                         Image image = new Image(stream);
                         ImageView imageView = new ImageView();
                         imageView.setImage(image);
@@ -573,7 +586,7 @@ public class MapController implements Initializable {
                         }
                     }
                     if (building.getTeamName().equals("Green")){
-                        InputStream stream = new FileInputStream("/Tower_Radiant_model2.png");
+                        InputStream stream = new FileInputStream("src/main/resources/Photos/Tower_Radiant_model2.png");
                         Image image = new Image(stream);
                         ImageView imageView = new ImageView();
                         imageView.setImage(image);
@@ -589,12 +602,9 @@ public class MapController implements Initializable {
                         }
                         else {
                             mainAnchor.getChildren().add(imageView);
-                            imageView.setOnMouseEntered(new EventHandler<MouseEvent>() {
-                                @Override
-                                public void handle(MouseEvent event) {
-                                    showHP.setText(Double. toString(building.getHp()));
-                                    showMana.setText("");
-                                }
+                            imageView.setOnMouseEntered(event -> {
+                                showHP.setText(Double.toString(building.getHp()));
+                                showMana.setText("");
                             });
                             if (building.getAttacking()) {
                                 animationAttackMethod(imageView);
@@ -605,7 +615,7 @@ public class MapController implements Initializable {
 
                 if (building.getTypeBuilding().equals("Ancient")){
                     if (building.getTeamName().equals("RED")){
-                        InputStream stream = new FileInputStream("/Ancient_Dire_model5.png");
+                        InputStream stream = new FileInputStream("src/main/resources/Photos/Ancient_Dire_model5.png");
                         Image image = new Image(stream);
                         ImageView imageView = new ImageView();
                         imageView.setImage(image);
@@ -621,12 +631,9 @@ public class MapController implements Initializable {
                         }
                         else {
                             mainAnchor.getChildren().add(imageView);
-                            imageView.setOnMouseEntered(new EventHandler<MouseEvent>() {
-                                @Override
-                                public void handle(MouseEvent event) {
-                                    showHP.setText(Double. toString(building.getHp()));
-                                    showMana.setText("");
-                                }
+                            imageView.setOnMouseEntered(event -> {
+                                showHP.setText(Double.toString(building.getHp()));
+                                showMana.setText("");
                             });
                             if (building.getAttacking()) {
                                 animationAttackMethod(imageView);
@@ -634,7 +641,7 @@ public class MapController implements Initializable {
                         }
                     }
                     if (building.getTeamName().equals("GREEN")){
-                        InputStream stream = new FileInputStream("/Ancient_Radiant_model.png");
+                        InputStream stream = new FileInputStream("src/main/resources/Photos/Ancient_Radiant_model.png");
                         Image image = new Image(stream);
                         ImageView imageView = new ImageView();
                         imageView.setImage(image);
@@ -649,12 +656,9 @@ public class MapController implements Initializable {
                         }
                         else {
                             mainAnchor.getChildren().add(imageView);
-                            imageView.setOnMouseEntered(new EventHandler<MouseEvent>() {
-                                @Override
-                                public void handle(MouseEvent event) {
-                                    showHP.setText(Double. toString(building.getHp()));
-                                    showMana.setText("");
-                                }
+                            imageView.setOnMouseEntered(event -> {
+                                showHP.setText(Double.toString(building.getHp()));
+                                showMana.setText("");
                             });
                             if (building.isDie()) {
                                 buildings.remove(building);
@@ -666,7 +670,7 @@ public class MapController implements Initializable {
                 }
                 if (building.getTypeBuilding().equals("Ranged")){
                     if (building.getTeamName().equals("RED")){
-                        InputStream stream = new FileInputStream("/Ancient_Radiant_model.png");
+                        InputStream stream = new FileInputStream("src/main/resources/Photos/Ancient_Radiant_model.png");
                         Image image = new Image(stream);
                         ImageView imageView = new ImageView();
                         imageView.setImage(image);
@@ -695,7 +699,7 @@ public class MapController implements Initializable {
                         }
                     }
                     if (building.getTeamName().equals("GREEN")){
-                        InputStream stream = new FileInputStream("/Ancient_Radiant_model.png");
+                        InputStream stream = new FileInputStream("src/main/resources/Photos/Ancient_Radiant_model.png");
                         Image image = new Image(stream);
                         ImageView imageView = new ImageView();
                         imageView.setImage(image);
@@ -711,12 +715,9 @@ public class MapController implements Initializable {
                         }
                         else {
                             mainAnchor.getChildren().add(imageView);
-                            imageView.setOnMouseEntered(new EventHandler<MouseEvent>() {
-                                @Override
-                                public void handle(MouseEvent event) {
-                                    showHP.setText(Double. toString(building.getHp()));
-                                    showMana.setText("");
-                                }
+                            imageView.setOnMouseEntered(event -> {
+                                showHP.setText(Double.toString(building.getHp()));
+                                showMana.setText("");
                             });
                             if (building.getAttacking()) {
                                 animationAttackMethod(imageView);
@@ -726,7 +727,7 @@ public class MapController implements Initializable {
                 }
                 if (building.getTypeBuilding().equals("MELEE")){
                     if (building.getTeamName().equals("RED")){
-                        InputStream stream = new FileInputStream("/Ancient_Radiant_model.png");
+                        InputStream stream = new FileInputStream("src/main/resources/Photos/Ancient_Radiant_model.png");
                         Image image = new Image(stream);
                         ImageView imageView = new ImageView();
                         imageView.setImage(image);
@@ -742,12 +743,9 @@ public class MapController implements Initializable {
                         }
                         else {
                             mainAnchor.getChildren().add(imageView);
-                            imageView.setOnMouseEntered(new EventHandler<MouseEvent>() {
-                                @Override
-                                public void handle(MouseEvent event) {
-                                    showHP.setText(Double. toString(building.getHp()));
-                                    showMana.setText("");
-                                }
+                            imageView.setOnMouseEntered(event -> {
+                                showHP.setText(Double.toString(building.getHp()));
+                                showMana.setText("");
                             });
                             if (building.getAttacking()) {
                                 animationAttackMethod(imageView);
@@ -755,7 +753,7 @@ public class MapController implements Initializable {
                         }
                     }
                     if (building.getTeamName().equals("GREEN")){
-                        InputStream stream = new FileInputStream("/Ancient_Radiant_model.png");
+                        InputStream stream = new FileInputStream("src/main/resources/Photos/Ancient_Radiant_model.png");
                         Image image = new Image(stream);
                         ImageView imageView = new ImageView();
                         imageView.setImage(image);
@@ -771,12 +769,9 @@ public class MapController implements Initializable {
                         }
                         else {
                             mainAnchor.getChildren().add(imageView);
-                            imageView.setOnMouseEntered(new EventHandler<MouseEvent>() {
-                                @Override
-                                public void handle(MouseEvent event) {
-                                    showHP.setText(Double. toString(building.getHp()));
-                                    showMana.setText("");
-                                }
+                            imageView.setOnMouseEntered(event -> {
+                                showHP.setText(Double.toString(building.getHp()));
+                                showMana.setText("");
                             });
                             if (building.getAttacking()) {
                                 animationAttackMethod(imageView);
@@ -801,7 +796,7 @@ public class MapController implements Initializable {
             stage = new Stage();
             stage.setScene(new Scene(root1));
             stage.show();
-        } catch (Exception  e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -812,28 +807,34 @@ public class MapController implements Initializable {
 
     @FXML
     void downFunction(ActionEvent event) {
-        move = 'd';
+        move = 's';
     }
 
     @FXML
     void leftAction(ActionEvent event) {
-        move = 'l';
+        move = 'a';
     }
 
     @FXML
     void rightFunctin(ActionEvent event) {
-        move = 'r';
+        move = 'd';
     }
 
     @FXML
     void upFunction(ActionEvent event) {
-        move = 'u';
+        move = 'w';
     }
 
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
-        teamNameOnMap.setText(getWinnerName());
+        new Thread(()->{
+            while(true) {
+                if(!ReceiveDataRunnable.isIsReloaded()) {
+                    checkUnits(ReceiveDataRunnable.getHeroes(), ReceiveDataRunnable.getAbilities(), ReceiveDataRunnable.getCreeps(), ReceiveDataRunnable.getBuildings());
+                    ReceiveDataRunnable.setIsReloaded(false);
+                }
+            }
+        }).start();
     }
 }

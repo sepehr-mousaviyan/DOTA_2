@@ -6,7 +6,7 @@ public class InterfaceConfig extends Config {
 
     private InterfaceConfig() {
         this.bundle = "InterfaceConfig";
-        config = ResourceBundle.getBundle("InterfaceConfig");
+        config = ResourceBundle.getBundle("Config/InterfaceConfig");
     }
 
     public static Config getInstance()

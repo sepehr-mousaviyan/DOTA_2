@@ -3,8 +3,8 @@ package sbu.cs.mahkats.Server.Unit.Movable.Hero;
 import sbu.cs.mahkats.Configuration.Config;
 import sbu.cs.mahkats.Configuration.InterfaceConfig;
 import sbu.cs.mahkats.Configuration.Units.HeroConfig;
-import sbu.cs.mahkats.Server.Unit.Movable.Hero.Ability.Ability;
 import sbu.cs.mahkats.Server.App.GamePlay;
+import sbu.cs.mahkats.Server.Unit.Movable.Hero.Ability.Ability;
 import sbu.cs.mahkats.Server.Unit.Movable.Movable;
 import sbu.cs.mahkats.Server.Unit.Unit;
 
@@ -17,7 +17,7 @@ public class Hero extends Movable {
     protected Ability ability2;
     protected Ability ability3;
 
-    protected ArrayList<Ability> abilties;
+    protected ArrayList<Ability> abilities;
     protected ArrayList<Unit> defenders;
 
     protected short level;
@@ -35,36 +35,36 @@ public class Hero extends Movable {
     protected int LEVEL_NUMBERS;
     protected int[] LEVEL_XP;
 
-    public Hero(String teamName , int code, String hero_name) {
-        super(teamName ,"Hero" , code);
+    public Hero(String teamName, int code, String hero_name) {
+        super(teamName, "Hero", code);
         isLevelUp = false;
         isRespawnTime = false;
         remainRespawnTime = 10;
+        abilities = new ArrayList<>();
 
         this.hero_name = hero_name;
         ability1 = new Ability(hero_name, 1);
-        abilties.add(ability1);
+        abilities.add(ability1);
         ability2 = new Ability(hero_name, 2);
-        abilties.add(ability2);
+        abilities.add(ability2);
         ability3 = new Ability(hero_name, 3);
-        abilties.add(ability3);
-
-        
+        abilities.add(ability3);
 
         ability1.setUnlock();
+        ability1.setCanUnlock();
         ability2.setCanUnlock();
 
         Config heroConfig = HeroConfig.getInstance(hero_name);
 
-        LEVEL_NUMBERS = heroConfig.getIntValue("hero.level_numbers");
-        hp = max_hp = heroConfig.getIntValue("hero." + hero_name + ".hp");
-        mana = max_mana = heroConfig.getIntValue("hero." + hero_name + ".mana");
-        minimum_damage = heroConfig.getIntValue("hero." + hero_name + ".minimum.damage");
-        maximum_damage = heroConfig.getIntValue("hero." + hero_name + ".maximum.damage");
-        armor = max_armor = heroConfig.getIntValue("hero." + hero_name + ".armor");
-        range = heroConfig.getIntValue("hero." + hero_name + ".range");
-        hp_regeneration = heroConfig.getIntValue("hero." + hero_name + ".hp_regeneration");
-        mana_regeneration = heroConfig.getIntValue("hero." + hero_name + ".mana_regeneration");
+        hero_name = hero_name.toLowerCase();
+        hp = max_hp = heroConfig.getDoubleValue("hero." + hero_name + ".hp");
+        mana = max_mana = heroConfig.getDoubleValue("hero." + hero_name + ".mana");
+        minimum_damage = heroConfig.getDoubleValue("hero." + hero_name + ".minimum.damage");
+        maximum_damage = heroConfig.getDoubleValue("hero." + hero_name + ".maximum.damage");
+        armor = max_armor = heroConfig.getDoubleValue("hero." + hero_name + ".armor");
+        range = heroConfig.getDoubleValue("hero." + hero_name + ".range");
+        hp_regeneration = heroConfig.getDoubleValue("hero." + hero_name + ".hp_regeneration");
+        mana_regeneration = heroConfig.getDoubleValue("hero." + hero_name + ".mana_regeneration");
 
         levelUp_benefit_hp = heroConfig.getDoubleValue("hero." + hero_name + ".levelUp_benefit.hp");
         levelUp_benefit_mana = heroConfig.getDoubleValue("hero." + hero_name + ".levelUp_benefit.mana");
@@ -75,10 +75,14 @@ public class Hero extends Movable {
 
         Config levelUpConfig = HeroConfig.getInstance("Level_Xp");
 
-        LEVEL_XP = new int[LEVEL_NUMBERS];
-        for (int i = 0; i < LEVEL_NUMBERS; i++ ) {
+        //LEVEL_NUMBERS = heroConfig.getIntValue("hero.level.numbers");
+        LEVEL_XP = new int[12];
+        for (int i = 0; i < LEVEL_NUMBERS; i++) {
             LEVEL_XP[i] = levelUpConfig.getIntValue("hero.xp_needed.level" + i);
         }
+
+        Location_y = 30;
+        Location_x = 30;
     }
 
     public void levelUp() {
@@ -91,43 +95,40 @@ public class Hero extends Movable {
             max_armor += levelUp_benefit_armor;
             hp_regeneration += levelUp_benefit_hp_regeneration;
             mana_regeneration += levelUp_benefit_mana_regeneration;
-            GamePlay.heroLevelUp();
-            if(!ability3.isMaxStage() || !ability2.isMaxStage() || !ability1.isMaxStage()) {
+            if (!ability3.isMaxStage() || !ability2.isMaxStage() || !ability1.isMaxStage()) {
                 isLevelUp = true;
             }
-            if(ability3.getUNLOCK_LEVEL() == level){
+            if (ability3.getUNLOCK_LEVEL() == level) {
                 ability3.setCanUnlock();
             }
-        }  
+        }
     }
 
-    public boolean canLevelUp(){
-        if(LEVEL_XP[level] <= experience){
-            return true;
-        }
-        return false;
+    public boolean canLevelUp() {
+        return LEVEL_XP[level] <= experience;
     }
 
     /**
      * upgrade ability but if can not do that return false
+     *
      * @param choice the number of ability
      * @return if can upgrade return true otherwise return false
      */
-    public boolean upgradeAbility(int choice){
-        if(isLevelUp){
-            switch (choice){
+    public boolean upgradeAbility(int choice) {
+        if (isLevelUp) {
+            switch (choice) {
                 case 1:
-                    if(!ability1.stageUp()){
+                    if (!ability1.stageUp()) {
                         return false;
                     }
                     break;
                 case 2:
-                    if(!ability2.stageUp()){
+                    if (!ability2.stageUp()) {
                         return false;
                     }
                     break;
                 case 3:
-                    if(!ability3.stageUp()){
+                    if (!ability3.stageUp()) {
                         return false;
                     }
                     break;
@@ -138,33 +139,33 @@ public class Hero extends Movable {
         return false;
     }
 
-    public void respawnTime(){
+    public void respawnTime() {
         isRespawnTime = true;
         remainRespawnTime *= 1.9;
-        new Thread(()->{
+        new Thread(() -> {
             int lastTurn = GamePlay.getTurn();
-           while(remainRespawnTime != 0){
-               if(lastTurn > GamePlay.getTurn()){
-                   remainRespawnTime--;
-               }
-           }
-           respawnAgain();
+            while (remainRespawnTime != 0) {
+                if (lastTurn > GamePlay.getTurn()) {
+                    remainRespawnTime--;
+                }
+            }
+            respawnAgain();
         });
     }
 
-    public void respawnAgain(){
+    public void respawnAgain() {
         Location_x = 10;
         Location_y = 10;
         isRespawnTime = false;
-        if(teamName.equals("RED")){
+        if (teamName.equals("RED")) {
             Config config = InterfaceConfig.getInstance();
             Location_x = config.getIntValue("map.width") - Location_x;
             Location_y = config.getIntValue("map.height") - Location_y;
         }
     }
 
-    public void takeDamage(double damage){
-        if((damage - armor) > hp){
+    public void takeDamage(double damage) {
+        if ((damage - armor) > hp) {
             hp = 0;
             isDie = false;
             this.respawnTime();
@@ -174,8 +175,8 @@ public class Hero extends Movable {
     }
 
     @Override
-    public void takeDamage(double damage , Hero hero) {
-        if((damage - armor) > hp){
+    public void takeDamage(double damage, Hero hero) {
+        if ((damage - armor) > hp) {
             hp = 0;
             isDie = true;
             this.respawnTime();
@@ -183,6 +184,23 @@ public class Hero extends Movable {
             return;
         }
         hp = hp - (damage - armor);
+    }
+
+    public void move(char moveChar, Hero hero, int CHUNK_SIZE) {
+        switch (moveChar) {
+            case 'w':
+                hero.move(hero.getLocation_x(), hero.getLocation_y() + CHUNK_SIZE);
+                break;
+            case 's':
+                hero.move(hero.getLocation_x(), hero.getLocation_y() - CHUNK_SIZE);
+                break;
+            case 'd':
+                hero.move(hero.getLocation_x() + CHUNK_SIZE, hero.getLocation_y());
+                break;
+            case 'a':
+                hero.move(hero.getLocation_x() - CHUNK_SIZE, hero.getLocation_y());
+                break;
+        }
     }
 
     public void addRegularExperience(double extraExperience) {
@@ -219,7 +237,7 @@ public class Hero extends Movable {
     }
 
     public ArrayList<Ability> getAbilities() {
-        return abilties;
+        return abilities;
     }
 
     public Ability getAbility1() {
@@ -234,4 +252,7 @@ public class Hero extends Movable {
         return ability3;
     }
 
+    public String getHero_name() {
+        return hero_name;
+    }
 }

@@ -6,20 +6,20 @@ import org.javatuples.Pair;
 
 public final class Api {
 
-    public JsonObject toJson(Pair... args) {
+    public static JsonObject toJson(Pair... args) {
         JsonObject json = new JsonObject();
-        for(int i = 0 ; i < args.length ; i++){
-            json.addProperty(args[i].getValue0().toString() , args[i].getValue1().toString());
+        for (int i = 0; i < args.length; i++) {
+            json.addProperty(args[i].getValue0().toString(), args[i].getValue1().toString());
         }
         return json;
     }
 
-    public JsonObject toJson(String json){
+    public static JsonObject toJson(String json) {
         Gson gson = new Gson();
         return gson.fromJson(json, JsonObject.class);
     }
 
-    public String toString(JsonObject json) {
+    public static String toString(JsonObject json) {
         return json.toString();
     }
 

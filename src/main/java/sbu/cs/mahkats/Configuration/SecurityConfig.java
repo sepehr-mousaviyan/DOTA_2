@@ -5,8 +5,8 @@ import java.util.ResourceBundle;
 public class SecurityConfig extends Config{
 
     private SecurityConfig() {
-        this.bundle = "InterfaceConfig";
-        config = ResourceBundle.getBundle("SecurityConfig");
+        this.bundle = "SecurityConfig";
+        config = ResourceBundle.getBundle("Config/SecurityConfig");
     }
 
     public static Config getInstance()

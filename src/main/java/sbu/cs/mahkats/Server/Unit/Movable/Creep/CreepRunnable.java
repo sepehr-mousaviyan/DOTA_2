@@ -6,39 +6,38 @@ import sbu.cs.mahkats.Server.Unit.Unit;
 import java.util.ArrayList;
 
 public class CreepRunnable implements Runnable {
-    private ArrayList<Creep> creeps;
-    public CreepRunnable(ArrayList<Creep> creeps){
+    private final ArrayList<Creep> creeps;
+
+    public CreepRunnable(ArrayList<Creep> creeps) {
         this.creeps = creeps;
     }
 
     private void handler() {
-        for(Creep c : creeps){
+        for (Creep c : creeps) {
             if (c.getStatusAttacker()) {
-                //TODO: message to client for attack
                 c.getDefender().takeDamage(c.getDamage());
-            }
-            else {
+            } else {
                 c.move(c.getLane());
             }
         }
-        
+
     }
 
-    private void checkCreepsAlive(){
+    private void checkCreepsAlive() {
         creeps.removeIf(Unit::getStatusDie);
     }
 
     @Override
-    public void run(){
+    public void run() {
         int lastTurn = GamePlay.getTurn();
-        while(true) {
+        while (true) {
             if (GamePlay.getTurn() > lastTurn) {
                 checkCreepsAlive();
                 handler();
                 lastTurn = GamePlay.getTurn();
             }
         }
-    
+
     }
 }
 

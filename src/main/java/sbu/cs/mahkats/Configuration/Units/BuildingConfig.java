@@ -8,15 +8,15 @@ public class BuildingConfig extends Config {
     private static String building;
 
     private BuildingConfig(String building_name) {
-        this.bundle = "TowerConfig";
+        this.bundle = "Building";
         building = building_name;
-        config = ResourceBundle.getBundle("building/" + building);
+        config = ResourceBundle.getBundle("Config/UnitConfig/Buildings/" + building);
     }
 
     public static Config getInstance(String building_name)
     {
         if (config_instance == null ||
-                !config_instance.getBundle().equals("BuildingConfig") ||
+                !config_instance.getBundle().equals("Building") ||
                 !building.equals(building_name)) {
             config_instance = new BuildingConfig(building_name);
         }

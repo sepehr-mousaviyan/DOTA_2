@@ -3,6 +3,8 @@ package sbu.cs.mahkats.Api.Data;
 import com.google.gson.JsonObject;
 import org.javatuples.Pair;
 import sbu.cs.mahkats.Api.Api;
+import sbu.cs.mahkats.Configuration.Config;
+import sbu.cs.mahkats.Configuration.InterfaceConfig;
 
 public class GamePlayData implements Data{
     protected final Long token;
@@ -14,15 +16,16 @@ public class GamePlayData implements Data{
     protected double range = 0;
     protected double experience;
     protected Boolean isAttacking = false;
-    protected int code_defender;
+    protected int code_defender = 0;
     protected boolean isDie = false;
-    protected int code;
-    protected String error;
-    protected int Location_x;
-    protected int Location_y;
-    protected String teamName;
+    protected int code = 0;
+    protected String error = "";
+    protected int Location_x = 0;
+    protected int Location_y = 0;
+    protected int max_Location_y = 0;
+    protected String teamName = "";
 
-    public GamePlayData(Long token, double hp, double hp_regeneration, double minimum_damage, double maximum_damage, double armor, double range, double experience, Boolean isAttacking, int code_defender, boolean isDie, int code, String teamName) {
+    public GamePlayData(Long token, double hp, double hp_regeneration, double minimum_damage, double maximum_damage, double armor, double range, double experience, Boolean isAttacking, int code_defender, boolean isDie, int code, String teamName, int Location_x, int Location_y) {
         this.token = token;
         this.hp = hp;
         this.hp_regeneration = hp_regeneration;
@@ -36,6 +39,10 @@ public class GamePlayData implements Data{
         this.isDie = isDie;
         this.code = code;
         this.teamName = teamName;
+        this.Location_x = Location_x;
+        this.Location_y = Location_y;
+        Config config = InterfaceConfig.getInstance();
+        max_Location_y = config.getIntValue("map.height");
     }
 
     public GamePlayData(Long token, String error) {
@@ -109,7 +116,7 @@ public class GamePlayData implements Data{
 
     public JsonObject makeJson(){
         if(error != null) {
-            return new Api().toJson(new Pair<>("token", token),
+            return Api.toJson(new Pair<>("token", token),
                     new Pair<>("hp", hp),
                     new Pair<>("hp_regeneration", hp_regeneration),
                     new Pair<>("minimum_damage", minimum_damage),
@@ -122,8 +129,8 @@ public class GamePlayData implements Data{
                     new Pair<>("isDie", isDie),
                     new Pair<>("code", code),
                     new Pair<>("Location_x", Location_x),
-                    new Pair<>("Location_y", Location_y));
+                    new Pair<>("Location_y", max_Location_y - Location_y));
         }
-        return new Api().toJson(new Pair<>("error", error), new Pair<>("token", token));
+        return Api.toJson(new Pair<>("error", error), new Pair<>("token", token));
     }
 }

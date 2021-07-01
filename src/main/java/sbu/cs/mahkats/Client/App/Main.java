@@ -1,20 +1,30 @@
 package sbu.cs.mahkats.Client.App;
 
-import sbu.cs.mahkats.Client.Connection.Connection;
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+import sbu.cs.mahkats.Configuration.Config;
+import sbu.cs.mahkats.Configuration.InterfaceConfig;
 
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+public class Main extends Application {
 
-public class Main {
-    public static void main(String[] args) throws IOException {
-        Logger logger =  Logger.getLogger(ClientApp.class.getName());
-        Connection client = new Connection();
-        if(client.getStatusConnection()) {
-            ClientApp.main(args);
-        }
-        else{
-            logger.log(Level.FINER,"connection to server failed in App class in main method");
-        }
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+        Config config = InterfaceConfig.getInstance();
+        Parent root = FXMLLoader.load(getClass().getResource("/Main.fxml"));
+
+
+        primaryStage.setTitle(config.getStringValue("stage.title"));
+        Scene scene = new Scene(root);
+        scene.getStylesheets().add("/style.css");
+
+        primaryStage.setScene(scene);
+        primaryStage.show();
+    }
+
+    public static void main(String[] args) {
+        launch(args);
     }
 }

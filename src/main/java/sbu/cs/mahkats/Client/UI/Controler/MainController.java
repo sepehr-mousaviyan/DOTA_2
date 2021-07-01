@@ -28,7 +28,9 @@ public class MainController implements Initializable {
     private static final int USERNAME_LENGTH = config.getIntValue("input.limit.userName");
     private static final int PASSWORD_LENGTH = config.getIntValue("input.limit.passWord");
     private static final int EMAIL_LENGTH = config.getIntValue("input.limit.email");
-    private static final String regex = "^\\S+@\\S+\\.\\S+$";
+    private static final String regexEmail = "^\\S+@\\S+\\.\\S+$";
+
+    private static Stage logStage;
 
     @FXML
     AnchorPane mainanchor;
@@ -92,73 +94,14 @@ public class MainController implements Initializable {
         }
     }
 
-    @FXML
-    void signUpAction(ActionEvent event) {
-        if (passInput.getText().isEmpty() || userNameInput.getText().isEmpty() || emailInput.getText().isEmpty()){
-            invalidRespond.setText("");
-            serverRespond.setText("");
-            invalidEmail.setText("");
-            emptyRespond.setText("PLEASE ENTER ALL FEILDS!");
-        }
-        else if (!goodInput(userNameInput.getText(),passInput.getText(),emailInput.getText())){
-            emptyRespond.setText("");
-            serverRespond.setText("");
-            invalidEmail.setText("");
-            invalidRespond.setText("DON'T USE ! , / , ? , ) , ( , * , & , % IN YOUR INPUT!");
+    public static boolean isValidEmailAddress(String email) {
+        Pattern pattern = Pattern.compile(regexEmail);
+        Matcher matcher = pattern.matcher(email);
+        return matcher.matches();
+    }
 
-        }
-        else if (!isValidEmailAddress(emailInput.getText())){
-            emptyRespond.setText("");
-            serverRespond.setText("");
-            invalidRespond.setText("");
-            invalidEmail.setText("YOUR EMAILADDRESS IS INVALID!");
-        }
-        else if (!checkLength(userNameInput.getText(),passInput.getText(),emailInput.getText())){
-            emptyRespond.setText("");
-            serverRespond.setText("");
-            invalidEmail.setText("");
-            invalidRespond.setText("YOUR LENGTH OF FIELDS ARE TOO LONG!");
-        }
-
-        else if(
-                Connection.checkUserSignUp(userNameInput.getText(),passInput.getText(),emailInput.getText())
-        ){
-            if(
-                    Connection.getCheckStatus()
-            ){
-                Connection.runReceiver();
-                try {
-                    Parent logParent = null;
-                    logParent = FXMLLoader.load(getClass().getResource("/LoadingScreenOne.fxml"));
-                    Stage logStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
-                    Scene logScene = new Scene(logParent);
-
-                    logStage.setScene(logScene);
-                    logStage.show();
-
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-            }
-
-
-            else {
-                //Print error massage
-                emptyRespond.setText("");
-                invalidRespond.setText("");
-                invalidEmail.setText("");
-                try {
-                    if (Connection.receive() != null)
-                        serverRespond.setText("SIGN IN FAILED!");
-                } catch (IOException e) {
-                    serverRespond.setText("CONNECTING TO SERVER FAILED");
-                }
-
-            }
-        }
-
+    public static void closeNext(){
+        logStage.close();
     }
 
     private boolean goodInput(String userName, String password, String email){
@@ -189,10 +132,64 @@ public class MainController implements Initializable {
 
     }
 
-    public static boolean isValidEmailAddress(String email) {
-        Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(email);
-        return matcher.matches();
+    @FXML
+    void signUpAction(ActionEvent event) {
+        if (passInput.getText().isEmpty() || userNameInput.getText().isEmpty() || emailInput.getText().isEmpty()){
+            invalidRespond.setText("");
+            serverRespond.setText("");
+            invalidEmail.setText("");
+            emptyRespond.setText("PLEASE ENTER ALL FEILDS!");
+        }
+        else if (!goodInput(userNameInput.getText(),passInput.getText(),emailInput.getText())){
+            emptyRespond.setText("");
+            serverRespond.setText("");
+            invalidEmail.setText("");
+            invalidRespond.setText("DON'T USE ! , / , ? , ) , ( , * , & , % IN YOUR INPUT!");
+
+        }
+        else if (!isValidEmailAddress(emailInput.getText())){
+            emptyRespond.setText("");
+            serverRespond.setText("");
+            invalidRespond.setText("");
+            invalidEmail.setText("YOUR EMAILADDRESS IS INVALID!");
+        }
+        else if (!checkLength(userNameInput.getText(),passInput.getText(),emailInput.getText())){
+            emptyRespond.setText("");
+            serverRespond.setText("");
+            invalidEmail.setText("");
+            invalidRespond.setText("YOUR LENGTH OF FIELDS ARE TOO LONG!");
+        }
+
+        else if(Connection.checkUserSignUp(userNameInput.getText(),passInput.getText(),emailInput.getText())){
+            if(Connection.getStatus()){
+                try {
+                    Parent logParent = null;
+                    logParent = FXMLLoader.load(getClass().getResource("/ChooseHeroScreen.fxml"));
+                    logStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+                    Scene logScene = new Scene(logParent);
+
+                    logStage.setScene(logScene);
+                    logStage.show();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+            } else {
+                //Print error massage
+                emptyRespond.setText("");
+                invalidRespond.setText("");
+                invalidEmail.setText("");
+                try {
+                    if (Connection.receiveSignUpSignIn() != null)
+                        serverRespond.setText("SIGN IN FAILED!");
+                } catch (IOException e) {
+                    serverRespond.setText("CONNECTING TO SERVER FAILED");
+                }
+
+            }
+        }
+
     }
 
     @FXML
@@ -208,7 +205,10 @@ public class MainController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        if (!SplashController.isPlayed)
+        if (!SplashController.isPlayed) {
             loadSplash();
+            SplashController.isPlayed = true;
+        }
+
     }
 }
