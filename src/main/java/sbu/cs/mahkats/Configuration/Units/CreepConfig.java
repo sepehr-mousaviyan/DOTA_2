@@ -8,7 +8,7 @@ public class CreepConfig extends Config {
 
     private CreepConfig() {
         this.bundle = "CreepConfig";
-        config = ResourceBundle.getBundle("Config/UnitConfig/Movable/CreepConfig");
+        config = ResourceBundle.getBundle("Config/UnitConfig/CreepConfig");
     }
 
     public static Config getInstance()

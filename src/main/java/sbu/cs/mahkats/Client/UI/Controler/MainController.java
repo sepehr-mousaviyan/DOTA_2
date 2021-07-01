@@ -28,7 +28,7 @@ public class MainController implements Initializable {
     private static final int USERNAME_LENGTH = config.getIntValue("input.limit.userName");
     private static final int PASSWORD_LENGTH = config.getIntValue("input.limit.passWord");
     private static final int EMAIL_LENGTH = config.getIntValue("input.limit.email");
-    private static final String regex = "^\\S+@\\S+\\.\\S+$";
+    private static final String regexEmail = "^\\S+@\\S+\\.\\S+$";
 
     private static Stage logStage;
 
@@ -94,6 +94,44 @@ public class MainController implements Initializable {
         }
     }
 
+    public static boolean isValidEmailAddress(String email) {
+        Pattern pattern = Pattern.compile(regexEmail);
+        Matcher matcher = pattern.matcher(email);
+        return matcher.matches();
+    }
+
+    public static void closeNext(){
+        logStage.close();
+    }
+
+    private boolean goodInput(String userName, String password, String email){
+        boolean userName_check, password_check, email_check;
+        userName_check = checkString(userName);
+        password_check = checkString(password);
+        email_check = checkString(email);
+
+        return userName_check && password_check && email_check;
+    }
+
+    private boolean checkString(String str){
+        boolean str_check = true;
+        char[] charArray = {'%','&','*','(',')','/',':',';','!','?','$'};
+
+        for (int i = 0; i < charArray.length; i++)
+            if (str.indexOf(charArray[i]) > -1) {
+                str_check = false;
+                break;
+            }
+        return str_check;
+    }
+
+    public static boolean checkLength(String userName, String passWord, String email){
+        return (userName.length() <= USERNAME_LENGTH) &&
+                (passWord.length() <= PASSWORD_LENGTH) &&
+                (email.length() <= EMAIL_LENGTH);
+
+    }
+
     @FXML
     void signUpAction(ActionEvent event) {
         if (passInput.getText().isEmpty() || userNameInput.getText().isEmpty() || emailInput.getText().isEmpty()){
@@ -137,10 +175,7 @@ public class MainController implements Initializable {
                     e.printStackTrace();
                 }
 
-            }
-
-
-            else {
+            } else {
                 //Print error massage
                 emptyRespond.setText("");
                 invalidRespond.setText("");
@@ -155,44 +190,6 @@ public class MainController implements Initializable {
             }
         }
 
-    }
-
-    public static void closeNext(){
-        logStage.close();
-    }
-
-    private boolean goodInput(String userName, String password, String email){
-        boolean userName_check, password_check, email_check;
-        userName_check = checkString(userName);
-        password_check = checkString(password);
-        email_check = checkString(email);
-
-        return userName_check && password_check && email_check;
-    }
-
-    private boolean checkString(String str){
-        boolean str_check = true;
-        char[] charArray = {'%','&','*','(',')','/',':',';','!','?','$'};
-
-        for (int i = 0; i < charArray.length; i++)
-            if (str.indexOf(charArray[i]) > -1) {
-                str_check = false;
-                break;
-            }
-        return str_check;
-    }
-
-    public static boolean checkLength(String userName, String passWord, String email){
-        return (userName.length() <= USERNAME_LENGTH) &&
-                (passWord.length() <= PASSWORD_LENGTH) &&
-                (email.length() <= EMAIL_LENGTH);
-
-    }
-
-    public static boolean isValidEmailAddress(String email) {
-        Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(email);
-        return matcher.matches();
     }
 
     @FXML

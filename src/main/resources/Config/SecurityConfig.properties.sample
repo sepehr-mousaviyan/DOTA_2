@@ -1,0 +1,4 @@
+sql.username        = your mysql username
+sql.password        = your mysql password
+sql.table.name      = name of your table
+sql.url             = url to your database mysql

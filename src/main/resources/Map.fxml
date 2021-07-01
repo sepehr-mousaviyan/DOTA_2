@@ -7,144 +7,87 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="mainAnchor" prefHeight="768.0" prefWidth="1026.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sbu.cs.mahkats.Client.UI.Controler.MapController">
+<AnchorPane fx:id="mainAnchor" prefHeight="768.0" prefWidth="1026.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sbu.cs.mahkats.Client.UI.Controler.MapController">
    <children>
       <ImageView fitHeight="750.0" fitWidth="750.0" layoutX="7.0" pickOnBounds="true">
          <image>
             <Image url="@Photos/map.png" />
          </image>
       </ImageView>
-      <Label layoutX="626.0" layoutY="5.0" prefHeight="48.0" prefWidth="148.0" text="Team Name :" textFill="#dadada">
+      <Label layoutX="729.0" layoutY="40.0" prefHeight="48.0" prefWidth="148.0" text="Team Name :" textFill="#dadada">
          <font>
             <Font size="25.0" />
          </font>
       </Label>
-      <Label fx:id="teamNameOnMap" layoutX="799.0" layoutY="6.0" prefHeight="10.0" prefWidth="133.0" textFill="#f8f7f7">
+      <Label fx:id="teamNameOnMap" layoutX="891.0" layoutY="33.0" prefHeight="57.0" prefWidth="107.0" textFill="#f8f7f7">
          <font>
             <Font size="39.0" />
          </font>
       </Label>
-      <Label id="heroName" fx:id="heroName" layoutX="761.0" layoutY="64.0" prefHeight="48.0" prefWidth="245.0" textFill="#dadada">
+      <Label id="heroName" fx:id="heroName" layoutX="760.0" layoutY="123.0" prefHeight="48.0" prefWidth="245.0" textFill="#dadada">
          <font>
             <Font size="25.0" />
          </font>
       </Label>
-      <Label fx:id="showHP" layoutX="754.0" layoutY="504.0" prefHeight="48.0" prefWidth="256.0" style="-fx-background-color: f0eded; -fx-background-radius: 30; -fx-border-color: cf4444; -fx-border-radius: 25; -fx-border-width: 5;" text="  Selected Unit XP :">
+      <ImageView fx:id="ability1" fitHeight="57.0" fitWidth="57.0" layoutX="767.0" layoutY="170.0" pickOnBounds="true" smooth="false" />
+      <ImageView fx:id="ability2" fitHeight="57.0" fitWidth="57.0" layoutX="847.0" layoutY="170.0" pickOnBounds="true" smooth="false" />
+      <ImageView fx:id="ability3" fitHeight="57.0" fitWidth="57.0" layoutX="929.0" layoutY="170.0" pickOnBounds="true" smooth="false" />
+      <Label fx:id="showHP" layoutX="754.0" layoutY="397.0" prefHeight="57.0" prefWidth="256.0" style="-fx-background-color: f0eded; -fx-background-radius: 30; -fx-border-color: cf4444; -fx-border-radius: 25; -fx-border-width: 5;">
          <font>
-            <Font size="16.0" />
+            <Font size="23.0" />
          </font>
       </Label>
-      <Label fx:id="showMana" layoutX="755.0" layoutY="560.0" prefHeight="48.0" prefWidth="256.0" style="-fx-background-color: f0eded; -fx-background-radius: 30; -fx-border-color: cf4444; -fx-border-radius: 25; -fx-border-width: 5;" text="  Hero Mana :">
+      <Label fx:id="showMana" layoutX="755.0" layoutY="475.0" prefHeight="57.0" prefWidth="256.0" style="-fx-background-color: f0eded; -fx-background-radius: 30; -fx-border-color: cf4444; -fx-border-radius: 25; -fx-border-width: 5;">
          <font>
-            <Font size="17.0" />
+            <Font size="23.0" />
          </font>
       </Label>
-      <Label fx:id="ability1_stage" layoutX="781.0" layoutY="207.0" prefHeight="28.0" prefWidth="57.0" style="-fx-background-color: f0eded; -fx-background-radius: 10;">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Label>
-      <Label fx:id="ability2_stage" layoutX="848.0" layoutY="207.0" prefHeight="28.0" prefWidth="57.0" style="-fx-background-color: f0eded; -fx-background-radius: 10;">
+      <Label fx:id="ability1_stage" layoutX="769.0" layoutY="243.0" prefHeight="28.0" prefWidth="57.0" style="-fx-background-color: f0eded; -fx-background-radius: 10;">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <Label fx:id="ability3_stage" layoutX="915.0" layoutY="207.0" prefHeight="28.0" prefWidth="57.0" style="-fx-background-color: f0eded; -fx-background-radius: 10;">
+      <Label fx:id="ability2_stage" layoutX="848.0" layoutY="242.0" prefHeight="28.0" prefWidth="57.0" style="-fx-background-color: f0eded; -fx-background-radius: 10;">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <Button layoutX="850.0" layoutY="635.0" mnemonicParsing="false" onAction="#upFunction" prefHeight="39.0" prefWidth="79.0" text="UP">
+      <Label fx:id="ability3_stage" layoutX="929.0" layoutY="242.0" prefHeight="28.0" prefWidth="57.0" style="-fx-background-color: f0eded; -fx-background-radius: 10;">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Button layoutX="850.0" layoutY="615.0" mnemonicParsing="false" onAction="#upFunction" prefHeight="39.0" prefWidth="79.0" text="UP">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
       </Button>
-      <Button layoutX="770.0" layoutY="675.0" mnemonicParsing="false" onAction="#leftAction" prefHeight="39.0" prefWidth="79.0" text="LEFT">
+      <Button layoutX="770.0" layoutY="655.0" mnemonicParsing="false" onAction="#leftAction" prefHeight="39.0" prefWidth="79.0" text="LEFT">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
       </Button>
-      <Button layoutX="848.0" layoutY="717.0" mnemonicParsing="false" onAction="#downFunction" text="DOWN">
+      <Button layoutX="848.0" layoutY="697.0" mnemonicParsing="false" onAction="#downFunction" text="DOWN">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
       </Button>
-      <Button layoutX="930.0" layoutY="675.0" mnemonicParsing="false" onAction="#rightFunctin" text="RIGHT">
+      <Button layoutX="930.0" layoutY="655.0" mnemonicParsing="false" onAction="#rightFunctin" text="RIGHT">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
       </Button>
-      <Label fx:id="upgrade_new_ability1" layoutX="769.0" layoutY="456.0" prefHeight="28.0" prefWidth="57.0" style="-fx-background-color: f0eded; -fx-background-radius: 10;" text="     1" textAlignment="CENTER">
-         <font>
-            <Font name="System Bold" size="18.0" />
-         </font>
-      </Label>
-      <Label fx:id="upgrade_new_ability2" layoutX="847.0" layoutY="456.0" prefHeight="28.0" prefWidth="57.0" style="-fx-background-color: f0eded; -fx-background-radius: 10;" text="     2">
-         <font>
-            <Font name="System Bold" size="18.0" />
-         </font>
-      </Label>
-      <Label fx:id="upgrade_new_ability3" layoutX="929.0" layoutY="456.0" prefHeight="28.0" prefWidth="57.0" style="-fx-background-color: f0eded; -fx-background-radius: 10;" text="     3">
-         <font>
-            <Font name="System Bold" size="18.0" />
-         </font>
-      </Label>
-      <Label layoutX="818.0" layoutY="410.0" prefHeight="48.0" prefWidth="120.0" text="Use Ability" textFill="#dadada">
-         <font>
-            <Font size="25.0" />
-         </font>
-      </Label>
-      <ImageView fx:id="rAbility1" fitHeight="50.0" fitWidth="50.0" layoutX="781.0" layoutY="143.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@Photos/Frost_Arrows_icon.png" />
-         </image>
-      </ImageView>
-      <ImageView fx:id="rAbility2" fitHeight="50.0" fitWidth="50.0" layoutX="851.0" layoutY="143.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@Photos/Multishot_icon.png" />
-         </image>
-      </ImageView>
-      <ImageView fx:id="rAbility3" fitHeight="50.0" fitWidth="50.0" layoutX="919.0" layoutY="143.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@Photos/Marksmanship_icon.png" />
-         </image>
-      </ImageView>
-      <Label layoutX="792.0" layoutY="100.0" prefHeight="48.0" prefWidth="171.0" text="Drow Ranger Hero" textFill="#9193bf">
-         <font>
-            <Font size="20.0" />
-         </font>
-      </Label>
-      <Label layoutX="791.0" layoutY="258.0" prefHeight="48.0" prefWidth="178.0" text="Dragon Knight Hero" textFill="#d0675a">
-         <font>
-            <Font size="20.0" />
-         </font>
-      </Label>
-      <ImageView fx:id="dAbility1" fitHeight="50.0" fitWidth="50.0" layoutX="785.0" layoutY="301.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@Photos/Breathe_Fire_icon.png" />
-         </image>
-      </ImageView>
-      <ImageView fx:id="dAbility2" fitHeight="50.0" fitWidth="50.0" layoutX="849.0" layoutY="302.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@Photos/Dragon_Tail_icon.png" />
-         </image>
-      </ImageView>
-      <ImageView fx:id="dAbility3" fitHeight="50.0" fitWidth="50.0" layoutX="912.0" layoutY="303.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@Photos/Elder_Dragon_Form_icon.png" />
-         </image>
-      </ImageView>
-      <Label fx:id="ability1_stage1" layoutX="782.0" layoutY="370.0" prefHeight="28.0" prefWidth="57.0" style="-fx-background-color: f0eded; -fx-background-radius: 10;">
+      <Label fx:id="upgrade_new_ability1" layoutX="769.0" layoutY="291.0" prefHeight="28.0" prefWidth="57.0" style="-fx-background-color: f0eded; -fx-background-radius: 10;">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <Label fx:id="ability1_stage2" layoutX="849.0" layoutY="370.0" prefHeight="28.0" prefWidth="57.0" style="-fx-background-color: f0eded; -fx-background-radius: 10;">
+      <Label fx:id="upgrade_new_ability2" layoutX="848.0" layoutY="291.0" prefHeight="28.0" prefWidth="57.0" style="-fx-background-color: f0eded; -fx-background-radius: 10;">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <Label fx:id="ability1_stage3" layoutX="916.0" layoutY="370.0" prefHeight="28.0" prefWidth="57.0" style="-fx-background-color: f0eded; -fx-background-radius: 10;">
+      <Label fx:id="upgrade_new_ability3" layoutX="929.0" layoutY="291.0" prefHeight="28.0" prefWidth="57.0" style="-fx-background-color: f0eded; -fx-background-radius: 10;">
          <font>
             <Font size="18.0" />
          </font>

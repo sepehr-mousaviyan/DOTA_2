@@ -58,20 +58,17 @@ public class User {
         if (res.contains(Boolean.TRUE)) {
             client.setTOKEN((long) res.getValue1());
             UserData userData = new UserData((long) res.getValue1());
-            MessageMaker messageMaker = new MessageMaker();
             JsonObject json = MessageMaker.message("OK", "res_signin", userData);
             this.playerData = playerData;
             LOGGER.info(res.getValue0() + " signed in. " + "acces TOKEN: " + res.getValue1());
             return json.toString();
         } else if (res.getValue0().equals(Boolean.FALSE)) {
             UserData userData = new UserData((String) res.getValue1());
-            MessageMaker messageMaker = new MessageMaker();
             JsonObject json = MessageMaker.message("fail", "res_signin", userData);
             LOGGER.info(res.getValue1());
             return json.toString();
         } else {
             UserData userData = new UserData("can not login! try later");
-            MessageMaker messageMaker = new MessageMaker();
             JsonObject json = MessageMaker.message("fail", "res_signup", userData);
             LOGGER.warn("can not login!");
             return json.toString();
