@@ -1,12 +1,6 @@
 package sbu.cs.mahkats.Client.UI.Controler;
 
 import com.google.gson.JsonObject;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
 import sbu.cs.mahkats.Api.Api;
 import sbu.cs.mahkats.Api.Data.AbilityData;
 import sbu.cs.mahkats.Api.Data.BuildingData;
@@ -52,7 +46,7 @@ public class ReceiveDataRunnable implements Runnable{
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            JsonObject josnMessage = new Api().toJson(message);
+            JsonObject josnMessage = Api.toJson(message);
             if(josnMessage == null){
                 continue;
             }

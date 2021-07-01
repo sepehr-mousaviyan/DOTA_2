@@ -3,7 +3,7 @@ package sbu.cs.mahkats.Server.App;
 
 import sbu.cs.mahkats.Api.Api;
 import sbu.cs.mahkats.Api.Data.ActionHeroData;
-import sbu.cs.mahkats.Api.MassageMaker;
+import sbu.cs.mahkats.Api.MessageMaker;
 import sbu.cs.mahkats.Api.Parser;
 import sbu.cs.mahkats.Configuration.Config;
 import sbu.cs.mahkats.Configuration.InterfaceConfig;
@@ -115,7 +115,7 @@ public class GamePlay {
 
     private void endGame(String name, ArrayList<Client> clients) {
         for(Client client : clients) {
-            client.send(new MassageMaker().massage("EndGame", name).toString());
+            client.send(new MessageMaker().message("EndGame", name).toString());
         }
     }
 
@@ -276,9 +276,9 @@ public class GamePlay {
             turn_nth_client = 0;
         }
         Client client = clients.get(turn_nth_client);
-        client.send(new MassageMaker().massage("ok", "startTurn").toString());
+        client.send(new MessageMaker().message("ok", "startTurn").toString());
         String data = client.receiveData();
-        ActionHeroData actionHeroData = Parser.parseActionHeroData(new Api().toJson(data));
+        ActionHeroData actionHeroData = Parser.parseActionHeroData(Api.toJson(data));
         Hero hero = GreenUnits.getHero(actionHeroData.getHeroCode()); 
         if (hero == null){
             hero = RedUnits.getHero(actionHeroData.getHeroCode());

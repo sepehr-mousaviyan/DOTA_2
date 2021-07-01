@@ -116,7 +116,7 @@ public class GamePlayData implements Data{
 
     public JsonObject makeJson(){
         if(error != null) {
-            return new Api().toJson(new Pair<>("token", token),
+            return Api.toJson(new Pair<>("token", token),
                     new Pair<>("hp", hp),
                     new Pair<>("hp_regeneration", hp_regeneration),
                     new Pair<>("minimum_damage", minimum_damage),
@@ -131,6 +131,6 @@ public class GamePlayData implements Data{
                     new Pair<>("Location_x", Location_x),
                     new Pair<>("Location_y", max_Location_y - Location_y));
         }
-        return new Api().toJson(new Pair<>("error", error), new Pair<>("token", token));
+        return Api.toJson(new Pair<>("error", error), new Pair<>("token", token));
     }
 }

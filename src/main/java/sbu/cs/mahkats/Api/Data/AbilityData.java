@@ -3,10 +3,11 @@ package sbu.cs.mahkats.Api.Data;
 import com.google.gson.JsonObject;
 import org.javatuples.Pair;
 import sbu.cs.mahkats.Api.Api;
+
 import java.util.ArrayList;
 
 public class AbilityData implements Data{
-    private long token;
+    private final long token;
     private String name;
     private int unlock_level;
     private int gunShot;
@@ -131,7 +132,7 @@ public class AbilityData implements Data{
     @Override
     public JsonObject makeJson() {
         if(error == null) {
-            return new Api().toJson(new Pair<>("token", token),
+            return Api.toJson(new Pair<>("token", token),
                     new Pair<>("name", name),
                     new Pair<>("unlock_level", unlock_level),
                     new Pair<>("gunShot", gunShot),
@@ -147,8 +148,7 @@ public class AbilityData implements Data{
                     new Pair<>("stage", stage),
                     new Pair<>("isUnlock", isUnlock),
                     new Pair<>("canUnlock", canUnlock));
-//                    new Pair<>("defenders", defendersCode));
         }
-        return new Api().toJson(new Pair<>("error", error), new Pair<>("token", token));
+        return Api.toJson(new Pair<>("error", error), new Pair<>("token", token));
     }
 }

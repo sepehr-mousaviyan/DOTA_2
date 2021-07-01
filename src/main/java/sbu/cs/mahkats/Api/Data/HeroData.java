@@ -27,10 +27,10 @@ public class HeroData extends MovableUnitData{
         String str = super.makeJson().toString();
         if(error != null) {
             str = str.substring(0, str.length() - 1) + ", ";
-            String added = new Api().toJson(new Pair<>("heroType", heroType)).toString();
+            String added = Api.toJson(new Pair<>("heroType", heroType)).toString();
             added = added.substring(1);
-            return new Api().toJson(str + added);
+            return Api.toJson(str + added);
         }
-        return new Api().toJson(str);
+        return Api.toJson(str);
     }
 }

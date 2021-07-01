@@ -5,7 +5,7 @@ import org.apache.log4j.Logger;
 import org.javatuples.Pair;
 import sbu.cs.mahkats.Api.Api;
 import sbu.cs.mahkats.Api.Data.*;
-import sbu.cs.mahkats.Api.MassageMaker;
+import sbu.cs.mahkats.Api.MessageMaker;
 import sbu.cs.mahkats.Api.Parser;
 import sbu.cs.mahkats.Server.App.GamePlay;
 import sbu.cs.mahkats.Server.Connection.DataBase.DataBase;
@@ -85,7 +85,7 @@ public class Client {
         sendBarrackData(redBarracks, "barrack" , "ok");
         sendAbilityData(greenAbility, "ability", "ok");
         sendAbilityData(redAbility, "ability", "ok");
-        send(new MassageMaker().massage("ok" , "End").toString());
+        send(new MessageMaker().message("ok" , "End").toString());
     }
 
     public void sendAncientData(Ancient ancient, String action, String status){
@@ -94,13 +94,13 @@ public class Client {
                 ancient.getExperience() , ancient.getStatusAttacker() , 0 ,
                 ancient.getStatusDie() , ancient.getCode() , "Ancient", ancient.getTeamName(), ancient.getLocation_x(),
                 ancient.getLocation_y());
-        send(new MassageMaker().massage(status , action , ancientData).toString());
+        send(new MessageMaker().message(status , action , ancientData).toString());
     }
 
     public void sendHeroData(ArrayList <Hero> heroes, String action, String status) {
         for(Hero hero : heroes){
             HeroData heroData = makeHeroData(hero);
-            send(new MassageMaker().massage(status , action , heroData).toString());
+            send(new MessageMaker().message(status , action , heroData).toString());
         }
     }
 
@@ -130,7 +130,7 @@ public class Client {
                 creep.getStatusDie() , creep.getCode(), creep.getLevel() , creep.getMana() ,
                 creep.getMana_regeneration(), creep.getType(), creep.getTeamName(), creep.getLocation_x(),
                     creep.getLocation_y());
-            send(new MassageMaker().massage(status , action , creepData).toString());      
+            send(new MessageMaker().message(status , action , creepData).toString());
         }
     }
 
@@ -145,7 +145,7 @@ public class Client {
                 tower.getExperience() , tower.getStatusAttacker() , defender ,
                 tower.getStatusDie() , tower.getCode() , tower.getTeamName(), "Tower",
                     tower.getLocation_x(), tower.getLocation_y());
-            send(new MassageMaker().massage(status , action , towerData).toString());    
+            send(new MessageMaker().message(status , action , towerData).toString());
         }
     }
 
@@ -156,7 +156,7 @@ public class Client {
                 barrack.getExperience() , barrack.getStatusAttacker() , 0 ,
                 barrack.getStatusDie() , barrack.getCode() , barrack.getTeamName() , "Barrack",
                     barrack.getLocation_x(), barrack.getLocation_y());
-            send(new MassageMaker().massage(status , action , barrackData).toString());    
+            send(new MessageMaker().message(status , action , barrackData).toString());
         }
     }
 
@@ -168,7 +168,7 @@ public class Client {
                     ability.getLeft_duration_turn() , ability.getLeft_duration_reload_turn(),
                     ability.isAvailable() , ability.getStage(), ability.getIsUnlock(),
                     ability.canUnlock(), null , 0 );
-            send(new MassageMaker().massage(status , action , abilityData).toString());
+            send(new MessageMaker().message(status , action , abilityData).toString());
         }
     }
 
@@ -184,8 +184,8 @@ public class Client {
             LOGGER.info("message received.");
         } catch (IOException e) {
             UserData userData = new UserData("couldn't receive, please send it again!" );
-            MassageMaker massageMaker = new MassageMaker();
-            JsonObject json = massageMaker.massage("fail", "receive", userData);
+            MessageMaker messageMaker = new MessageMaker();
+            JsonObject json = messageMaker.message("fail", "receive", userData);
             this.send(json.toString());
             LOGGER.fatal("message didn't received successfully!", e);
         }
@@ -220,7 +220,7 @@ public class Client {
         while(true) {
             String data = receiveUserData();
             Api api = new Api();
-            JsonObject json = api.toJson(data);
+            JsonObject json = Api.toJson(data);
             Pair res = null;
             String username;
             String password;
@@ -260,7 +260,7 @@ public class Client {
         HeroData knight = makeHeroData(hero);
         hero = new RangedHero("" , 0);
         HeroData ranged = makeHeroData(hero);
-        send(new MassageMaker().massage("ok", "listHero" , 2 , knight , ranged).toString());
+        send(new MessageMaker().message("ok", "listHero" , 2 , knight , ranged).toString());
     }
 
     public String getSelectHero(){
@@ -272,7 +272,7 @@ public class Client {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        ActionHeroData actionHeroData = Parser.parseActionHeroData(new Api().toJson(data));
+        ActionHeroData actionHeroData = Parser.parseActionHeroData(Api.toJson(data));
         if(actionHeroData.getChoice() == 5){
             return actionHeroData.getHeroName();
         }

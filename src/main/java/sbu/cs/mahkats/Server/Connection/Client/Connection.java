@@ -1,7 +1,7 @@
 package sbu.cs.mahkats.Server.Connection.Client;
 
 import org.apache.log4j.Logger;
-import sbu.cs.mahkats.Api.MassageMaker;
+import sbu.cs.mahkats.Api.MessageMaker;
 import sbu.cs.mahkats.Configuration.Config;
 import sbu.cs.mahkats.Server.App.GamePlay;
 
@@ -83,15 +83,15 @@ public class Connection implements Runnable {
         heroName = new ArrayList<String>();
         heroName.add(client.getSelectHero());
         if(setRedTrue()){
-            client.send(new MassageMaker().massage("GREEN" , heroName.get(0)).toString());
+            client.send(new MessageMaker().message("GREEN" , heroName.get(0)).toString());
             client.setTeamName("GREEN");
         }
         else{
             client.setTeamName("RED");
             if(heroName.get(0).equals("Knigth")){
-                client.send(new MassageMaker().massage("RED" , "Knight").toString());
+                client.send(new MessageMaker().message("RED" , "Knight").toString());
             } else {
-                client.send(new MassageMaker().massage("RED" , "Ranger").toString());
+                client.send(new MessageMaker().message("RED" , "Ranger").toString());
             }
         }/*
         if(!isRed) {

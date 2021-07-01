@@ -72,22 +72,22 @@ public class UserData implements Data {
     public JsonObject makeJson(){
         if(token == null) {
             if(email != null) {
-                return new Api().toJson(new Pair<>("username", username),
+                return Api.toJson(new Pair<>("username", username),
                         new Pair<>("password", password),
                         new Pair<>("email", email));
             }
-            return new Api().toJson(new Pair<>("username", username),
+            return Api.toJson(new Pair<>("username", username),
                     new Pair<>("password", password));
 
         }
-        return new Api().toJson(new Pair<>("token", token));
+        return Api.toJson(new Pair<>("token", token));
     }
 
     public JsonObject makeErrorJson(){
         if(token != null) {
-            return new Api().toJson(new Pair<>("error", error), new Pair<>("token", token));
+            return Api.toJson(new Pair<>("error", error), new Pair<>("token", token));
         }
-        return new Api().toJson(new Pair<>("error", error));
+        return Api.toJson(new Pair<>("error", error));
     }
 
     public boolean equals(UserData obj) {
