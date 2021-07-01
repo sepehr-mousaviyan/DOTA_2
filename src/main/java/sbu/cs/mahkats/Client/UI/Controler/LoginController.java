@@ -68,20 +68,10 @@ public class LoginController  {
         else {
             try {
                 if(Connection.checkUserSignIn(userNameInput.getText(),passInput.getText())){
-                    try {
-                        Thread.sleep(500);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    System.out.println("here");
                     if(Connection.getCheckStatus()){
-                        System.out.println("iftrue");
-//                        Connection.runReceiver();
                         try {
                             Parent logParent = null;
-                            System.out.println("before page");
-                            logParent = FXMLLoader.load(getClass().getResource("/GameMap.fxml"));
-                            System.out.println("after page");
+                            logParent = FXMLLoader.load(getClass().getResource("/ChooseHeroScreen.fxml"));
                             logStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
                             Scene logScene = new Scene(logParent);
@@ -106,7 +96,7 @@ public class LoginController  {
                         }
                     }
                 }
-            } catch (IOException e) {
+            } catch (IOException | InterruptedException e) {
                 serverRespond.setText("SIGN UP FAILED! Try later");
                 e.printStackTrace();
             }

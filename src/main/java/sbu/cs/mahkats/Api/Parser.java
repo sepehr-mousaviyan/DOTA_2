@@ -55,7 +55,6 @@ public class Parser{
         Gson gson = new Gson();
         JsonData buildingData = gson.fromJson(json , JsonData.class);
         String content = buildingData.getContent().toString();
-        //HashMap<String, JsonObject> heroes =  gson.fromJson(new Api().toJson(content), HashMap.class);
         HeroList hero = gson.fromJson(new Api().toJson(content), HeroList.class);
         return hero.getHeroes();
     }

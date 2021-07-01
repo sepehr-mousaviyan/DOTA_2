@@ -35,7 +35,6 @@ public abstract class Unit {
         chunk_size = config.getIntValue("game.chunk.size");
     }
 
-
     public double getHp() {
         return hp;
     }
@@ -108,13 +107,6 @@ public abstract class Unit {
         return teamName;
     }
 
-    public void hp_regenerate() {
-        hp = hp + hp_regeneration;
-        if (hp > 100) {
-            hp = 100;
-        }
-    }
-
     public int getLocation_x() {
         return Location_x;
     }
@@ -160,6 +152,13 @@ public abstract class Unit {
     }
 
     public double getHp_regeneration(){ return hp_regeneration; }
+
+    public void hp_regenerate() {
+        hp = hp + hp_regeneration;
+        if (hp > 100) {
+            hp = 100;
+        }
+    }
 
     public void reduce_hp(double reduce){ hp -= reduce; }
 

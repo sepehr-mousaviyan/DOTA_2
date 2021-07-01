@@ -80,24 +80,18 @@ public class Connection {
         return checkStatus;
     }
 
-    public static boolean checkUserSignIn(String userName, String passWord) throws IOException {
-
+    public static boolean checkUserSignIn(String userName, String passWord) throws IOException, InterruptedException {
+        checkStatus = false;
         try {
             UserData user = new UserData(userName,passWord);
             MassageMaker massageMaker = new MassageMaker();
             JsonObject signinObj = massageMaker.massage("OK","signin",user);
             if(send(signinObj.toString())){
-                String data = receive();
-                if(Parser.parseUserData(new Api().toJson(data)).getError() != null){
-                    checkStatus = true;
-                    return true;
-                }
-                else{
-                    return false;
-                }
-
+                receive();
+                checkStatus = true;
+                return true;
             }
-        } catch (Exception e){
+        } catch (IOException e){
             logger.fatal("Account not found", e);
             throw e;
         }
@@ -139,8 +133,8 @@ public class Connection {
         return error;
     }
 
-    public static void runReceiver(ActionEvent event){
-        new Thread(new ReceiveDataRunnable(dataInputStream, event)).start();
+    public static void runReceiver(){
+        new Thread(new ReceiveDataRunnable(dataInputStream)).start();
     }
 
     public static boolean getHeroesData(){

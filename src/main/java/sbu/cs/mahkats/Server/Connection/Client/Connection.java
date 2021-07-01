@@ -51,12 +51,11 @@ public class Connection implements Runnable {
         try {
             threads.get(0).join();
             threads.get(1).join();
+            Thread.sleep(10);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
         LOGGER.info("start send teamNames");
-        clients.get(0).send(new MassageMaker().massage("GREEN", "Knight").toString());
-        clients.get(1).send(new MassageMaker().massage("RED", "Ranger").toString());
         LOGGER.info("start send teamNames");
         new GamePlay("Knight", "Ranger").play(clients);
     }
@@ -82,7 +81,7 @@ public class Connection implements Runnable {
         client.handlerLoginSignup();
         client.sendListHero();
         heroName = new ArrayList<String>();
-        /*heroName.add(client.getSelectHero());
+        heroName.add(client.getSelectHero());
         if(setRedTrue()){
             client.send(new MassageMaker().massage("GREEN" , heroName.get(0)).toString());
             client.setTeamName("GREEN");
@@ -94,7 +93,7 @@ public class Connection implements Runnable {
             } else {
                 client.send(new MassageMaker().massage("RED" , "Ranger").toString());
             }
-        }
+        }/*
         if(!isRed) {
             heroName.add("Knight");
             client.send(new MassageMaker().massage("GREEN", "Knight").toString());

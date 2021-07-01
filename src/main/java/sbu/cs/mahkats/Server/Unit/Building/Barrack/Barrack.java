@@ -9,27 +9,5 @@ public class Barrack extends Building {
     public Barrack(String lane, String teamName , int code) {
         super(teamName, "Barrack" , code);
         this.lane = lane;
-        /*Config config = BuildingConfig.getInstance("BarrackConfig");
-        Location_x = config.getIntValue("barrack.barrack." + top + "Lane.location_x");
-        Location_y = config.getIntValue("barrack.barrack.topLane.location_y");
-        switch (lane) {
-            case "TOP":
-                Location_x = config.getIntValue("barrack.barrack.topLane.location_x");
-                Location_y = config.getIntValue("barrack.barrack.topLane.location_y");
-                break;
-            case "MIDDLE":
-                Location_x = config.getIntValue("barrack.barrack.middlelane.location_x");
-                Location_y = config.getIntValue("barrack.barrack.middlelane.location_y");
-                break;
-            case "BOTTOM":
-                Location_x = config.getIntValue("barrack.barrack.bottomlane.location_x");
-                Location_y = config.getIntValue("barrack.barrack.bottomlane.location_y");
-                break;
-        }
-        if(teamName.equals("Red")){
-            config = InterfaceConfig.getInstance();
-            Location_x = config.getIntValue("map.width") - Location_x;
-            Location_y = config.getIntValue("map.heigth") - Location_y;
-        }*/
     }
 }

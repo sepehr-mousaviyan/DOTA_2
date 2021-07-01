@@ -123,11 +123,6 @@ public class MainController implements Initializable {
         }
 
         else if(Connection.checkUserSignUp(userNameInput.getText(),passInput.getText(),emailInput.getText())){
-            try {
-                Thread.sleep(500);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
             if(Connection.getStatus()){
                 try {
                     Parent logParent = null;
@@ -214,6 +209,6 @@ public class MainController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         if (!SplashController.isPlayed);
-            //loadSplash();
+        loadSplash();
     }
 }

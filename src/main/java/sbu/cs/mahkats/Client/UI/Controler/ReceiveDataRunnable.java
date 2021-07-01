@@ -26,6 +26,7 @@ public class ReceiveDataRunnable implements Runnable{
     private static final ArrayList<AbilityData> abilities = new ArrayList<>();
     private final DataInputStream dataInputStream;
     private static String teamName = "Error";
+    private static boolean isReloaded = true;
 
     public static void setTeamName(String teamName) {
         ReceiveDataRunnable.teamName = teamName;
@@ -35,16 +36,13 @@ public class ReceiveDataRunnable implements Runnable{
         return teamName;
     }
 
-    ActionEvent event;
-
-    public ReceiveDataRunnable(DataInputStream dataInputStream, ActionEvent event) {
+    public ReceiveDataRunnable(DataInputStream dataInputStream) {
         this.dataInputStream = dataInputStream;
-        this.event = event;
     }
 
     @Override
     public void run() {
-        MapController mapController = new MapController();
+        //MapController mapController = new MapController();
 
         while(true){
             String message = "";
@@ -55,6 +53,9 @@ public class ReceiveDataRunnable implements Runnable{
                 e.printStackTrace();
             }
             JsonObject josnMessage = new Api().toJson(message);
+            if(josnMessage == null){
+                continue;
+            }
             String action = Parser.getAction(josnMessage);
             switch (action){
                 case "building":
@@ -71,7 +72,8 @@ public class ReceiveDataRunnable implements Runnable{
                     break;
                 case "End":
                     //Connection.sendHeroAction(MapController.getMove());
-                    mapController.checkUnits(heroes, abilities, creeps, buildings);
+                    //mapController.checkUnits(heroes, abilities, creeps, buildings);
+                    isReloaded = false;
                     break;
                 case "GREEN" :
                     //mapController.setFinished("Green");
@@ -138,4 +140,11 @@ public class ReceiveDataRunnable implements Runnable{
         return abilities;
     }
 
+    public static void setIsReloaded(boolean isReloaded) {
+        ReceiveDataRunnable.isReloaded = isReloaded;
+    }
+
+    public static boolean isIsReloaded() {
+        return isReloaded;
+    }
 }

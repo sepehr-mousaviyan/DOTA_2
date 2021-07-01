@@ -25,6 +25,7 @@ import sbu.cs.mahkats.Api.Parser;
 import sbu.cs.mahkats.Client.Connection.Connection;
 import sbu.cs.mahkats.Configuration.Config;
 import sbu.cs.mahkats.Configuration.Units.HeroConfig;
+import sbu.cs.mahkats.Server.Connection.Client.RecievrDataRunnable;
 import sbu.cs.mahkats.Server.Unit.Movable.Hero.Ability.Ability;
 
 import java.io.*;
@@ -860,8 +861,16 @@ public class MapController implements Initializable {
             thread.join();
         } catch (InterruptedException e) {
             e.printStackTrace();
-        }*/
-        //Connection.getTeamName();
-        teamNameOnMap.setText(recievedTeamName);
+        }
+        recievedTeamName = ReceiveDataRunnable.getTeamName();
+        teamNameOnMap.setText(recievedTeamName);*/
+        new Thread(()->{
+            while(true) {
+                if(!ReceiveDataRunnable.isIsReloaded()) {
+                    checkUnits(ReceiveDataRunnable.getHeroes(), ReceiveDataRunnable.getAbilities(), ReceiveDataRunnable.getCreeps(), ReceiveDataRunnable.getBuildings());
+                    ReceiveDataRunnable.setIsReloaded(false);
+                }
+            }
+        }).start();
     }
 }

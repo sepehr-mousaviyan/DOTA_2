@@ -1,26 +1,22 @@
 package sbu.cs.mahkats.Client.UI.Controler;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import sbu.cs.mahkats.Api.Api;
 import sbu.cs.mahkats.Api.Data.HeroData;
+import sbu.cs.mahkats.Api.Parser;
 import sbu.cs.mahkats.Client.Connection.Connection;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -101,7 +97,10 @@ public class ChooseHeroController implements Initializable {
     void goToSecondWaitingScreen(ActionEvent event) {
         try {
             Connection.sendSelectedHero(choosenHeroName);
-            Connection.runReceiver(event);
+            Connection.getTeamName();
+            Connection.runReceiver();
+
+            Platform.exit();
 
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Map.fxml"));
             Parent root1 = fxmlLoader.load();
