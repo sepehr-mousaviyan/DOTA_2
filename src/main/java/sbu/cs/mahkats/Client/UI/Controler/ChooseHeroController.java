@@ -64,7 +64,7 @@ public class ChooseHeroController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
+        Connection.getHeroesData();
         String videoOneAddress = "/video_2021-06-28_18-43-17.mp4";
         String videoTwoAddress = "/video_2021-06-28_18-43-30.mp4";
 
@@ -135,7 +135,7 @@ public class ChooseHeroController implements Initializable {
         try {
             Connection.sendSelectedHero(choosenHeroName);
             Parent logParent = null;
-            logParent = FXMLLoader.load(getClass().getResource("/testMap.fxml"));
+            logParent = FXMLLoader.load(getClass().getResource("/GameMap.fxml"));
             Stage logStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
             Scene logScene = new Scene(logParent);

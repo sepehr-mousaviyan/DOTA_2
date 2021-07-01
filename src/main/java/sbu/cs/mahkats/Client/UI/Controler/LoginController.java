@@ -19,6 +19,8 @@ public class LoginController  {
     private static final int USERNAME_LENGTH = config.getIntValue("input.limit.userName");
     private static final int PASSWORD_LENGTH = config.getIntValue("input.limit.passWord");
 
+    private static Stage logStage;
+
     @FXML
     private TextField userNameInput;
 
@@ -64,19 +66,32 @@ public class LoginController  {
         else {
             try {
                 if(Connection.checkUserSignIn(userNameInput.getText(),passInput.getText())){
+                    try {
+                        Thread.sleep(500);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    System.out.println("here");
                     if(Connection.getCheckStatus()){
-                        Connection.runReceiver();
-                        Parent logParent = FXMLLoader.load(getClass().getResource("/LoadingScreenOne.fxml"));
-                        Stage logStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                        System.out.println("iftrue");
+//                        Connection.runReceiver();
+                        try {
+                            Parent logParent = null;
+                            logParent = FXMLLoader.load(getClass().getResource("/ChooseHeroScreen.fxml"));
+                            logStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
-                        Scene logScene = new Scene(logParent);
+                            Scene logScene = new Scene(logParent);
 
-                        logStage.setScene(logScene);
-                        logStage.show();
+                            logStage.setScene(logScene);
+                            logStage.show();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
                     }
 
 
                     else {
+                        System.out.println("else");
                         emptyRespond.setText("");
                         invalidRespond.setText("");
                         try {
