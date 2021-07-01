@@ -3,14 +3,12 @@ package sbu.cs.mahkats.Server.Unit.Movable.Hero;
 import sbu.cs.mahkats.Configuration.Config;
 import sbu.cs.mahkats.Configuration.InterfaceConfig;
 import sbu.cs.mahkats.Configuration.Units.HeroConfig;
-import sbu.cs.mahkats.Server.Unit.Movable.Creep.Creep;
 import sbu.cs.mahkats.Server.Unit.Movable.Hero.Ability.Ability;
 import sbu.cs.mahkats.Server.App.GamePlay;
 import sbu.cs.mahkats.Server.Unit.Movable.Movable;
 import sbu.cs.mahkats.Server.Unit.Unit;
 
 import java.util.ArrayList;
-import java.util.Locale;
 
 public class Hero extends Movable {
     protected String hero_name;
@@ -19,7 +17,7 @@ public class Hero extends Movable {
     protected Ability ability2;
     protected Ability ability3;
 
-    protected ArrayList<Ability> abilties;
+    protected ArrayList<Ability> abilities;
     protected ArrayList<Unit> defenders;
 
     protected short level;
@@ -42,15 +40,15 @@ public class Hero extends Movable {
         isLevelUp = false;
         isRespawnTime = false;
         remainRespawnTime = 10;
-        abilties = new ArrayList<>();
+        abilities = new ArrayList<>();
 
         this.hero_name = hero_name;
         ability1 = new Ability(hero_name, 1);
-        abilties.add(ability1);
+        abilities.add(ability1);
         ability2 = new Ability(hero_name, 2);
-        abilties.add(ability2);
+        abilities.add(ability2);
         ability3 = new Ability(hero_name, 3);
-        abilties.add(ability3);
+        abilities.add(ability3);
         
 
         ability1.setUnlock();
@@ -82,6 +80,9 @@ public class Hero extends Movable {
         for (int i = 0; i < LEVEL_NUMBERS; i++ ) {
             LEVEL_XP[i] = levelUpConfig.getIntValue("hero.xp_needed.level" + i);
         }
+
+        Location_y = 10;
+        Location_x = 10;
     }
 
     public void levelUp() {
@@ -239,7 +240,7 @@ public class Hero extends Movable {
     }
 
     public ArrayList<Ability> getAbilities() {
-        return abilties;
+        return abilities;
     }
 
     public Ability getAbility1() {

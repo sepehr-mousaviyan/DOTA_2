@@ -1,6 +1,12 @@
 package sbu.cs.mahkats.Client.UI.Controler;
 
 import com.google.gson.JsonObject;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 import sbu.cs.mahkats.Api.Api;
 import sbu.cs.mahkats.Api.Data.AbilityData;
 import sbu.cs.mahkats.Api.Data.BuildingData;
@@ -14,10 +20,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class ReceiveDataRunnable implements Runnable{
-    private final ArrayList<BuildingData> buildings = new ArrayList<>();
-    private final ArrayList<HeroData> heroes = new ArrayList<>();
-    private final ArrayList<CreepData> creeps = new ArrayList<>();
-    private final ArrayList<AbilityData> abilities = new ArrayList<>();
+    private static final ArrayList<BuildingData> buildings = new ArrayList<>();
+    private static final ArrayList<HeroData> heroes = new ArrayList<>();
+    private static final ArrayList<CreepData> creeps = new ArrayList<>();
+    private static final ArrayList<AbilityData> abilities = new ArrayList<>();
     private final DataInputStream dataInputStream;
     private static String teamName = "Error";
 
@@ -29,8 +35,11 @@ public class ReceiveDataRunnable implements Runnable{
         return teamName;
     }
 
-    public ReceiveDataRunnable(DataInputStream dataInputStream) {
+    ActionEvent event;
+
+    public ReceiveDataRunnable(DataInputStream dataInputStream, ActionEvent event) {
         this.dataInputStream = dataInputStream;
+        this.event = event;
     }
 
     @Override
@@ -41,27 +50,28 @@ public class ReceiveDataRunnable implements Runnable{
             String message = "";
             try {
                 message = dataInputStream.readUTF();
+                System.out.println(message);
             } catch (IOException e) {
                 e.printStackTrace();
             }
             JsonObject josnMessage = new Api().toJson(message);
             String action = Parser.getAction(josnMessage);
             switch (action){
-                case "Building":
+                case "building":
                     updateBuildingData(Parser.parseBuildingData(josnMessage));
                     break;
-                case "Hero":
+                case "hero":
                     updateHeroData(Parser.parseHeroData(josnMessage));
                     break;
-                case "Creep":
+                case "creep":
                     updateCreepData(Parser.parseCreepData(josnMessage));
                     break;
-                case "Ability" :
+                case "ability" :
                     updateAbilityData(Parser.parseAbilityData(josnMessage));
                     break;
                 case "End":
-                    Connection.sendHeroAction(mapController.getMove());
-                    //mapController.checkUnits(heroes, abilities, creeps, buildings);
+                    //Connection.sendHeroAction(MapController.getMove());
+                    mapController.checkUnits(heroes, abilities, creeps, buildings);
                     break;
                 case "GREEN" :
                     //mapController.setFinished("Green");
@@ -110,6 +120,22 @@ public class ReceiveDataRunnable implements Runnable{
             }
         }
         abilities.add(abilityData);
+    }
+
+    public  static ArrayList<BuildingData> getBuildings() {
+        return buildings;
+    }
+
+    public static ArrayList<HeroData> getHeroes() {
+        return heroes;
+    }
+
+    public static ArrayList<CreepData> getCreeps() {
+        return creeps;
+    }
+
+    public static ArrayList<AbilityData> getAbilities() {
+        return abilities;
     }
 
 }

@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="mainAnchor" prefHeight="768.0" prefWidth="1024.0" style="-fx-background-color: #000000;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sbu.cs.mahkats.Client.UI.Controler.MapController">
+<AnchorPane fx:id="mainAnchor" prefHeight="768.0" prefWidth="1026.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sbu.cs.mahkats.Client.UI.Controler.MapController">
    <children>
       <ImageView fitHeight="750.0" fitWidth="750.0" layoutX="7.0" pickOnBounds="true">
          <image>
@@ -29,6 +29,9 @@
             <Font size="25.0" />
          </font>
       </Label>
+      <ImageView fx:id="ability1" fitHeight="57.0" fitWidth="57.0" layoutX="767.0" layoutY="170.0" pickOnBounds="true" smooth="false" />
+      <ImageView fx:id="ability2" fitHeight="57.0" fitWidth="57.0" layoutX="847.0" layoutY="170.0" pickOnBounds="true" smooth="false" />
+      <ImageView fx:id="ability3" fitHeight="57.0" fitWidth="57.0" layoutX="929.0" layoutY="170.0" pickOnBounds="true" smooth="false" />
       <Label fx:id="showHP" layoutX="754.0" layoutY="397.0" prefHeight="57.0" prefWidth="256.0" style="-fx-background-color: f0eded; -fx-background-radius: 30; -fx-border-color: cf4444; -fx-border-radius: 25; -fx-border-width: 5;">
          <font>
             <Font size="23.0" />
@@ -39,7 +42,7 @@
             <Font size="23.0" />
          </font>
       </Label>
-      <Label fx:id="ability_stage" layoutX="769.0" layoutY="243.0" prefHeight="28.0" prefWidth="57.0" style="-fx-background-color: f0eded; -fx-background-radius: 10;">
+      <Label fx:id="ability1_stage" layoutX="769.0" layoutY="243.0" prefHeight="28.0" prefWidth="57.0" style="-fx-background-color: f0eded; -fx-background-radius: 10;">
          <font>
             <Font size="18.0" />
          </font>

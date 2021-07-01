@@ -22,9 +22,9 @@ public class AbilityData implements Data{
     private int stage;
     private boolean isUnlock;
     private boolean canUnlock;
-    private ArrayList<Integer> defendersCode;
+    private ArrayList<Integer> defendersCode = new ArrayList<>();
     private int heroCode;
-    private String error;
+    private String error = null;
 
     public AbilityData(long token, String name, int unlock_level, int gunShot, int max_stage, int range, double damage, int manaCost, int reloadDuration, int duration, int left_duration_turn, int left_duration_reload_turn, boolean isAvailable, int stage, boolean isUnlock, boolean canUnlock, ArrayList<Integer> defendersCode , int heroCode) {
         this.token = token;
@@ -130,12 +130,12 @@ public class AbilityData implements Data{
 
     @Override
     public JsonObject makeJson() {
-        if(error != null) {
+        if(error == null) {
             return new Api().toJson(new Pair<>("token", token),
                     new Pair<>("name", name),
                     new Pair<>("unlock_level", unlock_level),
                     new Pair<>("gunShot", gunShot),
-                    new Pair<>("max_stagr", max_stage),
+                    new Pair<>("max_stage", max_stage),
                     new Pair<>("damage", damage),
                     new Pair<>("range", range),
                     new Pair<>("manaCost", manaCost),
@@ -146,9 +146,8 @@ public class AbilityData implements Data{
                     new Pair<>("isAvailable", isAvailable),
                     new Pair<>("stage", stage),
                     new Pair<>("isUnlock", isUnlock),
-                    new Pair<>("canUnlock", canUnlock),
-                    new Pair<>("canUnlock", canUnlock),
-                    new Pair<>("defenders", defendersCode));
+                    new Pair<>("canUnlock", canUnlock));
+//                    new Pair<>("defenders", defendersCode));
         }
         return new Api().toJson(new Pair<>("error", error), new Pair<>("token", token));
     }

@@ -59,6 +59,12 @@ public class MassageMaker{
         return new Api().toJson(statusProperties, actionProperties, contentProperties);
     }
 
+    public JsonObject massage(String status, String action, ActionHeroData actionHeroData){
+        return new Api().toJson(new Pair<>("status" , status),
+                new Pair<>("action" , action),
+                new Pair<>("content", actionHeroData.makeJson()));
+    }
+
     public JsonObject massage(String status, String action, AbilityData abilityData){
         return new Api().toJson(new Pair<>("status" , status),
                 new Pair<>("action" , action),

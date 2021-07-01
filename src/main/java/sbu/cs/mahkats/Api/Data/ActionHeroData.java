@@ -6,10 +6,10 @@ import sbu.cs.mahkats.Api.Api;
 
 public class ActionHeroData implements Data{
     private final long token;
-    private String teamName;
+    private String teamName = "";
     private String heroName = "";
     private int heroCode = 0;
-    private String abilityName;
+    private String abilityName = "";
     private int defenderCode = 0;
     private int location_x = 0;
     private int location_y = 0;

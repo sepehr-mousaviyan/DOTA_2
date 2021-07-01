@@ -35,7 +35,7 @@ public class LoadingTwoController implements Initializable {
             e.printStackTrace();
         }
 
-        Connection.runReceiver();
+        //Connection.runReceiver();
         if (isReceived) {
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Map.fxml"));

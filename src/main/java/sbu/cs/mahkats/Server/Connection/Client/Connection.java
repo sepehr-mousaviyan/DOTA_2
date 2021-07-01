@@ -54,8 +54,10 @@ public class Connection implements Runnable {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        LOGGER.info("start send teamNames");
         clients.get(0).send(new MassageMaker().massage("GREEN", "Knight").toString());
         clients.get(1).send(new MassageMaker().massage("RED", "Ranger").toString());
+        LOGGER.info("start send teamNames");
         new GamePlay("Knight", "Ranger").play(clients);
     }
 

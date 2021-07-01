@@ -102,7 +102,6 @@ public class Client {
             HeroData heroData = makeHeroData(hero);
             send(new MassageMaker().massage(status , action , heroData).toString());
         }
-
     }
 
     private HeroData makeHeroData(Hero hero) {

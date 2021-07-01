@@ -115,29 +115,6 @@ public abstract class Unit {
         }
     }
 
-    /**
-     * reduce the hp of this unit
-     * @param damage
-     */
-    public void takeDamage(double damage) {
-        if((damage - armor) > hp){
-            hp = 0;
-            isDie = false;
-            this.destroy();
-        }
-        hp = hp - (damage - armor);
-    }
-
-    public void takeDamage(double damage , Hero hero) {
-        if((damage - armor) > hp){
-            hp = 0;
-            isDie = true;
-            hero.addRegularExperience(this.experience);
-            this.destroy();
-        }
-        hp = hp - (damage - armor);
-    }
-
     public int getLocation_x() {
         return Location_x;
     }
@@ -198,6 +175,29 @@ public abstract class Unit {
 
     public double getDamage(){
         return (Math.random()  * (maximum_damage - minimum_damage)) + minimum_damage;
+    }
+
+    /**
+     * reduce the hp of this unit
+     * @param damage
+     */
+    public void takeDamage(double damage) {
+        if((damage - armor) > hp){
+            hp = 0;
+            isDie = false;
+            this.destroy();
+        }
+        hp = hp - (damage - armor);
+    }
+
+    public void takeDamage(double damage , Hero hero) {
+        if((damage - armor) > hp){
+            hp = 0;
+            isDie = true;
+            hero.addRegularExperience(this.experience);
+            this.destroy();
+        }
+        hp = hp - (damage - armor);
     }
 
     /**

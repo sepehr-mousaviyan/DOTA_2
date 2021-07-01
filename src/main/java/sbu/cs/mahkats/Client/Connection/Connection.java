@@ -1,6 +1,7 @@
 package sbu.cs.mahkats.Client.Connection;
 
 import com.google.gson.JsonObject;
+import javafx.event.ActionEvent;
 import org.apache.log4j.Logger;
 import sbu.cs.mahkats.Api.Api;
 import sbu.cs.mahkats.Api.Data.AbilityData;
@@ -138,8 +139,8 @@ public class Connection {
         return error;
     }
 
-    public static void runReceiver(){
-        new Thread(new ReceiveDataRunnable(dataInputStream)).start();
+    public static void runReceiver(ActionEvent event){
+        new Thread(new ReceiveDataRunnable(dataInputStream, event)).start();
     }
 
     public static boolean getHeroesData(){
@@ -158,7 +159,7 @@ public class Connection {
     public static void sendSelectedHero(String hero_name){
         ActionHeroData actionHeroData = new ActionHeroData(TOKEN, hero_name , 0, "", 0, 5, ReceiveDataRunnable.getTeamName());
         try {
-            send(actionHeroData.makeJson().toString());
+            send(new MassageMaker().massage("Ok", "actionHero",actionHeroData).toString());
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -166,7 +167,8 @@ public class Connection {
 
     public static void sendHeroAction(char ch){
         //send(new ActionHeroData(TOKEN, 0, ch , 1).makeJson().toString());
-        BufferMessage.add(new ActionHeroData(TOKEN, 0, ch , 1).makeJson().toString());
+        BufferMessage.add(new MassageMaker().massage("ok", "actionHero",
+                new ActionHeroData(TOKEN, 0, ch , 1)).toString());
     }
 
     public static boolean getTeamName(){
@@ -185,19 +187,19 @@ public class Connection {
     public static void sendNewAbility(AbilityData abilityData, HeroData heroData){
         ActionHeroData actionHeroData = new ActionHeroData(TOKEN, heroData.getHeroType(), heroData.getCode(),abilityData.getName(),0,2, ReceiveDataRunnable.getTeamName());
         //send(actionHeroData.makeJson().toString());
-        BufferMessage.add(actionHeroData.makeJson().toString());
+        BufferMessage.add(new MassageMaker().massage("Ok", "actionHero",actionHeroData).toString());
     }
 
     public static void sendUpgradeAbility(AbilityData abilityData, HeroData heroData){
         ActionHeroData actionHeroData = new ActionHeroData(TOKEN, heroData.getHeroType(), heroData.getCode(),abilityData.getName(),0,3, ReceiveDataRunnable.getTeamName());
         //send(actionHeroData.makeJson().toString());
-        BufferMessage.add(actionHeroData.makeJson().toString());
+        BufferMessage.add(new MassageMaker().massage("Ok", "actionHero",actionHeroData).toString());
     }
 
     public static void sendUseAbility(AbilityData abilityData, HeroData heroData){
         ActionHeroData actionHeroData = new ActionHeroData(TOKEN, heroData.getHeroType(), heroData.getCode(),abilityData.getName(),0,6,  ReceiveDataRunnable.getTeamName());
         //send(actionHeroData.makeJson().toString());
-        BufferMessage.add(actionHeroData.makeJson().toString());
+        BufferMessage.add(new MassageMaker().massage("Ok", "actionHero",actionHeroData).toString());
     }
 
     public static void senBufferMessage(){
