@@ -86,6 +86,7 @@ public class Connection {
             MassageMaker massageMaker = new MassageMaker();
             JsonObject signinObj = massageMaker.massage("OK","signin",user);
             if(send(signinObj.toString())){
+                receive();
                 checkStatus = true;
 
             }
@@ -118,6 +119,7 @@ public class Connection {
             Api api = new Api();
             JsonObject json = api.toJson(data);
             logger.info("massage has been receive");
+            logger.info(data);
             if(!Parser.getStatus(json))
                 error = Parser.parseUserData(json).getError();
             else

@@ -233,16 +233,21 @@ public class Client {
                     String email = Parser.parseUserData(json).getEmail();
                     res = dataBase.signupRequest(username, password, email);
                     send(user.ResSignup(res, new PlayerData(username, password), this));
-                    return;
+                    if((boolean) res.getValue0()) {
+                        return;
+                    }
+
 
                 case "signin":
                     username = Parser.parseUserData(json).getUsername();
                     password = Parser.parseUserData(json).getPassword();
                     res = dataBase.loginRequest(username, password);
                     send(user.ResSignin(res, new PlayerData(username, password), this));
-                    return;
-                    
-        
+//                    if((Boolean) res.getValue0()) {
+//                        return;
+//                    }
+                    break;
+
                 default:
                     break;
             }

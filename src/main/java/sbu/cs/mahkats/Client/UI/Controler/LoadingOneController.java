@@ -28,6 +28,7 @@ public class LoadingOneController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        System.out.println("load one intilaiadas");
         Thread thread = new Thread(() ->{
             isReceived = Connection.getHeroesData();
         });
