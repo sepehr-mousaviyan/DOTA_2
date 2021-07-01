@@ -13,6 +13,7 @@ import sbu.cs.mahkats.Api.Data.UserData;
 //import sbu.cs.mahkats.Client.UI.Controler.ReceiveDataRunnable;
 import sbu.cs.mahkats.Client.UI.Controler.ChooseHeroController;
 import sbu.cs.mahkats.Client.UI.Controler.ReceiveDataRunnable;
+import sbu.cs.mahkats.Client.UI.HashGenerator;
 import sbu.cs.mahkats.Configuration.Config;
 
 import java.io.*;
@@ -65,7 +66,9 @@ public class Connection {
         boolean resault = false;
 
         try {
-            UserData user = new UserData(userName,passWord,email);
+
+            String HashedPassWord = HashGenerator.generate(passWord);
+            UserData user = new UserData(userName,HashedPassWord,email);
             MassageMaker massageMaker = new MassageMaker();
             JsonObject signinObj = massageMaker.massage("OK","signup",user);
             if(send(signinObj.toString())){
@@ -83,7 +86,8 @@ public class Connection {
     public static boolean checkUserSignIn(String userName, String passWord) throws IOException, InterruptedException {
         checkStatus = false;
         try {
-            UserData user = new UserData(userName,passWord);
+            String HashedPassWord = HashGenerator.generate(passWord);
+            UserData user = new UserData(userName,HashedPassWord);
             MassageMaker massageMaker = new MassageMaker();
             JsonObject signinObj = massageMaker.massage("OK","signin",user);
             if(send(signinObj.toString())){

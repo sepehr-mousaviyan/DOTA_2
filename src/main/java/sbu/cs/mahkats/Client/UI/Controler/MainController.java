@@ -208,7 +208,10 @@ public class MainController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        if (!SplashController.isPlayed);
-        loadSplash();
+        if (!SplashController.isPlayed) {
+            loadSplash();
+            SplashController.isPlayed = true;
+        }
+
     }
 }

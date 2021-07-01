@@ -100,7 +100,7 @@ public class ChooseHeroController implements Initializable {
             Connection.getTeamName();
             Connection.runReceiver();
 
-            Platform.exit();
+//            Platform.exit();
 
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Map.fxml"));
             Parent root1 = fxmlLoader.load();
