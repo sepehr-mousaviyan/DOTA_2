@@ -57,7 +57,8 @@ public class Connection implements Runnable {
         }
         LOGGER.info("start send teamNames");
         LOGGER.info("start send teamNames");
-        new GamePlay("Knight", "Ranger").play(clients);
+        GamePlay gamePlay = GamePlay.getInstance("Knight", "Ranger");
+        gamePlay.play(clients);
     }
 
     public ArrayList<String> getHeroName(){ return heroName;}
@@ -80,28 +81,19 @@ public class Connection implements Runnable {
         clients.add(client);
         client.handlerLoginSignup();
         client.sendListHero();
-        heroName = new ArrayList<String>();
+        heroName = new ArrayList<>();
         heroName.add(client.getSelectHero());
         if(setRedTrue()){
-            client.send(new MessageMaker().message("GREEN" , heroName.get(0)).toString());
+            client.send(MessageMaker.message("GREEN", heroName.get(0)).toString());
             client.setTeamName("GREEN");
         }
-        else{
-            client.setTeamName("RED");
-            if(heroName.get(0).equals("Knigth")){
-                client.send(new MessageMaker().message("RED" , "Knight").toString());
-            } else {
-                client.send(new MessageMaker().message("RED" , "Ranger").toString());
-            }
-        }/*
-        if(!isRed) {
-            heroName.add("Knight");
-            client.send(new MassageMaker().massage("GREEN", "Knight").toString());
-            isRed = true;
-        }
         else {
-            heroName.add("Ranger");
-            client.send(new MassageMaker().massage("RED", "Ranger").toString());
-        }*/
+            client.setTeamName("RED");
+            if (heroName.get(0).equals("Knight")) {
+                client.send(MessageMaker.message("RED", "Knight").toString());
+            } else {
+                client.send(MessageMaker.message("RED", "Ranger").toString());
+            }
+        }
     }
 }

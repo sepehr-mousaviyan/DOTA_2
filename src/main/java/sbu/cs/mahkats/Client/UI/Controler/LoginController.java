@@ -89,7 +89,7 @@ public class LoginController  {
                         emptyRespond.setText("");
                         invalidRespond.setText("");
                         try {
-                            if (Connection.receive() != null)
+                            if (Connection.receiveSignUpSignIn() != null)
                                 serverRespond.setText("SIGN UP FAILED! Try later");
                         } catch (IOException e) {
                             serverRespond.setText("CONNECTING TO SERVER FAILED");

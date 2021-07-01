@@ -146,7 +146,7 @@ public class MainController implements Initializable {
                 invalidRespond.setText("");
                 invalidEmail.setText("");
                 try {
-                    if (Connection.receive() != null)
+                    if (Connection.receiveSignUpSignIn() != null)
                         serverRespond.setText("SIGN IN FAILED!");
                 } catch (IOException e) {
                     serverRespond.setText("CONNECTING TO SERVER FAILED");
