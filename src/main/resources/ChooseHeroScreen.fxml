@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="768.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sbu.cs.mahkats.Client.UI.Controler.ChooseHeroController">
+   <children>
+      <AnchorPane fx:id="screen" prefHeight="768.0" prefWidth="1024.0" style="-fx-background-color: #343434;">
+         <children>
+            <ImageView fitHeight="210.0" fitWidth="1030.0" layoutY="557.0" pickOnBounds="true">
+               <image>
+                  <Image url="@Photos/ChooseHeroScreen_Background.jpg" />
+               </image>
+            </ImageView>
+            <Label layoutX="368.0" layoutY="36.0" prefHeight="63.0" prefWidth="343.0" text="CHOOSE YOUR HERO!" textFill="#f5f5f5">
+               <font>
+                  <Font size="34.0" />
+               </font>
+            </Label>
+            <Label layoutX="821.0" layoutY="676.0" prefHeight="48.0" prefWidth="161.0" style="-fx-background-radius: 50; -fx-background-color: #afabac; -fx-border-radius: 30;" text=" START GAME">
+               <font>
+                  <Font name="System Bold" size="23.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="543.0" fitWidth="301.0" layoutX="15.0" layoutY="99.0" pickOnBounds="true" smooth="false">
+               <image>
+                  <Image url="@Photos/list.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="114.0" layoutY="209.0" prefHeight="30.0" prefWidth="107.0" text="Hero Name" textFill="#f5efef">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Label layoutX="81.0" layoutY="224.0" prefHeight="54.0" prefWidth="177.0" text="Drow Ranger" textAlignment="RIGHT" textFill="#bab1f5">
+               <font>
+                  <Font size="28.0" />
+               </font></Label>
+            <Label layoutX="129.0" layoutY="282.0" prefHeight="30.0" prefWidth="73.0" text="Abilities" textFill="#f5efef">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="543.0" fitWidth="301.0" layoutX="700.0" layoutY="80.0" pickOnBounds="true" smooth="false">
+               <image>
+                  <Image url="@Photos/list.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="48.0" fitWidth="61.0" layoutX="742.0" layoutY="297.0" pickOnBounds="true" smooth="false">
+               <image>
+                  <Image url="@Photos/Breathe_Fire_icon.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="48.0" fitWidth="61.0" layoutX="821.0" layoutY="297.0" pickOnBounds="true" smooth="false">
+               <image>
+                  <Image url="@Photos/Dragon_Tail_icon.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="797.0" layoutY="190.0" prefHeight="30.0" prefWidth="107.0" text="Hero Name" textFill="#f5efef">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Label layoutX="762.0" layoutY="205.0" prefHeight="54.0" prefWidth="187.0" text="Knight Dragon" textAlignment="RIGHT" textFill="#d36559">
+               <font>
+                  <Font size="28.0" />
+               </font>
+            </Label>
+            <Label layoutX="809.0" layoutY="258.0" prefHeight="30.0" prefWidth="73.0" text="Abilities" textFill="#f5efef">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="48.0" fitWidth="61.0" layoutX="899.0" layoutY="297.0" pickOnBounds="true" smooth="false">
+               <image>
+                  <Image url="@Photos/Elder_Dragon_Form_icon.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="48.0" fitWidth="61.0" layoutX="53.0" layoutY="317.0" pickOnBounds="true" smooth="false">
+               <image>
+                  <Image url="@Photos/Frost_Arrows_icon.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="48.0" fitWidth="61.0" layoutX="131.0" layoutY="317.0" pickOnBounds="true" smooth="false">
+               <image>
+                  <Image url="@Photos/Multishot_icon.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="48.0" fitWidth="61.0" layoutX="217.0" layoutY="317.0" pickOnBounds="true" smooth="false">
+               <image>
+                  <Image url="@Photos/Marksmanship_icon.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="32.0" layoutY="371.0" prefHeight="21.0" prefWidth="274.0" text="Frost Arrows   Multishot   Marksmanship " textFill="#bab1f5" />
+            <Label layoutX="738.0" layoutY="350.0" prefHeight="21.0" prefWidth="250.0" text="Breath Fire       Tail         Elder Form" textFill="#d36559" />
+            <Label layoutX="125.0" layoutY="405.0" prefHeight="30.0" prefWidth="82.0" text="Damage" textFill="#f5efef">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Label layoutX="815.0" layoutY="384.0" prefHeight="30.0" prefWidth="82.0" text="Damage" textFill="#f5efef">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Label layoutX="63.0" layoutY="442.0" text="Max :" textFill="#f5efef">
+               <font>
+                  <Font size="17.0" />
+               </font>
+            </Label>
+            <Label layoutX="63.0" layoutY="479.0" text="Min :" textFill="#f5efef">
+               <font>
+                  <Font size="17.0" />
+               </font>
+            </Label>
+            <Label layoutX="742.0" layoutY="423.0" text="Max :" textFill="#f5efef">
+               <font>
+                  <Font size="17.0" />
+               </font>
+            </Label>
+            <Label layoutX="743.0" layoutY="460.0" text="Min :" textFill="#f5efef">
+               <font>
+                  <Font size="17.0" />
+               </font>
+            </Label>
+            <Label fx:id="rangerMaxDamage" layoutX="122.0" layoutY="442.0" prefHeight="30.0" prefWidth="116.0" textFill="blue" />
+            <Label fx:id="rangerMinDamage" layoutX="124.0" layoutY="477.0" prefHeight="30.0" prefWidth="116.0" textFill="blue" />
+            <Label fx:id="knightMaxDamage" layoutX="801.0" layoutY="423.0" prefHeight="30.0" prefWidth="116.0" textFill="Red" />
+            <Label fx:id="knightMinDamage" layoutX="801.0" layoutY="460.0" prefHeight="30.0" prefWidth="116.0" textFill="Red" />
+            <ImageView fx:id="drowHero" fitHeight="280.0" fitWidth="261.0" layoutX="278.0" layoutY="356.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Photos/drow_ranger.png" />
+               </image>
+            </ImageView>
+            <Button layoutX="824.0" layoutY="676.0" mnemonicParsing="false" onAction="#goToSecondWaitingScreen" opacity="0.0" prefHeight="48.0" prefWidth="161.0" text="Button" />
+            <Label fx:id="choosen" layoutX="416.0" layoutY="166.0" prefHeight="48.0" prefWidth="198.0" textFill="WHITE" />
+         </children>
+      </AnchorPane>
+      <ImageView fitHeight="196.0" fitWidth="161.0" layoutX="548.0" layoutY="428.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="dragonHero" fitHeight="280.0" fitWidth="261.0" layoutX="448.0" layoutY="363.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@Photos/dragon_knight.png" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>
