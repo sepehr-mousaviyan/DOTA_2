@@ -6,8 +6,8 @@ import sbu.cs.mahkats.Configuration.Units.BuildingConfig;
 import sbu.cs.mahkats.Server.Unit.Building.Building;
 
 public class Tower extends Building {
-    public Tower(String teamName, String lane , int choice , int code){
-        super(teamName, lane, "Tower" , code);
+    public Tower(String teamName, String lane, int choice, int code) {
+        super(teamName, lane, "Tower", code);
         this.lane = lane;
         Config config = BuildingConfig.getInstance("TowerConfig");
 
@@ -22,7 +22,7 @@ public class Tower extends Building {
         Location_x = config.getIntValue("tower." + lane.toLowerCase() + "." + choice + ".location_x");
         Location_y = config.getIntValue("tower." + lane.toLowerCase() + "." + choice + ".location_y");
 
-        if(teamName.equals("Red")){
+        if (teamName.equals("Red")) {
             config = InterfaceConfig.getInstance();
             Location_x = config.getIntValue("map.width") - Location_x;
             Location_y = config.getIntValue("map.height") - Location_y;

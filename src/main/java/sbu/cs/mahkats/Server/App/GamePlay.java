@@ -8,6 +8,7 @@ import sbu.cs.mahkats.Api.MessageMaker;
 import sbu.cs.mahkats.Api.Parser;
 import sbu.cs.mahkats.Configuration.Config;
 import sbu.cs.mahkats.Configuration.InterfaceConfig;
+import sbu.cs.mahkats.Configuration.Units.CreepConfig;
 import sbu.cs.mahkats.Server.Connection.Client.Client;
 import sbu.cs.mahkats.Server.Unit.Building.Barrack.Barrack;
 import sbu.cs.mahkats.Server.Unit.Building.Tower.Tower;
@@ -53,8 +54,10 @@ public class GamePlay {
         config = Config.getInstance();
         REFRESH_RATE = config.getIntValue("game.refreshRate");
         CREEP_GENERATE_TIME = config.getIntValue("game.creep.generateTime");
-        RANGED_CREEP_NUMBERS = config.getIntValue("game.creep.ranged.numbers");
-        MELEE_CREEP_NUMBERS = config.getIntValue("game.creep.melee.numbers");
+
+        config = CreepConfig.getInstance();
+        RANGED_CREEP_NUMBERS = config.getIntValue("creep.ranged.numbers");
+        MELEE_CREEP_NUMBERS = config.getIntValue("creep.melee.numbers");
 
         GreenUnits = new unitList("GREEN", heroName1);
         RedUnits = new unitList("RED", heroName2);

@@ -7,7 +7,6 @@ import sbu.cs.mahkats.Server.Unit.Movable.Hero.Hero;
 import sbu.cs.mahkats.Server.Unit.Unit;
 
 import java.util.ArrayList;
-import java.util.Locale;
 
 public class Ability {
     private final String NAME;
@@ -15,10 +14,10 @@ public class Ability {
     private final int GUNSHOT;
     private final int STAGE_NUMBERS;
     private final int RANGE;
-    private final double [] DAMAGE;     //the list of damage sort of level
-    private final int [] MANA_COST;     //the list of mana that should cost for one use ability sort of level
-    private final int [] RELOAD_DURATION;   //the list of turn that should stay for can use again ability sort of level
-    private final int [] DURATION;      //the list of turn that duration a use ability sort of level
+    private final double[] DAMAGE;     //the list of damage sort of level
+    private final int[] MANA_COST;     //the list of mana that should cost for one use ability sort of level
+    private final int[] RELOAD_DURATION;   //the list of turn that should stay for can use again ability sort of level
+    private final int[] DURATION;      //the list of turn that duration a use ability sort of level
 
     private int left_duration_turn; //the count duration of ability for end
     private int left_duration_reload_turn;  //the count turn until unlock again ability to use
@@ -29,17 +28,17 @@ public class Ability {
     private boolean canUnlock;  // if hero can unlock this is true
 
     public Ability(String hero_name, int ability_number) {
-        
+
         stage = 0;
         isUnlock = false;
         isAvailable = true;
 
         Config heroConfig = HeroConfig.getInstance(hero_name);
         hero_name = hero_name.toLowerCase();
-        NAME = heroConfig.getStringValue("hero." + hero_name + ".ability" + ability_number +".name");
-        UNLOCK_LEVEL = heroConfig.getIntValue("hero." + hero_name + ".ability" + ability_number +".unlockLevel");
-        GUNSHOT = heroConfig.getIntValue("hero." + hero_name + ".ability" + ability_number +".gunshot");
-        STAGE_NUMBERS = heroConfig.getIntValue("hero." + hero_name + ".ability" + ability_number +".stage_numbers");
+        NAME = heroConfig.getStringValue("hero." + hero_name + ".ability" + ability_number + ".name");
+        UNLOCK_LEVEL = heroConfig.getIntValue("hero." + hero_name + ".ability" + ability_number + ".unlockLevel");
+        GUNSHOT = heroConfig.getIntValue("hero." + hero_name + ".ability" + ability_number + ".gunshot");
+        STAGE_NUMBERS = heroConfig.getIntValue("hero." + hero_name + ".ability" + ability_number + ".stage_numbers");
         RANGE = heroConfig.getIntValue("hero." + hero_name + ".ability" + ability_number + ".range");
 
         DAMAGE = new double[STAGE_NUMBERS];
@@ -60,18 +59,19 @@ public class Ability {
 
     /**
      * this function for using ability
+     *
      * @param hero that use this ability
      */
     public void use(Hero hero) {
-        if(isAvailable){
+        if (isAvailable) {
             int lastTurn;
             double temp_damage;
-            switch(this.NAME) {
+            switch (this.NAME) {
                 case "breathFire":
                     left_duration_turn = DURATION[stage];
                     lastTurn = GamePlay.getTurn();
-                    while(left_duration_turn != 0) {
-                        if(lastTurn < GamePlay.getTurn()) {
+                    while (left_duration_turn != 0) {
+                        if (lastTurn < GamePlay.getTurn()) {
                             breathFire(hero);
                             left_duration_turn--;
                             lastTurn = GamePlay.getTurn();
@@ -81,8 +81,8 @@ public class Ability {
                 case "dragonTail":
                     left_duration_turn = DURATION[stage];
                     lastTurn = GamePlay.getTurn();
-                    while(left_duration_turn != 0) {
-                        if(lastTurn < GamePlay.getTurn()) {
+                    while (left_duration_turn != 0) {
+                        if (lastTurn < GamePlay.getTurn()) {
                             dragonTail(hero, hero.getDefender());
                             left_duration_turn--;
                             lastTurn = GamePlay.getTurn();
@@ -97,8 +97,8 @@ public class Ability {
                     temp_damage = hero.getMinimum_damage();
                     hero.setRange(2);
                     hero.setMinimum_damage(this.getDamage());
-                    while(left_duration_turn != 0) {
-                        if(lastTurn < GamePlay.getTurn()) {
+                    while (left_duration_turn != 0) {
+                        if (lastTurn < GamePlay.getTurn()) {
                             left_duration_turn--;
                         }
                     }
@@ -112,8 +112,8 @@ public class Ability {
                     lastTurn = GamePlay.getTurn();
                     temp_damage = hero.getMinimum_damage();
                     hero.setMinimum_damage(this.getDamage());
-                    while(left_duration_turn != 0) {
-                        if(lastTurn < GamePlay.getTurn()) {
+                    while (left_duration_turn != 0) {
+                        if (lastTurn < GamePlay.getTurn()) {
                             left_duration_turn--;
                         }
                     }
@@ -124,8 +124,8 @@ public class Ability {
                 case "multiArrow":
                     left_duration_turn = DURATION[stage];
                     lastTurn = GamePlay.getTurn();
-                    while(left_duration_turn != 0) {
-                        if(lastTurn < GamePlay.getTurn()) {
+                    while (left_duration_turn != 0) {
+                        if (lastTurn < GamePlay.getTurn()) {
                             multiArrow(hero);
                             left_duration_turn--;
                             lastTurn = GamePlay.getTurn();
@@ -134,12 +134,12 @@ public class Ability {
                     break;
 
                 case "marksmanship":
-                    if(left_duration_turn == 0) {
+                    if (left_duration_turn == 0) {
                         left_duration_turn = DURATION[stage];
                     }
                     marksmanship(hero);
                     left_duration_turn--;
-                    if(left_duration_turn != 0){
+                    if (left_duration_turn != 0) {
                         return;
                     }
                     break;
@@ -149,8 +149,8 @@ public class Ability {
         //count reload duration
         left_duration_reload_turn = RELOAD_DURATION[stage];
         int lastTurn = GamePlay.getTurn();
-        while(left_duration_reload_turn != 0) {
-            if(lastTurn < GamePlay.getTurn()) {
+        while (left_duration_reload_turn != 0) {
+            if (lastTurn < GamePlay.getTurn()) {
                 left_duration_reload_turn--;
                 lastTurn = GamePlay.getTurn();
             }
@@ -160,6 +160,7 @@ public class Ability {
 
     /**
      * if can level up ability do that and return true
+     *
      * @return can stage up or not
      */
     public boolean stageUp() {
@@ -168,10 +169,12 @@ public class Ability {
             return true;
         }
         return false;
-        
+
     }
 
-    public int getLeft_duration_turn(){ return left_duration_turn; }
+    public int getLeft_duration_turn() {
+        return left_duration_turn;
+    }
 
     public void breathFire(Hero hero) {
         GamePlay.abilityHit(GUNSHOT, hero, this);
@@ -186,17 +189,16 @@ public class Ability {
     }
 
     public void dragonTail(Hero hero, Unit defender) {
-        defender.takeDamage(this.getDamage() , hero);
+        defender.takeDamage(this.getDamage(), hero);
         GamePlay.abilityHit(GUNSHOT, hero, this);
     }
 
     public void multiArrow(Hero hero) {
         ArrayList<Unit> defenders = hero.getDefenders();
-        for(Unit defender : defenders){
-            if(defender.getUnitType().equals("Hero")){
-                ((Hero)defender).takeDamage(this.getDamage());
-            }
-            else defender.takeDamage(this.getDamage());
+        for (Unit defender : defenders) {
+            if (defender.getUnitType().equals("Hero")) {
+                defender.takeDamage(this.getDamage());
+            } else defender.takeDamage(this.getDamage());
         }
         GamePlay.abilityHit(GUNSHOT, hero, this);
     }
@@ -205,32 +207,31 @@ public class Ability {
         GamePlay.abilityHit(GUNSHOT, hero, this);
     }
 
-    public double getDamage(){
+    public double getDamage() {
         return DAMAGE[stage];
     }
-    
+
     public boolean getIsUnlock() {
         return isUnlock;
     }
 
-    public int getRange(){ return RANGE; }
+    public int getRange() {
+        return RANGE;
+    }
 
-    public void levelUp(){
+    public void levelUp() {
         stage++;
     }
 
-    public boolean setUnlock(){
+    public boolean setUnlock() {
         if (!isUnlock) {
             isUnlock = true;
             return true;
         }
         return false;
-        
     }
 
-    public void setCanUnlock(){
-        isUnlock = true;
-    }
+    public void setCanUnlock() { isUnlock = true; }
 
     public int getUNLOCK_LEVEL() {
         return UNLOCK_LEVEL;
@@ -244,7 +245,7 @@ public class Ability {
         return MANA_COST[stage];
     }
 
-    public boolean isMaxStage(){ return (stage >= STAGE_NUMBERS); }
+    public boolean isMaxStage() { return (stage >= STAGE_NUMBERS); }
 
     public int getGUNSHOT() {
         return GUNSHOT;
@@ -275,7 +276,7 @@ public class Ability {
     }
 
     public boolean canUnlock() {
-        return  canUnlock;
+        return canUnlock;
     }
 
     public int getDuration() {

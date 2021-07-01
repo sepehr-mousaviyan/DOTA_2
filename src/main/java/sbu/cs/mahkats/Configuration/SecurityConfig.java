@@ -6,7 +6,7 @@ public class SecurityConfig extends Config{
 
     private SecurityConfig() {
         this.bundle = "SecurityConfig";
-        config = ResourceBundle.getBundle("SecurityConfig");
+        config = ResourceBundle.getBundle("Config/SecurityConfig");
     }
 
     public static Config getInstance()

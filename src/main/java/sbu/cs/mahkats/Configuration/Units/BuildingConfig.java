@@ -10,7 +10,7 @@ public class BuildingConfig extends Config {
     private BuildingConfig(String building_name) {
         this.bundle = "Building";
         building = building_name;
-        config = ResourceBundle.getBundle("UnitConfig/Buildings/" + building);
+        config = ResourceBundle.getBundle("Config/UnitConfig/Buildings/" + building);
     }
 
     public static Config getInstance(String building_name)

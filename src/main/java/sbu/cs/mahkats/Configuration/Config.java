@@ -8,7 +8,7 @@ public class Config {
     protected String bundle;
     protected Config() {
         this.bundle = "Config";
-        config = ResourceBundle.getBundle("Config");
+        config = ResourceBundle.getBundle("Config/Config");
     }
 
     public static Config getInstance()

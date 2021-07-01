@@ -10,7 +10,7 @@ public class HeroConfig extends Config{
     private HeroConfig(String hero_name) {
         this.bundle = "HeroConfig";
         hero = hero_name;
-        config = ResourceBundle.getBundle("UnitConfig/Movable/Hero/" + hero);
+        config = ResourceBundle.getBundle("Config/UnitConfig/Movable/Hero/" + hero);
     }
 
     public static Config getInstance(String hero_name)
