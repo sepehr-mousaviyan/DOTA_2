@@ -1,6 +1,5 @@
 package sbu.cs.mahkats.Client.UI.Controler;
 
-import com.google.gson.JsonObject;
 import javafx.animation.RotateTransition;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -16,24 +15,18 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import sbu.cs.mahkats.Api.Api;
 import sbu.cs.mahkats.Api.Data.AbilityData;
 import sbu.cs.mahkats.Api.Data.BuildingData;
 import sbu.cs.mahkats.Api.Data.CreepData;
 import sbu.cs.mahkats.Api.Data.HeroData;
-import sbu.cs.mahkats.Api.Parser;
 import sbu.cs.mahkats.Client.Connection.Connection;
 import sbu.cs.mahkats.Configuration.Config;
 import sbu.cs.mahkats.Configuration.Units.HeroConfig;
-import sbu.cs.mahkats.Server.Connection.Client.RecievrDataRunnable;
-import sbu.cs.mahkats.Server.Unit.Movable.Hero.Ability.Ability;
 
 import java.io.*;
-import java.lang.reflect.Array;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 public class MapController implements Initializable {
 
