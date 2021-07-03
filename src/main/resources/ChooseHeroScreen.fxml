@@ -131,7 +131,7 @@
             <Label fx:id="rangerMinDamage" layoutX="124.0" layoutY="477.0" prefHeight="30.0" prefWidth="116.0" textFill="blue" />
             <Label fx:id="knightMaxDamage" layoutX="801.0" layoutY="423.0" prefHeight="30.0" prefWidth="116.0" textFill="Red" />
             <Label fx:id="knightMinDamage" layoutX="801.0" layoutY="460.0" prefHeight="30.0" prefWidth="116.0" textFill="Red" />
-            <ImageView fx:id="drowHero" fitHeight="280.0" fitWidth="261.0" layoutX="278.0" layoutY="356.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="drowHero" fitHeight="280.0" fitWidth="261.0" layoutX="278.0" layoutY="356.0" onMouseClicked="#playHero2" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@Photos/drow_ranger.png" />
                </image>
@@ -141,7 +141,7 @@
          </children>
       </AnchorPane>
       <ImageView fitHeight="196.0" fitWidth="161.0" layoutX="548.0" layoutY="428.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="dragonHero" fitHeight="280.0" fitWidth="261.0" layoutX="448.0" layoutY="363.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="dragonHero" fitHeight="280.0" fitWidth="261.0" layoutX="448.0" layoutY="363.0" onMouseClicked="#playHero1" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@Photos/dragon_knight.png" />
          </image>

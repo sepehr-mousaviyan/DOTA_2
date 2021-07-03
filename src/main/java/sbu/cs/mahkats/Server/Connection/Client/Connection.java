@@ -17,7 +17,7 @@ public class Connection implements Runnable {
     private ServerSocket serverSocket;
     private Socket socket;
     private ArrayList<Client> clients;
-    private ArrayList<String> heroName;
+    private ArrayList<String> heroName = new ArrayList<>();
     private static boolean isRed = false; 
 
     private final static Logger LOGGER = Logger.getLogger(Connection.class.getName());
@@ -56,8 +56,7 @@ public class Connection implements Runnable {
             e.printStackTrace();
         }
         LOGGER.info("start send teamNames");
-        LOGGER.info("start send teamNames");
-        GamePlay gamePlay = GamePlay.getInstance("Knight", "Ranger");
+        GamePlay gamePlay = GamePlay.getInstance(heroName.get(0), heroName.get(1));
         gamePlay.play(clients);
     }
 
@@ -81,7 +80,6 @@ public class Connection implements Runnable {
         clients.add(client);
         client.handlerLoginSignup();
         client.sendListHero();
-        heroName = new ArrayList<>();
         heroName.add(client.getSelectHero());
         if(setRedTrue()){
             client.send(MessageMaker.message("GREEN", heroName.get(0)).toString());
@@ -89,7 +87,7 @@ public class Connection implements Runnable {
         }
         else {
             client.setTeamName("RED");
-            if (heroName.get(0).equals("Knight")) {
+            if (!heroName.get(0).equals("Knight")) {
                 client.send(MessageMaker.message("RED", "Knight").toString());
             } else {
                 client.send(MessageMaker.message("RED", "Ranger").toString());

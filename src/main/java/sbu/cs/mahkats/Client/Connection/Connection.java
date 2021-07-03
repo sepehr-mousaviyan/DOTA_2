@@ -87,8 +87,7 @@ public class Connection {
         try {
             String HashedPassWord = HashGenerator.generate(passWord);
             UserData user = new UserData(userName,HashedPassWord);
-            MessageMaker messageMaker = new MessageMaker();
-            JsonObject signinObj = messageMaker.message("OK","signin",user);
+            JsonObject signinObj = MessageMaker.message("OK","signin",user);
             if(send(signinObj.toString())){
                 receiveSignUpSignIn();
                 checkStatus = true;
@@ -169,7 +168,7 @@ public class Connection {
     public static void senBufferMessage(){
         if(BufferMessage.size()==0){
             try {
-                send(new ActionHeroData(TOKEN, 0, ' ' , 7).makeJson().toString());
+                send(MessageMaker.message("ok", "actionHero" , new ActionHeroData(TOKEN, 0, ' ' , 7)).toString());
             } catch (IOException e) {
                 e.printStackTrace();
             }

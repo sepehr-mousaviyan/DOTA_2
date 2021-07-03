@@ -78,13 +78,17 @@ public class GamePlay {
         towers.addAll(RedUnits.getTowers());
         TowerRunnable towerRunnable = new TowerRunnable(towers);
         new Thread(towerRunnable).start();
-        int lastTurn = turn;
+
 
         logger.info("game start");
         while (true) {
+            for (Client client : clients) {
+                client.sendData();
+                logger.info("send data");
+            }
+            int lastTurn = turn;
             try {
                 Thread.sleep(REFRESH_RATE);
-                lastTurn = turn;
                 turn++;
             } catch (InterruptedException e) {
                 logger.fatal("can not go next turn", e);
@@ -110,17 +114,14 @@ public class GamePlay {
                     spawnCreep();
                     lastTurnCreepSpawn = turn;
                 }
-                for (Client client : clients) {
-                    client.sendData();
-                    logger.info("send data");
-                }
+                checkLevelUpHero();
             }
         }
     }
 
     private void endGame(String name, ArrayList<Client> clients) {
         for (Client client : clients) {
-            client.send(new MessageMaker().message("EndGame", name).toString());
+            client.send(MessageMaker.message("EndGame", name).toString());
         }
     }
 
@@ -309,7 +310,8 @@ public class GamePlay {
         switch (actionHeroData.getChoice()) {
             //move hero
             case 1:
-                thisHero.move(actionHeroData.getMove(), thisHero, CHUNK_SIZE);
+                if(hero != null)
+                    thisHero.move(actionHeroData.getMove(), thisHero, CHUNK_SIZE);
                 break;
 
             //add new ability
@@ -391,8 +393,8 @@ public class GamePlay {
      * this function spawn a group of creep from a random barracks
      */
     private void spawnCreep() {
-        String greenLane = whichLane((int) (Math.random() * GreenUnits.getTowers().size()) + 1);
-        String redLane = whichLane((int) (Math.random() * RedUnits.getTowers().size()) + 1);
+        String greenLane = whichLane((int) (Math.random() * GreenUnits.getBarracks().size()) + 1);
+        String redLane = whichLane((int) (Math.random() * RedUnits.getBarracks().size()) + 1);
         ArrayList<MeleeCreep> redMeleeCreep = new ArrayList<>();
         ArrayList<MeleeCreep> greenMeleeCreep = new ArrayList<>();
         ArrayList<RangedCreep> redRangedCreep = new ArrayList<>();
@@ -459,6 +461,21 @@ public class GamePlay {
         heroes.addAll(RedUnits.getHeroes());
         for (Hero hero : heroes) {
             hero.mana_regeneration();
+        }
+    }
+
+    public void checkLevelUpHero(){
+        ArrayList<Hero> heroes = GreenUnits.getHeroes();
+        for(Hero hero : heroes){
+            if(hero.canLevelUp()){
+                hero.levelUp();
+            }
+        }
+        heroes = RedUnits.getHeroes();
+        for(Hero hero : heroes){
+            if(hero.canLevelUp()){
+                hero.levelUp();
+            }
         }
     }
 

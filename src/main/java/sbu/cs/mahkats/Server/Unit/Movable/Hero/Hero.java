@@ -102,6 +102,11 @@ public class Hero extends Movable {
                 ability3.setCanUnlock();
             }
         }
+
+        Location_y = 670;
+        Location_x = 70;
+
+
     }
 
     public boolean canLevelUp() {

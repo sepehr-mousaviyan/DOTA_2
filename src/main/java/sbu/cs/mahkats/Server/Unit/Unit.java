@@ -156,8 +156,8 @@ public abstract class Unit {
 
     public void hp_regenerate() {
         hp = hp + hp_regeneration;
-        if (hp > 100) {
-            hp = 100;
+        if (hp > max_hp) {
+            hp = max_hp;
         }
     }
 
@@ -187,7 +187,7 @@ public abstract class Unit {
     public void takeDamage(double damage) {
         if ((damage - armor) > hp) {
             hp = 0;
-            isDie = false;
+            isDie = true;
             this.destroy();
         }
         hp = hp - (damage - armor);

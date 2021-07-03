@@ -134,7 +134,7 @@ public class ReceiveDataRunnable implements Runnable{
                 case "RED" :
                     //mapController.setFinished("RED");
                     break;
-                case "StartTurn":
+                case "startTurn":
                     Connection.senBufferMessage();
                     break;
 

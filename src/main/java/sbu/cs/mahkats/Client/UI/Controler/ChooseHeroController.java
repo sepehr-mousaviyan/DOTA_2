@@ -1,5 +1,6 @@
 package sbu.cs.mahkats.Client.UI.Controler;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -54,14 +55,12 @@ public class ChooseHeroController implements Initializable {
                 knightMinDamage.setText(Double.toString(hero.getMinimum_damage()));
                 dragonHero.setOnMouseClicked(mouseEvent -> {
                     choosenHeroName = "knight";
-                    choosen.setText("You Choose");
                 });
             } else if (hero.getHeroType().equals("Ranger")) {
                 rangerMaxDamage.setText(Double.toString(hero.getMaximum_damage()));
                 rangerMinDamage.setText(Double.toString(hero.getMinimum_damage()));
                 drowHero.setOnMouseClicked(mouseEvent -> {
                     choosenHeroName = "Ranger";
-                    choosen.setText("You Choose");
                 });
             }
         }
@@ -71,11 +70,13 @@ public class ChooseHeroController implements Initializable {
     @FXML
     void playHero1(MouseEvent event) {
         choosenHeroName = "Knight";
+        choosen.setText("You Choose Knight");
     }
 
     @FXML
     void playHero2(MouseEvent event) {
         choosenHeroName = "Ranger";
+        choosen.setText("You Choose Ranger");
     }
 
     @FXML
@@ -85,8 +86,8 @@ public class ChooseHeroController implements Initializable {
             Connection.getTeamName();
             Connection.runReceiver();
 
-//            Platform.exit();
-
+            //Platform.exit();
+            System.out.println("before go map");
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Map.fxml"));
             Parent root1 = fxmlLoader.load();
             Stage stage = new Stage();
