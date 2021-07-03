@@ -165,12 +165,15 @@ public class MainController implements Initializable {
                 try {
                     Parent logParent = null;
                     logParent = FXMLLoader.load(getClass().getResource("/ChooseHeroScreen.fxml"));
-                    logStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+//                    logStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                    Stage s1 = (Stage)((Node) event.getSource()).getScene().getWindow();
 
                     Scene logScene = new Scene(logParent);
 
-                    logStage.setScene(logScene);
-                    logStage.show();
+//                    logStage.setScene(logScene);
+//                    logStage.show();
+                    s1.setScene(logScene);
+                    s1.show();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

@@ -1,10 +1,12 @@
 package sbu.cs.mahkats.Client.UI.Controler;
 
+import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -68,16 +70,17 @@ public class ChooseHeroController implements Initializable {
 
 
     @FXML
-    void playHero1(MouseEvent event) {
+    void playHero1() {
         choosenHeroName = "Knight";
-        choosen.setText("You Choose Knight");
+        choosen.setText("Your chosen Hero: Knight");
     }
 
     @FXML
-    void playHero2(MouseEvent event) {
+    void playHero2() {
         choosenHeroName = "Ranger";
-        choosen.setText("You Choose Ranger");
+        choosen.setText("Your chosen Hero: Ranger");
     }
+
 
     @FXML
     void goToSecondWaitingScreen(ActionEvent event) {
@@ -87,12 +90,15 @@ public class ChooseHeroController implements Initializable {
             Connection.runReceiver();
 
             //Platform.exit();
-            System.out.println("before go map");
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Map.fxml"));
-            Parent root1 = fxmlLoader.load();
-            Stage stage = new Stage();
-            stage.setScene(new Scene(root1));
-            stage.show();
+
+            Parent logParent = null;
+            logParent = FXMLLoader.load(getClass().getResource("/Map.fxml"));
+            Stage s1 = (Stage)((Node) event.getSource()).getScene().getWindow();
+
+            Scene logScene = new Scene(logParent);
+
+            s1.setScene(logScene);
+            s1.show();
 
         } catch (Exception e) {
             e.printStackTrace();
