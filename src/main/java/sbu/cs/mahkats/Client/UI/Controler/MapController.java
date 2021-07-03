@@ -129,6 +129,8 @@ public class MapController implements Initializable {
     public void checkUnits(ArrayList<HeroData> heroes, ArrayList<AbilityData> abilities, ArrayList<CreepData> creeps, ArrayList<BuildingData> buildings) {
         try {
             System.out.println("CheckList *****************");
+
+            AnchorPane newMap = FXMLLoader.load(getClass().getResource("/MapBoard.fxml"));
            /*heroName = new Label();
            ability1 = new ImageView();
            ability2 = new ImageView();
@@ -173,7 +175,7 @@ public class MapController implements Initializable {
                         ability2.setImage(image_a2);
                         ability3.setImage(image_a3);
 
-                        mainAnchor.getChildren().add(imageView_hero);
+                        newMap.getChildren().add(imageView_hero);
                         imageView_hero.setPickOnBounds(true);
                         imageView_hero.setOnMouseEntered(new EventHandler<MouseEvent>() {
                             @Override
@@ -309,7 +311,7 @@ public class MapController implements Initializable {
                         ability2.setImage(image_a2);
                         ability3.setImage(image_a3);
 
-                        mainAnchor.getChildren().add(imageView_hero);
+                        newMap.getChildren().add(imageView_hero);
                         imageView_hero.setPickOnBounds(true);
                         imageView_hero.setOnMouseEntered(new EventHandler<MouseEvent>() {
                             @Override
@@ -447,7 +449,7 @@ public class MapController implements Initializable {
                             imageView.setImage(null);
                         }
                         else {
-                            mainAnchor.getChildren().add(imageView);
+                            newMap.getChildren().add(imageView);
                             imageView.setOnMouseEntered(new EventHandler<MouseEvent>() {
                                 @Override
                                 public void handle(MouseEvent event) {
@@ -477,7 +479,7 @@ public class MapController implements Initializable {
                             imageView.setImage(null);
                         }
                         else {
-                            mainAnchor.getChildren().add(imageView);
+                            newMap.getChildren().add(imageView);
                             imageView.setOnMouseEntered(new EventHandler<MouseEvent>() {
                                 @Override
                                 public void handle(MouseEvent event) {
@@ -509,7 +511,7 @@ public class MapController implements Initializable {
                             imageView.setImage(null);
                         }
                         else {
-                            mainAnchor.getChildren().add(imageView);
+                            newMap.getChildren().add(imageView);
                             imageView.setOnMouseEntered(new EventHandler<MouseEvent>() {
                                 @Override
                                 public void handle(MouseEvent event) {
@@ -538,7 +540,7 @@ public class MapController implements Initializable {
                             imageView.setImage(null);
                         }
                         else {
-                            mainAnchor.getChildren().add(imageView);
+                            newMap.getChildren().add(imageView);
                             imageView.setOnMouseEntered(new EventHandler<MouseEvent>() {
                                 @Override
                                 public void handle(MouseEvent event) {
@@ -571,7 +573,7 @@ public class MapController implements Initializable {
                             imageView.setImage(null);
                         }
                         else {
-                            mainAnchor.getChildren().add(imageView);
+                            newMap.getChildren().add(imageView);
                             imageView.setOnMouseEntered(new EventHandler<MouseEvent>() {
                                 @Override
                                 public void handle(MouseEvent event) {
@@ -601,7 +603,7 @@ public class MapController implements Initializable {
                             imageView.setImage(null);
                         }
                         else {
-                            mainAnchor.getChildren().add(imageView);
+                            newMap.getChildren().add(imageView);
                             imageView.setOnMouseEntered(event -> {
                                 showHP.setText(Double.toString(building.getHp()));
                                 showMana.setText("");
@@ -630,7 +632,7 @@ public class MapController implements Initializable {
                             imageView.setImage(null);
                         }
                         else {
-                            mainAnchor.getChildren().add(imageView);
+                            newMap.getChildren().add(imageView);
                             imageView.setOnMouseEntered(event -> {
                                 showHP.setText(Double.toString(building.getHp()));
                                 showMana.setText("");
@@ -655,7 +657,7 @@ public class MapController implements Initializable {
                             animationAttackMethod(imageView);
                         }
                         else {
-                            mainAnchor.getChildren().add(imageView);
+                            newMap.getChildren().add(imageView);
                             imageView.setOnMouseEntered(event -> {
                                 showHP.setText(Double.toString(building.getHp()));
                                 showMana.setText("");
@@ -685,7 +687,7 @@ public class MapController implements Initializable {
                             imageView.setImage(null);
                         }
                         else {
-                            mainAnchor.getChildren().add(imageView);
+                            newMap.getChildren().add(imageView);
                             imageView.setOnMouseEntered(new EventHandler<MouseEvent>() {
                                 @Override
                                 public void handle(MouseEvent event) {
@@ -714,7 +716,7 @@ public class MapController implements Initializable {
                             imageView.setImage(null);
                         }
                         else {
-                            mainAnchor.getChildren().add(imageView);
+                            newMap.getChildren().add(imageView);
                             imageView.setOnMouseEntered(event -> {
                                 showHP.setText(Double.toString(building.getHp()));
                                 showMana.setText("");
@@ -742,7 +744,7 @@ public class MapController implements Initializable {
                             imageView.setImage(null);
                         }
                         else {
-                            mainAnchor.getChildren().add(imageView);
+                            newMap.getChildren().add(imageView);
                             imageView.setOnMouseEntered(event -> {
                                 showHP.setText(Double.toString(building.getHp()));
                                 showMana.setText("");
@@ -768,7 +770,7 @@ public class MapController implements Initializable {
                             imageView.setImage(null);
                         }
                         else {
-                            mainAnchor.getChildren().add(imageView);
+                            newMap.getChildren().add(imageView);
                             imageView.setOnMouseEntered(event -> {
                                 showHP.setText(Double.toString(building.getHp()));
                                 showMana.setText("");
@@ -780,6 +782,8 @@ public class MapController implements Initializable {
                     }
                 }
             }
+
+             mainAnchor.getChildren().setAll(newMap);
         }catch (Exception e){
             e.printStackTrace();
         }
