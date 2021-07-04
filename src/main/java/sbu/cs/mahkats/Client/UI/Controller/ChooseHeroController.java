@@ -1,7 +1,5 @@
-package sbu.cs.mahkats.Client.UI.Controler;
+package sbu.cs.mahkats.Client.UI.Controller;
 
-import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -11,7 +9,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import sbu.cs.mahkats.Api.Data.HeroData;
@@ -85,11 +82,10 @@ public class ChooseHeroController implements Initializable {
     @FXML
     void goToSecondWaitingScreen(ActionEvent event) {
         try {
+            System.out.println("qqqqqqqqqqqqqqqqqqqqqqq");
             Connection.sendSelectedHero(choosenHeroName);
             Connection.getTeamName();
             Connection.runReceiver();
-
-            //Platform.exit();
 
             Parent logParent = null;
             logParent = FXMLLoader.load(getClass().getResource("/Map.fxml"));
@@ -99,6 +95,7 @@ public class ChooseHeroController implements Initializable {
 
             s1.setScene(logScene);
             s1.show();
+            System.out.println("wwwwwwwwwwwwwwwwwwwww");
 
         } catch (Exception e) {
             e.printStackTrace();

@@ -64,33 +64,54 @@ public class Client {
      * send all units data to this socket client
      */
     public void sendData() {
-        unitList greenUnits = GamePlay.getGreenUnits();
-        unitList redUnits = GamePlay.getGreenUnits();
-        Ancient greenAncient = greenUnits.getAncient();
-        Ancient redAncient = redUnits.getAncient();
-        ArrayList<Hero> greenHeroes = greenUnits.getHeroes();
-        ArrayList<Hero> redHeroes = redUnits.getHeroes();
-        ArrayList<Creep> greenCreeps = greenUnits.getCreeps();
-        ArrayList<Creep> redCreeps = redUnits.getCreeps();
-        ArrayList<Tower> greenTowers = greenUnits.getTowers();
-        ArrayList<Tower> redTowers= redUnits.getTowers();
-        ArrayList<Barrack> greenBarracks= greenUnits.getBarracks();
-        ArrayList<Barrack> redBarracks= redUnits.getBarracks();
-        ArrayList<Ability> greenAbility = greenUnits.getHeroes().get(0).getAbilities();
-        ArrayList<Ability> redAbility = redUnits.getHeroes().get(0).getAbilities();
-        sendAncientData(greenAncient , "ancient" , "ok");
-        sendAncientData(redAncient , "ancient" , "ok");
-        sendHeroData(greenHeroes, "hero" , "ok");
-        sendHeroData(redHeroes, "hero" , "ok");
-        sendCreepData(greenCreeps, "creep" , "ok");
-        sendCreepData(redCreeps, "creep", "ok");
-        sendTowerData(greenTowers, "tower", "ok");
-        sendTowerData(redTowers, "tower", "ok");
-        sendBarrackData(greenBarracks, "barrack", "ok");
-        sendBarrackData(redBarracks, "barrack", "ok");
-        sendAbilityData(greenAbility, "ability", "ok");
-        sendAbilityData(redAbility, "ability", "ok");
+        send_green_units();
+        send_red_units();
         send(MessageMaker.message("ok", "End").toString());
+    }
+
+    private void send_red_units() {
+        unitList redUnits = GamePlay.getRedUnits();
+
+        Ancient redAncient = redUnits.getAncient();
+        sendAncientData(redAncient, "building", "ok");
+
+        ArrayList<Hero> redHeroes = redUnits.getHeroes();
+        sendHeroData(redHeroes, "hero", "ok");
+
+        ArrayList<Creep> redCreeps = redUnits.getCreeps();
+        sendCreepData(redCreeps, "creep", "ok");
+
+        ArrayList<Tower> redTowers = redUnits.getTowers();
+        sendTowerData(redTowers, "building", "ok");
+
+        ArrayList<Barrack> redBarracks = redUnits.getBarracks();
+        sendBarrackData(redBarracks, "building", "ok");
+
+        ArrayList<Ability> redAbility = redUnits.getHeroes().get(0).getAbilities();
+        sendAbilityData(redAbility, "ability", "ok");
+
+    }
+
+    private void send_green_units() {
+        unitList greenUnits = GamePlay.getGreenUnits();
+
+        Ancient greenAncient = greenUnits.getAncient();
+        sendAncientData(greenAncient, "building", "ok");
+
+        ArrayList<Hero> greenHeroes = greenUnits.getHeroes();
+        sendHeroData(greenHeroes, "hero", "ok");
+
+        ArrayList<Creep> greenCreeps = greenUnits.getCreeps();
+        sendCreepData(greenCreeps, "creep", "ok");
+
+        ArrayList<Tower> greenTowers = greenUnits.getTowers();
+        sendTowerData(greenTowers, "building", "ok");
+
+        ArrayList<Barrack> greenBarracks = greenUnits.getBarracks();
+        sendBarrackData(greenBarracks, "building", "ok");
+
+        ArrayList<Ability> greenAbility = greenUnits.getHeroes().get(0).getAbilities();
+        sendAbilityData(greenAbility, "ability", "ok");
     }
 
     /******************Ancient******************/
@@ -105,7 +126,9 @@ public class Client {
 
     /******************Hero******************/
     private void sendHeroData(ArrayList<Hero> heroes, String action, String status) {
+        int counter = 0;
         for (Hero hero : heroes) {
+            System.out.printf("%s, hero: %s%n", ++counter, hero);
             HeroData heroData = makeHeroData(hero);
             send(MessageMaker.message(status, action, heroData).toString());
         }
@@ -207,7 +230,7 @@ public class Client {
         String data = null;
         try {
             data = dataInputStream.readUTF();
-            LOGGER.info("message received.\n"+data);
+            LOGGER.info("message received.\n" + data);
         } catch (IOException e) {
             LOGGER.fatal("message didn't received successfully!", e);
         }
@@ -216,19 +239,19 @@ public class Client {
 
     /**
      * this function is just for sending
+     *
      * @param data that should send
      */
     public void send(String data) {
         try {
             dataOutputStream.writeUTF(data);
-            LOGGER.info("message sent.\n" + data);
         } catch (IOException e) {
             LOGGER.fatal("message didn't sent successfully!", e);
         }
     }
 
     public void handlerLoginSignup() {
-        while(true) {
+        while (true) {
             String data = receiveUserData();
             Api api = new Api();
             JsonObject json = Api.toJson(data);
@@ -236,7 +259,7 @@ public class Client {
             String username;
             String password;
 
-            switch (Parser.getAction(json)){
+            switch (Parser.getAction(json)) {
                 case "signup":
                     username = Parser.parseUserData(json).getUsername();
                     password = Parser.parseUserData(json).getPassword();
@@ -266,25 +289,25 @@ public class Client {
 
     }
 
-    public void sendListHero(){
-        Hero hero = new KnightHero("" , 0);
+    public void sendListHero() {
+        Hero hero = new KnightHero("", 0);
         HeroData knight = makeHeroData(hero);
-        hero = new RangedHero("" , 0);
+        hero = new RangedHero("", 0);
         HeroData ranged = makeHeroData(hero);
         send(MessageMaker.message("ok", "listHero", 2, knight, ranged).toString());
     }
 
-    public String getSelectHero(){
+    public String getSelectHero() {
         String data = null;
         try {
             do {
                 data = dataInputStream.readUTF();
-            }while(data == null);
+            } while (data == null);
         } catch (IOException e) {
             e.printStackTrace();
         }
         ActionHeroData actionHeroData = Parser.parseActionHeroData(Api.toJson(data));
-        if(actionHeroData.getChoice() == 5){
+        if (actionHeroData.getChoice() == 5) {
             return actionHeroData.getHeroName();
         }
         return null;
@@ -294,11 +317,11 @@ public class Client {
         this.TOKEN = TOKEN;
     }
 
-    public void setTeamName(String name){
+    public void setTeamName(String name) {
         teamName = name;
     }
 
-    public String getTeamName(){
+    public String getTeamName() {
         return teamName;
     }
 }

@@ -1,4 +1,4 @@
-package sbu.cs.mahkats.Client.UI.Controler;
+package sbu.cs.mahkats.Client.UI.Controller;
 
 import com.google.gson.JsonObject;
 import sbu.cs.mahkats.Api.Api;
@@ -124,9 +124,8 @@ public class ReceiveDataRunnable implements Runnable{
                     updateAbilityData(Parser.parseAbilityData(josnMessage));
                     break;
                 case "End":
-                    Connection.sendHeroAction(MapController.getMove());
                     //mapController.checkUnits(heroes, abilities, creeps, buildings);
-                    isReloaded = false;
+                    isReloaded = true;
                     break;
                 case "GREEN" :
                     //mapController.setFinished("Green");
@@ -135,9 +134,9 @@ public class ReceiveDataRunnable implements Runnable{
                     //mapController.setFinished("RED");
                     break;
                 case "startTurn":
+                    Connection.sendHeroAction(MapController.getMove());
                     Connection.senBufferMessage();
                     break;
-
             }
         }
     }

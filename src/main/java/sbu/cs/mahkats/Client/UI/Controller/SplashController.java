@@ -1,4 +1,4 @@
-package sbu.cs.mahkats.Client.UI.Controler;
+package sbu.cs.mahkats.Client.UI.Controller;
 
 import javafx.fxml.Initializable;
 

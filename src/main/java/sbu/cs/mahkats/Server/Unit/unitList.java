@@ -45,23 +45,25 @@ public class unitList {
         }
 
         //barracks unit making
-        this.meleeBarracks.add(new MeleeBarrack("TOP", teamName , GamePlay.get_add_Code()));
-        this.meleeBarracks.add(new MeleeBarrack("MIDDLE", teamName , GamePlay.get_add_Code()));
-        this.meleeBarracks.add(new MeleeBarrack("BOTTOM", teamName , GamePlay.get_add_Code()));
-        
-        this.rangedBarracks.add(new RangedBarrack("TOP", teamName , GamePlay.get_add_Code()));
-        this.rangedBarracks.add(new RangedBarrack("MIDDLE", teamName , GamePlay.get_add_Code()));
-        this.rangedBarracks.add(new RangedBarrack("BOTTOM", teamName , GamePlay.get_add_Code()));
+        this.meleeBarracks.add(new MeleeBarrack("TOP", teamName, GamePlay.get_add_Code()));
+        this.meleeBarracks.add(new MeleeBarrack("MIDDLE", teamName, GamePlay.get_add_Code()));
+        this.meleeBarracks.add(new MeleeBarrack("BOTTOM", teamName, GamePlay.get_add_Code()));
 
-        this.heroes.add(new Hero(teamName , GamePlay.get_add_Code() , heroName));
+        this.rangedBarracks.add(new RangedBarrack("TOP", teamName, GamePlay.get_add_Code()));
+        this.rangedBarracks.add(new RangedBarrack("MIDDLE", teamName, GamePlay.get_add_Code()));
+        this.rangedBarracks.add(new RangedBarrack("BOTTOM", teamName, GamePlay.get_add_Code()));
+
+        this.heroes.add(new Hero(teamName, GamePlay.get_add_Code(), heroName));
     }
-    
+
     public void add(Creep creep) {
         creeps.add(creep);
     }
+
     public void add(MeleeBarrack meleeBarrack) {
         meleeBarracks.add(meleeBarrack);
     }
+
     public void add(Tower tower) {
         towers.add(tower);
     }
@@ -77,10 +79,10 @@ public class unitList {
     public void addRangedBarracks(ArrayList<RangedBarrack> barracks) {
         this.rangedBarracks.addAll(barracks);
     }
-    
+
     public Tower getTower(String lane) {
-        for(Tower t : towers){
-            if(t.getLane().equals(lane)){
+        for (Tower t : towers) {
+            if (t.getLane().equals(lane)) {
                 return t;
             }
         }
@@ -88,8 +90,8 @@ public class unitList {
     }
 
     public Creep getCreep(String lane) {
-        for(Creep c : creeps){
-            if(c.getLane().equals(lane)){
+        for (Creep c : creeps) {
+            if (c.getLane().equals(lane)) {
                 return c;
             }
         }
@@ -97,8 +99,8 @@ public class unitList {
     }
 
     public RangedBarrack getRangedBarrack(String lane) {
-        for(RangedBarrack rangedB : rangedBarracks){
-            if(rangedB.getLane().equals(lane)){
+        for (RangedBarrack rangedB : rangedBarracks) {
+            if (rangedB.getLane().equals(lane)) {
                 return rangedB;
             }
         }
@@ -106,8 +108,8 @@ public class unitList {
     }
 
     public MeleeBarrack getMeleeBarracks(String lane) {
-        for(MeleeBarrack meleeB : meleeBarracks){
-            if(meleeB.getLane().equals(lane)){
+        for (MeleeBarrack meleeB : meleeBarracks) {
+            if (meleeB.getLane().equals(lane)) {
                 return meleeB;
             }
         }
@@ -121,7 +123,7 @@ public class unitList {
         return barracks;
     }
 
-    public ArrayList<Unit> getAll(){
+    public ArrayList<Unit> getAll() {
         ArrayList<Unit> all = new ArrayList<Unit>();
         all.addAll(creeps);
         all.addAll(towers);
@@ -132,26 +134,26 @@ public class unitList {
         return all;
     }
 
-    public Unit getUnit(int code){
+    public Unit getUnit(int code) {
         ArrayList<Unit> all = this.getAll();
-        for(Unit unit : all){
-            if(unit.getCode() == code){
+        for (Unit unit : all) {
+            if (unit.getCode() == code) {
                 return unit;
             }
         }
         return null;
     }
 
-    public Hero getHero(int code){
-        for(Hero hero : heroes){
-            if(hero.getCode() == code){
+    public Hero getHero(int code) {
+        for (Hero hero : heroes) {
+            if (hero.getCode() == code) {
                 return hero;
             }
         }
         return null;
     }
 
-    public ArrayList<Unit> getAll_withoutHero(){
+    public ArrayList<Unit> getAll_withoutHero() {
         ArrayList<Unit> all = new ArrayList<>();
         all.addAll(creeps);
         all.addAll(towers);
@@ -161,16 +163,15 @@ public class unitList {
         return all;
     }
 
-    public void remove(Unit unit){
-        for(Creep creep : creeps){
-            if(creep.equals(unit)){
+    public void remove(Unit unit) {
+        for (Creep creep : creeps) {
+            if (creep.equals(unit)) {
                 creeps.remove(creep);
-                if(creep.getType().equals("Ranged")) {
+                if (creep.getType().equals("Ranged")) {
                     for (RangedBarrack rangedBarrack : rangedBarracks) {
                         rangedBarrack.removeCreep(creep);
                     }
-                }
-                else{
+                } else {
                     for (MeleeBarrack meleeBarrack : meleeBarracks) {
                         meleeBarrack.removeCreep(creep);
                     }
@@ -197,7 +198,7 @@ public class unitList {
     }
 
     public ArrayList<Hero> getHeroes() {
-        return heroes;
+        return new ArrayList<>(this.heroes);
     }
 
 }

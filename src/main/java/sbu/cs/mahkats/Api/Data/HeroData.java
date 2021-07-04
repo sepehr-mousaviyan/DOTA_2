@@ -33,4 +33,21 @@ public class HeroData extends MovableUnitData{
         }
         return Api.toJson(str);
     }
+
+    @Override
+    public String toString() {
+        return "HeroData{" +
+                "isAttacking=" + isAttacking +
+                ", isDie=" + isDie +
+                ", code=" + code +
+                ", Location_x=" + Location_x +
+                ", Location_y=" + Location_y +
+                ", teamName='" + teamName + '\'' +
+                ", heroType='" + heroType + '\'' +
+                ", level=" + level +
+                ", mana=" + mana +
+                ", ability1='" + ability1 + '\'' +
+                ", ability2='" + ability2 + '\'' +
+                '}';
+    }
 }

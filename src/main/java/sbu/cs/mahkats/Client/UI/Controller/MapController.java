@@ -1,6 +1,7 @@
-package sbu.cs.mahkats.Client.UI.Controler;
+package sbu.cs.mahkats.Client.UI.Controller;
 
 import javafx.animation.RotateTransition;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -32,12 +33,13 @@ import java.util.ResourceBundle;
 public class MapController implements Initializable {
 
     private static Stage stage;
-
+    private Thread updater;
     Config config;
 
     public String recievedTeamName = "Error";
 
     private static char move;
+    private static int cc;
 
     private static String winnerTeamName;
 
@@ -96,30 +98,28 @@ public class MapController implements Initializable {
     private ImageView ability3;
 
 
-
-
-    public static void animationAttackMethod(ImageView pic){
+    public static void animationAttackMethod(ImageView pic) {
         RotateTransition rotate1 = new RotateTransition(Duration.millis(100), pic);
         rotate1.setFromAngle(-10);
         rotate1.setToAngle(10);
         rotate1.play();
         rotate1.setOnFinished((e) -> {
             try {
-                RotateTransition rotate2 = new RotateTransition(Duration.millis(100),pic);
+                RotateTransition rotate2 = new RotateTransition(Duration.millis(100), pic);
                 rotate2.setFromAngle(10);
                 rotate2.setToAngle(-10);
                 rotate2.play();
                 rotate2.setOnFinished((ex) -> {
                     try {
-                        RotateTransition rotate3 = new RotateTransition(Duration.millis(100),pic);
+                        RotateTransition rotate3 = new RotateTransition(Duration.millis(100), pic);
                         rotate3.setFromAngle(-10);
                         rotate3.setToAngle(0);
                         rotate3.play();
-                    }catch (Exception exp){
+                    } catch (Exception exp) {
 
                     }
                 });
-            }catch (Exception ex){
+            } catch (Exception ex) {
 
             }
         });
@@ -129,6 +129,9 @@ public class MapController implements Initializable {
     public void checkUnits(ArrayList<HeroData> heroes, ArrayList<AbilityData> abilities, ArrayList<CreepData> creeps, ArrayList<BuildingData> buildings) {
         try {
             System.out.println("CheckList *****************");
+            if (cc++ < 5) {
+                print_data(heroes, abilities, creeps, buildings);
+            }
 
             AnchorPane newMap = FXMLLoader.load(getClass().getResource("/MapBoard.fxml"));
            /*heroName = new Label();
@@ -146,13 +149,13 @@ public class MapController implements Initializable {
            upgrade_new_ability2 = new Label();
            upgrade_new_ability3 = new Label();*/
             for (HeroData hero : heroes) {
-                if (hero.getHeroType().equals("Ranger")){
+                if (hero.getHeroType().equalsIgnoreCase("Ranger")) {
                     if (hero.isDie()) {
                         heroes.remove(hero);
-                    }
-                    else {
+                    } else {
                         heroName.setText("Drow Ranger");
-                        InputStream stream_hero = new FileInputStream("src/main/resources/Photos/rangerHero.png");
+//                        InputStream stream_hero = new FileInputStream("src/main/resources/Photos/rangerHero.png");
+                        InputStream stream_hero = this.getClass().getResourceAsStream("/Photos/rangerHero.png");
                         InputStream stream_a1 = new FileInputStream("src/main/resources/Photos/Frost_Arrows_icon.png");
                         InputStream stream_a2 = new FileInputStream("src/main/resources/Photos/Multishot_icon.png");
                         InputStream stream_a3 = new FileInputStream("src/main/resources/Photos/Marksmanship_icon.png");
@@ -164,9 +167,7 @@ public class MapController implements Initializable {
 
                         imageView_hero.setImage(image_hero);
                         imageView_hero.setX(hero.getLocation_x());
-                        System.out.println("********************\n" + hero.getLocation_x());
                         imageView_hero.setY(hero.getLocation_y());
-                        System.out.println("********************\n" + hero.getLocation_y());
 
                         imageView_hero.setFitHeight(25);
                         imageView_hero.setFitWidth(25);
@@ -190,92 +191,86 @@ public class MapController implements Initializable {
                         }
                     }
                     config = HeroConfig.getInstance("Ranger");
-                    for (AbilityData ability : abilities){
-                        if(ability.getName().equals(config.getStringValue("hero.ranger.ability1.name"))){
+                    for (AbilityData ability : abilities) {
+                        if (ability.getName().equalsIgnoreCase(config.getStringValue("hero.ranger.ability1.name"))) {
                             ability1_stage.setText(Integer.toString(ability.getStage()));
-                            if (ability.isUnlock()){
+                            if (ability.isUnlock()) {
                                 ability1.setOnMouseClicked(event -> Connection.sendUseAbility(ability, hero));
-                            }
-                            else {
+                            } else {
                                 ability1.setOpacity(0.3);
                             }
-                            if(ability.isCanUnlock()) {
-                                if (ability.isUnlock()){
+                            if (ability.isCanUnlock()) {
+                                if (ability.isUnlock()) {
                                     upgrade_new_ability1.setText("UPGRADE");
-                                }
-                                else {
+                                } else {
                                     upgrade_new_ability1.setText("UNLOCK");
                                 }
                                 upgrade_new_ability1.setOnMouseClicked(event -> {
-                                    if(!ability.isUnlock() && ability.isAvailable()){
+                                    if (!ability.isUnlock() && ability.isAvailable()) {
                                         Connection.sendNewAbility(ability, hero);
                                     }
-                                    if(ability.isUnlock() && ability.isAvailable()){
+                                    if (ability.isUnlock() && ability.isAvailable()) {
                                         Connection.sendUpgradeAbility(ability, hero);
                                     }
                                 });
                             }
                         }
-                        if(ability.getName().equals(config.getStringValue("hero.ranger.ability2.name"))){
+                        if (ability.getName().equalsIgnoreCase(config.getStringValue("hero.ranger.ability2.name"))) {
                             ability2_stage.setText(Integer.toString(ability.getStage()));
-                            if (ability.isUnlock()){
+                            if (ability.isUnlock()) {
                                 ability2.setOnMouseClicked(new EventHandler<MouseEvent>() {
                                     @Override
                                     public void handle(MouseEvent event) {
                                         Connection.sendUseAbility(ability, hero);
                                     }
                                 });
-                            }
-                            else {
+                            } else {
                                 ability2.setOpacity(0.3);
                             }
-                            if(ability.isCanUnlock()) {
-                                if (ability.isUnlock()){
+                            if (ability.isCanUnlock()) {
+                                if (ability.isUnlock()) {
                                     upgrade_new_ability2.setText("UPGRADE");
-                                }
-                                else {
+                                } else {
                                     upgrade_new_ability2.setText("UNLOCK");
                                 }
                                 upgrade_new_ability2.setOnMouseClicked(new EventHandler<MouseEvent>() {
                                     @Override
                                     public void handle(MouseEvent event) {
-                                        if(!ability.isUnlock() && ability.isAvailable()){
+                                        if (!ability.isUnlock() && ability.isAvailable()) {
                                             Connection.sendNewAbility(ability, hero);
                                         }
-                                        if(ability.isUnlock() && ability.isAvailable()){
+                                        if (ability.isUnlock() && ability.isAvailable()) {
                                             Connection.sendUpgradeAbility(ability, hero);
                                         }
                                     }
                                 });
                             }
                         }
-                        if(ability.getName().equals(config.getStringValue("hero.ranger.ability3.name"))){
+                        if (ability.getName().equalsIgnoreCase(config.getStringValue("hero.ranger.ability3.name"))) {
                             ability3_stage.setText(Integer.toString(ability.getStage()));
-                            if (ability.isUnlock()){
+                            if (ability.isUnlock()) {
                                 upgrade_new_ability3.setText("UPGRADE");
-                            }
-                            else {
+                            } else {
                                 upgrade_new_ability3.setText("UNLOCK");
                             }
-                            if (ability.isUnlock()){
+                            if (ability.isUnlock()) {
                                 ability3.setOnMouseClicked(new EventHandler<MouseEvent>() {
                                     @Override
                                     public void handle(MouseEvent event) {
                                         Connection.sendUseAbility(ability, hero);
                                     }
                                 });
-                            }
-                            else {
+                            } else {
                                 ability3.setOpacity(0.3);
                             }
-                            if(ability.isCanUnlock()) {
+                            if (ability.isCanUnlock()) {
                                 upgrade_new_ability3.setOnMouseClicked(new EventHandler<MouseEvent>() {
                                     @Override
                                     public void handle(MouseEvent event) {
-                                        if(!ability.isUnlock() && ability.isAvailable()){
+                                        if (!ability.isUnlock() && ability.isAvailable()) {
                                             Connection.sendNewAbility(ability, hero);
                                         }
-                                        if(ability.isUnlock() && ability.isAvailable()){
+                                        if (ability.isUnlock() && ability.isAvailable()) {
                                             Connection.sendUpgradeAbility(ability, hero);
                                         }
                                     }
@@ -285,11 +280,10 @@ public class MapController implements Initializable {
                     }
                 }
 
-                if (hero.getHeroType().equals("Knight")){
+                if (hero.getHeroType().equalsIgnoreCase("Knight")) {
                     if (hero.isDie()) {
                         heroes.remove(hero);
-                    }
-                    else {
+                    } else {
                         heroName.setText("Dragon Knight");
                         InputStream stream_hero = new FileInputStream("src/main/resources/Photos/knightHero.png");
                         InputStream stream_a1 = new FileInputStream("src/main/resources/Photos/Breathe_Fire_icon.png");
@@ -327,100 +321,94 @@ public class MapController implements Initializable {
                     }
                     config = HeroConfig.getInstance("Knight");
 
-                    for (AbilityData ability : abilities){
-                        if(ability.getName().equals(config.getStringValue("hero.knight.ability1.name"))){
+                    for (AbilityData ability : abilities) {
+                        if (ability.getName().equalsIgnoreCase(config.getStringValue("hero.knight.ability1.name"))) {
                             ability1_stage.setText(Integer.toString(ability.getStage()));
-                            if (ability.isUnlock()){
+                            if (ability.isUnlock()) {
                                 ability1.setOnMouseClicked(new EventHandler<MouseEvent>() {
                                     @Override
                                     public void handle(MouseEvent event) {
                                         Connection.sendUseAbility(ability, hero);
                                     }
                                 });
-                            }
-                            else {
+                            } else {
                                 ability1.setOpacity(0.3);
                             }
-                            if(ability.isCanUnlock()) {
-                                if (ability.isUnlock()){
+                            if (ability.isCanUnlock()) {
+                                if (ability.isUnlock()) {
                                     upgrade_new_ability1.setText("UPGRADE");
-                                }
-                                else {
+                                } else {
                                     upgrade_new_ability1.setText("UNLOCK");
                                 }
                                 upgrade_new_ability1.setOnMouseClicked(new EventHandler<MouseEvent>() {
                                     @Override
                                     public void handle(MouseEvent event) {
-                                        if(!ability.isUnlock() && ability.isAvailable()){
+                                        if (!ability.isUnlock() && ability.isAvailable()) {
                                             Connection.sendNewAbility(ability, hero);
                                         }
-                                        if(ability.isUnlock() && ability.isAvailable()){
+                                        if (ability.isUnlock() && ability.isAvailable()) {
                                             Connection.sendUpgradeAbility(ability, hero);
                                         }
                                     }
                                 });
                             }
                         }
-                        if(ability.getName().equals(config.getStringValue("hero.knight.ability2.name"))){
+                        if (ability.getName().equalsIgnoreCase(config.getStringValue("hero.knight.ability2.name"))) {
                             ability2_stage.setText(Integer.toString(ability.getStage()));
-                            if (ability.isUnlock()){
+                            if (ability.isUnlock()) {
                                 ability2.setOnMouseClicked(new EventHandler<MouseEvent>() {
                                     @Override
                                     public void handle(MouseEvent event) {
                                         Connection.sendUseAbility(ability, hero);
                                     }
                                 });
-                            }
-                            else {
+                            } else {
                                 ability2.setOpacity(0.3);
                             }
-                            if(ability.isCanUnlock()) {
-                                if (ability.isUnlock()){
+                            if (ability.isCanUnlock()) {
+                                if (ability.isUnlock()) {
                                     upgrade_new_ability2.setText("UPGRADE");
-                                }
-                                else {
+                                } else {
                                     upgrade_new_ability2.setText("UNLOCK");
                                 }
                                 upgrade_new_ability2.setOnMouseClicked(new EventHandler<MouseEvent>() {
                                     @Override
                                     public void handle(MouseEvent event) {
-                                        if(!ability.isUnlock() && ability.isAvailable()){
+                                        if (!ability.isUnlock() && ability.isAvailable()) {
                                             Connection.sendNewAbility(ability, hero);
                                         }
-                                        if(ability.isUnlock() && ability.isAvailable()){
+                                        if (ability.isUnlock() && ability.isAvailable()) {
                                             Connection.sendUpgradeAbility(ability, hero);
                                         }
                                     }
                                 });
                             }
                         }
-                        if(ability.getName().equals(config.getStringValue("hero.knight.ability3.name"))){
+                        if (ability.getName().equalsIgnoreCase(config.getStringValue("hero.knight.ability3.name"))) {
                             ability3_stage.setText(Integer.toString(ability.getStage()));
-                            if (ability.isUnlock()){
+                            if (ability.isUnlock()) {
                                 upgrade_new_ability3.setText("UPGRADE");
-                            }
-                            else {
+                            } else {
                                 upgrade_new_ability3.setText("UNLOCK");
                             }
-                            if (ability.isUnlock()){
+                            if (ability.isUnlock()) {
                                 ability3.setOnMouseClicked(new EventHandler<MouseEvent>() {
                                     @Override
                                     public void handle(MouseEvent event) {
                                         Connection.sendUseAbility(ability, hero);
                                     }
                                 });
-                            }
-                            else {
+                            } else {
                                 ability3.setOpacity(0.3);
                             }
-                            if(ability.isCanUnlock()) {
+                            if (ability.isCanUnlock()) {
                                 upgrade_new_ability3.setOnMouseClicked(new EventHandler<MouseEvent>() {
                                     @Override
                                     public void handle(MouseEvent event) {
-                                        if(!ability.isUnlock() && ability.isAvailable()){
+                                        if (!ability.isUnlock() && ability.isAvailable()) {
                                             Connection.sendNewAbility(ability, hero);
                                         }
-                                        if(ability.isUnlock() && ability.isAvailable()){
+                                        if (ability.isUnlock() && ability.isAvailable()) {
                                             Connection.sendUpgradeAbility(ability, hero);
                                         }
                                     }
@@ -432,8 +420,8 @@ public class MapController implements Initializable {
             }
 
             for (CreepData creep : creeps) {
-                if(creep.getTeamName().equals("RED")){
-                    if(creep.getTypeCreep().equals("Ranged")) {
+                if (creep.getTeamName().equalsIgnoreCase("RED")) {
+                    if (creep.getTypeCreep().equalsIgnoreCase("Ranged")) {
                         InputStream stream = new FileInputStream("src/main/resources/Photos/dire_ranged_creep.png");
                         Image image = new Image(stream);
                         ImageView imageView = new ImageView();
@@ -447,13 +435,12 @@ public class MapController implements Initializable {
                         if (creep.isDie()) {
                             creeps.remove(creep);
                             imageView.setImage(null);
-                        }
-                        else {
+                        } else {
                             newMap.getChildren().add(imageView);
                             imageView.setOnMouseEntered(new EventHandler<MouseEvent>() {
                                 @Override
                                 public void handle(MouseEvent event) {
-                                    showHP.setText(Double. toString(creep.getHp()));
+                                    showHP.setText(Double.toString(creep.getHp()));
                                     showMana.setText("");
                                 }
                             });
@@ -461,8 +448,7 @@ public class MapController implements Initializable {
                                 animationAttackMethod(imageView);
                             }
                         }
-                    }
-                    else {
+                    } else {
 
                         InputStream stream = new FileInputStream("src/main/resources/Photos/dire_melee_creep.png");
                         Image image = new Image(stream);
@@ -477,13 +463,12 @@ public class MapController implements Initializable {
                         if (creep.isDie()) {
                             creeps.remove(creep);
                             imageView.setImage(null);
-                        }
-                        else {
+                        } else {
                             newMap.getChildren().add(imageView);
                             imageView.setOnMouseEntered(new EventHandler<MouseEvent>() {
                                 @Override
                                 public void handle(MouseEvent event) {
-                                    showHP.setText(Double. toString(creep.getHp()));
+                                    showHP.setText(Double.toString(creep.getHp()));
                                     showMana.setText("");
                                 }
                             });
@@ -492,10 +477,8 @@ public class MapController implements Initializable {
                             }
                         }
                     }
-                }
-
-                else {
-                    if(creep.getTypeCreep().equals("Ranged")){
+                } else {
+                    if (creep.getTypeCreep().equalsIgnoreCase("Ranged")) {
                         InputStream stream = new FileInputStream("src/main/resources/Photos/radiant_ranged_creep.png");
                         Image image = new Image(stream);
                         ImageView imageView = new ImageView();
@@ -509,13 +492,12 @@ public class MapController implements Initializable {
                         if (creep.isDie()) {
                             creeps.remove(creep);
                             imageView.setImage(null);
-                        }
-                        else {
+                        } else {
                             newMap.getChildren().add(imageView);
                             imageView.setOnMouseEntered(new EventHandler<MouseEvent>() {
                                 @Override
                                 public void handle(MouseEvent event) {
-                                    showHP.setText(Double. toString(creep.getHp()));
+                                    showHP.setText(Double.toString(creep.getHp()));
                                     showMana.setText("");
                                 }
                             });
@@ -523,8 +505,7 @@ public class MapController implements Initializable {
                                 animationAttackMethod(imageView);
                             }
                         }
-                    }
-                    else {
+                    } else {
                         InputStream stream = new FileInputStream("src/main/resources/Photos/radiant_melee_creep.png");
                         Image image = new Image(stream);
                         ImageView imageView = new ImageView();
@@ -538,13 +519,12 @@ public class MapController implements Initializable {
                         if (creep.isDie()) {
                             creeps.remove(creep);
                             imageView.setImage(null);
-                        }
-                        else {
+                        } else {
                             newMap.getChildren().add(imageView);
                             imageView.setOnMouseEntered(new EventHandler<MouseEvent>() {
                                 @Override
                                 public void handle(MouseEvent event) {
-                                    showHP.setText(Double. toString(creep.getHp()));
+                                    showHP.setText(Double.toString(creep.getHp()));
                                     showMana.setText("");
                                 }
                             });
@@ -557,8 +537,8 @@ public class MapController implements Initializable {
             }
 
             for (BuildingData building : buildings) {
-                if (building.getTypeBuilding().equals("Tower")) {
-                    if (building.getTeamName().equals("RED")){
+                if (building.getTypeBuilding().equalsIgnoreCase("Tower")) {
+                    if (building.getTeamName().equalsIgnoreCase("RED")) {
                         InputStream stream = new FileInputStream("src/main/resources/Photos/Tower_Dire_model.png");
                         Image image = new Image(stream);
                         ImageView imageView = new ImageView();
@@ -571,13 +551,12 @@ public class MapController implements Initializable {
                         if (building.isDie()) {
                             buildings.remove(building);
                             imageView.setImage(null);
-                        }
-                        else {
+                        } else {
                             newMap.getChildren().add(imageView);
                             imageView.setOnMouseEntered(new EventHandler<MouseEvent>() {
                                 @Override
                                 public void handle(MouseEvent event) {
-                                    showHP.setText(Double. toString(building.getHp()));
+                                    showHP.setText(Double.toString(building.getHp()));
                                     showMana.setText("");
                                 }
                             });
@@ -587,7 +566,7 @@ public class MapController implements Initializable {
 
                         }
                     }
-                    if (building.getTeamName().equals("Green")){
+                    if (building.getTeamName().equalsIgnoreCase("Green")) {
                         InputStream stream = new FileInputStream("src/main/resources/Photos/Tower_Radiant_model2.png");
                         Image image = new Image(stream);
                         ImageView imageView = new ImageView();
@@ -601,8 +580,7 @@ public class MapController implements Initializable {
                         if (building.isDie()) {
                             buildings.remove(building);
                             imageView.setImage(null);
-                        }
-                        else {
+                        } else {
                             newMap.getChildren().add(imageView);
                             imageView.setOnMouseEntered(event -> {
                                 showHP.setText(Double.toString(building.getHp()));
@@ -615,8 +593,9 @@ public class MapController implements Initializable {
                     }
                 }
 
-                if (building.getTypeBuilding().equals("Ancient")){
-                    if (building.getTeamName().equals("RED")){
+                if (building.getTypeBuilding().equalsIgnoreCase("Ancient")) {
+                    System.out.println("ancient dataaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+                    if (building.getTeamName().equalsIgnoreCase("RED")) {
                         InputStream stream = new FileInputStream("src/main/resources/Photos/Ancient_Dire_model5.png");
                         Image image = new Image(stream);
                         ImageView imageView = new ImageView();
@@ -628,10 +607,10 @@ public class MapController implements Initializable {
                         imageView.setPickOnBounds(true);
 
                         if (building.isDie()) {
+                            System.out.println("is die amcient");
                             buildings.remove(building);
                             imageView.setImage(null);
-                        }
-                        else {
+                        } else {
                             newMap.getChildren().add(imageView);
                             imageView.setOnMouseEntered(event -> {
                                 showHP.setText(Double.toString(building.getHp()));
@@ -642,7 +621,7 @@ public class MapController implements Initializable {
                             }
                         }
                     }
-                    if (building.getTeamName().equals("GREEN")){
+                    if (building.getTeamName().equalsIgnoreCase("GREEN")) {
                         InputStream stream = new FileInputStream("src/main/resources/Photos/Ancient_Radiant_model.png");
                         Image image = new Image(stream);
                         ImageView imageView = new ImageView();
@@ -652,11 +631,10 @@ public class MapController implements Initializable {
                         imageView.setFitHeight(80);
                         imageView.setFitWidth(75);
                         imageView.setPickOnBounds(true);
-
+                        System.out.println("is sddddddddddddfsgsdgsdfgdfg");
                         if (building.getAttacking()) {
                             animationAttackMethod(imageView);
-                        }
-                        else {
+                        } else {
                             newMap.getChildren().add(imageView);
                             imageView.setOnMouseEntered(event -> {
                                 showHP.setText(Double.toString(building.getHp()));
@@ -670,8 +648,8 @@ public class MapController implements Initializable {
                     }
 
                 }
-                if (building.getTypeBuilding().equals("Ranged")){
-                    if (building.getTeamName().equals("RED")){
+                if (building.getTypeBuilding().equalsIgnoreCase("Ranged")) {
+                    if (building.getTeamName().equalsIgnoreCase("RED")) {
                         InputStream stream = new FileInputStream("src/main/resources/Photos/Ancient_Radiant_model.png");
                         Image image = new Image(stream);
                         ImageView imageView = new ImageView();
@@ -685,13 +663,12 @@ public class MapController implements Initializable {
                         if (building.isDie()) {
                             buildings.remove(building);
                             imageView.setImage(null);
-                        }
-                        else {
+                        } else {
                             newMap.getChildren().add(imageView);
                             imageView.setOnMouseEntered(new EventHandler<MouseEvent>() {
                                 @Override
                                 public void handle(MouseEvent event) {
-                                    showHP.setText(Double. toString(building.getHp()));
+                                    showHP.setText(Double.toString(building.getHp()));
                                     showMana.setText("");
                                 }
                             });
@@ -700,7 +677,7 @@ public class MapController implements Initializable {
                             }
                         }
                     }
-                    if (building.getTeamName().equals("GREEN")){
+                    if (building.getTeamName().equalsIgnoreCase("GREEN")) {
                         InputStream stream = new FileInputStream("src/main/resources/Photos/Ancient_Radiant_model.png");
                         Image image = new Image(stream);
                         ImageView imageView = new ImageView();
@@ -714,8 +691,7 @@ public class MapController implements Initializable {
                         if (building.isDie()) {
                             buildings.remove(building);
                             imageView.setImage(null);
-                        }
-                        else {
+                        } else {
                             newMap.getChildren().add(imageView);
                             imageView.setOnMouseEntered(event -> {
                                 showHP.setText(Double.toString(building.getHp()));
@@ -727,8 +703,8 @@ public class MapController implements Initializable {
                         }
                     }
                 }
-                if (building.getTypeBuilding().equals("MELEE")){
-                    if (building.getTeamName().equals("RED")){
+                if (building.getTypeBuilding().equalsIgnoreCase("MELEE")) {
+                    if (building.getTeamName().equalsIgnoreCase("RED")) {
                         InputStream stream = new FileInputStream("src/main/resources/Photos/Ancient_Radiant_model.png");
                         Image image = new Image(stream);
                         ImageView imageView = new ImageView();
@@ -742,8 +718,7 @@ public class MapController implements Initializable {
                         if (building.isDie()) {
                             buildings.remove(building);
                             imageView.setImage(null);
-                        }
-                        else {
+                        } else {
                             newMap.getChildren().add(imageView);
                             imageView.setOnMouseEntered(event -> {
                                 showHP.setText(Double.toString(building.getHp()));
@@ -754,7 +729,7 @@ public class MapController implements Initializable {
                             }
                         }
                     }
-                    if (building.getTeamName().equals("GREEN")){
+                    if (building.getTeamName().equalsIgnoreCase("GREEN")) {
                         InputStream stream = new FileInputStream("src/main/resources/Photos/Ancient_Radiant_model.png");
                         Image image = new Image(stream);
                         ImageView imageView = new ImageView();
@@ -768,8 +743,7 @@ public class MapController implements Initializable {
                         if (building.isDie()) {
                             buildings.remove(building);
                             imageView.setImage(null);
-                        }
-                        else {
+                        } else {
                             newMap.getChildren().add(imageView);
                             imageView.setOnMouseEntered(event -> {
                                 showHP.setText(Double.toString(building.getHp()));
@@ -782,16 +756,27 @@ public class MapController implements Initializable {
                     }
                 }
             }
-
-             mainAnchor.getChildren().setAll(newMap);
-        }catch (Exception e){
+            mainAnchor.getChildren().add(newMap);
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public void setFinished(String winnerName){
+    private void print_data(ArrayList<HeroData> heroes, ArrayList<AbilityData> abilities, ArrayList<CreepData> creeps, ArrayList<BuildingData> buildings) {
+        System.out.println("heros");
+        for (HeroData hero : heroes) {
+            System.out.println(hero);
+        }
+        System.out.println("buildings");
+        for (BuildingData building : buildings) {
+            System.out.println(building);
+        }
+        System.out.println("###################################################################################");
+    }
+
+    public void setFinished(String winnerName) {
         try {
-            if (winnerName.equals("GREEN"))
+            if (winnerName.equalsIgnoreCase("GREEN"))
                 setWinnerTeamName("Green");
             else
                 setWinnerTeamName("Red");
@@ -805,7 +790,7 @@ public class MapController implements Initializable {
         }
     }
 
-    public static void closeStage(){
+    public static void closeStage() {
         stage.close();
     }
 
@@ -829,16 +814,32 @@ public class MapController implements Initializable {
         move = 'w';
     }
 
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        new Thread(()->{
-            while(true) {
-                if(!ReceiveDataRunnable.isIsReloaded()) {
-                    checkUnits(ReceiveDataRunnable.getHeroes(), ReceiveDataRunnable.getAbilities(), ReceiveDataRunnable.getCreeps(), ReceiveDataRunnable.getBuildings());
-                    ReceiveDataRunnable.setIsReloaded(false);
+        updater = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (true) {
+                    if (ReceiveDataRunnable.isIsReloaded()) {
+                        System.out.println("start check");
+                        Platform.runLater(new Runnable() {
+                            @Override
+                            public void run() {
+                                checkUnits(ReceiveDataRunnable.getHeroes(), ReceiveDataRunnable.getAbilities(), ReceiveDataRunnable.getCreeps(), ReceiveDataRunnable.getBuildings());
+                            }
+                        });
+                        ReceiveDataRunnable.setIsReloaded(false);
+                        System.out.println("end check");
+                    }
+                    try {
+                        Thread.sleep(10);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
-        }).start();
+        });
+        updater.start();
+        System.out.println("thread updater started");
     }
 }

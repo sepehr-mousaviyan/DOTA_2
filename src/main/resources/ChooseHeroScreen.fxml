@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="768.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sbu.cs.mahkats.Client.UI.Controler.ChooseHeroController">
+<AnchorPane prefHeight="768.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sbu.cs.mahkats.Client.UI.Controller.ChooseHeroController">
    <children>
       <AnchorPane fx:id="screen" prefHeight="768.0" prefWidth="1024.0" style="-fx-background-color: #343434;">
          <children>

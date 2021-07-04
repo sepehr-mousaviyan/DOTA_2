@@ -1,4 +1,4 @@
-package sbu.cs.mahkats.Client.UI.Controler;
+package sbu.cs.mahkats.Client.UI.Controller;
 
 import javafx.animation.FadeTransition;
 import javafx.event.ActionEvent;
@@ -208,10 +208,10 @@ public class MainController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        if (!SplashController.isPlayed) {
+        /*if (!SplashController.isPlayed) {
             loadSplash();
             SplashController.isPlayed = true;
-        }
+        }*/
 
     }
 }
