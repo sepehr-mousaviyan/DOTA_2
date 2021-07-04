@@ -9,8 +9,8 @@ import sbu.cs.mahkats.Api.Data.HeroData;
 import sbu.cs.mahkats.Api.Data.UserData;
 import sbu.cs.mahkats.Api.MessageMaker;
 import sbu.cs.mahkats.Api.Parser;
-import sbu.cs.mahkats.Client.UI.Controler.ChooseHeroController;
-import sbu.cs.mahkats.Client.UI.Controler.ReceiveDataRunnable;
+import sbu.cs.mahkats.Client.UI.Controller.ChooseHeroController;
+import sbu.cs.mahkats.Client.UI.Controller.ReceiveDataRunnable;
 import sbu.cs.mahkats.Client.Util.HashGenerator;
 import sbu.cs.mahkats.Configuration.Config;
 

@@ -2,7 +2,7 @@ package sbu.cs.mahkats.Api.Data;
 
 import com.google.gson.JsonObject;
 
-public class BuildingData extends GamePlayData{
+public class BuildingData extends GamePlayData {
     private String typeBuilding;
 
     public BuildingData(Long token, double hp, double hp_regeneration, double minimum_damage, double maximum_damage, double armor, double range, double experience, Boolean isAttacking, int code_defender, boolean isDie, int code, String typeBuilding, String teamName, int Location_x, int Location_y) {
@@ -21,5 +21,22 @@ public class BuildingData extends GamePlayData{
     @Override
     public JsonObject makeJson() {
         return super.makeJson();
+    }
+
+    @Override
+    public String toString() {
+        return "BuildingData{" +
+                "typeBuilding='" + typeBuilding + '\'' +
+                ", token=" + token +
+                ", hp=" + hp +
+                ", isAttacking=" + isAttacking +
+                ", isDie=" + isDie +
+                ", code=" + code +
+                ", error='" + error + '\'' +
+                ", Location_x=" + Location_x +
+                ", Location_y=" + Location_y +
+                ", max_Location_y=" + max_Location_y +
+                ", teamName='" + teamName + '\'' +
+                '}';
     }
 }
