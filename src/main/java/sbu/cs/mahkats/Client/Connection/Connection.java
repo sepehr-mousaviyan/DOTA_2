@@ -206,4 +206,8 @@ public class Connection {
     public static long getTOKEN() {
         return TOKEN;
     }
+
+    public static DataInputStream getDataInputStream() {
+        return dataInputStream;
+    }
 }

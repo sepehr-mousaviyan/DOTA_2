@@ -1,5 +1,6 @@
 package sbu.cs.mahkats.Client.UI.Controler;
 
+import com.google.gson.JsonObject;
 import javafx.animation.RotateTransition;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -15,15 +16,19 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import sbu.cs.mahkats.Api.Api;
 import sbu.cs.mahkats.Api.Data.AbilityData;
 import sbu.cs.mahkats.Api.Data.BuildingData;
 import sbu.cs.mahkats.Api.Data.CreepData;
 import sbu.cs.mahkats.Api.Data.HeroData;
+import sbu.cs.mahkats.Api.Parser;
 import sbu.cs.mahkats.Client.Connection.Connection;
 import sbu.cs.mahkats.Configuration.Config;
 import sbu.cs.mahkats.Configuration.Units.HeroConfig;
 
+import java.io.DataInputStream;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
@@ -782,8 +787,7 @@ public class MapController implements Initializable {
                     }
                 }
             }
-
-             mainAnchor.getChildren().setAll(newMap);
+            mainAnchor.getChildren().setAll(newMap);
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -829,14 +833,15 @@ public class MapController implements Initializable {
         move = 'w';
     }
 
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         new Thread(()->{
             while(true) {
-                if(!ReceiveDataRunnable.isIsReloaded()) {
+                if(ReceiveDataRunnable.isIsReloaded()) {
+                    System.out.println("start check");
                     checkUnits(ReceiveDataRunnable.getHeroes(), ReceiveDataRunnable.getAbilities(), ReceiveDataRunnable.getCreeps(), ReceiveDataRunnable.getBuildings());
                     ReceiveDataRunnable.setIsReloaded(false);
+                    System.out.println("end check");
                 }
             }
         }).start();

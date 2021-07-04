@@ -1,6 +1,11 @@
 package sbu.cs.mahkats.Client.UI.Controler;
 
 import com.google.gson.JsonObject;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 import sbu.cs.mahkats.Api.Api;
 import sbu.cs.mahkats.Api.Data.AbilityData;
 import sbu.cs.mahkats.Api.Data.BuildingData;
@@ -124,9 +129,8 @@ public class ReceiveDataRunnable implements Runnable{
                     updateAbilityData(Parser.parseAbilityData(josnMessage));
                     break;
                 case "End":
-                    Connection.sendHeroAction(MapController.getMove());
                     //mapController.checkUnits(heroes, abilities, creeps, buildings);
-                    isReloaded = false;
+                    isReloaded = true;
                     break;
                 case "GREEN" :
                     //mapController.setFinished("Green");
@@ -135,6 +139,7 @@ public class ReceiveDataRunnable implements Runnable{
                     //mapController.setFinished("RED");
                     break;
                 case "startTurn":
+                    Connection.sendHeroAction(MapController.getMove());
                     Connection.senBufferMessage();
                     break;
 

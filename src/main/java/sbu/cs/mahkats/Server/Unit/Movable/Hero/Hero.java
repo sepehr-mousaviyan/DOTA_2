@@ -41,7 +41,7 @@ public class Hero extends Movable {
         isRespawnTime = false;
         remainRespawnTime = 10;
         abilities = new ArrayList<>();
-
+        level = 0;
         this.hero_name = hero_name;
         ability1 = new Ability(hero_name, 1);
         abilities.add(ability1);
@@ -110,7 +110,7 @@ public class Hero extends Movable {
     }
 
     public boolean canLevelUp() {
-        return LEVEL_XP[level] <= experience;
+        return LEVEL_XP[level] < experience;
     }
 
     /**

@@ -89,8 +89,6 @@ public class ChooseHeroController implements Initializable {
             Connection.getTeamName();
             Connection.runReceiver();
 
-            //Platform.exit();
-
             Parent logParent = null;
             logParent = FXMLLoader.load(getClass().getResource("/Map.fxml"));
             Stage s1 = (Stage)((Node) event.getSource()).getScene().getWindow();
